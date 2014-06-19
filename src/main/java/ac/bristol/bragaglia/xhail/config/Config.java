@@ -268,7 +268,11 @@ public class Config {
 	public void setName(String name) {
 		if (null == name || (name = name.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'name' argument in Config.setName(String): " + name);
-		this.name = name;
+		int index = name.lastIndexOf(File.separator); 
+		if (index > -1)
+			this.name = name.substring(index);
+		else
+			this.name = name;
 		assert invariant() : "Illegal state in Config.setName(String)";
 	}
 

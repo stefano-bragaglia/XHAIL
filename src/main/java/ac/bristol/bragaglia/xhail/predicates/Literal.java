@@ -39,6 +39,11 @@ public class Literal implements Comparable<Literal>, Iterable<Atom> {
 		return compare;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -66,6 +71,11 @@ public class Literal implements Comparable<Literal>, Iterable<Atom> {
 		return atom.get(i);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,16 +104,16 @@ public class Literal implements Comparable<Literal>, Iterable<Atom> {
 		return negated;
 	}
 
-	@Override
-	public String toString() {
-		String result = atom.toString();
+	public String toPrint() {
+		String result = atom.toPrint();
 		if (negated)
 			result = "not " + result;
 		return result;
 	}
 
-	public Object toPrint() {
-		String result = atom.toPrint();
+	@Override
+	public String toString() {
+		String result = atom.toString();
 		if (negated)
 			result = "not " + result;
 		return result;

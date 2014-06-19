@@ -1794,12 +1794,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundMinus2Context extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundMinus2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1812,11 +1812,11 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundTimesContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode ASTERISK() { return getToken(XhailParser.ASTERISK, 0); }
 		public GroundTimesContext(GroundTermContext ctx) { copyFrom(ctx); }
@@ -1830,13 +1830,13 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundAndContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
+		}
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode BIT_AND() { return getToken(XhailParser.BIT_AND, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
-		}
 		public GroundAndContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1848,13 +1848,13 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundXorContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
+		}
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode BIT_XOR() { return getToken(XhailParser.BIT_XOR, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
-		}
 		public GroundXorContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1866,12 +1866,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundLessEqualsContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode COMP_LE() { return getToken(XhailParser.COMP_LE, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundLessEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1885,11 +1885,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundPower1Context extends GroundTermContext {
 		public TerminalNode ASTERISKS() { return getToken(XhailParser.ASTERISKS, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundPower1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1954,12 +1954,12 @@ public class XhailParser extends Parser {
 	public static class GroundPower3Context extends GroundTermContext {
 		public TerminalNode ARITH_POWER() { return getToken(XhailParser.ARITH_POWER, 0); }
 		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundPower3Context(GroundTermContext ctx) { copyFrom(ctx); }
@@ -1974,11 +1974,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundPower2Context extends GroundTermContext {
 		public TerminalNode ARITH_POWER() { return getToken(XhailParser.ARITH_POWER, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundPower2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1991,11 +1991,11 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundNotEqualsContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode COMP_NE() { return getToken(XhailParser.COMP_NE, 0); }
 		public GroundNotEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
@@ -2009,12 +2009,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundEqualsContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode COMP_EQ() { return getToken(XhailParser.COMP_EQ, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2027,13 +2027,13 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundOrContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
+		}
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode BIT_OR() { return getToken(XhailParser.BIT_OR, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
-		}
 		public GroundOrContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2046,11 +2046,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundModulus1Context extends GroundTermContext {
 		public TerminalNode BACKSLASH() { return getToken(XhailParser.BACKSLASH, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundModulus1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2064,11 +2064,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundModulus2Context extends GroundTermContext {
 		public TerminalNode ARITH_MODULUS() { return getToken(XhailParser.ARITH_MODULUS, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundModulus2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2104,12 +2104,12 @@ public class XhailParser extends Parser {
 	public static class GroundModulus3Context extends GroundTermContext {
 		public TerminalNode ARITH_MODULUS() { return getToken(XhailParser.ARITH_MODULUS, 0); }
 		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundModulus3Context(GroundTermContext ctx) { copyFrom(ctx); }
@@ -2124,11 +2124,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundLessContext extends GroundTermContext {
 		public TerminalNode COMP_LT() { return getToken(XhailParser.COMP_LT, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundLessContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2141,12 +2141,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundPlusContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode PLUS() { return getToken(XhailParser.PLUS, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundPlusContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2160,11 +2160,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundGreaterEqualsContext extends GroundTermContext {
 		public TerminalNode COMP_GE() { return getToken(XhailParser.COMP_GE, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundGreaterEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2178,11 +2178,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundAssign1Context extends GroundTermContext {
 		public TerminalNode ASSIGN() { return getToken(XhailParser.ASSIGN, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundAssign1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2195,11 +2195,11 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundGreaterContext extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode COMP_GT() { return getToken(XhailParser.COMP_GT, 0); }
 		public GroundGreaterContext(GroundTermContext ctx) { copyFrom(ctx); }
@@ -2213,12 +2213,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundDivide2Context extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode ARITH_DIVIDE() { return getToken(XhailParser.ARITH_DIVIDE, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundDivide2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2232,13 +2232,13 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundDivide3Context extends GroundTermContext {
 		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
 		public TerminalNode ARITH_DIVIDE() { return getToken(XhailParser.ARITH_DIVIDE, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundDivide3Context(GroundTermContext ctx) { copyFrom(ctx); }
@@ -2253,11 +2253,11 @@ public class XhailParser extends Parser {
 	}
 	public static class GroundAssign2Context extends GroundTermContext {
 		public TerminalNode EQUALS() { return getToken(XhailParser.EQUALS, 0); }
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundAssign2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2270,12 +2270,12 @@ public class XhailParser extends Parser {
 		}
 	}
 	public static class GroundDivide1Context extends GroundTermContext {
-		public List<GroundAtomContext> groundAtom() {
-			return getRuleContexts(GroundAtomContext.class);
+		public GroundAtomContext groundAtom() {
+			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
-		public GroundAtomContext groundAtom(int i) {
-			return getRuleContext(GroundAtomContext.class,i);
+		public GroundTermContext groundTerm() {
+			return getRuleContext(GroundTermContext.class,0);
 		}
 		public GroundDivide1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2301,7 +2301,7 @@ public class XhailParser extends Parser {
 				{
 				setState(349); groundAtom();
 				setState(350); match(ASSIGN);
-				setState(351); groundAtom();
+				setState(351); groundTerm();
 				}
 				break;
 
@@ -2311,7 +2311,7 @@ public class XhailParser extends Parser {
 				{
 				setState(353); groundAtom();
 				setState(354); match(EQUALS);
-				setState(355); groundAtom();
+				setState(355); groundTerm();
 				}
 				break;
 
@@ -2321,7 +2321,7 @@ public class XhailParser extends Parser {
 				{
 				setState(357); groundAtom();
 				setState(358); match(BIT_AND);
-				setState(359); groundAtom();
+				setState(359); groundTerm();
 				}
 				break;
 
@@ -2340,7 +2340,7 @@ public class XhailParser extends Parser {
 				{
 				setState(363); groundAtom();
 				setState(364); match(BIT_OR);
-				setState(365); groundAtom();
+				setState(365); groundTerm();
 				}
 				break;
 
@@ -2350,7 +2350,7 @@ public class XhailParser extends Parser {
 				{
 				setState(367); groundAtom();
 				setState(368); match(BIT_XOR);
-				setState(369); groundAtom();
+				setState(369); groundTerm();
 				}
 				break;
 
@@ -2360,7 +2360,7 @@ public class XhailParser extends Parser {
 				{
 				setState(371); groundAtom();
 				setState(372); match(COMP_EQ);
-				setState(373); groundAtom();
+				setState(373); groundTerm();
 				}
 				break;
 
@@ -2370,7 +2370,7 @@ public class XhailParser extends Parser {
 				{
 				setState(375); groundAtom();
 				setState(376); match(COMP_GE);
-				setState(377); groundAtom();
+				setState(377); groundTerm();
 				}
 				break;
 
@@ -2380,7 +2380,7 @@ public class XhailParser extends Parser {
 				{
 				setState(379); groundAtom();
 				setState(380); match(COMP_GT);
-				setState(381); groundAtom();
+				setState(381); groundTerm();
 				}
 				break;
 
@@ -2390,7 +2390,7 @@ public class XhailParser extends Parser {
 				{
 				setState(383); groundAtom();
 				setState(384); match(COMP_LE);
-				setState(385); groundAtom();
+				setState(385); groundTerm();
 				}
 				break;
 
@@ -2400,7 +2400,7 @@ public class XhailParser extends Parser {
 				{
 				setState(387); groundAtom();
 				setState(388); match(COMP_LT);
-				setState(389); groundAtom();
+				setState(389); groundTerm();
 				}
 				break;
 
@@ -2410,7 +2410,7 @@ public class XhailParser extends Parser {
 				{
 				setState(391); groundAtom();
 				setState(392); match(COMP_NE);
-				setState(393); groundAtom();
+				setState(393); groundTerm();
 				}
 				break;
 
@@ -2420,7 +2420,7 @@ public class XhailParser extends Parser {
 				{
 				setState(395); groundAtom();
 				setState(396); match(PLUS);
-				setState(397); groundAtom();
+				setState(397); groundTerm();
 				}
 				break;
 
@@ -2439,7 +2439,7 @@ public class XhailParser extends Parser {
 				{
 				setState(401); groundAtom();
 				setState(402); match(MINUS);
-				setState(403); groundAtom();
+				setState(403); groundTerm();
 				}
 				break;
 
@@ -2449,7 +2449,7 @@ public class XhailParser extends Parser {
 				{
 				setState(405); groundAtom();
 				setState(406); match(ASTERISK);
-				setState(407); groundAtom();
+				setState(407); groundTerm();
 				}
 				break;
 
@@ -2459,7 +2459,7 @@ public class XhailParser extends Parser {
 				{
 				setState(409); groundAtom();
 				setState(410); match(SLASH);
-				setState(411); groundAtom();
+				setState(411); groundTerm();
 				}
 				break;
 
@@ -2469,7 +2469,7 @@ public class XhailParser extends Parser {
 				{
 				setState(413); groundAtom();
 				setState(414); match(ARITH_DIVIDE);
-				setState(415); groundAtom();
+				setState(415); groundTerm();
 				}
 				break;
 
@@ -2481,7 +2481,7 @@ public class XhailParser extends Parser {
 				setState(418); match(PAREN_LEFT);
 				setState(419); groundAtom();
 				setState(420); match(COMMA);
-				setState(421); groundAtom();
+				setState(421); groundTerm();
 				setState(422); match(PAREN_RIGHT);
 				}
 				break;
@@ -2492,7 +2492,7 @@ public class XhailParser extends Parser {
 				{
 				setState(424); groundAtom();
 				setState(425); match(BACKSLASH);
-				setState(426); groundAtom();
+				setState(426); groundTerm();
 				}
 				break;
 
@@ -2502,7 +2502,7 @@ public class XhailParser extends Parser {
 				{
 				setState(428); groundAtom();
 				setState(429); match(ARITH_MODULUS);
-				setState(430); groundAtom();
+				setState(430); groundTerm();
 				}
 				break;
 
@@ -2514,7 +2514,7 @@ public class XhailParser extends Parser {
 				setState(433); match(PAREN_LEFT);
 				setState(434); groundAtom();
 				setState(435); match(COMMA);
-				setState(436); groundAtom();
+				setState(436); groundTerm();
 				setState(437); match(PAREN_RIGHT);
 				}
 				break;
@@ -2546,7 +2546,7 @@ public class XhailParser extends Parser {
 				{
 				setState(448); groundAtom();
 				setState(449); match(ASTERISKS);
-				setState(450); groundAtom();
+				setState(450); groundTerm();
 				}
 				break;
 
@@ -2556,7 +2556,7 @@ public class XhailParser extends Parser {
 				{
 				setState(452); groundAtom();
 				setState(453); match(ARITH_POWER);
-				setState(454); groundAtom();
+				setState(454); groundTerm();
 				}
 				break;
 
@@ -2568,7 +2568,7 @@ public class XhailParser extends Parser {
 				setState(457); match(PAREN_LEFT);
 				setState(458); groundAtom();
 				setState(459); match(COMMA);
-				setState(460); groundAtom();
+				setState(460); groundTerm();
 				setState(461); match(PAREN_RIGHT);
 				}
 				break;
@@ -4279,74 +4279,73 @@ public class XhailParser extends Parser {
 		"\2\2\2\u015b\u0150\3\2\2\2\u015b\u015c\3\2\2\2\u015c\u015e\3\2\2\2\u015d"+
 		"\u014c\3\2\2\2\u015d\u014d\3\2\2\2\u015d\u014e\3\2\2\2\u015d\u014f\3\2"+
 		"\2\2\u015e#\3\2\2\2\u015f\u0160\5\"\22\2\u0160\u0161\7%\2\2\u0161\u0162"+
-		"\5\"\22\2\u0162\u01dd\3\2\2\2\u0163\u0164\5\"\22\2\u0164\u0165\7/\2\2"+
-		"\u0165\u0166\5\"\22\2\u0166\u01dd\3\2\2\2\u0167\u0168\5\"\22\2\u0168\u0169"+
-		"\7\16\2\2\u0169\u016a\5\"\22\2\u016a\u01dd\3\2\2\2\u016b\u016c\7\17\2"+
-		"\2\u016c\u01dd\5\"\22\2\u016d\u016e\5\"\22\2\u016e\u016f\7\20\2\2\u016f"+
-		"\u0170\5\"\22\2\u0170\u01dd\3\2\2\2\u0171\u0172\5\"\22\2\u0172\u0173\7"+
-		"\21\2\2\u0173\u0174\5\"\22\2\u0174\u01dd\3\2\2\2\u0175\u0176\5\"\22\2"+
-		"\u0176\u0177\7\22\2\2\u0177\u0178\5\"\22\2\u0178\u01dd\3\2\2\2\u0179\u017a"+
-		"\5\"\22\2\u017a\u017b\7\23\2\2\u017b\u017c\5\"\22\2\u017c\u01dd\3\2\2"+
-		"\2\u017d\u017e\5\"\22\2\u017e\u017f\7\24\2\2\u017f\u0180\5\"\22\2\u0180"+
-		"\u01dd\3\2\2\2\u0181\u0182\5\"\22\2\u0182\u0183\7\25\2\2\u0183\u0184\5"+
-		"\"\22\2\u0184\u01dd\3\2\2\2\u0185\u0186\5\"\22\2\u0186\u0187\7\26\2\2"+
-		"\u0187\u0188\5\"\22\2\u0188\u01dd\3\2\2\2\u0189\u018a\5\"\22\2\u018a\u018b"+
-		"\7\27\2\2\u018b\u018c\5\"\22\2\u018c\u01dd\3\2\2\2\u018d\u018e\5\"\22"+
-		"\2\u018e\u018f\7\67\2\2\u018f\u0190\5\"\22\2\u0190\u01dd\3\2\2\2\u0191"+
-		"\u0192\7\62\2\2\u0192\u01dd\5\"\22\2\u0193\u0194\5\"\22\2\u0194\u0195"+
-		"\7\62\2\2\u0195\u0196\5\"\22\2\u0196\u01dd\3\2\2\2\u0197\u0198\5\"\22"+
-		"\2\u0198\u0199\7#\2\2\u0199\u019a\5\"\22\2\u019a\u01dd\3\2\2\2\u019b\u019c"+
-		"\5\"\22\2\u019c\u019d\79\2\2\u019d\u019e\5\"\22\2\u019e\u01dd\3\2\2\2"+
-		"\u019f\u01a0\5\"\22\2\u01a0\u01a1\7\13\2\2\u01a1\u01a2\5\"\22\2\u01a2"+
-		"\u01dd\3\2\2\2\u01a3\u01a4\7\13\2\2\u01a4\u01a5\7\64\2\2\u01a5\u01a6\5"+
-		"\"\22\2\u01a6\u01a7\7*\2\2\u01a7\u01a8\5\"\22\2\u01a8\u01a9\7\65\2\2\u01a9"+
-		"\u01dd\3\2\2\2\u01aa\u01ab\5\"\22\2\u01ab\u01ac\7\'\2\2\u01ac\u01ad\5"+
-		"\"\22\2\u01ad\u01dd\3\2\2\2\u01ae\u01af\5\"\22\2\u01af\u01b0\7\f\2\2\u01b0"+
-		"\u01b1\5\"\22\2\u01b1\u01dd\3\2\2\2\u01b2\u01b3\7\f\2\2\u01b3\u01b4\7"+
-		"\64\2\2\u01b4\u01b5\5\"\22\2\u01b5\u01b6\7*\2\2\u01b6\u01b7\5\"\22\2\u01b7"+
-		"\u01b8\7\65\2\2\u01b8\u01dd\3\2\2\2\u01b9\u01ba\7(\2\2\u01ba\u01bb\5\""+
-		"\22\2\u01bb\u01bc\7(\2\2\u01bc\u01dd\3\2\2\2\u01bd\u01be\7\n\2\2\u01be"+
-		"\u01bf\7\64\2\2\u01bf\u01c0\5\"\22\2\u01c0\u01c1\7\65\2\2\u01c1\u01dd"+
-		"\3\2\2\2\u01c2\u01c3\5\"\22\2\u01c3\u01c4\7$\2\2\u01c4\u01c5\5\"\22\2"+
-		"\u01c5\u01dd\3\2\2\2\u01c6\u01c7\5\"\22\2\u01c7\u01c8\7\r\2\2\u01c8\u01c9"+
-		"\5\"\22\2\u01c9\u01dd\3\2\2\2\u01ca\u01cb\7\r\2\2\u01cb\u01cc\7\64\2\2"+
-		"\u01cc\u01cd\5\"\22\2\u01cd\u01ce\7*\2\2\u01ce\u01cf\5\"\22\2\u01cf\u01d0"+
-		"\7\65\2\2\u01d0\u01dd\3\2\2\2\u01d1\u01d6\5\"\22\2\u01d2\u01d3\7\66\2"+
-		"\2\u01d3\u01d5\5\"\22\2\u01d4\u01d2\3\2\2\2\u01d5\u01d8\3\2\2\2\u01d6"+
-		"\u01d4\3\2\2\2\u01d6\u01d7\3\2\2\2\u01d7\u01dd\3\2\2\2\u01d8\u01d6\3\2"+
-		"\2\2\u01d9\u01da\t\2\2\2\u01da\u01db\7.\2\2\u01db\u01dd\t\2\2\2\u01dc"+
-		"\u015f\3\2\2\2\u01dc\u0163\3\2\2\2\u01dc\u0167\3\2\2\2\u01dc\u016b\3\2"+
-		"\2\2\u01dc\u016d\3\2\2\2\u01dc\u0171\3\2\2\2\u01dc\u0175\3\2\2\2\u01dc"+
-		"\u0179\3\2\2\2\u01dc\u017d\3\2\2\2\u01dc\u0181\3\2\2\2\u01dc\u0185\3\2"+
-		"\2\2\u01dc\u0189\3\2\2\2\u01dc\u018d\3\2\2\2\u01dc\u0191\3\2\2\2\u01dc"+
-		"\u0193\3\2\2\2\u01dc\u0197\3\2\2\2\u01dc\u019b\3\2\2\2\u01dc\u019f\3\2"+
-		"\2\2\u01dc\u01a3\3\2\2\2\u01dc\u01aa\3\2\2\2\u01dc\u01ae\3\2\2\2\u01dc"+
-		"\u01b2\3\2\2\2\u01dc\u01b9\3\2\2\2\u01dc\u01bd\3\2\2\2\u01dc\u01c2\3\2"+
-		"\2\2\u01dc\u01c6\3\2\2\2\u01dc\u01ca\3\2\2\2\u01dc\u01d1\3\2\2\2\u01dc"+
-		"\u01d9\3\2\2\2\u01dd%\3\2\2\2\u01de\u01df\7)\2\2\u01df\u01e0\7B\2\2\u01e0"+
-		"\'\3\2\2\2\u01e1\u01e2\7)\2\2\u01e2\u01ea\7>\2\2\u01e3\u01e4\7)\2\2\u01e4"+
-		"\u01ea\7B\2\2\u01e5\u01e6\7)\2\2\u01e6\u01e7\7B\2\2\u01e7\u01e8\7\62\2"+
-		"\2\u01e8\u01ea\7B\2\2\u01e9\u01e1\3\2\2\2\u01e9\u01e3\3\2\2\2\u01e9\u01e5"+
-		"\3\2\2\2\u01ea)\3\2\2\2\u01eb\u01ec\7/\2\2\u01ec\u01ed\7B\2\2\u01ed+\3"+
-		"\2\2\2\u01ee\u01ef\7&\2\2\u01ef\u01f0\7B\2\2\u01f0-\3\2\2\2\u01f1\u01f2"+
-		"\5\60\31\2\u01f2\u01f3\7-\2\2\u01f3\u01fe\3\2\2\2\u01f4\u01f5\5\60\31"+
-		"\2\u01f5\u01f6\7\61\2\2\u01f6\u01f7\5\62\32\2\u01f7\u01f8\7-\2\2\u01f8"+
-		"\u01fe\3\2\2\2\u01f9\u01fa\7\61\2\2\u01fa\u01fb\5\62\32\2\u01fb\u01fc"+
-		"\7-\2\2\u01fc\u01fe\3\2\2\2\u01fd\u01f1\3\2\2\2\u01fd\u01f4\3\2\2\2\u01fd"+
-		"\u01f9\3\2\2\2\u01fe/\3\2\2\2\u01ff\u0204\5@!\2\u0200\u0201\7(\2\2\u0201"+
-		"\u0203\5@!\2\u0202\u0200\3\2\2\2\u0203\u0206\3\2\2\2\u0204\u0202\3\2\2"+
-		"\2\u0204\u0205\3\2\2\2\u0205\61\3\2\2\2\u0206\u0204\3\2\2\2\u0207\u020c"+
-		"\5\64\33\2\u0208\u0209\7*\2\2\u0209\u020b\5\64\33\2\u020a\u0208\3\2\2"+
-		"\2\u020b\u020e\3\2\2\2\u020c\u020a\3\2\2\2\u020c\u020d\3\2\2\2\u020d\63"+
-		"\3\2\2\2\u020e\u020c\3\2\2\2\u020f\u0211\7\63\2\2\u0210\u020f\3\2\2\2"+
-		"\u0210\u0211\3\2\2\2\u0211\u0212\3\2\2\2\u0212\u0213\5@!\2\u0213\65\3"+
-		"\2\2\2\u0214\u0227\58\35\2\u0215\u0227\5:\36\2\u0216\u0227\7D\2\2\u0217"+
-		"\u0227\7B\2\2\u0218\u021d\7A\2\2\u0219\u021a\7\64\2\2\u021a\u021b\5<\37"+
-		"\2\u021b\u021c\7\65\2\2\u021c\u021e\3\2\2\2\u021d\u0219\3\2\2\2\u021d"+
-		"\u021e\3\2\2\2\u021e\u0223\3\2\2\2\u021f\u0220\7)\2\2\u0220\u0222\5\66"+
-		"\34\2\u0221\u021f\3\2\2\2\u0222\u0225\3\2\2\2\u0223\u0221\3\2\2\2\u0223"+
-		"\u0224\3\2\2\2\u0224\u0227\3\2\2\2\u0225\u0223\3\2\2\2\u0226\u0214\3\2"+
-		"\2\2\u0226\u0215\3\2\2\2\u0226\u0216\3\2\2\2\u0226\u0217\3\2\2\2\u0226"+
+		"\5$\23\2\u0162\u01dd\3\2\2\2\u0163\u0164\5\"\22\2\u0164\u0165\7/\2\2\u0165"+
+		"\u0166\5$\23\2\u0166\u01dd\3\2\2\2\u0167\u0168\5\"\22\2\u0168\u0169\7"+
+		"\16\2\2\u0169\u016a\5$\23\2\u016a\u01dd\3\2\2\2\u016b\u016c\7\17\2\2\u016c"+
+		"\u01dd\5\"\22\2\u016d\u016e\5\"\22\2\u016e\u016f\7\20\2\2\u016f\u0170"+
+		"\5$\23\2\u0170\u01dd\3\2\2\2\u0171\u0172\5\"\22\2\u0172\u0173\7\21\2\2"+
+		"\u0173\u0174\5$\23\2\u0174\u01dd\3\2\2\2\u0175\u0176\5\"\22\2\u0176\u0177"+
+		"\7\22\2\2\u0177\u0178\5$\23\2\u0178\u01dd\3\2\2\2\u0179\u017a\5\"\22\2"+
+		"\u017a\u017b\7\23\2\2\u017b\u017c\5$\23\2\u017c\u01dd\3\2\2\2\u017d\u017e"+
+		"\5\"\22\2\u017e\u017f\7\24\2\2\u017f\u0180\5$\23\2\u0180\u01dd\3\2\2\2"+
+		"\u0181\u0182\5\"\22\2\u0182\u0183\7\25\2\2\u0183\u0184\5$\23\2\u0184\u01dd"+
+		"\3\2\2\2\u0185\u0186\5\"\22\2\u0186\u0187\7\26\2\2\u0187\u0188\5$\23\2"+
+		"\u0188\u01dd\3\2\2\2\u0189\u018a\5\"\22\2\u018a\u018b\7\27\2\2\u018b\u018c"+
+		"\5$\23\2\u018c\u01dd\3\2\2\2\u018d\u018e\5\"\22\2\u018e\u018f\7\67\2\2"+
+		"\u018f\u0190\5$\23\2\u0190\u01dd\3\2\2\2\u0191\u0192\7\62\2\2\u0192\u01dd"+
+		"\5\"\22\2\u0193\u0194\5\"\22\2\u0194\u0195\7\62\2\2\u0195\u0196\5$\23"+
+		"\2\u0196\u01dd\3\2\2\2\u0197\u0198\5\"\22\2\u0198\u0199\7#\2\2\u0199\u019a"+
+		"\5$\23\2\u019a\u01dd\3\2\2\2\u019b\u019c\5\"\22\2\u019c\u019d\79\2\2\u019d"+
+		"\u019e\5$\23\2\u019e\u01dd\3\2\2\2\u019f\u01a0\5\"\22\2\u01a0\u01a1\7"+
+		"\13\2\2\u01a1\u01a2\5$\23\2\u01a2\u01dd\3\2\2\2\u01a3\u01a4\7\13\2\2\u01a4"+
+		"\u01a5\7\64\2\2\u01a5\u01a6\5\"\22\2\u01a6\u01a7\7*\2\2\u01a7\u01a8\5"+
+		"$\23\2\u01a8\u01a9\7\65\2\2\u01a9\u01dd\3\2\2\2\u01aa\u01ab\5\"\22\2\u01ab"+
+		"\u01ac\7\'\2\2\u01ac\u01ad\5$\23\2\u01ad\u01dd\3\2\2\2\u01ae\u01af\5\""+
+		"\22\2\u01af\u01b0\7\f\2\2\u01b0\u01b1\5$\23\2\u01b1\u01dd\3\2\2\2\u01b2"+
+		"\u01b3\7\f\2\2\u01b3\u01b4\7\64\2\2\u01b4\u01b5\5\"\22\2\u01b5\u01b6\7"+
+		"*\2\2\u01b6\u01b7\5$\23\2\u01b7\u01b8\7\65\2\2\u01b8\u01dd\3\2\2\2\u01b9"+
+		"\u01ba\7(\2\2\u01ba\u01bb\5\"\22\2\u01bb\u01bc\7(\2\2\u01bc\u01dd\3\2"+
+		"\2\2\u01bd\u01be\7\n\2\2\u01be\u01bf\7\64\2\2\u01bf\u01c0\5\"\22\2\u01c0"+
+		"\u01c1\7\65\2\2\u01c1\u01dd\3\2\2\2\u01c2\u01c3\5\"\22\2\u01c3\u01c4\7"+
+		"$\2\2\u01c4\u01c5\5$\23\2\u01c5\u01dd\3\2\2\2\u01c6\u01c7\5\"\22\2\u01c7"+
+		"\u01c8\7\r\2\2\u01c8\u01c9\5$\23\2\u01c9\u01dd\3\2\2\2\u01ca\u01cb\7\r"+
+		"\2\2\u01cb\u01cc\7\64\2\2\u01cc\u01cd\5\"\22\2\u01cd\u01ce\7*\2\2\u01ce"+
+		"\u01cf\5$\23\2\u01cf\u01d0\7\65\2\2\u01d0\u01dd\3\2\2\2\u01d1\u01d6\5"+
+		"\"\22\2\u01d2\u01d3\7\66\2\2\u01d3\u01d5\5\"\22\2\u01d4\u01d2\3\2\2\2"+
+		"\u01d5\u01d8\3\2\2\2\u01d6\u01d4\3\2\2\2\u01d6\u01d7\3\2\2\2\u01d7\u01dd"+
+		"\3\2\2\2\u01d8\u01d6\3\2\2\2\u01d9\u01da\t\2\2\2\u01da\u01db\7.\2\2\u01db"+
+		"\u01dd\t\2\2\2\u01dc\u015f\3\2\2\2\u01dc\u0163\3\2\2\2\u01dc\u0167\3\2"+
+		"\2\2\u01dc\u016b\3\2\2\2\u01dc\u016d\3\2\2\2\u01dc\u0171\3\2\2\2\u01dc"+
+		"\u0175\3\2\2\2\u01dc\u0179\3\2\2\2\u01dc\u017d\3\2\2\2\u01dc\u0181\3\2"+
+		"\2\2\u01dc\u0185\3\2\2\2\u01dc\u0189\3\2\2\2\u01dc\u018d\3\2\2\2\u01dc"+
+		"\u0191\3\2\2\2\u01dc\u0193\3\2\2\2\u01dc\u0197\3\2\2\2\u01dc\u019b\3\2"+
+		"\2\2\u01dc\u019f\3\2\2\2\u01dc\u01a3\3\2\2\2\u01dc\u01aa\3\2\2\2\u01dc"+
+		"\u01ae\3\2\2\2\u01dc\u01b2\3\2\2\2\u01dc\u01b9\3\2\2\2\u01dc\u01bd\3\2"+
+		"\2\2\u01dc\u01c2\3\2\2\2\u01dc\u01c6\3\2\2\2\u01dc\u01ca\3\2\2\2\u01dc"+
+		"\u01d1\3\2\2\2\u01dc\u01d9\3\2\2\2\u01dd%\3\2\2\2\u01de\u01df\7)\2\2\u01df"+
+		"\u01e0\7B\2\2\u01e0\'\3\2\2\2\u01e1\u01e2\7)\2\2\u01e2\u01ea\7>\2\2\u01e3"+
+		"\u01e4\7)\2\2\u01e4\u01ea\7B\2\2\u01e5\u01e6\7)\2\2\u01e6\u01e7\7B\2\2"+
+		"\u01e7\u01e8\7\62\2\2\u01e8\u01ea\7B\2\2\u01e9\u01e1\3\2\2\2\u01e9\u01e3"+
+		"\3\2\2\2\u01e9\u01e5\3\2\2\2\u01ea)\3\2\2\2\u01eb\u01ec\7/\2\2\u01ec\u01ed"+
+		"\7B\2\2\u01ed+\3\2\2\2\u01ee\u01ef\7&\2\2\u01ef\u01f0\7B\2\2\u01f0-\3"+
+		"\2\2\2\u01f1\u01f2\5\60\31\2\u01f2\u01f3\7-\2\2\u01f3\u01fe\3\2\2\2\u01f4"+
+		"\u01f5\5\60\31\2\u01f5\u01f6\7\61\2\2\u01f6\u01f7\5\62\32\2\u01f7\u01f8"+
+		"\7-\2\2\u01f8\u01fe\3\2\2\2\u01f9\u01fa\7\61\2\2\u01fa\u01fb\5\62\32\2"+
+		"\u01fb\u01fc\7-\2\2\u01fc\u01fe\3\2\2\2\u01fd\u01f1\3\2\2\2\u01fd\u01f4"+
+		"\3\2\2\2\u01fd\u01f9\3\2\2\2\u01fe/\3\2\2\2\u01ff\u0204\5@!\2\u0200\u0201"+
+		"\7(\2\2\u0201\u0203\5@!\2\u0202\u0200\3\2\2\2\u0203\u0206\3\2\2\2\u0204"+
+		"\u0202\3\2\2\2\u0204\u0205\3\2\2\2\u0205\61\3\2\2\2\u0206\u0204\3\2\2"+
+		"\2\u0207\u020c\5\64\33\2\u0208\u0209\7*\2\2\u0209\u020b\5\64\33\2\u020a"+
+		"\u0208\3\2\2\2\u020b\u020e\3\2\2\2\u020c\u020a\3\2\2\2\u020c\u020d\3\2"+
+		"\2\2\u020d\63\3\2\2\2\u020e\u020c\3\2\2\2\u020f\u0211\7\63\2\2\u0210\u020f"+
+		"\3\2\2\2\u0210\u0211\3\2\2\2\u0211\u0212\3\2\2\2\u0212\u0213\5@!\2\u0213"+
+		"\65\3\2\2\2\u0214\u0227\58\35\2\u0215\u0227\5:\36\2\u0216\u0227\7D\2\2"+
+		"\u0217\u0227\7B\2\2\u0218\u021d\7A\2\2\u0219\u021a\7\64\2\2\u021a\u021b"+
+		"\5<\37\2\u021b\u021c\7\65\2\2\u021c\u021e\3\2\2\2\u021d\u0219\3\2\2\2"+
+		"\u021d\u021e\3\2\2\2\u021e\u0223\3\2\2\2\u021f\u0220\7)\2\2\u0220\u0222"+
+		"\5\66\34\2\u0221\u021f\3\2\2\2\u0222\u0225\3\2\2\2\u0223\u0221\3\2\2\2"+
+		"\u0223\u0224\3\2\2\2\u0224\u0227\3\2\2\2\u0225\u0223\3\2\2\2\u0226\u0214"+
+		"\3\2\2\2\u0226\u0215\3\2\2\2\u0226\u0216\3\2\2\2\u0226\u0217\3\2\2\2\u0226"+
 		"\u0218\3\2\2\2\u0227\67\3\2\2\2\u0228\u022a\5F$\2\u0229\u0228\3\2\2\2"+
 		"\u0229\u022a\3\2\2\2\u022a\u022c\3\2\2\2\u022b\u022d\t\3\2\2\u022c\u022b"+
 		"\3\2\2\2\u022c\u022d\3\2\2\2\u022d\u022e\3\2\2\2\u022e\u022f\7+\2\2\u022f"+

@@ -15,6 +15,58 @@ import java.util.StringJoiner;
  */
 public class Atom implements Comparable<Atom>, Iterable<Atom> {
 
+	public static final String ARITH_ABS = "#abs";
+
+	public static final String ARITH_ASSIGN = "#assign";
+
+	public static final String ARITH_DIVIDE = "#div";
+
+	public static final String ARITH_MINUS = "#minus";
+
+	public static final String ARITH_MODULUS = "#mod";
+
+	public static final String ARITH_PLUS = "#plus";
+
+	public static final String ARITH_POWER = "#pow";
+
+	public static final String ARITH_TIMES = "#times";
+
+	public static final String BIT_AND = "#and";
+
+	public static final String BIT_NOT = "#not";
+
+	public static final String BIT_OR = "#or";
+
+	public static final String BIT_XOR = "#xor";
+
+	public static final String COMP_EQ = "#eq";
+
+	public static final String COMP_GE = "#ge";
+
+	public static final String COMP_GT = "#gt";
+
+	public static final String COMP_LE = "#le";
+
+	public static final String COMP_LT = "#lt";
+
+	public static final String COMP_NE = "#ne";
+
+	public static final String CON_SYMBOL = "$";
+
+	public static final String INP_SYMBOL = "+";
+
+	public static final String INTERVAL = "#interval";
+
+	public static final String OUP_SYMBOL = "-";
+
+	public static final String PAR_CONSTANT = "con";
+
+	public static final String PAR_INPUT = "inp";
+
+	public static final String PAR_OUTPUT = "oup";
+
+	public static final String POOLING = "#pooling";
+
 	/**
 	 * 
 	 */
@@ -57,6 +109,11 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 		return compare;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,7 +140,11 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public Atom get(int i) {
 		return terms[i];
 	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,12 +154,11 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 		return result;
 	}
 
-	public boolean isVariable() {
-		return terms.length == 0 && name.length() > 0 && name.charAt(0) >= 'A' && name.charAt(0) <= 'Z';
-	}
-
 	public boolean isParameter() {
 		return ((1 == terms.length || 2 == terms.length) && (name.equals(PAR_INPUT) || name.equals(PAR_OUTPUT) || name.equals(PAR_CONSTANT)));
+	}
+	public boolean isVariable() {
+		return terms.length == 0 && name.length() > 0 && name.charAt(0) >= 'A' && name.charAt(0) <= 'Z';
 	}
 
 	@Override
@@ -120,7 +180,6 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 			}
 		};
 	}
-
 	/**
 	 * @return
 	 */
@@ -128,54 +187,61 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 		return name;
 	}
 
-	public static final String POOLING = "#pooling";
-
-	public static final String INTERVAL = "#interval";
-
-	public static final String ARITH_PLUS = "#plus";
-
-	public static final String ARITH_MINUS = "#minus";
-
-	public static final String ARITH_TIMES = "#times";
-
-	public static final String ARITH_DIVIDE = "#div";
-
-	public static final String ARITH_MODULUS = "#mod";
-
-	public static final String ARITH_POWER = "#pow";
-
-	public static final String ARITH_ABS = "#abs";
-
-	public static final String BIT_NOT = "#not";
-
-	public static final String BIT_AND = "#and";
-
-	public static final String BIT_OR = "#or";
-
-	public static final String BIT_XOR = "#xor";
-
-	public static final String ARITH_ASSIGN = "#assign";
-
-	public static final String COMP_EQ = "#eq";
-
-	public static final String COMP_NE = "#ne";
-
-	public static final String COMP_GT = "#gt";
-
-	public static final String COMP_LT = "#lt";
-
-	public static final String COMP_GE = "#ge";
-
-	public static final String COMP_LE = "#le";
-
-	public static final String PAR_INPUT = "inp";
-	public static final String INP_SYMBOL = "+";
-
-	public static final String PAR_OUTPUT = "oup";
-	public static final String OUP_SYMBOL = "-";
-
-	public static final String PAR_CONSTANT = "con";
-	public static final String CON_SYMBOL = "$";
+	public String toPrint() {
+		if (INTERVAL.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + ".." + terms[1].toPrint();
+		} else if (POOLING.equals(name) && arity() >= 2) {
+			StringJoiner joiner = new StringJoiner(";");
+			for (Atom term : terms)
+				joiner.add(term.toPrint());
+			return joiner.toString();
+		} else if (ARITH_ABS.equals(name) && 1 == arity()) {
+			return "|" + terms[0].toPrint() + "|";
+		} else if (ARITH_ASSIGN.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "=" + terms[1].toPrint();
+		} else if (ARITH_DIVIDE.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "/" + terms[1].toPrint();
+		} else if (ARITH_MINUS.equals(name) && 1 == arity()) {
+			return "-" + terms[0].toPrint();
+		} else if (ARITH_MINUS.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "-" + terms[1].toPrint();
+		} else if (ARITH_MODULUS.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "\\" + terms[1].toPrint();
+		} else if (ARITH_PLUS.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "+" + terms[1].toPrint();
+		} else if (ARITH_POWER.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "**" + terms[1].toPrint();
+		} else if (ARITH_TIMES.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "*" + terms[1].toPrint();
+		} else if (BIT_AND.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "&" + terms[1].toPrint();
+		} else if (BIT_NOT.equals(name) && 1 == arity()) {
+			return "~" + terms[0].toPrint();
+		} else if (BIT_OR.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "?" + terms[1].toPrint();
+		} else if (BIT_XOR.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "^" + terms[1].toPrint();
+		} else if (COMP_EQ.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "==" + terms[1].toPrint();
+		} else if (COMP_GE.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + ">=" + terms[1].toPrint();
+		} else if (COMP_GT.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + ">" + terms[1].toPrint();
+		} else if (COMP_LE.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "<=" + terms[1].toPrint();
+		} else if (COMP_LT.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "<" + terms[1].toPrint();
+		} else if (COMP_NE.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "!=" + terms[1].toPrint();
+		} else {
+			if (0 == arity())
+				return name;
+			StringJoiner joiner = new StringJoiner(", ");
+			for (Atom term : terms)
+				joiner.add(term.toPrint());
+			return String.format("%s(%s)", name, joiner.toString());
+		}
+	}
 
 	@Override
 	public String toString() {
@@ -242,62 +308,6 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 			StringJoiner joiner = new StringJoiner(", ");
 			for (Atom term : terms)
 				joiner.add(term.toString());
-			return String.format("%s(%s)", name, joiner.toString());
-		}
-	}
-
-	public String toPrint() {
-		if (INTERVAL.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + ".." + terms[1].toPrint();
-		} else if (POOLING.equals(name) && arity() >= 2) {
-			StringJoiner joiner = new StringJoiner(";");
-			for (Atom term : terms)
-				joiner.add(term.toPrint());
-			return joiner.toString();
-		} else if (ARITH_ABS.equals(name) && 1 == arity()) {
-			return "|" + terms[0].toPrint() + "|";
-		} else if (ARITH_ASSIGN.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "=" + terms[1].toPrint();
-		} else if (ARITH_DIVIDE.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "/" + terms[1].toPrint();
-		} else if (ARITH_MINUS.equals(name) && 1 == arity()) {
-			return "-" + terms[0].toPrint();
-		} else if (ARITH_MINUS.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "-" + terms[1].toPrint();
-		} else if (ARITH_MODULUS.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "\\" + terms[1].toPrint();
-		} else if (ARITH_PLUS.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "+" + terms[1].toPrint();
-		} else if (ARITH_POWER.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "**" + terms[1].toPrint();
-		} else if (ARITH_TIMES.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "*" + terms[1].toPrint();
-		} else if (BIT_AND.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "&" + terms[1].toPrint();
-		} else if (BIT_NOT.equals(name) && 1 == arity()) {
-			return "~" + terms[0].toPrint();
-		} else if (BIT_OR.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "?" + terms[1].toPrint();
-		} else if (BIT_XOR.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "^" + terms[1].toPrint();
-		} else if (COMP_EQ.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "==" + terms[1].toPrint();
-		} else if (COMP_GE.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + ">=" + terms[1].toPrint();
-		} else if (COMP_GT.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + ">" + terms[1].toPrint();
-		} else if (COMP_LE.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "<=" + terms[1].toPrint();
-		} else if (COMP_LT.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "<" + terms[1].toPrint();
-		} else if (COMP_NE.equals(name) && 2 == arity()) {
-			return terms[0].toPrint() + "!=" + terms[1].toPrint();
-		} else {
-			if (0 == arity())
-				return name;
-			StringJoiner joiner = new StringJoiner(", ");
-			for (Atom term : terms)
-				joiner.add(term.toPrint());
 			return String.format("%s(%s)", name, joiner.toString());
 		}
 	}

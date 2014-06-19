@@ -161,36 +161,35 @@ groundAtom
 
 groundTerm
 :
-	groundAtom ASSIGN groundAtom # GroundAssign1
-	| groundAtom EQUALS groundAtom # GroundAssign2
-	| groundAtom BIT_AND groundAtom # GroundAnd
+	groundAtom ASSIGN groundTerm # GroundAssign1
+	| groundAtom EQUALS groundTerm # GroundAssign2
+	| groundAtom BIT_AND groundTerm # GroundAnd
 	| BIT_NOT groundAtom # GroundNot
-	| groundAtom BIT_OR groundAtom # GroundOr
-	| groundAtom BIT_XOR groundAtom # GroundXor
-	| groundAtom COMP_EQ groundAtom # GroundEquals
-	| groundAtom COMP_GE groundAtom # GroundGreaterEquals
-	| groundAtom COMP_GT groundAtom # GroundGreater
-	| groundAtom COMP_LE groundAtom # GroundLessEquals
-	| groundAtom COMP_LT groundAtom # GroundLess
-	| groundAtom COMP_NE groundAtom # GroundNotEquals
-	| groundAtom PLUS groundAtom # GroundPlus
+	| groundAtom BIT_OR groundTerm # GroundOr
+	| groundAtom BIT_XOR groundTerm # GroundXor
+	| groundAtom COMP_EQ groundTerm # GroundEquals
+	| groundAtom COMP_GE groundTerm # GroundGreaterEquals
+	| groundAtom COMP_GT groundTerm # GroundGreater
+	| groundAtom COMP_LE groundTerm # GroundLessEquals
+	| groundAtom COMP_LT groundTerm # GroundLess
+	| groundAtom COMP_NE groundTerm # GroundNotEquals
+	| groundAtom PLUS groundTerm # GroundPlus
 	| MINUS groundAtom # GroundMinus1
-	| groundAtom MINUS groundAtom # GroundMinus2
-	| groundAtom ASTERISK groundAtom # GroundTimes
-	| groundAtom SLASH groundAtom # GroundDivide1
-	| groundAtom ARITH_DIVIDE groundAtom # GroundDivide2
-	| ARITH_DIVIDE PAREN_LEFT groundAtom COMMA groundAtom PAREN_RIGHT #
+	| groundAtom MINUS groundTerm # GroundMinus2
+	| groundAtom ASTERISK groundTerm # GroundTimes
+	| groundAtom SLASH groundTerm # GroundDivide1
+	| groundAtom ARITH_DIVIDE groundTerm # GroundDivide2
+	| ARITH_DIVIDE PAREN_LEFT groundAtom COMMA groundTerm PAREN_RIGHT #
 	GroundDivide3
-	| groundAtom BACKSLASH groundAtom # GroundModulus1
-	| groundAtom ARITH_MODULUS groundAtom # GroundModulus2
-	| ARITH_MODULUS PAREN_LEFT groundAtom COMMA groundAtom PAREN_RIGHT #
+	| groundAtom BACKSLASH groundTerm # GroundModulus1
+	| groundAtom ARITH_MODULUS groundTerm # GroundModulus2
+	| ARITH_MODULUS PAREN_LEFT groundAtom COMMA groundTerm PAREN_RIGHT #
 	GroundModulus3
 	| BAR groundAtom BAR # GroundAbsolute1
 	| ARITH_ABS PAREN_LEFT groundAtom PAREN_RIGHT # GroundAbsolute2
-	| groundAtom ASTERISKS groundAtom # GroundPower1
-	| groundAtom ARITH_POWER groundAtom # GroundPower2
-	| ARITH_POWER PAREN_LEFT groundAtom COMMA groundAtom PAREN_RIGHT #
-	GroundPower3
+	| groundAtom ASTERISKS groundTerm # GroundPower1
+	| groundAtom ARITH_POWER groundTerm # GroundPower2
+	| ARITH_POWER PAREN_LEFT groundAtom COMMA groundTerm PAREN_RIGHT # GroundPower3
 	| groundAtom
 	(
 		SEMICOLON groundAtom

@@ -37,7 +37,7 @@ public class Kernel {
 
 	private static final String TCL = "try_clause_literal";
 
-	private static final String UCL = "use_clause_literal";
+	static final String UCL = "use_clause_literal";
 
 	private static String join(Atom atom, int index) {
 		if (null == atom)

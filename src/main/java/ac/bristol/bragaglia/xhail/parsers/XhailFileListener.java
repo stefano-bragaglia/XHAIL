@@ -285,55 +285,55 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundAnd(GroundAndContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.BIT_AND).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.BIT_AND).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundAssign1(GroundAssign1Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_ASSIGN).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_ASSIGN).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundAssign2(GroundAssign2Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_ASSIGN).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_ASSIGN).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundDivide1(GroundDivide1Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundDivide2(GroundDivide2Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundDivide3(GroundDivide3Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_DIVIDE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundEquals(GroundEqualsContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_EQ).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_EQ).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundGreater(GroundGreaterContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_GT).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_GT).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundGreaterEquals(GroundGreaterEqualsContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_GE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_GE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
@@ -356,13 +356,13 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundLess(GroundLessContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_LT).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_LT).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundLessEquals(GroundLessEqualsContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_LE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_LE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
@@ -374,25 +374,25 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundMinus2(GroundMinus2Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_MINUS).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_MINUS).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundModulus1(GroundModulus1Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundModulus2(GroundModulus2Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundModulus3(GroundModulus3Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_MODULUS).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
@@ -404,19 +404,19 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundNotEquals(GroundNotEqualsContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.COMP_NE).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.COMP_NE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundOr(GroundOrContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.BIT_OR).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.BIT_OR).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundPlus(GroundPlusContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_PLUS).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_PLUS).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
@@ -438,19 +438,19 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundPower1(GroundPower1Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundPower2(GroundPower2Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundPower3(GroundPower3Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
@@ -468,13 +468,13 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundTimes(GroundTimesContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_TIMES).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.ARITH_TIMES).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override
 	public void exitGroundXor(GroundXorContext ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.BIT_XOR).append(ctx.groundAtom(0).getText()).append(ctx.groundAtom(1).getText()));
+			builders.push(Builder.get(Atom.BIT_XOR).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
 	@Override

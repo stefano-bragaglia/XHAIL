@@ -88,7 +88,7 @@ public class Hypothesis {
 			result = (null == previous || !candidate.equals(previous));
 		}
 		modified |= result;
-		assert invariant() : "Illegal state in Hypothesis.addUse(int, int)";
+		assert invariant() : "Illegal state in Hypothesis.addUse(int, int, int)";
 		return result;
 	}
 
@@ -169,7 +169,7 @@ public class Hypothesis {
 			count = 0;
 			while (iterator.hasNext()) {
 				for (Atom fact : iterator.next())
-					if (fact.name().equals("use_clause_literal") && 2 == fact.arity())
+					if (fact.name().equals(Kernel.UCL) && 2 == fact.arity())
 						this.addUse(count, Integer.parseInt(fact.get(0).toString()), Integer.parseInt(fact.get(1).toString()));
 				count += 1;
 			}

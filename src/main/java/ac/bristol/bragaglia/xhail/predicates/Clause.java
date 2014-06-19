@@ -69,6 +69,10 @@ public class Clause implements Comparable<Clause>, Iterable<Literal> {
 		return count;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,10 +94,14 @@ public class Clause implements Comparable<Clause>, Iterable<Literal> {
 		return true;
 	}
 
+
 	public Literal get(int i) {
 		return body[i];
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,6 +143,19 @@ public class Clause implements Comparable<Clause>, Iterable<Literal> {
 			StringJoiner joiner = new StringJoiner(", ");
 			for (int j = 0; j < count; j++)
 				joiner.add(body[j].toString());
+			builder.append(joiner.toString());
+		}
+		builder.append(".");
+		return builder.toString();
+	}
+
+	public String toPrint() {
+		StringBuilder builder = new StringBuilder(head.toPrint());
+		if (count > 0) {
+			builder.append(" :- ");
+			StringJoiner joiner = new StringJoiner(", ");
+			for (int j = 0; j < count; j++)
+				joiner.add(body[j].toPrint());
 			builder.append(joiner.toString());
 		}
 		builder.append(".");

@@ -1,0 +1,219 @@
+clasp version 3.0.3
+Reading from stdin
+Solving...
+Answer: 1
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,2) use_clause_literal(1,1)
+Optimization: 11
+Answer: 2
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,1)
+Optimization: 10
+Answer: 3
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 9
+Answer: 4
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(2,1) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 8
+Answer: 5
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 1
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 2
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 3
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 4
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 5
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,2)
+Optimization: 7
+Answer: 6
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,2)
+Optimization: 7
+Answer: 7
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 8
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 9
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,2)
+Optimization: 7
+Answer: 10
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,2)
+Optimization: 7
+Answer: 11
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 12
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 13
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 14
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 15
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 16
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 17
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 18
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 19
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 20
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 21
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,1)
+Optimization: 7
+Answer: 22
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,1)
+Optimization: 7
+Answer: 23
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 24
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 25
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,1)
+Optimization: 7
+Answer: 26
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,1)
+Optimization: 7
+Answer: 27
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 28
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 29
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 30
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 31
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 32
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,6) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 33
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 34
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 35
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 36
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 37
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 38
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 39
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 40
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 41
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,2)
+Optimization: 7
+Answer: 42
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,2)
+Optimization: 7
+Answer: 43
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,2)
+Optimization: 7
+Answer: 44
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,2)
+Optimization: 7
+Answer: 45
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 46
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,2)
+Optimization: 7
+Answer: 47
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 48
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,2)
+Optimization: 7
+Answer: 49
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 50
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 51
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 52
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,7) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 53
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,1)
+Optimization: 7
+Answer: 54
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,1)
+Optimization: 7
+Answer: 55
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 56
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 57
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,4) use_clause_literal(1,1)
+Optimization: 7
+Answer: 58
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,6) use_clause_literal(1,5) use_clause_literal(1,1)
+Optimization: 7
+Answer: 59
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,4) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 60
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,5) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 61
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 62
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,2) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+Answer: 63
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,6) use_clause_literal(1,1)
+Optimization: 7
+Answer: 64
+use_clause_literal(2,0) use_clause_literal(1,0) use_clause_literal(2,3) use_clause_literal(2,1) use_clause_literal(1,8) use_clause_literal(1,3) use_clause_literal(1,1)
+Optimization: 7
+OPTIMUM FOUND
+
+Models       : 69    
+  Optimum    : yes
+  Optimal    : 64
+Optimization : 7
+Calls        : 1
+Time         : 0.235s (Solving: 0.01s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.220s
