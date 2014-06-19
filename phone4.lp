@@ -53,10 +53,10 @@ initiates(setDown(A,P1),idle(P2),T) :- agent(A),holdsAt(ringing(P1,P2),T).
 terminates(setDown(A,P1),ringing(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
 initiates(pickUp(A,P2),connected(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
 terminates(pickUp(A,P2),ringing(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
-initiates(setDown(A,P1),idle(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
+%%% initiates(setDown(A,P1),idle(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P1),disconnected(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 terminates(setDown(A,P1),connected(P1,P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
-initiates(setDown(A,P2),idle(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
+%%% initiates(setDown(A,P2),idle(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P2),disconnected(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 terminates(setDown(A,P2),connected(P1,P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P),idle(P),T) :- agent(A),holdsAt(disconnected(P),T). 
@@ -188,8 +188,31 @@ happens(setDown(a2,p2),4).
 #modeh terminates(+event,+fluent,+time) :0-5.
 
 #modeb eql(+event,pickUp(-agent,-phone)) :5.
-#modeb eql(+fluent,dialTone(+phone)) :5.
-#modeb eql(+fluent,idle(+phone)) :5.
+#modeb eql(+event,setDown(-agent,-phone)) :5.
+#modeb eql(+event,dial(-agent,-phone,-phone)) :5.
 
+#modeb eql(+fluent,dialTone(-phone)) :5.
+#modeb eql(+fluent,idle(-phone)) :5.
+#modeb eql(+fluent,busySignal(-phone)) :5.
+#modeb eql(+fluent,ringing(-phone,-phone)) :5.
+#modeb eql(+fluent,disconnected(-phone)) :5.
+#modeb eql(+fluent,connected(-phone,-phone)) :5.
+
+#modeb holdsAt(dialTone(+phone),+time) :5.
+#modeb not holdsAt(dialTone(+phone),+time) :5.
 #modeb holdsAt(idle(+phone),+time) :5.
 #modeb not holdsAt(idle(+phone),+time) :5.
+#modeb holdsAt(busySignal(+phone),+time) :5.
+#modeb not holdsAt(busySignal(+phone),+time) :5.
+#modeb holdsAt(ringing(+phone,+phone),+time) :5.
+#modeb not holdsAt(ringing(+phone,+phone),+time) :5.
+#modeb holdsAt(disconnected(+phone),+time) :5.
+#modeb not holdsAt(disconnected(+phone),+time) :5.
+#modeb holdsAt(connected(+phone,+phone),+time) :5.
+#modeb not holdsAt(connected(+phone,+phone),+time) :5.
+
+%*
+Extend A4 parser to understand +
+next(T1,T2) :- T1 == T2+1.
+#modeb next(+time,-time).
+*%
