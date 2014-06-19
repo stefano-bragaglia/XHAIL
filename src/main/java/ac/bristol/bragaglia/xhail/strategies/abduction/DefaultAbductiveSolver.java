@@ -11,7 +11,7 @@ import java.util.List;
 
 import ac.bristol.bragaglia.xhail.application.Version;
 import ac.bristol.bragaglia.xhail.config.Config;
-import ac.bristol.bragaglia.xhail.parsers.Clasp3Parser;
+import ac.bristol.bragaglia.xhail.parsers.Clasp3FileParser;
 import ac.bristol.bragaglia.xhail.problem.Explanation;
 import ac.bristol.bragaglia.xhail.problem.Problem;
 
@@ -58,7 +58,7 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 				Path clasp = config.createFile(temp, config.getFilename() + "_abd.clasp");
 				config.runClasp(gringo, clasp, errors).waitFor();
 				FileInputStream stream = new FileInputStream(clasp.toFile());
-				result = new Explanation(problem, Clasp3Parser.parse(stream));
+				result = new Explanation(problem, Clasp3FileParser.parse(stream));
 				stream.close();
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines)

@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import ac.bristol.bragaglia.xhail.config.Config;
-import ac.bristol.bragaglia.xhail.parsers.XhailParser;
+import ac.bristol.bragaglia.xhail.parsers.XhailFileParser;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
@@ -189,7 +189,7 @@ public class Program {
 	public void load(InputStream stream) {
 		if (null == stream)
 			throw new IllegalArgumentException("Illegal 'stream' argument in Program.load(InputStream): " + stream);
-		XhailParser.parse(problem, stream);
+		XhailFileParser.parse(problem, stream);
 		config.setName("stream");
 		assert invariant() : "Illegal state in Program.load(InputStream)";
 	}
@@ -197,7 +197,7 @@ public class Program {
 	public void load(String resource) {
 		if (null == resource || (resource = resource.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'resource' argument in Program.load(String): " + resource);
-		this.load(XhailParser.open(resource));
+		this.load(XhailFileParser.open(resource));
 		config.setName("resource");
 		assert invariant() : "Illegal state in Program.load(String)";
 	}

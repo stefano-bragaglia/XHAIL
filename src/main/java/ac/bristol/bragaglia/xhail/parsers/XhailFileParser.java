@@ -12,17 +12,17 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarLexer;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailLexer;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser;
 import ac.bristol.bragaglia.xhail.problem.Problem;
 
 /**
  * @author stefano
  *
  */
-public class XhailParser {
+public class XhailFileParser {
 
-	private static final XhailParser INSTANCE = new XhailParser();
+	private static final XhailFileParser INSTANCE = new XhailFileParser();
 
 	private static final String PENGUINS = "ac/bristol/bragaglia/xhail/ec.lp";
 
@@ -41,7 +41,7 @@ public class XhailParser {
 
 	public static InputStream open(String resource) {
 		if (null == resource || (resource = resource.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'resource' argument in XhailParser.open(String): " + resource);
+			throw new IllegalArgumentException("Illegal 'resource' argument in XhailFileParser.open(String): " + resource);
 		InputStream result = null;
 		try {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -52,32 +52,32 @@ public class XhailParser {
 			}
 			result = url.openStream();
 		} catch (IOException | NullPointerException e) {
-			throw new IllegalArgumentException("Illegal 'resource' argument in XhailParser.open(String): " + resource);
+			throw new IllegalArgumentException("Illegal 'resource' argument in XhailFileParser.open(String): " + resource);
 		}
 		return result;
 	}
 
 	public static void parse(Problem problem, InputStream stream) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in XhailParser.parse(Problem, InputStream): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in XhailFileParser.parse(Problem, InputStream): " + problem);
 		if (null == stream)
-			throw new IllegalArgumentException("Illegal 'stream' argument in XhailParser.parse(Problem, InputStream): " + stream);
+			throw new IllegalArgumentException("Illegal 'stream' argument in XhailFileParser.parse(Problem, InputStream): " + stream);
 		try {
 			ANTLRInputStream input = new ANTLRInputStream(stream);
-			GrammarLexer lexer = new GrammarLexer(input);
+			XhailLexer lexer = new XhailLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-			GrammarParser parser = new GrammarParser(tokens);
+			XhailParser parser = new XhailParser(tokens);
 			parser.removeErrorListeners();
 			parser.addErrorListener(XhailErrorListener.get());
 			ParseTree tree = parser.program();
 			ParseTreeWalker walker = new ParseTreeWalker();
-			XhailListener.accept(walker, tree, problem);
+			XhailFileListener.accept(walker, tree, problem);
 		} catch (IOException e) {
-			throw new IllegalArgumentException("Illegal 'stream' argument in XhailParser.parse(Problem, InputStream): " + stream);
+			throw new IllegalArgumentException("Illegal 'stream' argument in XhailFileParser.parse(Problem, InputStream): " + stream);
 		}
 	}
 
-	private XhailParser() {
+	private XhailFileParser() {
 	}
 
 }

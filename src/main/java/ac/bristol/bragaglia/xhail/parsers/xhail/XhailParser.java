@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.2.2
+// Generated from Xhail.g4 by ANTLR 4.2.2
 
 package ac.bristol.bragaglia.xhail.parsers.xhail;
 
@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GrammarParser extends Parser {
+public class XhailParser extends Parser {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -63,7 +63,7 @@ public class GrammarParser extends Parser {
 	};
 
 	@Override
-	public String getGrammarFileName() { return "Grammar.g4"; }
+	public String getGrammarFileName() { return "Xhail.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }
@@ -77,10 +77,7 @@ public class GrammarParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	 
-	 	public static final int HIDDEN = 1;
-	 
-	public GrammarParser(TokenStream input) {
+	public XhailParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -88,11 +85,11 @@ public class GrammarParser extends Parser {
 		public DirectiveContext directive(int i) {
 			return getRuleContext(DirectiveContext.class,i);
 		}
-		public List<TerminalNode> DOT() { return getTokens(GrammarParser.DOT); }
+		public List<TerminalNode> DOT() { return getTokens(XhailParser.DOT); }
 		public List<DirectiveContext> directive() {
 			return getRuleContexts(DirectiveContext.class);
 		}
-		public TerminalNode EOF() { return getToken(GrammarParser.EOF, 0); }
+		public TerminalNode EOF() { return getToken(XhailParser.EOF, 0); }
 		public ClauseContext clause(int i) {
 			return getRuleContext(ClauseContext.class,i);
 		}
@@ -100,7 +97,7 @@ public class GrammarParser extends Parser {
 			return getRuleContexts(ClauseContext.class);
 		}
 		public TerminalNode DOT(int i) {
-			return getToken(GrammarParser.DOT, i);
+			return getToken(XhailParser.DOT, i);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -108,11 +105,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterProgram(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterProgram(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitProgram(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitProgram(this);
 		}
 	}
 
@@ -239,11 +236,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_directive; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterDirective(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterDirective(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitDirective(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitDirective(this);
 		}
 	}
 
@@ -335,20 +332,20 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ComputeContext extends ParserRuleContext {
-		public TerminalNode CURLY_LEFT() { return getToken(GrammarParser.CURLY_LEFT, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_COMPUTE() { return getToken(GrammarParser.DIR_COMPUTE, 0); }
+		public TerminalNode CURLY_LEFT() { return getToken(XhailParser.CURLY_LEFT, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_COMPUTE() { return getToken(XhailParser.DIR_COMPUTE, 0); }
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
-		public TerminalNode CURLY_RIGHT() { return getToken(GrammarParser.CURLY_RIGHT, 0); }
+		public TerminalNode CURLY_RIGHT() { return getToken(XhailParser.CURLY_RIGHT, 0); }
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
 		public ComputeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -356,11 +353,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_compute; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterCompute(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterCompute(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitCompute(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitCompute(this);
 		}
 	}
 
@@ -412,24 +409,24 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ConstantContext extends ParserRuleContext {
-		public TerminalNode EQUALS() { return getToken(GrammarParser.EQUALS, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode EQUALS() { return getToken(XhailParser.EQUALS, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public TerminalNode DIR_CONST() { return getToken(GrammarParser.DIR_CONST, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DIR_CONST() { return getToken(XhailParser.DIR_CONST, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public ConstantContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_constant; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterConstant(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterConstant(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitConstant(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitConstant(this);
 		}
 	}
 
@@ -458,8 +455,8 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class DomainContext extends ParserRuleContext {
-		public TerminalNode DIR_DOMAIN() { return getToken(GrammarParser.DIR_DOMAIN, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode DIR_DOMAIN() { return getToken(XhailParser.DIR_DOMAIN, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
@@ -469,11 +466,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_domain; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterDomain(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterDomain(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitDomain(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitDomain(this);
 		}
 	}
 
@@ -500,8 +497,8 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ExampleContext extends ParserRuleContext {
-		public TerminalNode NOT() { return getToken(GrammarParser.NOT, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode NOT() { return getToken(XhailParser.NOT, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public PriorityContext priority() {
 			return getRuleContext(PriorityContext.class,0);
 		}
@@ -511,18 +508,18 @@ public class GrammarParser extends Parser {
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public TerminalNode DIR_EXAMPLE() { return getToken(GrammarParser.DIR_EXAMPLE, 0); }
+		public TerminalNode DIR_EXAMPLE() { return getToken(XhailParser.DIR_EXAMPLE, 0); }
 		public ExampleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_example; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterExample(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterExample(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitExample(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitExample(this);
 		}
 	}
 
@@ -574,11 +571,11 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ExternalContext extends ParserRuleContext {
-		public TerminalNode DIR_EXTERNAL() { return getToken(GrammarParser.DIR_EXTERNAL, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode SLASH() { return getToken(GrammarParser.SLASH, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DIR_EXTERNAL() { return getToken(XhailParser.DIR_EXTERNAL, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public PredicateContext predicate() {
 			return getRuleContext(PredicateContext.class,0);
 		}
@@ -588,11 +585,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_external; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterExternal(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterExternal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitExternal(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitExternal(this);
 		}
 	}
 
@@ -646,56 +643,56 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class HideAllContext extends HideContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_HIDE() { return getToken(GrammarParser.DIR_HIDE, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_HIDE() { return getToken(XhailParser.DIR_HIDE, 0); }
 		public HideAllContext(HideContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterHideAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterHideAll(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitHideAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitHideAll(this);
 		}
 	}
 	public static class HideExplicitContext extends HideContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_HIDE() { return getToken(GrammarParser.DIR_HIDE, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
-		public List<TerminalNode> VARIABLE() { return getTokens(GrammarParser.VARIABLE); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_HIDE() { return getToken(XhailParser.DIR_HIDE, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
+		public List<TerminalNode> VARIABLE() { return getTokens(XhailParser.VARIABLE); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public TerminalNode VARIABLE(int i) {
-			return getToken(GrammarParser.VARIABLE, i);
+			return getToken(XhailParser.VARIABLE, i);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public HideExplicitContext(HideContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterHideExplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterHideExplicit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitHideExplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitHideExplicit(this);
 		}
 	}
 	public static class HideImplicitContext extends HideContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_HIDE() { return getToken(GrammarParser.DIR_HIDE, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode SLASH() { return getToken(GrammarParser.SLASH, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_HIDE() { return getToken(XhailParser.DIR_HIDE, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public HideImplicitContext(HideContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterHideImplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterHideImplicit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitHideImplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitHideImplicit(this);
 		}
 	}
 
@@ -767,31 +764,31 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class MaximizeContext extends ParserRuleContext {
-		public TerminalNode CURLY_LEFT() { return getToken(GrammarParser.CURLY_LEFT, 0); }
+		public TerminalNode CURLY_LEFT() { return getToken(XhailParser.CURLY_LEFT, 0); }
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public TerminalNode SQUARE_RIGHT() { return getToken(GrammarParser.SQUARE_RIGHT, 0); }
+		public TerminalNode SQUARE_RIGHT() { return getToken(XhailParser.SQUARE_RIGHT, 0); }
 		public WeightContext weight(int i) {
 			return getRuleContext(WeightContext.class,i);
 		}
 		public List<WeightContext> weight() {
 			return getRuleContexts(WeightContext.class);
 		}
-		public TerminalNode DIR_MAXIMIZE() { return getToken(GrammarParser.DIR_MAXIMIZE, 0); }
-		public TerminalNode SQUARE_LEFT() { return getToken(GrammarParser.SQUARE_LEFT, 0); }
-		public TerminalNode CURLY_RIGHT() { return getToken(GrammarParser.CURLY_RIGHT, 0); }
+		public TerminalNode DIR_MAXIMIZE() { return getToken(XhailParser.DIR_MAXIMIZE, 0); }
+		public TerminalNode SQUARE_LEFT() { return getToken(XhailParser.SQUARE_LEFT, 0); }
+		public TerminalNode CURLY_RIGHT() { return getToken(XhailParser.CURLY_RIGHT, 0); }
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public PriorityContext priority(int i) {
 			return getRuleContext(PriorityContext.class,i);
 		}
 		public List<PriorityContext> priority() {
 			return getRuleContexts(PriorityContext.class);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
@@ -801,11 +798,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_maximize; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterMaximize(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterMaximize(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitMaximize(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitMaximize(this);
 		}
 	}
 
@@ -927,8 +924,8 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ModeBodyContext extends ParserRuleContext {
-		public TerminalNode NOT() { return getToken(GrammarParser.NOT, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode NOT() { return getToken(XhailParser.NOT, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public PriorityContext priority() {
 			return getRuleContext(PriorityContext.class,0);
 		}
@@ -938,7 +935,7 @@ public class GrammarParser extends Parser {
 		public SignatureContext signature() {
 			return getRuleContext(SignatureContext.class,0);
 		}
-		public TerminalNode DIR_MODEB() { return getToken(GrammarParser.DIR_MODEB, 0); }
+		public TerminalNode DIR_MODEB() { return getToken(XhailParser.DIR_MODEB, 0); }
 		public BoundContext bound() {
 			return getRuleContext(BoundContext.class,0);
 		}
@@ -948,11 +945,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_modeBody; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterModeBody(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterModeBody(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitModeBody(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitModeBody(this);
 		}
 	}
 
@@ -1012,8 +1009,8 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class ModeHeadContext extends ParserRuleContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_MODEH() { return getToken(GrammarParser.DIR_MODEH, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_MODEH() { return getToken(XhailParser.DIR_MODEH, 0); }
 		public PriorityContext priority() {
 			return getRuleContext(PriorityContext.class,0);
 		}
@@ -1032,11 +1029,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_modeHead; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterModeHead(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterModeHead(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitModeHead(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitModeHead(this);
 		}
 	}
 
@@ -1091,20 +1088,20 @@ public class GrammarParser extends Parser {
 		public KeyListContext keyList() {
 			return getRuleContext(KeyListContext.class,0);
 		}
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public SignatureContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_signature; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterSignature(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterSignature(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitSignature(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitSignature(this);
 		}
 	}
 
@@ -1135,12 +1132,12 @@ public class GrammarParser extends Parser {
 		public List<KeyContext> key() {
 			return getRuleContexts(KeyContext.class);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public KeyContext key(int i) {
 			return getRuleContext(KeyContext.class,i);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
 		public KeyListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1148,11 +1145,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_keyList; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterKeyList(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterKeyList(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitKeyList(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitKeyList(this);
 		}
 	}
 
@@ -1209,50 +1206,50 @@ public class GrammarParser extends Parser {
 		public KeySignatureContext(KeyContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterKeySignature(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterKeySignature(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitKeySignature(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitKeySignature(this);
 		}
 	}
 	public static class KeyConstantContext extends KeyContext {
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
-		public TerminalNode HASH() { return getToken(GrammarParser.HASH, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
+		public TerminalNode HASH() { return getToken(XhailParser.HASH, 0); }
 		public KeyConstantContext(KeyContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterKeyConstant(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterKeyConstant(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitKeyConstant(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitKeyConstant(this);
 		}
 	}
 	public static class KeyInputContext extends KeyContext {
-		public TerminalNode PLUS() { return getToken(GrammarParser.PLUS, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode PLUS() { return getToken(XhailParser.PLUS, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public KeyInputContext(KeyContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterKeyInput(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterKeyInput(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitKeyInput(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitKeyInput(this);
 		}
 	}
 	public static class KeyOutputContext extends KeyContext {
-		public TerminalNode MINUS() { return getToken(GrammarParser.MINUS, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public KeyOutputContext(KeyContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterKeyOutput(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterKeyOutput(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitKeyOutput(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitKeyOutput(this);
 		}
 	}
 
@@ -1309,31 +1306,31 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class MinimizeContext extends ParserRuleContext {
-		public TerminalNode CURLY_LEFT() { return getToken(GrammarParser.CURLY_LEFT, 0); }
+		public TerminalNode CURLY_LEFT() { return getToken(XhailParser.CURLY_LEFT, 0); }
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public TerminalNode SQUARE_RIGHT() { return getToken(GrammarParser.SQUARE_RIGHT, 0); }
+		public TerminalNode SQUARE_RIGHT() { return getToken(XhailParser.SQUARE_RIGHT, 0); }
 		public WeightContext weight(int i) {
 			return getRuleContext(WeightContext.class,i);
 		}
 		public List<WeightContext> weight() {
 			return getRuleContexts(WeightContext.class);
 		}
-		public TerminalNode SQUARE_LEFT() { return getToken(GrammarParser.SQUARE_LEFT, 0); }
-		public TerminalNode CURLY_RIGHT() { return getToken(GrammarParser.CURLY_RIGHT, 0); }
+		public TerminalNode SQUARE_LEFT() { return getToken(XhailParser.SQUARE_LEFT, 0); }
+		public TerminalNode CURLY_RIGHT() { return getToken(XhailParser.CURLY_RIGHT, 0); }
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode DIR_MINIMIZE() { return getToken(GrammarParser.DIR_MINIMIZE, 0); }
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode DIR_MINIMIZE() { return getToken(XhailParser.DIR_MINIMIZE, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public PriorityContext priority(int i) {
 			return getRuleContext(PriorityContext.class,i);
 		}
 		public List<PriorityContext> priority() {
 			return getRuleContexts(PriorityContext.class);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
@@ -1343,11 +1340,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_minimize; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterMinimize(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterMinimize(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitMinimize(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitMinimize(this);
 		}
 	}
 
@@ -1480,56 +1477,56 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class ShowAllContext extends ShowContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode DIR_SHOW() { return getToken(GrammarParser.DIR_SHOW, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode DIR_SHOW() { return getToken(XhailParser.DIR_SHOW, 0); }
 		public ShowAllContext(ShowContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterShowAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterShowAll(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitShowAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitShowAll(this);
 		}
 	}
 	public static class ShowImplicitContext extends ShowContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode SLASH() { return getToken(GrammarParser.SLASH, 0); }
-		public TerminalNode DIR_SHOW() { return getToken(GrammarParser.DIR_SHOW, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
+		public TerminalNode DIR_SHOW() { return getToken(XhailParser.DIR_SHOW, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public ShowImplicitContext(ShowContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterShowImplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterShowImplicit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitShowImplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitShowImplicit(this);
 		}
 	}
 	public static class ShowExplicitContext extends ShowContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
-		public TerminalNode DIR_SHOW() { return getToken(GrammarParser.DIR_SHOW, 0); }
-		public List<TerminalNode> VARIABLE() { return getTokens(GrammarParser.VARIABLE); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
+		public TerminalNode DIR_SHOW() { return getToken(XhailParser.DIR_SHOW, 0); }
+		public List<TerminalNode> VARIABLE() { return getTokens(XhailParser.VARIABLE); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public TerminalNode VARIABLE(int i) {
-			return getToken(GrammarParser.VARIABLE, i);
+			return getToken(XhailParser.VARIABLE, i);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public ShowExplicitContext(ShowContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterShowExplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterShowExplicit(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitShowExplicit(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitShowExplicit(this);
 		}
 	}
 
@@ -1612,63 +1609,63 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class GroundIntegerContext extends GroundAtomContext {
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
 		public GroundIntegerContext(GroundAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundInteger(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundInteger(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundInteger(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundInteger(this);
 		}
 	}
 	public static class GroundVariableContext extends GroundAtomContext {
-		public TerminalNode VARIABLE() { return getToken(GrammarParser.VARIABLE, 0); }
+		public TerminalNode VARIABLE() { return getToken(XhailParser.VARIABLE, 0); }
 		public GroundVariableContext(GroundAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundVariable(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundVariable(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundVariable(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundVariable(this);
 		}
 	}
 	public static class GroundPredicateContext extends GroundAtomContext {
 		public GroundTermContext groundTerm(int i) {
 			return getRuleContext(GroundTermContext.class,i);
 		}
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public List<GroundTermContext> groundTerm() {
 			return getRuleContexts(GroundTermContext.class);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundPredicateContext(GroundAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPredicate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPredicate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPredicate(this);
 		}
 	}
 	public static class GroundStringContext extends GroundAtomContext {
-		public TerminalNode STRING() { return getToken(GrammarParser.STRING, 0); }
+		public TerminalNode STRING() { return getToken(XhailParser.STRING, 0); }
 		public GroundStringContext(GroundAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundString(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundString(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundString(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundString(this);
 		}
 	}
 
@@ -1758,60 +1755,60 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class GroundIntervalContext extends GroundTermContext {
-		public List<TerminalNode> INTEGER() { return getTokens(GrammarParser.INTEGER); }
-		public TerminalNode DOTS() { return getToken(GrammarParser.DOTS, 0); }
+		public List<TerminalNode> INTEGER() { return getTokens(XhailParser.INTEGER); }
+		public TerminalNode DOTS() { return getToken(XhailParser.DOTS, 0); }
 		public TerminalNode IDENTIFIER(int i) {
-			return getToken(GrammarParser.IDENTIFIER, i);
+			return getToken(XhailParser.IDENTIFIER, i);
 		}
 		public TerminalNode INTEGER(int i) {
-			return getToken(GrammarParser.INTEGER, i);
+			return getToken(XhailParser.INTEGER, i);
 		}
-		public List<TerminalNode> VARIABLE() { return getTokens(GrammarParser.VARIABLE); }
-		public List<TerminalNode> IDENTIFIER() { return getTokens(GrammarParser.IDENTIFIER); }
+		public List<TerminalNode> VARIABLE() { return getTokens(XhailParser.VARIABLE); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(XhailParser.IDENTIFIER); }
 		public TerminalNode VARIABLE(int i) {
-			return getToken(GrammarParser.VARIABLE, i);
+			return getToken(XhailParser.VARIABLE, i);
 		}
 		public GroundIntervalContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundInterval(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundInterval(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundInterval(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundInterval(this);
 		}
 	}
 	public static class GroundMinus1Context extends GroundTermContext {
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public TerminalNode MINUS() { return getToken(GrammarParser.MINUS, 0); }
+		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
 		public GroundMinus1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundMinus1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundMinus1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundMinus1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundMinus1(this);
 		}
 	}
 	public static class GroundMinus2Context extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode MINUS() { return getToken(GrammarParser.MINUS, 0); }
+		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundMinus2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundMinus2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundMinus2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundMinus2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundMinus2(this);
 		}
 	}
 	public static class GroundTimesContext extends GroundTermContext {
@@ -1821,73 +1818,73 @@ public class GrammarParser extends Parser {
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode ASTERISK() { return getToken(GrammarParser.ASTERISK, 0); }
+		public TerminalNode ASTERISK() { return getToken(XhailParser.ASTERISK, 0); }
 		public GroundTimesContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundTimes(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundTimes(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundTimes(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundTimes(this);
 		}
 	}
 	public static class GroundAndContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode BIT_AND() { return getToken(GrammarParser.BIT_AND, 0); }
+		public TerminalNode BIT_AND() { return getToken(XhailParser.BIT_AND, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundAndContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundAnd(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundAnd(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundAnd(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundAnd(this);
 		}
 	}
 	public static class GroundXorContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode BIT_XOR() { return getToken(GrammarParser.BIT_XOR, 0); }
+		public TerminalNode BIT_XOR() { return getToken(XhailParser.BIT_XOR, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundXorContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundXor(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundXor(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundXor(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundXor(this);
 		}
 	}
 	public static class GroundLessEqualsContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode COMP_LE() { return getToken(GrammarParser.COMP_LE, 0); }
+		public TerminalNode COMP_LE() { return getToken(XhailParser.COMP_LE, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundLessEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundLessEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundLessEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundLessEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundLessEquals(this);
 		}
 	}
 	public static class GroundPower1Context extends GroundTermContext {
-		public TerminalNode ASTERISKS() { return getToken(GrammarParser.ASTERISKS, 0); }
+		public TerminalNode ASTERISKS() { return getToken(XhailParser.ASTERISKS, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -1897,86 +1894,86 @@ public class GrammarParser extends Parser {
 		public GroundPower1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPower1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPower1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPower1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPower1(this);
 		}
 	}
 	public static class GroundAbsolute2Context extends GroundTermContext {
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public TerminalNode ARITH_ABS() { return getToken(GrammarParser.ARITH_ABS, 0); }
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode ARITH_ABS() { return getToken(XhailParser.ARITH_ABS, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundAbsolute2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundAbsolute2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundAbsolute2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundAbsolute2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundAbsolute2(this);
 		}
 	}
 	public static class GroundNotContext extends GroundTermContext {
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
-		public TerminalNode BIT_NOT() { return getToken(GrammarParser.BIT_NOT, 0); }
+		public TerminalNode BIT_NOT() { return getToken(XhailParser.BIT_NOT, 0); }
 		public GroundNotContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundNot(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundNot(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundNot(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundNot(this);
 		}
 	}
 	public static class GroundAbsolute1Context extends GroundTermContext {
-		public List<TerminalNode> BAR() { return getTokens(GrammarParser.BAR); }
+		public List<TerminalNode> BAR() { return getTokens(XhailParser.BAR); }
 		public GroundAtomContext groundAtom() {
 			return getRuleContext(GroundAtomContext.class,0);
 		}
 		public TerminalNode BAR(int i) {
-			return getToken(GrammarParser.BAR, i);
+			return getToken(XhailParser.BAR, i);
 		}
 		public GroundAbsolute1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundAbsolute1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundAbsolute1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundAbsolute1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundAbsolute1(this);
 		}
 	}
 	public static class GroundPower3Context extends GroundTermContext {
-		public TerminalNode ARITH_POWER() { return getToken(GrammarParser.ARITH_POWER, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
+		public TerminalNode ARITH_POWER() { return getToken(XhailParser.ARITH_POWER, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode COMMA() { return getToken(GrammarParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundPower3Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPower3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPower3(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPower3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPower3(this);
 		}
 	}
 	public static class GroundPower2Context extends GroundTermContext {
-		public TerminalNode ARITH_POWER() { return getToken(GrammarParser.ARITH_POWER, 0); }
+		public TerminalNode ARITH_POWER() { return getToken(XhailParser.ARITH_POWER, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -1986,11 +1983,11 @@ public class GrammarParser extends Parser {
 		public GroundPower2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPower2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPower2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPower2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPower2(this);
 		}
 	}
 	public static class GroundNotEqualsContext extends GroundTermContext {
@@ -2000,55 +1997,55 @@ public class GrammarParser extends Parser {
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode COMP_NE() { return getToken(GrammarParser.COMP_NE, 0); }
+		public TerminalNode COMP_NE() { return getToken(XhailParser.COMP_NE, 0); }
 		public GroundNotEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundNotEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundNotEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundNotEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundNotEquals(this);
 		}
 	}
 	public static class GroundEqualsContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode COMP_EQ() { return getToken(GrammarParser.COMP_EQ, 0); }
+		public TerminalNode COMP_EQ() { return getToken(XhailParser.COMP_EQ, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundEquals(this);
 		}
 	}
 	public static class GroundOrContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode BIT_OR() { return getToken(GrammarParser.BIT_OR, 0); }
+		public TerminalNode BIT_OR() { return getToken(XhailParser.BIT_OR, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundOrContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundOr(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundOr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundOr(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundOr(this);
 		}
 	}
 	public static class GroundModulus1Context extends GroundTermContext {
-		public TerminalNode BACKSLASH() { return getToken(GrammarParser.BACKSLASH, 0); }
+		public TerminalNode BACKSLASH() { return getToken(XhailParser.BACKSLASH, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2058,15 +2055,15 @@ public class GrammarParser extends Parser {
 		public GroundModulus1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundModulus1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundModulus1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundModulus1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundModulus1(this);
 		}
 	}
 	public static class GroundModulus2Context extends GroundTermContext {
-		public TerminalNode ARITH_MODULUS() { return getToken(GrammarParser.ARITH_MODULUS, 0); }
+		public TerminalNode ARITH_MODULUS() { return getToken(XhailParser.ARITH_MODULUS, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2076,20 +2073,20 @@ public class GrammarParser extends Parser {
 		public GroundModulus2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundModulus2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundModulus2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundModulus2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundModulus2(this);
 		}
 	}
 	public static class GroundPoolingContext extends GroundTermContext {
-		public List<TerminalNode> SEMICOLON() { return getTokens(GrammarParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(XhailParser.SEMICOLON); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(GrammarParser.SEMICOLON, i);
+			return getToken(XhailParser.SEMICOLON, i);
 		}
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
@@ -2097,36 +2094,36 @@ public class GrammarParser extends Parser {
 		public GroundPoolingContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPooling(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPooling(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPooling(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPooling(this);
 		}
 	}
 	public static class GroundModulus3Context extends GroundTermContext {
-		public TerminalNode ARITH_MODULUS() { return getToken(GrammarParser.ARITH_MODULUS, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
+		public TerminalNode ARITH_MODULUS() { return getToken(XhailParser.ARITH_MODULUS, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode COMMA() { return getToken(GrammarParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundModulus3Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundModulus3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundModulus3(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundModulus3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundModulus3(this);
 		}
 	}
 	public static class GroundLessContext extends GroundTermContext {
-		public TerminalNode COMP_LT() { return getToken(GrammarParser.COMP_LT, 0); }
+		public TerminalNode COMP_LT() { return getToken(XhailParser.COMP_LT, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2136,33 +2133,33 @@ public class GrammarParser extends Parser {
 		public GroundLessContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundLess(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundLess(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundLess(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundLess(this);
 		}
 	}
 	public static class GroundPlusContext extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode PLUS() { return getToken(GrammarParser.PLUS, 0); }
+		public TerminalNode PLUS() { return getToken(XhailParser.PLUS, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundPlusContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundPlus(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundPlus(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundPlus(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundPlus(this);
 		}
 	}
 	public static class GroundGreaterEqualsContext extends GroundTermContext {
-		public TerminalNode COMP_GE() { return getToken(GrammarParser.COMP_GE, 0); }
+		public TerminalNode COMP_GE() { return getToken(XhailParser.COMP_GE, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2172,15 +2169,15 @@ public class GrammarParser extends Parser {
 		public GroundGreaterEqualsContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundGreaterEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundGreaterEquals(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundGreaterEquals(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundGreaterEquals(this);
 		}
 	}
 	public static class GroundAssign1Context extends GroundTermContext {
-		public TerminalNode ASSIGN() { return getToken(GrammarParser.ASSIGN, 0); }
+		public TerminalNode ASSIGN() { return getToken(XhailParser.ASSIGN, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2190,11 +2187,11 @@ public class GrammarParser extends Parser {
 		public GroundAssign1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundAssign1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundAssign1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundAssign1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundAssign1(this);
 		}
 	}
 	public static class GroundGreaterContext extends GroundTermContext {
@@ -2204,58 +2201,58 @@ public class GrammarParser extends Parser {
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode COMP_GT() { return getToken(GrammarParser.COMP_GT, 0); }
+		public TerminalNode COMP_GT() { return getToken(XhailParser.COMP_GT, 0); }
 		public GroundGreaterContext(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundGreater(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundGreater(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundGreater(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundGreater(this);
 		}
 	}
 	public static class GroundDivide2Context extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode ARITH_DIVIDE() { return getToken(GrammarParser.ARITH_DIVIDE, 0); }
+		public TerminalNode ARITH_DIVIDE() { return getToken(XhailParser.ARITH_DIVIDE, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundDivide2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundDivide2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundDivide2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundDivide2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundDivide2(this);
 		}
 	}
 	public static class GroundDivide3Context extends GroundTermContext {
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode COMMA() { return getToken(GrammarParser.COMMA, 0); }
-		public TerminalNode ARITH_DIVIDE() { return getToken(GrammarParser.ARITH_DIVIDE, 0); }
+		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
+		public TerminalNode ARITH_DIVIDE() { return getToken(XhailParser.ARITH_DIVIDE, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public GroundDivide3Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundDivide3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundDivide3(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundDivide3(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundDivide3(this);
 		}
 	}
 	public static class GroundAssign2Context extends GroundTermContext {
-		public TerminalNode EQUALS() { return getToken(GrammarParser.EQUALS, 0); }
+		public TerminalNode EQUALS() { return getToken(XhailParser.EQUALS, 0); }
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
@@ -2265,29 +2262,29 @@ public class GrammarParser extends Parser {
 		public GroundAssign2Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundAssign2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundAssign2(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundAssign2(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundAssign2(this);
 		}
 	}
 	public static class GroundDivide1Context extends GroundTermContext {
 		public List<GroundAtomContext> groundAtom() {
 			return getRuleContexts(GroundAtomContext.class);
 		}
-		public TerminalNode SLASH() { return getToken(GrammarParser.SLASH, 0); }
+		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
 		public GroundAtomContext groundAtom(int i) {
 			return getRuleContext(GroundAtomContext.class,i);
 		}
 		public GroundDivide1Context(GroundTermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroundDivide1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroundDivide1(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroundDivide1(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroundDivide1(this);
 		}
 	}
 
@@ -2631,19 +2628,19 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class BoundContext extends ParserRuleContext {
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode COLON() { return getToken(GrammarParser.COLON, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode COLON() { return getToken(XhailParser.COLON, 0); }
 		public BoundContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bound; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterBound(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterBound(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitBound(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitBound(this);
 		}
 	}
 
@@ -2680,46 +2677,46 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class BoundSingleContext extends BoundsContext {
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode COLON() { return getToken(GrammarParser.COLON, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode COLON() { return getToken(XhailParser.COLON, 0); }
 		public BoundSingleContext(BoundsContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterBoundSingle(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterBoundSingle(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitBoundSingle(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitBoundSingle(this);
 		}
 	}
 	public static class BoundsAllContext extends BoundsContext {
-		public TerminalNode COLON() { return getToken(GrammarParser.COLON, 0); }
-		public TerminalNode ALL() { return getToken(GrammarParser.ALL, 0); }
+		public TerminalNode COLON() { return getToken(XhailParser.COLON, 0); }
+		public TerminalNode ALL() { return getToken(XhailParser.ALL, 0); }
 		public BoundsAllContext(BoundsContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterBoundsAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterBoundsAll(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitBoundsAll(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitBoundsAll(this);
 		}
 	}
 	public static class BoundsBothContext extends BoundsContext {
-		public List<TerminalNode> INTEGER() { return getTokens(GrammarParser.INTEGER); }
-		public TerminalNode COLON() { return getToken(GrammarParser.COLON, 0); }
-		public TerminalNode MINUS() { return getToken(GrammarParser.MINUS, 0); }
+		public List<TerminalNode> INTEGER() { return getTokens(XhailParser.INTEGER); }
+		public TerminalNode COLON() { return getToken(XhailParser.COLON, 0); }
+		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
 		public TerminalNode INTEGER(int i) {
-			return getToken(GrammarParser.INTEGER, i);
+			return getToken(XhailParser.INTEGER, i);
 		}
 		public BoundsBothContext(BoundsContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterBoundsBoth(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterBoundsBoth(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitBoundsBoth(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitBoundsBoth(this);
 		}
 	}
 
@@ -2771,19 +2768,19 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class WeightContext extends ParserRuleContext {
-		public TerminalNode EQUALS() { return getToken(GrammarParser.EQUALS, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
+		public TerminalNode EQUALS() { return getToken(XhailParser.EQUALS, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
 		public WeightContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_weight; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterWeight(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterWeight(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitWeight(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitWeight(this);
 		}
 	}
 
@@ -2809,19 +2806,19 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class PriorityContext extends ParserRuleContext {
-		public TerminalNode AT() { return getToken(GrammarParser.AT, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
+		public TerminalNode AT() { return getToken(XhailParser.AT, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
 		public PriorityContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_priority; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterPriority(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterPriority(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitPriority(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitPriority(this);
 		}
 	}
 
@@ -2858,39 +2855,39 @@ public class GrammarParser extends Parser {
 		}
 	}
 	public static class ConstraintClauseContext extends ClauseContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode IF() { return getToken(GrammarParser.IF, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode IF() { return getToken(XhailParser.IF, 0); }
 		public BodyContext body() {
 			return getRuleContext(BodyContext.class,0);
 		}
 		public ConstraintClauseContext(ClauseContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterConstraintClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterConstraintClause(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitConstraintClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitConstraintClause(this);
 		}
 	}
 	public static class FactClauseContext extends ClauseContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
 		public HeadContext head() {
 			return getRuleContext(HeadContext.class,0);
 		}
 		public FactClauseContext(ClauseContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterFactClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterFactClause(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitFactClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitFactClause(this);
 		}
 	}
 	public static class FullClauseContext extends ClauseContext {
-		public TerminalNode DOT() { return getToken(GrammarParser.DOT, 0); }
-		public TerminalNode IF() { return getToken(GrammarParser.IF, 0); }
+		public TerminalNode DOT() { return getToken(XhailParser.DOT, 0); }
+		public TerminalNode IF() { return getToken(XhailParser.IF, 0); }
 		public HeadContext head() {
 			return getRuleContext(HeadContext.class,0);
 		}
@@ -2900,11 +2897,11 @@ public class GrammarParser extends Parser {
 		public FullClauseContext(ClauseContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterFullClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterFullClause(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitFullClause(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitFullClause(this);
 		}
 	}
 
@@ -2960,9 +2957,9 @@ public class GrammarParser extends Parser {
 		public AtomContext atom(int i) {
 			return getRuleContext(AtomContext.class,i);
 		}
-		public List<TerminalNode> BAR() { return getTokens(GrammarParser.BAR); }
+		public List<TerminalNode> BAR() { return getTokens(XhailParser.BAR); }
 		public TerminalNode BAR(int i) {
-			return getToken(GrammarParser.BAR, i);
+			return getToken(XhailParser.BAR, i);
 		}
 		public List<AtomContext> atom() {
 			return getRuleContexts(AtomContext.class);
@@ -2973,11 +2970,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_head; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterHead(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterHead(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitHead(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitHead(this);
 		}
 	}
 
@@ -3020,12 +3017,12 @@ public class GrammarParser extends Parser {
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
 		public BodyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3033,11 +3030,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_body; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterBody(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterBody(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitBody(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitBody(this);
 		}
 	}
 
@@ -3077,7 +3074,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class LiteralContext extends ParserRuleContext {
-		public TerminalNode NOT() { return getToken(GrammarParser.NOT, 0); }
+		public TerminalNode NOT() { return getToken(XhailParser.NOT, 0); }
 		public AtomContext atom() {
 			return getRuleContext(AtomContext.class,0);
 		}
@@ -3087,11 +3084,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_literal; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterLiteral(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterLiteral(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitLiteral(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitLiteral(this);
 		}
 	}
 
@@ -3128,24 +3125,24 @@ public class GrammarParser extends Parser {
 		public GroupContext group() {
 			return getRuleContext(GroupContext.class,0);
 		}
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
 		public TerminalNode COLON(int i) {
-			return getToken(GrammarParser.COLON, i);
+			return getToken(XhailParser.COLON, i);
 		}
 		public AggregatewContext aggregatew() {
 			return getRuleContext(AggregatewContext.class,0);
 		}
-		public List<TerminalNode> COLON() { return getTokens(GrammarParser.COLON); }
+		public List<TerminalNode> COLON() { return getTokens(XhailParser.COLON); }
 		public AggregateContext aggregate() {
 			return getRuleContext(AggregateContext.class,0);
 		}
-		public TerminalNode VARIABLE() { return getToken(GrammarParser.VARIABLE, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode VARIABLE() { return getToken(XhailParser.VARIABLE, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public PredicateContext predicate(int i) {
 			return getRuleContext(PredicateContext.class,i);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
 		public List<PredicateContext> predicate() {
 			return getRuleContexts(PredicateContext.class);
 		}
@@ -3155,11 +3152,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_predicate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterPredicate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitPredicate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitPredicate(this);
 		}
 	}
 
@@ -3245,38 +3242,38 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class AggregateContext extends ParserRuleContext {
-		public TerminalNode CURLY_LEFT() { return getToken(GrammarParser.CURLY_LEFT, 0); }
+		public TerminalNode CURLY_LEFT() { return getToken(XhailParser.CURLY_LEFT, 0); }
 		public List<NumberContext> number() {
 			return getRuleContexts(NumberContext.class);
 		}
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public NumberContext number(int i) {
 			return getRuleContext(NumberContext.class,i);
 		}
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
-		public TerminalNode AGGR_COUNT() { return getToken(GrammarParser.AGGR_COUNT, 0); }
-		public TerminalNode CURLY_RIGHT() { return getToken(GrammarParser.CURLY_RIGHT, 0); }
+		public TerminalNode AGGR_COUNT() { return getToken(XhailParser.AGGR_COUNT, 0); }
+		public TerminalNode CURLY_RIGHT() { return getToken(XhailParser.CURLY_RIGHT, 0); }
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
-		public TerminalNode AGGR_EVEN() { return getToken(GrammarParser.AGGR_EVEN, 0); }
-		public TerminalNode AGGR_ODD() { return getToken(GrammarParser.AGGR_ODD, 0); }
+		public TerminalNode AGGR_EVEN() { return getToken(XhailParser.AGGR_EVEN, 0); }
+		public TerminalNode AGGR_ODD() { return getToken(XhailParser.AGGR_ODD, 0); }
 		public AggregateContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_aggregate; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterAggregate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterAggregate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitAggregate(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitAggregate(this);
 		}
 	}
 
@@ -3350,42 +3347,42 @@ public class GrammarParser extends Parser {
 		public LiteralContext literal(int i) {
 			return getRuleContext(LiteralContext.class,i);
 		}
-		public TerminalNode SQUARE_RIGHT() { return getToken(GrammarParser.SQUARE_RIGHT, 0); }
+		public TerminalNode SQUARE_RIGHT() { return getToken(XhailParser.SQUARE_RIGHT, 0); }
 		public WeightContext weight(int i) {
 			return getRuleContext(WeightContext.class,i);
 		}
 		public List<WeightContext> weight() {
 			return getRuleContexts(WeightContext.class);
 		}
-		public TerminalNode SQUARE_LEFT() { return getToken(GrammarParser.SQUARE_LEFT, 0); }
+		public TerminalNode SQUARE_LEFT() { return getToken(XhailParser.SQUARE_LEFT, 0); }
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
 		public List<NumberContext> number() {
 			return getRuleContexts(NumberContext.class);
 		}
-		public TerminalNode AGGR_SUM() { return getToken(GrammarParser.AGGR_SUM, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public TerminalNode AGGR_SUM() { return getToken(XhailParser.AGGR_SUM, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public NumberContext number(int i) {
 			return getRuleContext(NumberContext.class,i);
 		}
 		public List<LiteralContext> literal() {
 			return getRuleContexts(LiteralContext.class);
 		}
-		public TerminalNode AGGR_MIN() { return getToken(GrammarParser.AGGR_MIN, 0); }
-		public TerminalNode AGGR_AVG() { return getToken(GrammarParser.AGGR_AVG, 0); }
-		public TerminalNode AGGR_MAX() { return getToken(GrammarParser.AGGR_MAX, 0); }
+		public TerminalNode AGGR_MIN() { return getToken(XhailParser.AGGR_MIN, 0); }
+		public TerminalNode AGGR_AVG() { return getToken(XhailParser.AGGR_AVG, 0); }
+		public TerminalNode AGGR_MAX() { return getToken(XhailParser.AGGR_MAX, 0); }
 		public AggregatewContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_aggregatew; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterAggregatew(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterAggregatew(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitAggregatew(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitAggregatew(this);
 		}
 	}
 
@@ -3479,20 +3476,20 @@ public class GrammarParser extends Parser {
 			return getRuleContexts(AtomListContext.class);
 		}
 		public TerminalNode SEMICOLONS(int i) {
-			return getToken(GrammarParser.SEMICOLONS, i);
+			return getToken(XhailParser.SEMICOLONS, i);
 		}
-		public List<TerminalNode> SEMICOLONS() { return getTokens(GrammarParser.SEMICOLONS); }
+		public List<TerminalNode> SEMICOLONS() { return getTokens(XhailParser.SEMICOLONS); }
 		public GroupContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_group; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterGroup(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterGroup(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitGroup(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitGroup(this);
 		}
 	}
 
@@ -3535,12 +3532,12 @@ public class GrammarParser extends Parser {
 		public AtomContext atom(int i) {
 			return getRuleContext(AtomContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(GrammarParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(XhailParser.COMMA); }
 		public List<AtomContext> atom() {
 			return getRuleContexts(AtomContext.class);
 		}
 		public TerminalNode COMMA(int i) {
-			return getToken(GrammarParser.COMMA, i);
+			return getToken(XhailParser.COMMA, i);
 		}
 		public AtomListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3548,11 +3545,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_atomList; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterAtomList(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterAtomList(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitAtomList(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitAtomList(this);
 		}
 	}
 
@@ -3592,69 +3589,69 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class AtomContext extends ParserRuleContext {
-		public TerminalNode BACKSLASH() { return getToken(GrammarParser.BACKSLASH, 0); }
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode ASTERISKS() { return getToken(GrammarParser.ASTERISKS, 0); }
+		public TerminalNode BACKSLASH() { return getToken(XhailParser.BACKSLASH, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode ASTERISKS() { return getToken(XhailParser.ASTERISKS, 0); }
 		public TerminalNode BAR(int i) {
-			return getToken(GrammarParser.BAR, i);
+			return getToken(XhailParser.BAR, i);
 		}
-		public TerminalNode ARITH_DIVIDE() { return getToken(GrammarParser.ARITH_DIVIDE, 0); }
+		public TerminalNode ARITH_DIVIDE() { return getToken(XhailParser.ARITH_DIVIDE, 0); }
 		public PredicateContext predicate(int i) {
 			return getRuleContext(PredicateContext.class,i);
 		}
-		public TerminalNode BIT_NOT() { return getToken(GrammarParser.BIT_NOT, 0); }
-		public TerminalNode BIT_AND() { return getToken(GrammarParser.BIT_AND, 0); }
-		public TerminalNode BIT_OR() { return getToken(GrammarParser.BIT_OR, 0); }
-		public TerminalNode BIT_XOR() { return getToken(GrammarParser.BIT_XOR, 0); }
-		public TerminalNode ASTERISK() { return getToken(GrammarParser.ASTERISK, 0); }
-		public TerminalNode COMP_LT() { return getToken(GrammarParser.COMP_LT, 0); }
+		public TerminalNode BIT_NOT() { return getToken(XhailParser.BIT_NOT, 0); }
+		public TerminalNode BIT_AND() { return getToken(XhailParser.BIT_AND, 0); }
+		public TerminalNode BIT_OR() { return getToken(XhailParser.BIT_OR, 0); }
+		public TerminalNode BIT_XOR() { return getToken(XhailParser.BIT_XOR, 0); }
+		public TerminalNode ASTERISK() { return getToken(XhailParser.ASTERISK, 0); }
+		public TerminalNode COMP_LT() { return getToken(XhailParser.COMP_LT, 0); }
 		public List<NumberContext> number() {
 			return getRuleContexts(NumberContext.class);
 		}
-		public TerminalNode EQUALS() { return getToken(GrammarParser.EQUALS, 0); }
-		public TerminalNode COMMA() { return getToken(GrammarParser.COMMA, 0); }
+		public TerminalNode EQUALS() { return getToken(XhailParser.EQUALS, 0); }
+		public TerminalNode COMMA() { return getToken(XhailParser.COMMA, 0); }
 		public NumberContext number(int i) {
 			return getRuleContext(NumberContext.class,i);
 		}
-		public TerminalNode ARITH_MODULUS() { return getToken(GrammarParser.ARITH_MODULUS, 0); }
-		public TerminalNode ARITH_POWER() { return getToken(GrammarParser.ARITH_POWER, 0); }
-		public TerminalNode STRING() { return getToken(GrammarParser.STRING, 0); }
-		public TerminalNode COMP_LE() { return getToken(GrammarParser.COMP_LE, 0); }
-		public TerminalNode ARITH_ABS() { return getToken(GrammarParser.ARITH_ABS, 0); }
+		public TerminalNode ARITH_MODULUS() { return getToken(XhailParser.ARITH_MODULUS, 0); }
+		public TerminalNode ARITH_POWER() { return getToken(XhailParser.ARITH_POWER, 0); }
+		public TerminalNode STRING() { return getToken(XhailParser.STRING, 0); }
+		public TerminalNode COMP_LE() { return getToken(XhailParser.COMP_LE, 0); }
+		public TerminalNode ARITH_ABS() { return getToken(XhailParser.ARITH_ABS, 0); }
 		public PoolingContext pooling() {
 			return getRuleContext(PoolingContext.class,0);
 		}
-		public TerminalNode PAREN_RIGHT() { return getToken(GrammarParser.PAREN_RIGHT, 0); }
-		public TerminalNode ASSIGN() { return getToken(GrammarParser.ASSIGN, 0); }
-		public List<TerminalNode> BAR() { return getTokens(GrammarParser.BAR); }
-		public TerminalNode COMP_GE() { return getToken(GrammarParser.COMP_GE, 0); }
-		public TerminalNode PAREN_LEFT() { return getToken(GrammarParser.PAREN_LEFT, 0); }
-		public TerminalNode COMP_EQ() { return getToken(GrammarParser.COMP_EQ, 0); }
-		public TerminalNode SLASH() { return getToken(GrammarParser.SLASH, 0); }
+		public TerminalNode PAREN_RIGHT() { return getToken(XhailParser.PAREN_RIGHT, 0); }
+		public TerminalNode ASSIGN() { return getToken(XhailParser.ASSIGN, 0); }
+		public List<TerminalNode> BAR() { return getTokens(XhailParser.BAR); }
+		public TerminalNode COMP_GE() { return getToken(XhailParser.COMP_GE, 0); }
+		public TerminalNode PAREN_LEFT() { return getToken(XhailParser.PAREN_LEFT, 0); }
+		public TerminalNode COMP_EQ() { return getToken(XhailParser.COMP_EQ, 0); }
+		public TerminalNode SLASH() { return getToken(XhailParser.SLASH, 0); }
 		public IntervalContext interval() {
 			return getRuleContext(IntervalContext.class,0);
 		}
-		public TerminalNode MINUS() { return getToken(GrammarParser.MINUS, 0); }
-		public TerminalNode PLUS() { return getToken(GrammarParser.PLUS, 0); }
-		public TerminalNode VARIABLE() { return getToken(GrammarParser.VARIABLE, 0); }
-		public TerminalNode SUPREMUM() { return getToken(GrammarParser.SUPREMUM, 0); }
-		public TerminalNode COMP_GT() { return getToken(GrammarParser.COMP_GT, 0); }
-		public TerminalNode INFIMUM() { return getToken(GrammarParser.INFIMUM, 0); }
+		public TerminalNode MINUS() { return getToken(XhailParser.MINUS, 0); }
+		public TerminalNode PLUS() { return getToken(XhailParser.PLUS, 0); }
+		public TerminalNode VARIABLE() { return getToken(XhailParser.VARIABLE, 0); }
+		public TerminalNode SUPREMUM() { return getToken(XhailParser.SUPREMUM, 0); }
+		public TerminalNode COMP_GT() { return getToken(XhailParser.COMP_GT, 0); }
+		public TerminalNode INFIMUM() { return getToken(XhailParser.INFIMUM, 0); }
 		public List<PredicateContext> predicate() {
 			return getRuleContexts(PredicateContext.class);
 		}
-		public TerminalNode COMP_NE() { return getToken(GrammarParser.COMP_NE, 0); }
+		public TerminalNode COMP_NE() { return getToken(XhailParser.COMP_NE, 0); }
 		public AtomContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_atom; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterAtom(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterAtom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitAtom(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitAtom(this);
 		}
 	}
 
@@ -3987,7 +3984,7 @@ public class GrammarParser extends Parser {
 		public List<NumberContext> number() {
 			return getRuleContexts(NumberContext.class);
 		}
-		public TerminalNode DOTS() { return getToken(GrammarParser.DOTS, 0); }
+		public TerminalNode DOTS() { return getToken(XhailParser.DOTS, 0); }
 		public NumberContext number(int i) {
 			return getRuleContext(NumberContext.class,i);
 		}
@@ -3997,11 +3994,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_interval; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterInterval(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterInterval(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitInterval(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitInterval(this);
 		}
 	}
 
@@ -4028,9 +4025,9 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class PoolingContext extends ParserRuleContext {
-		public List<TerminalNode> SEMICOLON() { return getTokens(GrammarParser.SEMICOLON); }
+		public List<TerminalNode> SEMICOLON() { return getTokens(XhailParser.SEMICOLON); }
 		public TerminalNode SEMICOLON(int i) {
-			return getToken(GrammarParser.SEMICOLON, i);
+			return getToken(XhailParser.SEMICOLON, i);
 		}
 		public PredicateContext predicate(int i) {
 			return getRuleContext(PredicateContext.class,i);
@@ -4044,11 +4041,11 @@ public class GrammarParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_pooling; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterPooling(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterPooling(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitPooling(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitPooling(this);
 		}
 	}
 
@@ -4088,20 +4085,20 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class NumberContext extends ParserRuleContext {
-		public TerminalNode INTEGER() { return getToken(GrammarParser.INTEGER, 0); }
-		public TerminalNode VARIABLE() { return getToken(GrammarParser.VARIABLE, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(GrammarParser.IDENTIFIER, 0); }
+		public TerminalNode INTEGER() { return getToken(XhailParser.INTEGER, 0); }
+		public TerminalNode VARIABLE() { return getToken(XhailParser.VARIABLE, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(XhailParser.IDENTIFIER, 0); }
 		public NumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_number; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).enterNumber(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).enterNumber(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GrammarListener ) ((GrammarListener)listener).exitNumber(this);
+			if ( listener instanceof XhailListener ) ((XhailListener)listener).exitNumber(this);
 		}
 	}
 

@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.2.2
+// Generated from Xhail.g4 by ANTLR 4.2.2
 
 package ac.bristol.bragaglia.xhail.parsers.xhail;
 
@@ -13,1011 +13,1011 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link GrammarListener},
+ * This class provides an empty implementation of {@link XhailFileListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class GrammarBaseListener implements GrammarListener {
+public class XhailBaseListener implements XhailListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundInterval(@NotNull GrammarParser.GroundIntervalContext ctx) { }
+	@Override public void enterGroundInterval(@NotNull XhailParser.GroundIntervalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundInterval(@NotNull GrammarParser.GroundIntervalContext ctx) { }
+	@Override public void exitGroundInterval(@NotNull XhailParser.GroundIntervalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstant(@NotNull GrammarParser.ConstantContext ctx) { }
+	@Override public void enterConstant(@NotNull XhailParser.ConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstant(@NotNull GrammarParser.ConstantContext ctx) { }
+	@Override public void exitConstant(@NotNull XhailParser.ConstantContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundMinus1(@NotNull GrammarParser.GroundMinus1Context ctx) { }
+	@Override public void enterGroundMinus1(@NotNull XhailParser.GroundMinus1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundMinus1(@NotNull GrammarParser.GroundMinus1Context ctx) { }
+	@Override public void exitGroundMinus1(@NotNull XhailParser.GroundMinus1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterShowImplicit(@NotNull GrammarParser.ShowImplicitContext ctx) { }
+	@Override public void enterShowImplicit(@NotNull XhailParser.ShowImplicitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitShowImplicit(@NotNull GrammarParser.ShowImplicitContext ctx) { }
+	@Override public void exitShowImplicit(@NotNull XhailParser.ShowImplicitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundMinus2(@NotNull GrammarParser.GroundMinus2Context ctx) { }
+	@Override public void enterGroundMinus2(@NotNull XhailParser.GroundMinus2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundMinus2(@NotNull GrammarParser.GroundMinus2Context ctx) { }
+	@Override public void exitGroundMinus2(@NotNull XhailParser.GroundMinus2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgram(@NotNull GrammarParser.ProgramContext ctx) { }
+	@Override public void enterProgram(@NotNull XhailParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgram(@NotNull GrammarParser.ProgramContext ctx) { }
+	@Override public void exitProgram(@NotNull XhailParser.ProgramContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeyOutput(@NotNull GrammarParser.KeyOutputContext ctx) { }
+	@Override public void enterKeyOutput(@NotNull XhailParser.KeyOutputContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKeyOutput(@NotNull GrammarParser.KeyOutputContext ctx) { }
+	@Override public void exitKeyOutput(@NotNull XhailParser.KeyOutputContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBody(@NotNull GrammarParser.BodyContext ctx) { }
+	@Override public void enterBody(@NotNull XhailParser.BodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBody(@NotNull GrammarParser.BodyContext ctx) { }
+	@Override public void exitBody(@NotNull XhailParser.BodyContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFullClause(@NotNull GrammarParser.FullClauseContext ctx) { }
+	@Override public void enterFullClause(@NotNull XhailParser.FullClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFullClause(@NotNull GrammarParser.FullClauseContext ctx) { }
+	@Override public void exitFullClause(@NotNull XhailParser.FullClauseContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompute(@NotNull GrammarParser.ComputeContext ctx) { }
+	@Override public void enterCompute(@NotNull XhailParser.ComputeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCompute(@NotNull GrammarParser.ComputeContext ctx) { }
+	@Override public void exitCompute(@NotNull XhailParser.ComputeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMaximize(@NotNull GrammarParser.MaximizeContext ctx) { }
+	@Override public void enterMaximize(@NotNull XhailParser.MaximizeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMaximize(@NotNull GrammarParser.MaximizeContext ctx) { }
+	@Override public void exitMaximize(@NotNull XhailParser.MaximizeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPower1(@NotNull GrammarParser.GroundPower1Context ctx) { }
+	@Override public void enterGroundPower1(@NotNull XhailParser.GroundPower1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPower1(@NotNull GrammarParser.GroundPower1Context ctx) { }
+	@Override public void exitGroundPower1(@NotNull XhailParser.GroundPower1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPredicate(@NotNull GrammarParser.PredicateContext ctx) { }
+	@Override public void enterPredicate(@NotNull XhailParser.PredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPredicate(@NotNull GrammarParser.PredicateContext ctx) { }
+	@Override public void exitPredicate(@NotNull XhailParser.PredicateContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(@NotNull GrammarParser.NumberContext ctx) { }
+	@Override public void enterNumber(@NotNull XhailParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(@NotNull GrammarParser.NumberContext ctx) { }
+	@Override public void exitNumber(@NotNull XhailParser.NumberContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundAbsolute2(@NotNull GrammarParser.GroundAbsolute2Context ctx) { }
+	@Override public void enterGroundAbsolute2(@NotNull XhailParser.GroundAbsolute2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundAbsolute2(@NotNull GrammarParser.GroundAbsolute2Context ctx) { }
+	@Override public void exitGroundAbsolute2(@NotNull XhailParser.GroundAbsolute2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHideImplicit(@NotNull GrammarParser.HideImplicitContext ctx) { }
+	@Override public void enterHideImplicit(@NotNull XhailParser.HideImplicitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHideImplicit(@NotNull GrammarParser.HideImplicitContext ctx) { }
+	@Override public void exitHideImplicit(@NotNull XhailParser.HideImplicitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundAbsolute1(@NotNull GrammarParser.GroundAbsolute1Context ctx) { }
+	@Override public void enterGroundAbsolute1(@NotNull XhailParser.GroundAbsolute1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundAbsolute1(@NotNull GrammarParser.GroundAbsolute1Context ctx) { }
+	@Override public void exitGroundAbsolute1(@NotNull XhailParser.GroundAbsolute1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPower3(@NotNull GrammarParser.GroundPower3Context ctx) { }
+	@Override public void enterGroundPower3(@NotNull XhailParser.GroundPower3Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPower3(@NotNull GrammarParser.GroundPower3Context ctx) { }
+	@Override public void exitGroundPower3(@NotNull XhailParser.GroundPower3Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPower2(@NotNull GrammarParser.GroundPower2Context ctx) { }
+	@Override public void enterGroundPower2(@NotNull XhailParser.GroundPower2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPower2(@NotNull GrammarParser.GroundPower2Context ctx) { }
+	@Override public void exitGroundPower2(@NotNull XhailParser.GroundPower2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundNotEquals(@NotNull GrammarParser.GroundNotEqualsContext ctx) { }
+	@Override public void enterGroundNotEquals(@NotNull XhailParser.GroundNotEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundNotEquals(@NotNull GrammarParser.GroundNotEqualsContext ctx) { }
+	@Override public void exitGroundNotEquals(@NotNull XhailParser.GroundNotEqualsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroup(@NotNull GrammarParser.GroupContext ctx) { }
+	@Override public void enterGroup(@NotNull XhailParser.GroupContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroup(@NotNull GrammarParser.GroupContext ctx) { }
+	@Override public void exitGroup(@NotNull XhailParser.GroupContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoundSingle(@NotNull GrammarParser.BoundSingleContext ctx) { }
+	@Override public void enterBoundSingle(@NotNull XhailParser.BoundSingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoundSingle(@NotNull GrammarParser.BoundSingleContext ctx) { }
+	@Override public void exitBoundSingle(@NotNull XhailParser.BoundSingleContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWeight(@NotNull GrammarParser.WeightContext ctx) { }
+	@Override public void enterWeight(@NotNull XhailParser.WeightContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitWeight(@NotNull GrammarParser.WeightContext ctx) { }
+	@Override public void exitWeight(@NotNull XhailParser.WeightContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModeHead(@NotNull GrammarParser.ModeHeadContext ctx) { }
+	@Override public void enterModeHead(@NotNull XhailParser.ModeHeadContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModeHead(@NotNull GrammarParser.ModeHeadContext ctx) { }
+	@Override public void exitModeHead(@NotNull XhailParser.ModeHeadContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPooling(@NotNull GrammarParser.GroundPoolingContext ctx) { }
+	@Override public void enterGroundPooling(@NotNull XhailParser.GroundPoolingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPooling(@NotNull GrammarParser.GroundPoolingContext ctx) { }
+	@Override public void exitGroundPooling(@NotNull XhailParser.GroundPoolingContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPriority(@NotNull GrammarParser.PriorityContext ctx) { }
+	@Override public void enterPriority(@NotNull XhailParser.PriorityContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPriority(@NotNull GrammarParser.PriorityContext ctx) { }
+	@Override public void exitPriority(@NotNull XhailParser.PriorityContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExternal(@NotNull GrammarParser.ExternalContext ctx) { }
+	@Override public void enterExternal(@NotNull XhailParser.ExternalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExternal(@NotNull GrammarParser.ExternalContext ctx) { }
+	@Override public void exitExternal(@NotNull XhailParser.ExternalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterShowAll(@NotNull GrammarParser.ShowAllContext ctx) { }
+	@Override public void enterShowAll(@NotNull XhailParser.ShowAllContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitShowAll(@NotNull GrammarParser.ShowAllContext ctx) { }
+	@Override public void exitShowAll(@NotNull XhailParser.ShowAllContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPooling(@NotNull GrammarParser.PoolingContext ctx) { }
+	@Override public void enterPooling(@NotNull XhailParser.PoolingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPooling(@NotNull GrammarParser.PoolingContext ctx) { }
+	@Override public void exitPooling(@NotNull XhailParser.PoolingContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAggregatew(@NotNull GrammarParser.AggregatewContext ctx) { }
+	@Override public void enterAggregatew(@NotNull XhailParser.AggregatewContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAggregatew(@NotNull GrammarParser.AggregatewContext ctx) { }
+	@Override public void exitAggregatew(@NotNull XhailParser.AggregatewContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDomain(@NotNull GrammarParser.DomainContext ctx) { }
+	@Override public void enterDomain(@NotNull XhailParser.DomainContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDomain(@NotNull GrammarParser.DomainContext ctx) { }
+	@Override public void exitDomain(@NotNull XhailParser.DomainContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundAssign1(@NotNull GrammarParser.GroundAssign1Context ctx) { }
+	@Override public void enterGroundAssign1(@NotNull XhailParser.GroundAssign1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundAssign1(@NotNull GrammarParser.GroundAssign1Context ctx) { }
+	@Override public void exitGroundAssign1(@NotNull XhailParser.GroundAssign1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInterval(@NotNull GrammarParser.IntervalContext ctx) { }
+	@Override public void enterInterval(@NotNull XhailParser.IntervalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInterval(@NotNull GrammarParser.IntervalContext ctx) { }
+	@Override public void exitInterval(@NotNull XhailParser.IntervalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundDivide2(@NotNull GrammarParser.GroundDivide2Context ctx) { }
+	@Override public void enterGroundDivide2(@NotNull XhailParser.GroundDivide2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundDivide2(@NotNull GrammarParser.GroundDivide2Context ctx) { }
+	@Override public void exitGroundDivide2(@NotNull XhailParser.GroundDivide2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundString(@NotNull GrammarParser.GroundStringContext ctx) { }
+	@Override public void enterGroundString(@NotNull XhailParser.GroundStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundString(@NotNull GrammarParser.GroundStringContext ctx) { }
+	@Override public void exitGroundString(@NotNull XhailParser.GroundStringContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundDivide3(@NotNull GrammarParser.GroundDivide3Context ctx) { }
+	@Override public void enterGroundDivide3(@NotNull XhailParser.GroundDivide3Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundDivide3(@NotNull GrammarParser.GroundDivide3Context ctx) { }
+	@Override public void exitGroundDivide3(@NotNull XhailParser.GroundDivide3Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomList(@NotNull GrammarParser.AtomListContext ctx) { }
+	@Override public void enterAtomList(@NotNull XhailParser.AtomListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomList(@NotNull GrammarParser.AtomListContext ctx) { }
+	@Override public void exitAtomList(@NotNull XhailParser.AtomListContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundAssign2(@NotNull GrammarParser.GroundAssign2Context ctx) { }
+	@Override public void enterGroundAssign2(@NotNull XhailParser.GroundAssign2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundAssign2(@NotNull GrammarParser.GroundAssign2Context ctx) { }
+	@Override public void exitGroundAssign2(@NotNull XhailParser.GroundAssign2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundDivide1(@NotNull GrammarParser.GroundDivide1Context ctx) { }
+	@Override public void enterGroundDivide1(@NotNull XhailParser.GroundDivide1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundDivide1(@NotNull GrammarParser.GroundDivide1Context ctx) { }
+	@Override public void exitGroundDivide1(@NotNull XhailParser.GroundDivide1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHideAll(@NotNull GrammarParser.HideAllContext ctx) { }
+	@Override public void enterHideAll(@NotNull XhailParser.HideAllContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHideAll(@NotNull GrammarParser.HideAllContext ctx) { }
+	@Override public void exitHideAll(@NotNull XhailParser.HideAllContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSignature(@NotNull GrammarParser.SignatureContext ctx) { }
+	@Override public void enterSignature(@NotNull XhailParser.SignatureContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSignature(@NotNull GrammarParser.SignatureContext ctx) { }
+	@Override public void exitSignature(@NotNull XhailParser.SignatureContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundTimes(@NotNull GrammarParser.GroundTimesContext ctx) { }
+	@Override public void enterGroundTimes(@NotNull XhailParser.GroundTimesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundTimes(@NotNull GrammarParser.GroundTimesContext ctx) { }
+	@Override public void exitGroundTimes(@NotNull XhailParser.GroundTimesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactClause(@NotNull GrammarParser.FactClauseContext ctx) { }
+	@Override public void enterFactClause(@NotNull XhailParser.FactClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactClause(@NotNull GrammarParser.FactClauseContext ctx) { }
+	@Override public void exitFactClause(@NotNull XhailParser.FactClauseContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundAnd(@NotNull GrammarParser.GroundAndContext ctx) { }
+	@Override public void enterGroundAnd(@NotNull XhailParser.GroundAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundAnd(@NotNull GrammarParser.GroundAndContext ctx) { }
+	@Override public void exitGroundAnd(@NotNull XhailParser.GroundAndContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeyInput(@NotNull GrammarParser.KeyInputContext ctx) { }
+	@Override public void enterKeyInput(@NotNull XhailParser.KeyInputContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKeyInput(@NotNull GrammarParser.KeyInputContext ctx) { }
+	@Override public void exitKeyInput(@NotNull XhailParser.KeyInputContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundXor(@NotNull GrammarParser.GroundXorContext ctx) { }
+	@Override public void enterGroundXor(@NotNull XhailParser.GroundXorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundXor(@NotNull GrammarParser.GroundXorContext ctx) { }
+	@Override public void exitGroundXor(@NotNull XhailParser.GroundXorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExample(@NotNull GrammarParser.ExampleContext ctx) { }
+	@Override public void enterExample(@NotNull XhailParser.ExampleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExample(@NotNull GrammarParser.ExampleContext ctx) { }
+	@Override public void exitExample(@NotNull XhailParser.ExampleContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLiteral(@NotNull GrammarParser.LiteralContext ctx) { }
+	@Override public void enterLiteral(@NotNull XhailParser.LiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLiteral(@NotNull GrammarParser.LiteralContext ctx) { }
+	@Override public void exitLiteral(@NotNull XhailParser.LiteralContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAggregate(@NotNull GrammarParser.AggregateContext ctx) { }
+	@Override public void enterAggregate(@NotNull XhailParser.AggregateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAggregate(@NotNull GrammarParser.AggregateContext ctx) { }
+	@Override public void exitAggregate(@NotNull XhailParser.AggregateContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundLessEquals(@NotNull GrammarParser.GroundLessEqualsContext ctx) { }
+	@Override public void enterGroundLessEquals(@NotNull XhailParser.GroundLessEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundLessEquals(@NotNull GrammarParser.GroundLessEqualsContext ctx) { }
+	@Override public void exitGroundLessEquals(@NotNull XhailParser.GroundLessEqualsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHead(@NotNull GrammarParser.HeadContext ctx) { }
+	@Override public void enterHead(@NotNull XhailParser.HeadContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHead(@NotNull GrammarParser.HeadContext ctx) { }
+	@Override public void exitHead(@NotNull XhailParser.HeadContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundVariable(@NotNull GrammarParser.GroundVariableContext ctx) { }
+	@Override public void enterGroundVariable(@NotNull XhailParser.GroundVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundVariable(@NotNull GrammarParser.GroundVariableContext ctx) { }
+	@Override public void exitGroundVariable(@NotNull XhailParser.GroundVariableContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundNot(@NotNull GrammarParser.GroundNotContext ctx) { }
+	@Override public void enterGroundNot(@NotNull XhailParser.GroundNotContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundNot(@NotNull GrammarParser.GroundNotContext ctx) { }
+	@Override public void exitGroundNot(@NotNull XhailParser.GroundNotContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeySignature(@NotNull GrammarParser.KeySignatureContext ctx) { }
+	@Override public void enterKeySignature(@NotNull XhailParser.KeySignatureContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKeySignature(@NotNull GrammarParser.KeySignatureContext ctx) { }
+	@Override public void exitKeySignature(@NotNull XhailParser.KeySignatureContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeyConstant(@NotNull GrammarParser.KeyConstantContext ctx) { }
+	@Override public void enterKeyConstant(@NotNull XhailParser.KeyConstantContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKeyConstant(@NotNull GrammarParser.KeyConstantContext ctx) { }
+	@Override public void exitKeyConstant(@NotNull XhailParser.KeyConstantContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundEquals(@NotNull GrammarParser.GroundEqualsContext ctx) { }
+	@Override public void enterGroundEquals(@NotNull XhailParser.GroundEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundEquals(@NotNull GrammarParser.GroundEqualsContext ctx) { }
+	@Override public void exitGroundEquals(@NotNull XhailParser.GroundEqualsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMinimize(@NotNull GrammarParser.MinimizeContext ctx) { }
+	@Override public void enterMinimize(@NotNull XhailParser.MinimizeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMinimize(@NotNull GrammarParser.MinimizeContext ctx) { }
+	@Override public void exitMinimize(@NotNull XhailParser.MinimizeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundInteger(@NotNull GrammarParser.GroundIntegerContext ctx) { }
+	@Override public void enterGroundInteger(@NotNull XhailParser.GroundIntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundInteger(@NotNull GrammarParser.GroundIntegerContext ctx) { }
+	@Override public void exitGroundInteger(@NotNull XhailParser.GroundIntegerContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModeBody(@NotNull GrammarParser.ModeBodyContext ctx) { }
+	@Override public void enterModeBody(@NotNull XhailParser.ModeBodyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModeBody(@NotNull GrammarParser.ModeBodyContext ctx) { }
+	@Override public void exitModeBody(@NotNull XhailParser.ModeBodyContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundOr(@NotNull GrammarParser.GroundOrContext ctx) { }
+	@Override public void enterGroundOr(@NotNull XhailParser.GroundOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundOr(@NotNull GrammarParser.GroundOrContext ctx) { }
+	@Override public void exitGroundOr(@NotNull XhailParser.GroundOrContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHideExplicit(@NotNull GrammarParser.HideExplicitContext ctx) { }
+	@Override public void enterHideExplicit(@NotNull XhailParser.HideExplicitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHideExplicit(@NotNull GrammarParser.HideExplicitContext ctx) { }
+	@Override public void exitHideExplicit(@NotNull XhailParser.HideExplicitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBound(@NotNull GrammarParser.BoundContext ctx) { }
+	@Override public void enterBound(@NotNull XhailParser.BoundContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBound(@NotNull GrammarParser.BoundContext ctx) { }
+	@Override public void exitBound(@NotNull XhailParser.BoundContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoundsAll(@NotNull GrammarParser.BoundsAllContext ctx) { }
+	@Override public void enterBoundsAll(@NotNull XhailParser.BoundsAllContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoundsAll(@NotNull GrammarParser.BoundsAllContext ctx) { }
+	@Override public void exitBoundsAll(@NotNull XhailParser.BoundsAllContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundModulus1(@NotNull GrammarParser.GroundModulus1Context ctx) { }
+	@Override public void enterGroundModulus1(@NotNull XhailParser.GroundModulus1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundModulus1(@NotNull GrammarParser.GroundModulus1Context ctx) { }
+	@Override public void exitGroundModulus1(@NotNull XhailParser.GroundModulus1Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundModulus2(@NotNull GrammarParser.GroundModulus2Context ctx) { }
+	@Override public void enterGroundModulus2(@NotNull XhailParser.GroundModulus2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundModulus2(@NotNull GrammarParser.GroundModulus2Context ctx) { }
+	@Override public void exitGroundModulus2(@NotNull XhailParser.GroundModulus2Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundModulus3(@NotNull GrammarParser.GroundModulus3Context ctx) { }
+	@Override public void enterGroundModulus3(@NotNull XhailParser.GroundModulus3Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundModulus3(@NotNull GrammarParser.GroundModulus3Context ctx) { }
+	@Override public void exitGroundModulus3(@NotNull XhailParser.GroundModulus3Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundLess(@NotNull GrammarParser.GroundLessContext ctx) { }
+	@Override public void enterGroundLess(@NotNull XhailParser.GroundLessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundLess(@NotNull GrammarParser.GroundLessContext ctx) { }
+	@Override public void exitGroundLess(@NotNull XhailParser.GroundLessContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPlus(@NotNull GrammarParser.GroundPlusContext ctx) { }
+	@Override public void enterGroundPlus(@NotNull XhailParser.GroundPlusContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPlus(@NotNull GrammarParser.GroundPlusContext ctx) { }
+	@Override public void exitGroundPlus(@NotNull XhailParser.GroundPlusContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDirective(@NotNull GrammarParser.DirectiveContext ctx) { }
+	@Override public void enterDirective(@NotNull XhailParser.DirectiveContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDirective(@NotNull GrammarParser.DirectiveContext ctx) { }
+	@Override public void exitDirective(@NotNull XhailParser.DirectiveContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstraintClause(@NotNull GrammarParser.ConstraintClauseContext ctx) { }
+	@Override public void enterConstraintClause(@NotNull XhailParser.ConstraintClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitConstraintClause(@NotNull GrammarParser.ConstraintClauseContext ctx) { }
+	@Override public void exitConstraintClause(@NotNull XhailParser.ConstraintClauseContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundGreaterEquals(@NotNull GrammarParser.GroundGreaterEqualsContext ctx) { }
+	@Override public void enterGroundGreaterEquals(@NotNull XhailParser.GroundGreaterEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundGreaterEquals(@NotNull GrammarParser.GroundGreaterEqualsContext ctx) { }
+	@Override public void exitGroundGreaterEquals(@NotNull XhailParser.GroundGreaterEqualsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterShowExplicit(@NotNull GrammarParser.ShowExplicitContext ctx) { }
+	@Override public void enterShowExplicit(@NotNull XhailParser.ShowExplicitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitShowExplicit(@NotNull GrammarParser.ShowExplicitContext ctx) { }
+	@Override public void exitShowExplicit(@NotNull XhailParser.ShowExplicitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundGreater(@NotNull GrammarParser.GroundGreaterContext ctx) { }
+	@Override public void enterGroundGreater(@NotNull XhailParser.GroundGreaterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundGreater(@NotNull GrammarParser.GroundGreaterContext ctx) { }
+	@Override public void exitGroundGreater(@NotNull XhailParser.GroundGreaterContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeyList(@NotNull GrammarParser.KeyListContext ctx) { }
+	@Override public void enterKeyList(@NotNull XhailParser.KeyListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitKeyList(@NotNull GrammarParser.KeyListContext ctx) { }
+	@Override public void exitKeyList(@NotNull XhailParser.KeyListContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGroundPredicate(@NotNull GrammarParser.GroundPredicateContext ctx) { }
+	@Override public void enterGroundPredicate(@NotNull XhailParser.GroundPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGroundPredicate(@NotNull GrammarParser.GroundPredicateContext ctx) { }
+	@Override public void exitGroundPredicate(@NotNull XhailParser.GroundPredicateContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtom(@NotNull GrammarParser.AtomContext ctx) { }
+	@Override public void enterAtom(@NotNull XhailParser.AtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtom(@NotNull GrammarParser.AtomContext ctx) { }
+	@Override public void exitAtom(@NotNull XhailParser.AtomContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoundsBoth(@NotNull GrammarParser.BoundsBothContext ctx) { }
+	@Override public void enterBoundsBoth(@NotNull XhailParser.BoundsBothContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoundsBoth(@NotNull GrammarParser.BoundsBothContext ctx) { }
+	@Override public void exitBoundsBoth(@NotNull XhailParser.BoundsBothContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

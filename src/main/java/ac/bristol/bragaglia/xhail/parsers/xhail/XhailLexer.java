@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.2.2
+// Generated from Xhail.g4 by ANTLR 4.2.2
 
 package ac.bristol.bragaglia.xhail.parsers.xhail;
 
@@ -16,7 +16,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GrammarLexer extends Lexer {
+public class XhailLexer extends Lexer {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -64,17 +64,14 @@ public class GrammarLexer extends Lexer {
 		"LOWERCASE", "NONZERO", "UPPERCASE", "UNDERSCORE"
 	};
 
-	 
-	 	public static final int HIDDEN = 1;
-	 
 
-	public GrammarLexer(CharStream input) {
+	public XhailLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Grammar.g4"; }
+	public String getGrammarFileName() { return "Xhail.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }
@@ -249,7 +246,7 @@ public class GrammarLexer extends Lexer {
 		"\2\u01d9\u01d7\3\2\2\2\u01d9\u01da\3\2\2\2\u01da\u0086\3\2\2\2\u01db\u01d9"+
 		"\3\2\2\2\u01dc\u01de\t\4\2\2\u01dd\u01dc\3\2\2\2\u01de\u01df\3\2\2\2\u01df"+
 		"\u01dd\3\2\2\2\u01df\u01e0\3\2\2\2\u01e0\u01e1\3\2\2\2\u01e1\u01e2\bD"+
-		"\3\2\u01e2\u0088\3\2\2\2\u01e3\u01e6\t\5\2\2\u01e4\u01e6\5\u0091I\2\u01e5"+
+		"\2\2\u01e2\u0088\3\2\2\2\u01e3\u01e6\t\5\2\2\u01e4\u01e6\5\u0091I\2\u01e5"+
 		"\u01e3\3\2\2\2\u01e5\u01e4\3\2\2\2\u01e6\u008a\3\2\2\2\u01e7\u01e8\7^"+
 		"\2\2\u01e8\u01f8\t\6\2\2\u01e9\u01eb\7^\2\2\u01ea\u01ec\t\7\2\2\u01eb"+
 		"\u01ea\3\2\2\2\u01eb\u01ec\3\2\2\2\u01ec\u01ee\3\2\2\2\u01ed\u01ef\t\b"+
@@ -263,7 +260,7 @@ public class GrammarLexer extends Lexer {
 		"\u0090\3\2\2\2\u0201\u0202\t\13\2\2\u0202\u0092\3\2\2\2\u0203\u0204\t"+
 		"\f\2\2\u0204\u0094\3\2\2\2\u0205\u0206\7a\2\2\u0206\u0096\3\2\2\2\23\2"+
 		"\u012c\u0140\u01aa\u01b5\u01c1\u01c7\u01cc\u01ce\u01d4\u01d9\u01df\u01e5"+
-		"\u01eb\u01ee\u01f7\u01fd\4\2\3\2\b\2\2";
+		"\u01eb\u01ee\u01f7\u01fd\3\b\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -10,70 +10,70 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarBaseListener;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.BoundContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.BoundSingleContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.BoundsAllContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.BoundsBothContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ComputeContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ConstantContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ConstraintClauseContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.DomainContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ExampleContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ExternalContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.FactClauseContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.FullClauseContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundAbsolute1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundAbsolute2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundAndContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundAssign1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundAssign2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundDivide1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundDivide2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundDivide3Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundEqualsContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundGreaterContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundGreaterEqualsContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundIntegerContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundIntervalContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundLessContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundLessEqualsContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundMinus1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundMinus2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundModulus1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundModulus2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundModulus3Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundNotContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundNotEqualsContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundOrContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPlusContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPoolingContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPower1Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPower2Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPower3Context;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundPredicateContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundStringContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundTimesContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundVariableContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.GroundXorContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.HideAllContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.HideExplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.HideImplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.KeyConstantContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.KeyInputContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.KeyListContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.KeyOutputContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.KeySignatureContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.MaximizeContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.MinimizeContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ModeBodyContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ModeHeadContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.PriorityContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ShowAllContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ShowExplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.ShowImplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.SignatureContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.GrammarParser.WeightContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailBaseListener;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundSingleContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundsAllContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundsBothContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ComputeContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ConstantContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ConstraintClauseContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.DomainContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ExampleContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ExternalContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.FactClauseContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.FullClauseContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAbsolute1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAbsolute2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAndContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAssign1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAssign2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide3Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundEqualsContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundGreaterContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundGreaterEqualsContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundIntegerContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundIntervalContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundLessContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundLessEqualsContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundMinus1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundMinus2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundModulus1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundModulus2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundModulus3Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundNotContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundNotEqualsContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundOrContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPlusContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPoolingContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPower1Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPower2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPower3Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundPredicateContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundStringContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundTimesContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundVariableContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundXorContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideAllContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideExplicitContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideImplicitContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyConstantContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyInputContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyListContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyOutputContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeySignatureContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.MaximizeContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.MinimizeContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ModeBodyContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ModeHeadContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.PriorityContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowAllContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowExplicitContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowImplicitContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.SignatureContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.WeightContext;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 import ac.bristol.bragaglia.xhail.predicates.Literal;
@@ -83,23 +83,23 @@ import ac.bristol.bragaglia.xhail.problem.Problem;
  * @author stefano
  *
  */
-public class XhailListener extends GrammarBaseListener {
+public class XhailFileListener extends XhailBaseListener {
 
-	// private static XhailListener instance = null;
+	// private static XhailFileListener instance = null;
 
 	public static void accept(ParseTreeWalker walker, ParseTree tree, Problem problem) {
 		if (null == walker)
-			throw new IllegalArgumentException("Illegal 'walker' argument in XhailListener.host(ParseTreeWalker, ParseTree, Problem): " + walker);
+			throw new IllegalArgumentException("Illegal 'walker' argument in XhailFileListener.host(ParseTreeWalker, ParseTree, Problem): " + walker);
 		if (null == tree)
-			throw new IllegalArgumentException("Illegal 'tree' argument in XhailListener.host(ParseTreeWalker, ParseTree, Problem): " + tree);
+			throw new IllegalArgumentException("Illegal 'tree' argument in XhailFileListener.host(ParseTreeWalker, ParseTree, Problem): " + tree);
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in XhailListener.host(ParseTreeWalker, ParseTree, Problem): " + problem);
-		walker.walk(new XhailListener(problem), tree);
+			throw new IllegalArgumentException("Illegal 'problem' argument in XhailFileListener.host(ParseTreeWalker, ParseTree, Problem): " + problem);
+		walker.walk(new XhailFileListener(problem), tree);
 	}
 
 	private static String combine(ParserRuleContext ctx) {
 		if (null == ctx)
-			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailListener.combine(ParserRuleContext): " + ctx);
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.combine(ParserRuleContext): " + ctx);
 		StringJoiner joiner = new StringJoiner(" ");
 		combine(ctx, joiner);
 		return joiner.toString();
@@ -107,9 +107,9 @@ public class XhailListener extends GrammarBaseListener {
 
 	private static void combine(ParseTree ctx, StringJoiner joiner) {
 		if (null == ctx)
-			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailListener.combine(ParseTree, StringJoiner): " + ctx);
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.combine(ParseTree, StringJoiner): " + ctx);
 		if (null == joiner)
-			throw new IllegalArgumentException("Illegal 'joiner' argument in XhailListener.combine(ParseTree, StringJoiner): " + joiner);
+			throw new IllegalArgumentException("Illegal 'joiner' argument in XhailFileListener.combine(ParseTree, StringJoiner): " + joiner);
 		for (int i = 0; i < ctx.getChildCount(); i++) {
 			ParseTree child = ctx.getChild(i);
 			if (0 == child.getChildCount())
@@ -131,9 +131,9 @@ public class XhailListener extends GrammarBaseListener {
 
 	private Integer weight;
 
-	private XhailListener(Problem problem) {
+	private XhailFileListener(Problem problem) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in XhailListener(Model): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in XhailFileListener(Model): " + problem);
 		this.builders = new Stack<>();
 		this.problem = problem;
 	}

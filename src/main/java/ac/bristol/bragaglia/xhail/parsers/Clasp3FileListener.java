@@ -32,23 +32,23 @@ import ac.bristol.bragaglia.xhail.predicates.Builder;
  * @author stefano
  *
  */
-public class Clasp3Listener extends GrammarBaseListener {
+public class Clasp3FileListener extends GrammarBaseListener {
 
 	// private static final int[] EMPTY = {};
 
 	// /**
 	// * Unique instance of this singleton class.
 	// */
-	// private static Clasp3Listener instance;
+	// private static Clasp3FileListener instance;
 
 	public static void accept(ParseTreeWalker walker, ParseTree tree, Set<Set<Atom>> output) {
 		if (null == walker)
-			throw new IllegalArgumentException("Illegal 'walker' argument in Clasp3Listener.host(ParseTreeWalker, ParseTree, Set<Atom>): " + walker);
+			throw new IllegalArgumentException("Illegal 'walker' argument in Clasp3FileListener.host(ParseTreeWalker, ParseTree, Set<Atom>): " + walker);
 		if (null == tree)
-			throw new IllegalArgumentException("Illegal 'tree' argument in Clasp3Listener.host(ParseTreeWalker, ParseTree, Set<Atom>): " + tree);
+			throw new IllegalArgumentException("Illegal 'tree' argument in Clasp3FileListener.host(ParseTreeWalker, ParseTree, Set<Atom>): " + tree);
 		if (null == output)
-			throw new IllegalArgumentException("Illegal 'output' argument in Clasp3Listener.host(ParseTreeWalker, ParseTree, Set<Set<Atom>>): " + output);
-		walker.walk(new Clasp3Listener(output), tree);
+			throw new IllegalArgumentException("Illegal 'output' argument in Clasp3FileListener.host(ParseTreeWalker, ParseTree, Set<Set<Atom>>): " + output);
+		walker.walk(new Clasp3FileListener(output), tree);
 	}
 
 	// private Map<int[], Set<Set<Atom>>> answers;
@@ -70,7 +70,7 @@ public class Clasp3Listener extends GrammarBaseListener {
 	 * Default constructor. The constructor is private because this is a
 	 * singleton class.
 	 */
-	private Clasp3Listener(Set<Set<Atom>> output) {
+	private Clasp3FileListener(Set<Set<Atom>> output) {
 		this.answers = new LinkedHashMap<>();
 		this.builders = new Stack<>();
 		this.optimal = Collections.emptyList();
