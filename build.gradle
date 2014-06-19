@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = 'ac.bristol.bragaglia'
+version = '0.5.0'
+mainClassName = 'ac.bristol.bragaglia.xhail.application.Application'
+// applicationDefaultJvmArgs = ["-v", "--version"]
+// run {
+// 	args '-v' '--version'
+// }
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': rootProject.name, 'Implementation-Version': version
+        mainAttributes 'Main-Class': mainClassName
+    }
+    from { 
+    	configurations.compile.collect { 
+    		it.isDirectory() ? it : zipTree(it) 
+    	} 
+    }
+    archiveName = baseName + '.' + extension
+    destinationDir = project.file('/usr/local/' + rootProject.name + '-' + version + '/')
+}
+
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+	// compile 'ac.bristol.bragaglia:clasp3-parser:0.1.0'
+	// compile 'ac.bristol.bragaglia:xhail-parser:0.1.0'
+	compile 'org.antlr:antlr4-runtime:4.2.2'
+    testCompile 'junit:junit:4.11'
+}

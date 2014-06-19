@@ -1,0 +1,275 @@
+/**
+ * 
+ */
+package ac.bristol.bragaglia.xhail.config;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
+/**
+ * @author stefano
+ *
+ */
+public class Config {
+
+	private static final String STDIN = "stdin";
+
+	public static String[] combine(String command, String... args) {
+		if (null == command)
+			throw new IllegalArgumentException("Illegal 'command' argument in Config.combine(String, String[]): " + command);
+		if (null == args)
+			throw new IllegalArgumentException("Illegal 'args' argument in Config.combine(String, String[]): " + args);
+		int length = 0;
+		String[] result = new String[1 + args.length];
+		if (!(command = command.trim()).isEmpty())
+			result[length++] = command;
+		for (String arg : args)
+			if (!(arg = arg.trim()).isEmpty())
+				result[length++] = arg;
+		return Arrays.copyOf(result, length);
+	}
+
+	public static Process process(Path input, Path output, Path error, String command, String... args) {
+		if (null == input)
+			throw new IllegalArgumentException("Illegal 'input' argument in Config.process(Path, Path, Path, String, String[]): " + input);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Config.process(Path, Path, Path, String, String[]): " + output);
+		if (null == error)
+			throw new IllegalArgumentException("Illegal 'error' argument in Config.process(Path, Path, Path, String, String[]): " + error);
+		if (null == command || (command = command.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'command' argument in Config.process(Path, Path, Path, String, String[]): " + command);
+		if (null == args)
+			throw new IllegalArgumentException("Illegal 'args' argument in Config.process(Path, Path, Path, String, String[]): " + args);
+		try {
+			ProcessBuilder process = new ProcessBuilder(combine(command, args));
+			process.redirectInput(input.toFile());
+			process.redirectOutput(output.toFile());
+			process.redirectError(Redirect.appendTo(error.toFile()));
+			return process.start();
+		} catch (NullPointerException | IndexOutOfBoundsException | SecurityException | IOException e) {
+			return null;
+		}
+	}
+
+	private String clasp;
+
+	private Path current;
+
+	private boolean debug;
+
+	// private Set<File> files;
+
+	private String gringo;
+
+	private String name;
+
+	/**
+	 * @param gringo
+	 * @param clasp
+	 * @param debug
+	 */
+	public Config(String gringo, String clasp, boolean debug) {
+		File file;
+		if (null == gringo || (gringo = gringo.trim()).isEmpty() || !(file = new File(gringo)).isFile() || !file.exists())
+			throw new IllegalArgumentException("Illegal 'gringo' argument in Config(String, String, boolean): " + gringo);
+		if (null == clasp || (clasp = clasp.trim()).isEmpty() || !(file = new File(clasp)).isFile() || !file.exists())
+			throw new IllegalArgumentException("Illegal 'clasp' argument in Config(String, String, boolean): " + clasp);
+		try {
+			this.current = Paths.get(".").toRealPath();
+		} catch (IOException | SecurityException e) {
+			try {
+				this.current = Files.createTempDirectory("JHAIL_").toRealPath();
+			} catch (IOException | SecurityException ee) {
+				this.current = Paths.get(".");
+			}
+		}
+		this.gringo = gringo;
+		this.clasp = clasp;
+		this.name = STDIN;
+		// this.files = new LinkedHashSet<>();
+		// for (File source : files)
+		// if (source.isFile()) {
+		// this.files.add(source);
+		// if (this.name.equals(STDIN)) {
+		// this.name = source.getName();
+		// int p = this.name.lastIndexOf('.');
+		// if (p > -1)
+		// this.name = this.name.substring(0, p);
+		// }
+		// }
+		this.debug = debug;
+		assert invariant() : "Illegal state in Config(String, String, boolean)";
+	}
+
+	public Path createFile(Path path, String name) {
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Config.createFile(Path, String): " + path);
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFile(Path, String): " + name);
+		try {
+			Path result = Paths.get(path.toString(), name);
+			if (!result.toFile().exists())
+				result = Files.createFile(result);
+			if (!debug)
+				result.toFile().deleteOnExit();
+			assert invariant() : "Illegal state in Config.createFile(Path, String)";
+			return result;
+		} catch (UnsupportedOperationException | IOException | SecurityException e) {
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFile(Path, String): " + name);
+		}
+	}
+
+	public Path createFile(String name) {
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFile(String): " + name);
+		Path result = createFile(current, name);
+		assert invariant() : "Illegal state in Config.createFile(String)";
+		return result;
+
+	}
+
+	public Path createFolder(Path path, String name) {
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Config.createFolder(Path, String): " + path);
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFolder(Path, String): " + name);
+		try {
+			Path result;
+			if ("." == name)
+				result = path;
+			else if (".." == name)
+				result = path.getParent();
+			else {
+				result = Paths.get(path.toString(), name);
+				if (!result.toFile().exists())
+					result = Files.createDirectory(result);
+				if (!debug)
+					result.toFile().deleteOnExit();
+			}
+			assert invariant() : "Illegal state in Config.createFolder(Path, String)";
+			return result;
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFolder(Path, String): " + name);
+		}
+	}
+
+	public Path createFolder(String name) {
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFolder(String): " + name);
+		Path result = createFolder(current, name);
+		assert invariant() : "Illegal state in Config.createFolder(String)";
+		return result;
+	}
+
+	public boolean deleteFile(Path file) {
+		if (null == file)
+			throw new IllegalArgumentException("Illegal 'file' argument in Config.deleteFile(Path): " + file);
+		boolean result = false;
+		try {
+			File f = file.toFile();
+			if (f.exists())
+				result = f.delete();
+		} catch (SecurityException e) {
+			result = false;
+		}
+		assert invariant() : "Illegal state in Config.deleteFile(Path)";
+		return result;
+	}
+
+	public Path getCurrentPath() {
+		assert invariant() : "Illegal state in Config.getCurrentPath()";
+		return current;
+	}
+
+	public String getFilename() {
+		assert invariant() : "Illegal state in Config.getFilename()";
+		return name;
+	}
+
+	private boolean invariant() {
+		File file;
+		return (null != clasp && !clasp.isEmpty() && (file = new File(clasp)).isFile() && file.exists() && null != current && null != gringo
+				&& !gringo.isEmpty() && (file = new File(gringo)).isFile() && file.exists() && null != name && !name.isEmpty());
+	}
+
+	public boolean isDebug() {
+		assert invariant() : "Illegal state in Config.isDebug()";
+		return debug;
+	}
+
+	public Path overwriteFile(Path path, String name) {
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Config.overwriteFile(Path, String): " + path);
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.overwriteFile(Path, String): " + name);
+		try {
+			Path result = Paths.get(path.toString(), name);
+			if (result.toFile().exists())
+				result.toFile().delete();
+			result = Files.createFile(result);
+			if (!debug)
+				result.toFile().deleteOnExit();
+			assert invariant() : "Illegal state in Config.overwriteFile(Path, String)";
+			return result;
+		} catch (UnsupportedOperationException | IOException | SecurityException e) {
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.overwriteFile(Path, String): " + name);
+		}
+	}
+
+	public Path overwriteFile(String name) {
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.createFile(String): " + name);
+		Path result = overwriteFile(current, name);
+		assert invariant() : "Illegal state in Config.createFile(String)";
+		return result;
+	}
+
+	public Process runClasp(Path input, Path output, Path error) {
+		if (null == input)
+			throw new IllegalArgumentException("Illegal 'input' argument in Config.runClasp(Path, Path, Path): " + input);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Config.runClasp(Path, Path, Path): " + output);
+		if (null == error)
+			throw new IllegalArgumentException("Illegal 'error' argument in Config.runClasp(Path, Path, Path): " + error);
+		Process result = process(input, output, error, clasp, "--opt-mode=optN");
+		assert invariant() : "Illegal state in Config.runClasp(Path, Path, Path)";
+		return result;
+	}
+
+	public Process runGringo(Path input, Path output, Path error) {
+		if (null == input)
+			throw new IllegalArgumentException("Illegal 'input' argument in Config.runGringo(Path, Path, Path): " + input);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Config.runGringo(Path, Path, Path): " + output);
+		if (null == error)
+			throw new IllegalArgumentException("Illegal 'error' argument in Config.runGringo(Path, Path, Path): " + error);
+		Process result = process(input, output, error, gringo);
+		assert invariant() : "Illegal state in Config.runGringo(Path, Path, Path)";
+		return result;
+	}
+
+	public Process runGringoT(Path input, Path output, Path error) {
+		if (null == input)
+			throw new IllegalArgumentException("Illegal 'input' argument in Config.runGringo(Path, Path, Path): " + input);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Config.runGringo(Path, Path, Path): " + output);
+		if (null == error)
+			throw new IllegalArgumentException("Illegal 'error' argument in Config.runGringo(Path, Path, Path): " + error);
+		Process result = process(input, output, error, gringo, "-t");
+		assert invariant() : "Illegal state in Config.runGringo(Path, Path, Path)";
+		return result;
+	}
+
+	public void setName(String name) {
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Config.setName(String): " + name);
+		this.name = name;
+		assert invariant() : "Illegal state in Config.setName(String)";
+	}
+
+}
