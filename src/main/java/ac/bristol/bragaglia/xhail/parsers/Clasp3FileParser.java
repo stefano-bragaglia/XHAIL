@@ -15,8 +15,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarLexer;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Lexer;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 
 /**
@@ -67,9 +67,9 @@ public class Clasp3FileParser {
 		Set<Set<Atom>> result = new LinkedHashSet<>();
 		try {
 			ANTLRInputStream input = new ANTLRInputStream(stream);
-			GrammarLexer lexer = new GrammarLexer(input);
+			Clasp3Lexer lexer = new Clasp3Lexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-			GrammarParser parser = new GrammarParser(tokens);
+			Clasp3Parser parser = new Clasp3Parser(tokens);
 			parser.removeErrorListeners();
 			parser.addErrorListener(XhailErrorListener.get());
 			ParseTree tree = parser.output();

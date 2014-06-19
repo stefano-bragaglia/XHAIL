@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.2.2
+// Generated from Clasp3.g4 by ANTLR 4.2.2
 
 package ac.bristol.bragaglia.xhail.parsers.clasp3;
 
@@ -16,7 +16,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class GrammarLexer extends Lexer {
+public class Clasp3Lexer extends Lexer {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -53,13 +53,13 @@ public class GrammarLexer extends Lexer {
 	};
 
 
-	public GrammarLexer(CharStream input) {
+	public Clasp3Lexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Grammar.g4"; }
+	public String getGrammarFileName() { return "Clasp3.g4"; }
 
 	@Override
 	public String[] getTokenNames() { return tokenNames; }

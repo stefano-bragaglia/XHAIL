@@ -1,4 +1,4 @@
-// Generated from Grammar.g4 by ANTLR 4.2.2
+// Generated from Clasp3.g4 by ANTLR 4.2.2
 
 package ac.bristol.bragaglia.xhail.parsers.clasp3;
 
@@ -13,413 +13,413 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link GrammarListener},
+ * This class provides an empty implementation of {@link Clasp3Listener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class GrammarBaseListener implements GrammarListener {
+public class Clasp3BaseListener implements Clasp3Listener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExtension(@NotNull GrammarParser.ExtensionContext ctx) { }
+	@Override public void enterExtension(@NotNull Clasp3Parser.ExtensionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExtension(@NotNull GrammarParser.ExtensionContext ctx) { }
+	@Override public void exitExtension(@NotNull Clasp3Parser.ExtensionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSolving(@NotNull GrammarParser.SolvingContext ctx) { }
+	@Override public void enterSolving(@NotNull Clasp3Parser.SolvingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSolving(@NotNull GrammarParser.SolvingContext ctx) { }
+	@Override public void exitSolving(@NotNull Clasp3Parser.SolvingContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFact(@NotNull GrammarParser.FactContext ctx) { }
+	@Override public void enterFact(@NotNull Clasp3Parser.FactContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFact(@NotNull GrammarParser.FactContext ctx) { }
+	@Override public void exitFact(@NotNull Clasp3Parser.FactContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOptimal(@NotNull GrammarParser.OptimalContext ctx) { }
+	@Override public void enterOptimal(@NotNull Clasp3Parser.OptimalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOptimal(@NotNull GrammarParser.OptimalContext ctx) { }
+	@Override public void exitOptimal(@NotNull Clasp3Parser.OptimalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValues(@NotNull GrammarParser.ValuesContext ctx) { }
+	@Override public void enterValues(@NotNull Clasp3Parser.ValuesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValues(@NotNull GrammarParser.ValuesContext ctx) { }
+	@Override public void exitValues(@NotNull Clasp3Parser.ValuesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGenericFolder(@NotNull GrammarParser.GenericFolderContext ctx) { }
+	@Override public void enterGenericFolder(@NotNull Clasp3Parser.GenericFolderContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGenericFolder(@NotNull GrammarParser.GenericFolderContext ctx) { }
+	@Override public void exitGenericFolder(@NotNull Clasp3Parser.GenericFolderContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSourceFile(@NotNull GrammarParser.SourceFileContext ctx) { }
+	@Override public void enterSourceFile(@NotNull Clasp3Parser.SourceFileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSourceFile(@NotNull GrammarParser.SourceFileContext ctx) { }
+	@Override public void exitSourceFile(@NotNull Clasp3Parser.SourceFileContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomPredicate(@NotNull GrammarParser.AtomPredicateContext ctx) { }
+	@Override public void enterAtomPredicate(@NotNull Clasp3Parser.AtomPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomPredicate(@NotNull GrammarParser.AtomPredicateContext ctx) { }
+	@Override public void exitAtomPredicate(@NotNull Clasp3Parser.AtomPredicateContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOutput(@NotNull GrammarParser.OutputContext ctx) { }
+	@Override public void enterOutput(@NotNull Clasp3Parser.OutputContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOutput(@NotNull GrammarParser.OutputContext ctx) { }
+	@Override public void exitOutput(@NotNull Clasp3Parser.OutputContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterResult(@NotNull GrammarParser.ResultContext ctx) { }
+	@Override public void enterResult(@NotNull Clasp3Parser.ResultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitResult(@NotNull GrammarParser.ResultContext ctx) { }
+	@Override public void exitResult(@NotNull Clasp3Parser.ResultContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSourceSTDIN(@NotNull GrammarParser.SourceSTDINContext ctx) { }
+	@Override public void enterSourceSTDIN(@NotNull Clasp3Parser.SourceSTDINContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSourceSTDIN(@NotNull GrammarParser.SourceSTDINContext ctx) { }
+	@Override public void exitSourceSTDIN(@NotNull Clasp3Parser.SourceSTDINContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(@NotNull GrammarParser.NumberContext ctx) { }
+	@Override public void enterNumber(@NotNull Clasp3Parser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(@NotNull GrammarParser.NumberContext ctx) { }
+	@Override public void exitNumber(@NotNull Clasp3Parser.NumberContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParentFolder(@NotNull GrammarParser.ParentFolderContext ctx) { }
+	@Override public void enterParentFolder(@NotNull Clasp3Parser.ParentFolderContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParentFolder(@NotNull GrammarParser.ParentFolderContext ctx) { }
+	@Override public void exitParentFolder(@NotNull Clasp3Parser.ParentFolderContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSeparation(@NotNull GrammarParser.SeparationContext ctx) { }
+	@Override public void enterSeparation(@NotNull Clasp3Parser.SeparationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSeparation(@NotNull GrammarParser.SeparationContext ctx) { }
+	@Override public void exitSeparation(@NotNull Clasp3Parser.SeparationContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOptimization(@NotNull GrammarParser.OptimizationContext ctx) { }
+	@Override public void enterOptimization(@NotNull Clasp3Parser.OptimizationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOptimization(@NotNull GrammarParser.OptimizationContext ctx) { }
+	@Override public void exitOptimization(@NotNull Clasp3Parser.OptimizationContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathWindows(@NotNull GrammarParser.PathWindowsContext ctx) { }
+	@Override public void enterPathWindows(@NotNull Clasp3Parser.PathWindowsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPathWindows(@NotNull GrammarParser.PathWindowsContext ctx) { }
+	@Override public void exitPathWindows(@NotNull Clasp3Parser.PathWindowsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModel(@NotNull GrammarParser.ModelContext ctx) { }
+	@Override public void enterModel(@NotNull Clasp3Parser.ModelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModel(@NotNull GrammarParser.ModelContext ctx) { }
+	@Override public void exitModel(@NotNull Clasp3Parser.ModelContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomInteger(@NotNull GrammarParser.AtomIntegerContext ctx) { }
+	@Override public void enterAtomInteger(@NotNull Clasp3Parser.AtomIntegerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomInteger(@NotNull GrammarParser.AtomIntegerContext ctx) { }
+	@Override public void exitAtomInteger(@NotNull Clasp3Parser.AtomIntegerContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModels(@NotNull GrammarParser.ModelsContext ctx) { }
+	@Override public void enterModels(@NotNull Clasp3Parser.ModelsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModels(@NotNull GrammarParser.ModelsContext ctx) { }
+	@Override public void exitModels(@NotNull Clasp3Parser.ModelsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOptimum(@NotNull GrammarParser.OptimumContext ctx) { }
+	@Override public void enterOptimum(@NotNull Clasp3Parser.OptimumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOptimum(@NotNull GrammarParser.OptimumContext ctx) { }
+	@Override public void exitOptimum(@NotNull Clasp3Parser.OptimumContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPathNIX(@NotNull GrammarParser.PathNIXContext ctx) { }
+	@Override public void enterPathNIX(@NotNull Clasp3Parser.PathNIXContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPathNIX(@NotNull GrammarParser.PathNIXContext ctx) { }
+	@Override public void exitPathNIX(@NotNull Clasp3Parser.PathNIXContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVersion(@NotNull GrammarParser.VersionContext ctx) { }
+	@Override public void enterVersion(@NotNull Clasp3Parser.VersionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVersion(@NotNull GrammarParser.VersionContext ctx) { }
+	@Override public void exitVersion(@NotNull Clasp3Parser.VersionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomString(@NotNull GrammarParser.AtomStringContext ctx) { }
+	@Override public void enterAtomString(@NotNull Clasp3Parser.AtomStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomString(@NotNull GrammarParser.AtomStringContext ctx) { }
+	@Override public void exitAtomString(@NotNull Clasp3Parser.AtomStringContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFilename(@NotNull GrammarParser.FilenameContext ctx) { }
+	@Override public void enterFilename(@NotNull Clasp3Parser.FilenameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFilename(@NotNull GrammarParser.FilenameContext ctx) { }
+	@Override public void exitFilename(@NotNull Clasp3Parser.FilenameContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAnswer(@NotNull GrammarParser.AnswerContext ctx) { }
+	@Override public void enterAnswer(@NotNull Clasp3Parser.AnswerContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAnswer(@NotNull GrammarParser.AnswerContext ctx) { }
+	@Override public void exitAnswer(@NotNull Clasp3Parser.AnswerContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCalls(@NotNull GrammarParser.CallsContext ctx) { }
+	@Override public void enterCalls(@NotNull Clasp3Parser.CallsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCalls(@NotNull GrammarParser.CallsContext ctx) { }
+	@Override public void exitCalls(@NotNull Clasp3Parser.CallsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOptValues(@NotNull GrammarParser.OptValuesContext ctx) { }
+	@Override public void enterOptValues(@NotNull Clasp3Parser.OptValuesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOptValues(@NotNull GrammarParser.OptValuesContext ctx) { }
+	@Override public void exitOptValues(@NotNull Clasp3Parser.OptValuesContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCurrentFolder(@NotNull GrammarParser.CurrentFolderContext ctx) { }
+	@Override public void enterCurrentFolder(@NotNull Clasp3Parser.CurrentFolderContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCurrentFolder(@NotNull GrammarParser.CurrentFolderContext ctx) { }
+	@Override public void exitCurrentFolder(@NotNull Clasp3Parser.CurrentFolderContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTime(@NotNull GrammarParser.TimeContext ctx) { }
+	@Override public void enterTime(@NotNull Clasp3Parser.TimeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTime(@NotNull GrammarParser.TimeContext ctx) { }
+	@Override public void exitTime(@NotNull Clasp3Parser.TimeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCputime(@NotNull GrammarParser.CputimeContext ctx) { }
+	@Override public void enterCputime(@NotNull Clasp3Parser.CputimeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCputime(@NotNull GrammarParser.CputimeContext ctx) { }
+	@Override public void exitCputime(@NotNull Clasp3Parser.CputimeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatistics(@NotNull GrammarParser.StatisticsContext ctx) { }
+	@Override public void enterStatistics(@NotNull Clasp3Parser.StatisticsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatistics(@NotNull GrammarParser.StatisticsContext ctx) { }
+	@Override public void exitStatistics(@NotNull Clasp3Parser.StatisticsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

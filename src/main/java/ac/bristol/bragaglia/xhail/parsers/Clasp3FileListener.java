@@ -16,15 +16,15 @@ import java.util.TreeSet;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarBaseListener;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.AnswerContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.AtomIntegerContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.AtomPredicateContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.AtomStringContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.FactContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.OptValuesContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.OutputContext;
-import ac.bristol.bragaglia.xhail.parsers.clasp3.GrammarParser.ValuesContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3BaseListener;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.AnswerContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.AtomIntegerContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.AtomPredicateContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.AtomStringContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.FactContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.OptValuesContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.OutputContext;
+import ac.bristol.bragaglia.xhail.parsers.clasp3.Clasp3Parser.ValuesContext;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 
@@ -32,7 +32,7 @@ import ac.bristol.bragaglia.xhail.predicates.Builder;
  * @author stefano
  *
  */
-public class Clasp3FileListener extends GrammarBaseListener {
+public class Clasp3FileListener extends Clasp3BaseListener {
 
 	// private static final int[] EMPTY = {};
 
