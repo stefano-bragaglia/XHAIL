@@ -66,15 +66,23 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 					if (!line.isEmpty()) {
 						if (line.startsWith("% warning: ")) {
 							line = line.substring(11);
+							if (line.endsWith(":") || line.endsWith("!"))
+								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
 						} else if (line.startsWith("ERROR: ")) {
 							line = line.substring(7);
+							if (line.endsWith(":") || line.endsWith("!"))
+								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** ERROR (%s): %s on abduction", Version.get().getTitle(), line));
 						} else if (line.startsWith("*** ERROR: ")) {
 							line = line.substring(11);
+							if (line.endsWith(":") || line.endsWith("!"))
+								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** ERROR (%s): %s on abduction", Version.get().getTitle(), line));
 						} else if (line.startsWith("% error: ")) {
 							line = line.substring(9);
+							if (line.endsWith(":") || line.endsWith("!"))
+								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** ERROR (%s): %s on abduction", Version.get().getTitle(), line));
 						} else
 							System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
