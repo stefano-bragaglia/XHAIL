@@ -220,8 +220,11 @@ public class Problem extends Model {
 		if (null == name || (name = name.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'name' argument in Problem.compose(String, String, int, int, String): " + name);
 		if (null == list || (list = list.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'vars' argument in Problem.compose(String, String, int, int, String): " + list);
-		return String.format("%s%s_%d_%d(%s)", tag, name, weight, priority, list);
+			throw new IllegalArgumentException("Illegal 'list' argument in Problem.compose(String, String, int, int, String): " + list);
+		if (list.isEmpty())
+			return String.format("%s%s_%d_%d", tag, name, weight, priority);
+		else
+			return String.format("%s%s_%d_%d(%s)", tag, name, weight, priority, list);
 	}
 
 	/**
