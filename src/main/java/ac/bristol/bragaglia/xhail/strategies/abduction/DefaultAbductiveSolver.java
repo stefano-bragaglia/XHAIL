@@ -61,10 +61,18 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 				result = new Explanation(problem, Clasp3FileParser.parse(stream));
 				stream.close();
 				List<String> lines = Files.readAllLines(errors);
-				for (String line : lines)
-					System.err.println(String.format("*** WARNING (%s): %s", Version.get().getTitle(), line));
+				for (String line : lines) {
+					if (line.startsWith("% warning: ")) {
+						line = line.substring(11);
+						System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
+					}
+					if (line.startsWith("% error: ")) {
+						line = line.substring(9);
+						System.err.println(String.format("*** ERROR (%s): %s on abduction", Version.get().getTitle(), line));
+					}
+				}
 			} catch (InterruptedException | IOException | SecurityException e) {
-				// nothing, so that abduced will remain null.
+				// nothing, so that Explanation will remain null.
 			}
 		}
 		assert invariant() : "Illegal state in DefaultAbductiveSolver.solve(Config, Problem)";

@@ -61,8 +61,16 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 				result = new Hypothesis(kernel, Clasp3FileParser.parse(stream));
 				stream.close();
 				List<String> lines = Files.readAllLines(errors);
-				for (String line : lines)
-					System.err.println(String.format("*** WARNING (%s): %s", Version.get().getTitle(), line));
+				for (String line : lines) {
+					if (line.startsWith("% warning: ")) {
+						line = line.substring(11);
+						System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
+					}
+					if (line.startsWith("% error: ")) {
+						line = line.substring(9);
+						System.err.println(String.format("*** ERROR (%s): %s on induction", Version.get().getTitle(), line));
+					}
+				}
 			} catch (InterruptedException | IOException | SecurityException e) {
 				// nothing, so that induced will remain null.
 			}
