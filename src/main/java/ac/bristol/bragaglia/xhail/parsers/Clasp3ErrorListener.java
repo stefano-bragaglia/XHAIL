@@ -13,15 +13,15 @@ import ac.bristol.bragaglia.xhail.application.Version;
  * @author stefano
  *
  */
-public class XhailErrorListener extends BaseErrorListener {
+public class Clasp3ErrorListener extends BaseErrorListener {
 
-	private static final XhailErrorListener instance = new XhailErrorListener();
+	private static final Clasp3ErrorListener instance = new Clasp3ErrorListener();
 
-	public static XhailErrorListener get() {
+	public static Clasp3ErrorListener get() {
 		return instance;
 	}
 
-	private XhailErrorListener() {
+	private Clasp3ErrorListener() {
 		super();
 	}
 
@@ -29,14 +29,14 @@ public class XhailErrorListener extends BaseErrorListener {
 	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
 		if (msg.startsWith("% warning: ")) {
 			msg = msg.substring(11);
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
+			System.err.println(String.format("*** WARNING (%s): %s on output at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
 					charPositionInLine));
 		} else if (msg.startsWith("% error: ")) {
 			msg = msg.substring(9);
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
+			System.err.println(String.format("*** WARNING (%s): %s on output at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
 					charPositionInLine));
 		} else
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
+			System.err.println(String.format("*** WARNING (%s): %s on output at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
 					charPositionInLine));
 	}
 

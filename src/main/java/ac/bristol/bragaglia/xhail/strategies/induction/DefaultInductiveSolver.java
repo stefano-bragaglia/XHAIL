@@ -65,11 +65,11 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 					if (line.startsWith("% warning: ")) {
 						line = line.substring(11);
 						System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
-					}
-					if (line.startsWith("% error: ")) {
+					} else if (line.startsWith("% error: ")) {
 						line = line.substring(9);
 						System.err.println(String.format("*** ERROR (%s): %s on induction", Version.get().getTitle(), line));
-					}
+					} else
+						System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
 				}
 			} catch (InterruptedException | IOException | SecurityException e) {
 				// nothing, so that induced will remain null.

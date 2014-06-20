@@ -71,7 +71,7 @@ public class Clasp3FileParser {
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			Clasp3Parser parser = new Clasp3Parser(tokens);
 			parser.removeErrorListeners();
-			parser.addErrorListener(XhailErrorListener.get());
+			parser.addErrorListener(Clasp3ErrorListener.get());
 			ParseTree tree = parser.output();
 			ParseTreeWalker walker = new ParseTreeWalker();
 			Clasp3FileListener.accept(walker, tree, result);
