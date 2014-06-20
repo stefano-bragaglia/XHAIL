@@ -215,5 +215,5 @@ Models       : 69
   Optimal    : 64
 Optimization : 7
 Calls        : 1
-Time         : 0.235s (Solving: 0.01s 1st Model: 0.00s Unsat: 0.00s)
-CPU Time     : 0.220s
+Time         : 0.387s (Solving: 0.01s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.380s

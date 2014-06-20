@@ -104,7 +104,7 @@ modeHead
 
 signature
 :
-	IDENTIFIER PAREN_LEFT keyList PAREN_RIGHT
+	IDENTIFIER (PAREN_LEFT keyList PAREN_RIGHT)?
 ;
 
 keyList

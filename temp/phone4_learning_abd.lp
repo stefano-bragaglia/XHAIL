@@ -23,11 +23,11 @@
 
 #maximize[ holdsAt(connected(p1, p2), 3) =1 @1, holdsAt(dialTone(p1), 1) =1 @1, holdsAt(disconnected(p2), 4) =1 @1, holdsAt(idle(p1), 0) =1 @1, holdsAt(idle(p1), 4) =1 @1, holdsAt(idle(p1), 5) =1 @1, holdsAt(idle(p2), 0) =1 @1, holdsAt(idle(p2), 1) =1 @1, holdsAt(idle(p2), 5) =1 @1, holdsAt(ringing(p1, p2), 2) =1 @1, not holdsAt(busySignal(p1), 0) =1 @1, not holdsAt(busySignal(p1), 1) =1 @1, not holdsAt(busySignal(p1), 2) =1 @1, not holdsAt(busySignal(p1), 3) =1 @1, not holdsAt(busySignal(p1), 4) =1 @1, not holdsAt(busySignal(p1), 5) =1 @1, not holdsAt(busySignal(p2), 0) =1 @1, not holdsAt(busySignal(p2), 1) =1 @1, not holdsAt(busySignal(p2), 2) =1 @1, not holdsAt(busySignal(p2), 3) =1 @1, not holdsAt(busySignal(p2), 4) =1 @1, not holdsAt(busySignal(p2), 5) =1 @1, not holdsAt(connected(p1, p1), 0) =1 @1, not holdsAt(connected(p1, p1), 1) =1 @1, not holdsAt(connected(p1, p1), 2) =1 @1, not holdsAt(connected(p1, p1), 3) =1 @1, not holdsAt(connected(p1, p1), 4) =1 @1, not holdsAt(connected(p1, p1), 5) =1 @1, not holdsAt(connected(p1, p2), 0) =1 @1, not holdsAt(connected(p1, p2), 1) =1 @1, not holdsAt(connected(p1, p2), 2) =1 @1, not holdsAt(connected(p1, p2), 4) =1 @1, not holdsAt(connected(p1, p2), 5) =1 @1, not holdsAt(connected(p2, p1), 0) =1 @1, not holdsAt(connected(p2, p1), 1) =1 @1, not holdsAt(connected(p2, p1), 2) =1 @1, not holdsAt(connected(p2, p1), 3) =1 @1, not holdsAt(connected(p2, p1), 4) =1 @1, not holdsAt(connected(p2, p1), 5) =1 @1, not holdsAt(connected(p2, p2), 0) =1 @1, not holdsAt(connected(p2, p2), 1) =1 @1, not holdsAt(connected(p2, p2), 2) =1 @1, not holdsAt(connected(p2, p2), 3) =1 @1, not holdsAt(connected(p2, p2), 4) =1 @1, not holdsAt(connected(p2, p2), 5) =1 @1, not holdsAt(dialTone(p1), 0) =1 @1, not holdsAt(dialTone(p1), 2) =1 @1, not holdsAt(dialTone(p1), 3) =1 @1, not holdsAt(dialTone(p1), 4) =1 @1, not holdsAt(dialTone(p1), 5) =1 @1, not holdsAt(dialTone(p2), 0) =1 @1, not holdsAt(dialTone(p2), 1) =1 @1, not holdsAt(dialTone(p2), 2) =1 @1, not holdsAt(dialTone(p2), 3) =1 @1, not holdsAt(dialTone(p2), 4) =1 @1, not holdsAt(dialTone(p2), 5) =1 @1, not holdsAt(disconnected(p1), 0) =1 @1, not holdsAt(disconnected(p1), 1) =1 @1, not holdsAt(disconnected(p1), 2) =1 @1, not holdsAt(disconnected(p1), 3) =1 @1, not holdsAt(disconnected(p1), 4) =1 @1, not holdsAt(disconnected(p1), 5) =1 @1, not holdsAt(disconnected(p2), 0) =1 @1, not holdsAt(disconnected(p2), 1) =1 @1, not holdsAt(disconnected(p2), 2) =1 @1, not holdsAt(disconnected(p2), 3) =1 @1, not holdsAt(disconnected(p2), 5) =1 @1, not holdsAt(idle(p1), 1) =1 @1, not holdsAt(idle(p1), 2) =1 @1, not holdsAt(idle(p1), 3) =1 @1, not holdsAt(idle(p2), 2) =1 @1, not holdsAt(idle(p2), 3) =1 @1, not holdsAt(idle(p2), 4) =1 @1, not holdsAt(ringing(p1, p1), 0) =1 @1, not holdsAt(ringing(p1, p1), 1) =1 @1, not holdsAt(ringing(p1, p1), 2) =1 @1, not holdsAt(ringing(p1, p1), 3) =1 @1, not holdsAt(ringing(p1, p1), 4) =1 @1, not holdsAt(ringing(p1, p1), 5) =1 @1, not holdsAt(ringing(p1, p2), 0) =1 @1, not holdsAt(ringing(p1, p2), 1) =1 @1, not holdsAt(ringing(p1, p2), 3) =1 @1, not holdsAt(ringing(p1, p2), 4) =1 @1, not holdsAt(ringing(p1, p2), 5) =1 @1, not holdsAt(ringing(p2, p1), 0) =1 @1, not holdsAt(ringing(p2, p1), 1) =1 @1, not holdsAt(ringing(p2, p1), 2) =1 @1, not holdsAt(ringing(p2, p1), 3) =1 @1, not holdsAt(ringing(p2, p1), 4) =1 @1, not holdsAt(ringing(p2, p1), 5) =1 @1, not holdsAt(ringing(p2, p2), 0) =1 @1, not holdsAt(ringing(p2, p2), 1) =1 @1, not holdsAt(ringing(p2, p2), 2) =1 @1, not holdsAt(ringing(p2, p2), 3) =1 @1, not holdsAt(ringing(p2, p2), 4) =1 @1, not holdsAt(ringing(p2, p2), 5) =1 @1 ].
 
-#minimize[ abd_initiates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)) =1 @1 : typ_initiates_1_1(V1, V2, V3) ].
-#minimize[ abd_terminates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)) =1 @1 : typ_terminates_1_1(V1, V2, V3) ].
+#minimize[ abd_initiates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)) =1 @1 : typ_initiates_1_1(V1, V2, V3) ].
+#minimize[ abd_terminates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)) =1 @1 : typ_terminates_1_1(V1, V2, V3) ].
 
-0 { abd_initiates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)) : typ_initiates_1_1(V1, V2, V3) } 5.
-0 { abd_terminates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)) : typ_terminates_1_1(V1, V2, V3) } 5.
+0 { abd_initiates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)) : typ_initiates_1_1(V1, V2, V3) } 5.
+0 { abd_terminates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)) : typ_terminates_1_1(V1, V2, V3) } 5.
 eql ( E , E ) :- event ( E ) .
 eql ( F , F ) :- fluent ( F ) .
 event ( pickUp ( A , P ) ; setDown ( A , P ) ; dial ( A , P1 , P2 ) ) :- phone ( P ) , phone ( P1 ) , phone ( P2 ) , agent ( A ) .
@@ -47,7 +47,7 @@ initiates ( setDown ( A , P1 ) , idle ( P1 ) , T ) :- agent ( A ) , holdsAt ( ri
 initiates ( setDown ( A , P1 ) , idle ( P2 ) , T ) :- agent ( A ) , holdsAt ( ringing ( P1 , P2 ) , T ) .
 initiates ( setDown ( A , P2 ) , disconnected ( P1 ) , T ) :- agent ( A ) , holdsAt ( connected ( P1 , P2 ) , T ) .
 initiates ( setDown ( A , P2 ) , idle ( P2 ) , T ) :- agent ( A ) , holdsAt ( connected ( P1 , P2 ) , T ) .
-initiates(V1, V2, V3) :- typ_initiates_1_1(V1, V2, V3), abd_initiates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)).
+initiates(V1, V2, V3) :- typ_initiates_1_1(V1, V2, V3), abd_initiates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)).
 started ( F , T ) :- happens ( E , T ) , initiates ( E , F , T ) .
 stopped ( F , T ) :- happens ( E , T ) , terminates ( E , F , T ) .
 terminates ( dial ( A , P1 , P2 ) , dialTone ( P1 ) , T ) :- agent ( A ) , holdsAt ( dialTone ( P1 ) , T ) , holdsAt ( idle ( P2 ) , T ) .
@@ -60,7 +60,7 @@ terminates ( setDown ( A , P ) , disconnected ( P ) , T ) :- agent ( A ) , holds
 terminates ( setDown ( A , P1 ) , connected ( P1 , P2 ) , T ) :- agent ( A ) , holdsAt ( connected ( P1 , P2 ) , T ) .
 terminates ( setDown ( A , P1 ) , ringing ( P1 , P2 ) , T ) :- agent ( A ) , holdsAt ( ringing ( P1 , P2 ) , T ) .
 terminates ( setDown ( A , P2 ) , connected ( P1 , P2 ) , T ) :- agent ( A ) , holdsAt ( connected ( P1 , P2 ) , T ) .
-terminates(V1, V2, V3) :- typ_terminates_1_1(V1, V2, V3), abd_terminates_1_1(inp(V1, event), inp(V2, fluent), inp(V3, time)).
+terminates(V1, V2, V3) :- typ_terminates_1_1(V1, V2, V3), abd_terminates_1_1(inp_tag(V1, event), inp_tag(V2, fluent), inp_tag(V3, time)).
 typ_initiates_1_1(V1, V2, V3) :- event(V1), fluent(V2), time(V3).
 typ_terminates_1_1(V1, V2, V3) :- event(V1), fluent(V2), time(V3).
 

@@ -59,11 +59,11 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 
 	public static final String OUP_SYMBOL = "-";
 
-	public static final String PAR_CONSTANT = "con";
+	public static final String PAR_CONSTANT = "con_tag";
 
-	public static final String PAR_INPUT = "inp";
+	public static final String PAR_INPUT = "inp_tag";
 
-	public static final String PAR_OUTPUT = "oup";
+	public static final String PAR_OUTPUT = "oup_tag";
 
 	public static final String POOLING = "#pooling";
 
