@@ -219,7 +219,7 @@ public class Problem extends Model {
 			throw new IllegalArgumentException("Illegal 'tag' argument in Problem.compose(String, String, int, int, String): " + tag);
 		if (null == name || (name = name.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'name' argument in Problem.compose(String, String, int, int, String): " + name);
-		if (null == list || (list = list.trim()).isEmpty())
+		if (null == list)
 			throw new IllegalArgumentException("Illegal 'list' argument in Problem.compose(String, String, int, int, String): " + list);
 		if (list.isEmpty())
 			return String.format("%s%s_%d_%d", tag, name, weight, priority);
