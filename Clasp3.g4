@@ -138,7 +138,7 @@ statistics
 
 models
 :
-	'Models       : ' INTEGER SPACE* NEWLINE
+	'Models       : ' INTEGER PLUS? SPACE* NEWLINE
 ;
 
 optimum
@@ -280,6 +280,11 @@ STRING
 		~["\\]
 		| ESCAPE
 	)+? '"'
+;
+
+PLUS
+: 
+	'+'
 ;
 
 fragment

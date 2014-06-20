@@ -626,7 +626,10 @@ public class Problem extends Model {
 				model.addShow(String.format("#show %s / %d .", name, arity));
 				model.addMinimize(String.format("#minimize[ %s%s : %s ].", abduce, value.asData(), type));
 				model.addClause(String.format("%s :- %s.", type, types));
-				model.addClause(String.format("%s(%s) :- %s, %s.", name, vars, type, abduce));
+				if (vars.isEmpty())
+					model.addClause(String.format("%s :- %s, %s.", name, type, abduce));
+				else
+					model.addClause(String.format("%s(%s) :- %s, %s.", name, vars, type, abduce));
 				model.addClause(String.format("%s{ %s : %s }%s.", value.asLower(), abduce, type, value.asUpper()));
 			}
 		}
