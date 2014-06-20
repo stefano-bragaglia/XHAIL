@@ -27,7 +27,7 @@ public class XhailErrorListener extends BaseErrorListener {
 
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-		System.err.println(String.format("*** WARNING (%s): %s", Version.get().getTitle(), msg));
+		System.err.println(String.format("*** WARNING (%s): %s", Version.get().getTitle(), e.getMessage()));
 	}
 
 }
