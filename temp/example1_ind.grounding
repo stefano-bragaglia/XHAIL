@@ -1,0 +1,29 @@
+#hide.
+#show use_clause_literal/2.
+clause(1).
+literal(1,1).
+ssss(a).
+type(a).
+type(b).
+type(c).
+#count{use_clause_literal(1,0)}.
+#count{use_clause_literal(1,1)}.
+try_clause_literal(1,1,c):-not use_clause_literal(1,1).
+try_clause_literal(1,1,b):-not use_clause_literal(1,1).
+try_clause_literal(1,1,a):-not use_clause_literal(1,1).
+try_clause_literal(1,1,a):-use_clause_literal(1,1).
+q(a):-use_clause_literal(1,0),try_clause_literal(1,1,a).
+q(b):-use_clause_literal(1,0),try_clause_literal(1,1,b).
+q(c):-use_clause_literal(1,0),try_clause_literal(1,1,c).
+p(c):-q(c).
+p(b):-q(b).
+p(a):-q(a).
+#maximize[p(a)=1@1].
+#maximize[not p(b)=1@1].
+#minimize[use_clause_literal(1,0)=1@1].
+#minimize[use_clause_literal(1,1)=1@1].
+level(1,0):-use_clause_literal(1,0).
+level(1,1):-use_clause_literal(1,1).
+:-not level(1,0),level(1,1).
+:-not p(a).
+:-p(b).

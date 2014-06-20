@@ -30,11 +30,11 @@ public class XhailErrorListener extends BaseErrorListener {
 		if (msg.startsWith("% warning: ")) {
 			msg = msg.substring(11);
 			System.err.println(String.format("*** WARNING (%s): %s on %d:%d", Version.get().getTitle(), e.getMessage(), line, charPositionInLine));
-		}
-		if (msg.startsWith("% error: ")) {
+		} else if (msg.startsWith("% error: ")) {
 			msg = msg.substring(9);
 			System.err.println(String.format("*** WARNING (%s): %s on %d:%d", Version.get().getTitle(), e.getMessage(), line, charPositionInLine));
-		}
+		} else
+			System.err.println(String.format("*** WARNING (%s): %s on %d:%d", Version.get().getTitle(), e.getMessage(), line, charPositionInLine));
 	}
 
 }

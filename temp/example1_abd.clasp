@@ -1,0 +1,21 @@
+clasp version 3.0.3
+Reading from stdin
+Solving...
+Answer: 1
+s(a) type(a) type(b) type(c) p(a) abd_r_1_1(inp_tag(a,type)) r(a)
+Optimization: 1
+Answer: 1
+s(a) type(a) type(b) type(c) abd_q_1_1(inp_tag(a,type)) q(a) p(a)
+Optimization: 1
+Answer: 2
+s(a) type(a) type(b) type(c) p(a) abd_r_1_1(inp_tag(a,type)) r(a)
+Optimization: 1
+OPTIMUM FOUND
+
+Models       : 3     
+  Optimum    : yes
+  Optimal    : 2
+Optimization : 1
+Calls        : 1
+Time         : 0.001s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.000s

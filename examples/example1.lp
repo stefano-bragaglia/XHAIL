@@ -3,11 +3,11 @@
 
 #modeh q(+type).
 #modeh r(+type).
-#modeb ssss(+type).
+#modeb s(+type).
 
 p(X) :- q(X).
 p(X) :- r(X).
 
 type(a;b;c).
 
-ssss(a).
+s(a).
