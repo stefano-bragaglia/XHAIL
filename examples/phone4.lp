@@ -53,10 +53,10 @@ initiates(setDown(A,P1),idle(P2),T) :- agent(A),holdsAt(ringing(P1,P2),T).
 terminates(setDown(A,P1),ringing(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
 initiates(pickUp(A,P2),connected(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
 terminates(pickUp(A,P2),ringing(P1,P2),T) :- agent(A),holdsAt(ringing(P1,P2),T). 
-%%% initiates(setDown(A,P1),idle(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
+%%% To be induced: initiates(setDown(A,P1),idle(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P1),disconnected(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 terminates(setDown(A,P1),connected(P1,P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
-%%% initiates(setDown(A,P2),idle(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
+%%% To be induced: initiates(setDown(A,P2),idle(P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P2),disconnected(P1),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 terminates(setDown(A,P2),connected(P1,P2),T) :- agent(A),holdsAt(connected(P1,P2),T). 
 initiates(setDown(A,P),idle(P),T) :- agent(A),holdsAt(disconnected(P),T). 

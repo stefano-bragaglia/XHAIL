@@ -3,9 +3,11 @@
  */
 package ac.bristol.bragaglia.xhail.problem;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -157,30 +159,10 @@ public class Deduction {
 			}
 			Atom term = atom.get(0);
 			values.add(term);
-			// if (term.arity() > 0)
-			// for (Map<Literal, ModeBodyData> family : modes.values())
-			// for (Literal mode : family.keySet())
-			// match(term, mode.atom(), vars);
 		} else
 			for (Atom term : atom)
 				getVars(term, modes, vars);
 	}
-
-	// private static void match(Atom atom, Atom mode, Map<Atom, Set<Atom>>
-	// memory) {
-	// int arity = mode.arity();
-	// if (mode.name().equals(atom.name()) && arity == atom.arity()) {
-	// for (int i = 0; i < arity; i++) {
-	// Atom term = mode.get(i);
-	// String functor = term.name();
-	// if (functor.equals(Atom.PAR_INPUT) || functor.equals(Atom.PAR_OUTPUT) ||
-	// functor.equals(Atom.PAR_CONSTANT))
-	// store(term.get(term.arity() - 1), atom.get(i), memory);
-	// }
-	// } else
-	// for (Atom term : mode)
-	// match(atom, term, memory);
-	// }
 
 	/**
 	 * Stores the given value as item of the given type inside the given memory.
@@ -206,6 +188,8 @@ public class Deduction {
 
 	private Explanation explanation;
 
+	private Set<String> found;
+
 	private Map<Atom, Set<Atom>> history;
 
 	private Set<Atom> model;
@@ -225,6 +209,7 @@ public class Deduction {
 			throw new IllegalArgumentException("Illegal 'explanation' argument in Deduction(Explanation): " + explanation);
 		this.delta = explanation.delta;
 		this.explanation = explanation;
+		this.found = new LinkedHashSet<>();
 		this.model = explanation.model;
 		this.modes = explanation.problem.modes();
 		this.history = new HashMap<>();
@@ -241,50 +226,40 @@ public class Deduction {
 	 *         <code>false</code> otherwise
 	 */
 	private boolean invariant() {
-		return (null != delta && null != explanation && null != model && null != modes && null != history && null != types);
+		return (null != delta && null != explanation && null != found && null != model && null != modes && null != history && null != types);
 	}
 
-	private void level(int level, /* Map<Atom, Set<Atom>> vars, */Clause clause) {
+	private boolean isNew(Atom atom, Map<Atom, Set<Atom>> vars) {
+		boolean result = false;
+		Iterator<Set<Atom>> iter = vars.values().iterator();
+		while (!result && iter.hasNext())
+			result = iter.next().contains(atom);
+		return result;
+	}
+
+	private void level(int level, Map<Atom, Set<Atom>> vars, Clause clause) {
 		Map<Atom, Set<Atom>> next = new HashMap<>();
 		for (Map<Literal, ModeBodyData> family : modes.values())
 			for (Literal mode : family.keySet()) {
 				Atom predicate = mode.atom();
-				for (Atom term : parse(predicate, /* vars, */next))
-					if (mode.negated() != model.contains(term)) {
+
+				for (Entry<Atom, Boolean> entry : parse(predicate, vars, next)) {
+					Atom term = entry.getKey();
+					String text = new Literal(mode.negated(), term).toPrint();
+					if (entry.getValue() && mode.negated() != model.contains(term) && !found.contains(text)) {
+						found.add(text);
 						ModeBodyData data = family.get(mode);
 						Literal literal = new Literal(mode.negated(), Explanation.annotate(level, term, predicate, data.getWeight(), data.getPriority()));
-						if (!clause.contains(literal)) {
+						if (!clause.contains(literal))
 							clause.append(literal);
-							// TODO I'm already adding types to inductive
-							// phase...
-							// for (Atom type : tipify(term, types)) {
-							// Literal ltype = new Literal(false,
-							// Explanation.annotate(level, type, type, 1, 1));
-							// if (!clause.contains(ltype))
-							// clause.append(ltype);
-							// }
-						}
 					}
+				}
 				if (!next.isEmpty()) {
 					append(next, history);
-					level(level + 1, /* next, */clause);
+					level(level + 1, next, clause);
 				}
 			}
 	}
-
-	// TODO I'm already adding types to inductive phase...
-	// private static Collection<Atom> tipify(Atom atom, Map<Atom, Set<Atom>>
-	// types) {
-	// Set<Atom> result = new HashSet<>();
-	// if (0 == atom.arity()) {
-	// for (Atom type : types.keySet())
-	// if (types.get(type).contains(atom))
-	// result.add(Builder.get(type.name()).append(atom).build());
-	// } else
-	// for (Atom term : atom)
-	// result.addAll(tipify(term, types));
-	// return result;
-	// }
 
 	/**
 	 * Parses the given predicate and returns the collection of matching atoms.
@@ -293,64 +268,60 @@ public class Deduction {
 	 *            the predicate to parse
 	 * @return the matching atoms as a collection of atoms
 	 */
-	private Collection<Atom> parse(Atom predicate, /*
-													 * Map<Atom, Set<Atom>>
-													 * vars,
-													 */Map<Atom, Set<Atom>> next) {
+	private Collection<Entry<Atom, Boolean>> parse(Atom predicate, Map<Atom, Set<Atom>> vars, Map<Atom, Set<Atom>> next) {
 		if (null == predicate)
 			throw new IllegalArgumentException("Illegal 'predicate' argument in Deduction.parse(Atom, Map<Atom, Set<Atom>>): " + predicate);
 		if (null == next)
 			throw new IllegalArgumentException("Illegal 'next' argument in Deduction.parse(Atom, Map<Atom, Set<Atom>>): " + next);
-		Set<Atom> result;
+		Map<Atom, Boolean> result = new HashMap<>();
 		int arity = predicate.arity();
 		String functor = predicate.name();
 		if (Atom.PAR_INPUT.equals(functor) && 1 == arity) {
-			// result = vars.get(predicate.get(0));
-			result = history.get(predicate.get(0));
+			for (Atom atom : history.get(predicate.get(0)))
+				result.put(atom, isNew(atom, vars));
 		} else if (Atom.PAR_OUTPUT.equals(functor) && 1 == arity) {
 			Atom type = predicate.get(0);
-			result = types.get(type);
-			for (Atom atom : result)
-				if (!contains(type, atom, history)) {
-					Set<Atom> set = next.get(type);
-					if (null == set) {
-						set = new LinkedHashSet<>();
-						next.put(type, set);
-					}
-					set.add(atom);
-				}
+			for (Atom atom : types.get(type)) {
+				result.put(atom, false);
+				if (!contains(type, atom, history))
+					store(type, atom, history);
+			}
 		} else if (Atom.PAR_CONSTANT.equals(functor) && 1 == arity) {
-			result = types.get(predicate.get(0));
+			for (Atom atom : types.get(predicate.get(0)))
+				result.put(atom, false);
 		} else {
-			Stack<Builder> stack = new Stack<>();
-			stack.push(Builder.get(functor));
+			Stack<Entry<Builder, Boolean>> stack = new Stack<>();
+			stack.push(new SimpleEntry<Builder, Boolean>(Builder.get(functor), false));
 			for (Atom term : predicate) {
-				Stack<Builder> temp = new Stack<>();
+				Stack<Entry<Builder, Boolean>> temp = new Stack<>();
 				while (!stack.isEmpty()) {
-					Builder builder = stack.pop();
-					Collection<Atom> collection = parse(term, /* vars, */next);
+					Entry<Builder, Boolean> entry = stack.pop();
+					Builder builder = entry.getKey();
+					boolean newUsed = entry.getValue();
+					Collection<Entry<Atom, Boolean>> collection = parse(term, vars, next);
 					if (null != collection)
-						for (Atom candidate : collection)
-							temp.push(Builder.get(builder).append(candidate));
+						for (Entry<Atom, Boolean> e : collection) {
+							Atom a = e.getKey();
+							boolean value = e.getValue();
+							value |= newUsed;
+							temp.push(new SimpleEntry<Builder, Boolean>(Builder.get(builder).append(a), value));
+						}
 					else
-						temp.push(Builder.get(builder).append(Builder.get("#null").build()));
+						temp.push(new SimpleEntry<Builder, Boolean>(Builder.get(builder).append(Builder.get("#null").build()), false));
 				}
 				stack = temp;
 			}
-			result = new HashSet<>();
-			for (Builder builder : stack)
-				result.add(builder.build());
+			for (Entry<Builder, Boolean> entry : stack)
+				result.put(entry.getKey().build(), entry.getValue());
 		}
 		assert invariant() : "Illegal state in Deduction.parse(Atom)";
-		return result;
+		return result.entrySet();
 	}
 
-	// private int abd;
-
 	/**
-	 * Performs the deduction
+	 * Performs the deduction and returns the found clauses.
 	 * 
-	 * @return the clauses after deduction
+	 * @return the clauses found by deduction
 	 */
 	public Collection<Clause> perform() {
 		Set<Clause> result = new LinkedHashSet<>();
@@ -360,12 +331,11 @@ public class Deduction {
 				Entry<Integer, Integer> value = delta.get(abducee);
 				Clause clause = new Clause(Explanation.annotate(0, head, abducee, value.getKey(), value.getValue()));
 				history.clear();
-				// Map<Atom, Set<Atom>> vars = new HashMap<>();
-				// getVars(abducee, modes, vars);
-				// append(vars, history);
-				getVars(abducee, modes, history);
-				level(1, /* vars, */clause);
-				// System.err.println("Clause: " + clause.toPrint());
+				Map<Atom, Set<Atom>> vars = new HashMap<>();
+				getVars(abducee, modes, vars);
+				append(vars, history);
+				found.clear();
+				level(1, vars, clause);
 				if (!result.contains(clause))
 					result.add(clause);
 			}
@@ -373,4 +343,5 @@ public class Deduction {
 		assert invariant() : "Illegal state in Deduction.perform()";
 		return result;
 	}
+
 }

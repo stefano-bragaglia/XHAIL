@@ -136,9 +136,13 @@ public class Application {
 			time = end - time;
 			System.out.println();
 			print("Model", program.model());
+			System.out.println();
 			print("Delta", program.delta());
+			System.out.println();
 			println("Kappa", program.kappa());
+			System.out.println();
 			printall(program.guess());
+			System.out.println();
 			System.out.println();
 			System.out.println(String.format("Answers  : %d", program.guess().size()));
 			System.out.println(String.format("Time     : %d.%ds", time / 1000, time % 1000));

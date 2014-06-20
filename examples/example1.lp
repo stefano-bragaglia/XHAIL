@@ -1,13 +1,13 @@
-#example fact(a).
-#example not fact(b).
+#example pp ( a ) .
+#example not pp ( b ) .
 
-#modeh head1(+type).
-#modeh head2(+type).
+#modeh qq ( +tt ) .
+#modeh rr ( +tt ) .
 
-#modeb body(+type).
+#modeb ss ( +tt ) .
 
-fact(X) :- head1(X).
-fact(X) :- head2(X).
+pp ( X ) :- qq ( X ) .
+pp ( X ) :- rr ( X ) .
 
-type(a;b;c).
-body(a).
+tt ( a ; b ; c ) .
+ss ( a ) .
