@@ -47,11 +47,11 @@ public abstract class AbstractStrategy implements Strategy {
 			throw new IllegalArgumentException("Illegal 'program' argument in AbstractStrategy.solve(Program): " + program);
 		boolean result = false;
 		Config config = program.getConfig();
-		Explanation generalization = abductiveSolver.solve(config, program.getProblem());
-		if (null != generalization) {
-			Program.inject(generalization, program);
+		Explanation explanation = abductiveSolver.solve(config, program.getProblem());
+		if (null != explanation) {
+			Program.inject(explanation, program);
 			if (program.isGeneralizable()) {
-				Kernel kernel = deductiveSolver.solve(config, generalization);
+				Kernel kernel = deductiveSolver.solve(config, explanation);
 				if (null != kernel) {
 					Program.inject(kernel, program);
 					if (kernel.isGeneralizable()) {

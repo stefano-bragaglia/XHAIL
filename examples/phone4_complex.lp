@@ -213,6 +213,6 @@ happens(setDown(a2,p2),4).
 
 %*
 Extend A4 parser to understand +
-next(T1,T2) :- T1 == T2+1.
+next(T1,T2) :- T1 == T2 + 1.
 #modeb next(+time,-time).
 *%
