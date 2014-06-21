@@ -11,7 +11,7 @@ else
 	else
 		max=$1
 	fi
-	name=`date +"%Y.%d.%m-%T.csv"`
+	name=`date +"%Y.%d.%m-%T-v0.5.0.csv"`
 	TIMEFORMAT=%3R
 	echo -n "Problem" 
 	echo -n "Problem" > $name
