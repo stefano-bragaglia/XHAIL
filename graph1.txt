@@ -1,0 +1,59 @@
+$(function () {
+        $('#container').highcharts({
+            credits : {
+                enabled : false
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Comparison on efficiency'
+            },
+            subtitle: {
+                text: 'between former and current implementation'
+            },
+            xAxis: {
+                categories: [
+                    'example 1',
+                    'example 2',
+                    'example 3',
+                    'penguins s',
+                    'penguins u',
+                    'phone ded',
+                    'phone abd',
+                    'phone ind',
+                    'phone cplx',
+                    'phone hard'
+                ]
+            },
+            yAxis: {
+                type: 'logarithmic',
+                minorTickInterval: 0.1,
+                title: {
+                    text: 'Wall time (ms)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'v0.4.0',
+                data: [200, 115, 231, 218, 134, 214, 667, 10810, 558398, 6311572]
+            }, {
+                name: 'v0.5.0',
+                data: [632, 663, 692, 654, 648, 7718, 7927, 7594, 7887, 8853]
+            }]
+        });
+    });
+    
