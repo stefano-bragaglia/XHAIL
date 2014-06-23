@@ -2,7 +2,7 @@
 if [ $# -ne 1 ]
 then
     echo "Please provide the number of batches that you would like to run..."
-	echo "ex.: ./run 5"
+	echo "ex.: ./go.sh 5"
 else
 	if [ "$1" -lt "1" ]
 	then 
@@ -11,30 +11,27 @@ else
 	else
 		max=$1
 	fi
-	name=`date +"%Y.%d.%m-%T-v0.5.0.csv"`
-	TIMEFORMAT=%3R
-	echo -n "Problem" 
-	echo -n "Problem" > $name
-	for (( i=1; i<=$max; i++ ))
+	path=`pwd`
+	cd examples > /dev/null 2> /dev/null
+	for file in *.lp
 	do
-		echo -n ",Batch-$i" 
-		echo -n ",Batch-$i" >> $name
-	done 
-	echo ""
-	echo "" >> $name
-	file=examples/phone4_hard.lp
-	# for file in examples/*.lp
-	# do
-		echo -n "\"$file\""
-		echo -n "\"$file\"" >> $name
+		name="../$file.txt"
+		echo -n $file
+		echo "" > $name
 		for (( i=1; i<=$max; i++ ))
 		do
-			value=`time ( java -jar /Library/Xhail/xhail.jar -c /Library/Clasp/clasp -g /Library/Gringo/gringo $file > /dev/null 2> /dev/null ) 2>&1`
-			echo -n ",$value"
-			echo -n ",$value" >> $name
+			java -jar /Library/Xhail/xhail.jar -c /Library/Clasp/clasp -g /Library/Gringo/gringo $file >> $name 2>> $name
+			echo -n .
 		done
 		echo ""
-		echo "" >> $name
-	# done	
-	echo "File '$name' with these results succesfully created!"
+	done	
+	cd $path > /dev/null 2> /dev/null
+	
+	#for file in example1.lp.txt example2.lp.txt example3.lp.txt penguins_simple.lp.txt penguins_unfeasible.lp.txt phone4_ded.lp.txt phone4_abd.lp.txt phone4_ind.lp.txt phone4_complex.lp.txt phone4_hard.lp.txt 
+	#do
+	#	name=$($file/.lp.txt/.txt) 
+	#	cat $file | grep abducing | cut -d " " -f 5 | tr '.' ',' | tr '\n' 's' | sed -e 's/ss/s/g' | tr 's' '\t' 
+	#done
+	
+	echo "Done."
 fi

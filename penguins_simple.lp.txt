@@ -1,0 +1,253 @@
+
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.437s
+  parsing  : 0.063s
+  abducing : 0.041s
+  deducing : 0.015s
+  inducing : 0.024s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.465s
+  parsing  : 0.061s
+  abducing : 0.044s
+  deducing : 0.014s
+  inducing : 0.029s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.451s
+  parsing  : 0.064s
+  abducing : 0.048s
+  deducing : 0.012s
+  inducing : 0.023s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.491s
+  parsing  : 0.095s
+  abducing : 0.044s
+  deducing : 0.014s
+  inducing : 0.024s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.469s
+  parsing  : 0.067s
+  abducing : 0.058s
+  deducing : 0.015s
+  inducing : 0.024s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.443s
+  parsing  : 0.065s
+  abducing : 0.048s
+  deducing : 0.014s
+  inducing : 0.023s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.457s
+  parsing  : 0.068s
+  abducing : 0.039s
+  deducing : 0.012s
+  inducing : 0.026s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.463s
+  parsing  : 0.068s
+  abducing : 0.047s
+  deducing : 0.019s
+  inducing : 0.020s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.501s
+  parsing  : 0.101s
+  abducing : 0.050s
+  deducing : 0.018s
+  inducing : 0.030s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.463s
+  parsing  : 0.072s
+  abducing : 0.044s
+  deducing : 0.014s
+  inducing : 0.022s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.464s
+  parsing  : 0.069s
+  abducing : 0.050s
+  deducing : 0.013s
+  inducing : 0.024s
+xhail version 0.5.0
+
+Reading from penguins_simple.lp
+Solving...
+
+Model: bird(a) bird(b) bird(c) bird(d) flies(a) flies(c) penguin(d)
+
+Delta: flies(+bird(a)) flies(+bird(c))
+
+Kappa: flies(V1) :- not penguin(V1).
+
+Answer: 1
+    flies(V1) :- not penguin(V1).
+
+
+Answers    : 1
+Runtime    : 0.449s
+  parsing  : 0.062s
+  abducing : 0.045s
+  deducing : 0.014s
+  inducing : 0.025s

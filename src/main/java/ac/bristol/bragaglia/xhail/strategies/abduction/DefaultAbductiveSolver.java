@@ -42,6 +42,7 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 			throw new IllegalArgumentException("Illegal 'config' argument in DefaultAbductiveSolver.solve(Config, Problem): " + config);
 		if (null == problem)
 			throw new IllegalArgumentException("Illegal 'model' argument in DefaultAbductiveSolver.solve(Config, Problem): " + problem);
+		config.getAbducing().start();
 		Explanation result = null;
 		Path temp = config.createFolder("temp");
 		Path errors = config.overwriteFile(temp, "errors_abd.log");
@@ -57,9 +58,13 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 				config.runGringo(source, gringo, errors).waitFor();
 				Path clasp = config.createFile(temp, config.getFilename() + "_abd.clasp");
 				config.runClasp(gringo, clasp, errors).waitFor();
+				config.getAbducing().stop();
+				config.getParsing().start();
 				FileInputStream stream = new FileInputStream(clasp.toFile());
 				result = new Explanation(problem, Clasp3FileParser.parse(stream));
 				stream.close();
+				config.getParsing().stop();
+				config.getAbducing().start();
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines) {
 					line = line.trim();
@@ -91,6 +96,7 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 			} catch (InterruptedException | IOException | SecurityException e) {
 				// nothing, so that Explanation will remain null.
 			}
+			config.getAbducing().stop();
 		}
 		assert invariant() : "Illegal state in DefaultAbductiveSolver.solve(Config, Problem)";
 		return result;

@@ -1,0 +1,253 @@
+
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.743s
+  parsing  : 0.037s
+  abducing : 0.046s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.734s
+  parsing  : 0.041s
+  abducing : 0.048s
+  deducing : 0.008s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.740s
+  parsing  : 0.040s
+  abducing : 0.047s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.807s
+  parsing  : 0.043s
+  abducing : 0.055s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.771s
+  parsing  : 0.041s
+  abducing : 0.054s
+  deducing : 0.009s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.743s
+  parsing  : 0.045s
+  abducing : 0.050s
+  deducing : 0.008s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.735s
+  parsing  : 0.040s
+  abducing : 0.048s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.723s
+  parsing  : 0.042s
+  abducing : 0.050s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.740s
+  parsing  : 0.040s
+  abducing : 0.046s
+  deducing : 0.008s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.718s
+  parsing  : 0.043s
+  abducing : 0.050s
+  deducing : 0.008s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.800s
+  parsing  : 0.044s
+  abducing : 0.050s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from ec.lp
+Solving...
+*** WARNING (xhail): initially/1 is never defined on abduction
+*** WARNING (xhail): con_tag/2 is never defined on abduction
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.823s
+  parsing  : 0.043s
+  abducing : 0.051s
+  deducing : 0.007s
+  inducing : 0.000s

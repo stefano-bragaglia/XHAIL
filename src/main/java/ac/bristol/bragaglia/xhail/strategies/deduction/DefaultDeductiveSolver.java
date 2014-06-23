@@ -34,7 +34,9 @@ public class DefaultDeductiveSolver implements DeductiveStrategy {
 			throw new IllegalArgumentException("Illegal 'config' argument in DefaultDeductionSolver.solve(Config, Abduced): " + config);
 		if (null == generalization)
 			throw new IllegalArgumentException("Illegal 'generalization' argument in DefaultDeductionSolver.solve(Config, Abdduced): " + generalization);
+		config.getDeducing().start();
 		Kernel result = generalization.deduce();
+		config.getDeducing().stop();
 		assert invariant() : "Illegal state in DefaultDeductionSolver.solve(Config, Abdduced)";
 		return result;
 	}

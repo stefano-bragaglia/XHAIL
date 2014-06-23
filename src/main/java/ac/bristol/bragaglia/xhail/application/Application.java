@@ -117,8 +117,8 @@ public class Application {
 	 * Executes the application's main task.
 	 */
 	private static void execute() {
-		Config config = new Config(gringo, clasp, debug);
 		long time = System.currentTimeMillis();
+		Config config = new Config(gringo, clasp, debug);
 		Program program = new Program(config);
 		if (0 == files.size()) {
 			System.out.println("Reading from stdin");
@@ -129,11 +129,11 @@ public class Application {
 				program.load(file);
 			}
 		System.out.println("Solving...");
-		long cpu = System.currentTimeMillis();
+		// long cpu = System.currentTimeMillis();
 		if (program.solve()) {
-			long end = System.currentTimeMillis();
-			cpu = end - cpu;
-			time = end - time;
+			// long end = System.currentTimeMillis();
+			// cpu = end - cpu;
+			// time = end - time;
 			System.out.println();
 			print("Model", program.model());
 			System.out.println();
@@ -144,9 +144,14 @@ public class Application {
 			printall(program.guess());
 			System.out.println();
 			System.out.println();
-			System.out.println(String.format("Answers  : %d", program.guess().size()));
-			System.out.println(String.format("Time     : %d.%ds", time / 1000, time % 1000));
-			System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000, cpu % 1000));
+			time = System.currentTimeMillis() - time;
+			System.out.println(String.format("Answers    : %d", program.guess().size()));
+			System.out.println(String.format("Runtime    : %.3fs", time / 1000.0));
+			System.out.println(String.format("  parsing  : %.3fs", config.getParsing().getTime() / 1000.0));
+			System.out.println(String.format("  abducing : %.3fs", config.getAbducing().getTime() / 1000.0));
+			System.out.println(String.format("  deducing : %.3fs", config.getDeducing().getTime() / 1000.0));
+			System.out.println(String.format("  inducing : %.3fs", config.getInducing().getTime() / 1000.0));
+			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000, cpu % 1000));
 		} else
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));
 	}

@@ -1,0 +1,229 @@
+
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.405s
+  parsing  : 0.050s
+  abducing : 0.047s
+  deducing : 0.009s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.415s
+  parsing  : 0.045s
+  abducing : 0.047s
+  deducing : 0.005s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.417s
+  parsing  : 0.047s
+  abducing : 0.044s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.393s
+  parsing  : 0.043s
+  abducing : 0.045s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.422s
+  parsing  : 0.044s
+  abducing : 0.045s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.403s
+  parsing  : 0.049s
+  abducing : 0.045s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.394s
+  parsing  : 0.045s
+  abducing : 0.044s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.396s
+  parsing  : 0.041s
+  abducing : 0.044s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.426s
+  parsing  : 0.059s
+  abducing : 0.047s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.419s
+  parsing  : 0.042s
+  abducing : 0.041s
+  deducing : 0.006s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.406s
+  parsing  : 0.053s
+  abducing : 0.048s
+  deducing : 0.007s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from penguins_unfeasible.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 0.385s
+  parsing  : 0.045s
+  abducing : 0.046s
+  deducing : 0.006s
+  inducing : 0.000s

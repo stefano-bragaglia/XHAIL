@@ -1,0 +1,229 @@
+
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.860s
+  parsing  : 0.043s
+  abducing : 0.113s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.560s
+  parsing  : 0.046s
+  abducing : 0.100s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.753s
+  parsing  : 0.041s
+  abducing : 0.094s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.585s
+  parsing  : 0.044s
+  abducing : 0.097s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.355s
+  parsing  : 0.042s
+  abducing : 0.098s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.391s
+  parsing  : 0.043s
+  abducing : 0.096s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.437s
+  parsing  : 0.045s
+  abducing : 0.109s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.446s
+  parsing  : 0.048s
+  abducing : 0.107s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.344s
+  parsing  : 0.044s
+  abducing : 0.102s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.432s
+  parsing  : 0.047s
+  abducing : 0.106s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.579s
+  parsing  : 0.047s
+  abducing : 0.100s
+  deducing : 0.000s
+  inducing : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_ded.lp
+Solving...
+
+Model: holdsAt(connected(p1, p2), 3) holdsAt(dialTone(p1), 1) holdsAt(disconnected(p2), 4) holdsAt(idle(p1), 0) holdsAt(idle(p1), 4) holdsAt(idle(p1), 5) holdsAt(idle(p1), 6) holdsAt(idle(p2), 0) holdsAt(idle(p2), 1) holdsAt(idle(p2), 5) holdsAt(idle(p2), 6) holdsAt(ringing(p1, p2), 2)
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers    : 0
+Runtime    : 3.670s
+  parsing  : 0.045s
+  abducing : 0.107s
+  deducing : 0.000s
+  inducing : 0.000s

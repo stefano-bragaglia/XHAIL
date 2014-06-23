@@ -42,6 +42,7 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 			throw new IllegalArgumentException("Illegal 'config' argument in DefaultInductiveSolver.solve(Config, Kernel): " + config);
 		if (null == kernel)
 			throw new IllegalArgumentException("Illegal 'kernel' argument in DefaultInductiveSolver.solve(Config, Kernel): " + kernel);
+		config.getInducing().start();
 		Hypothesis result = null;
 		Path temp = config.createFolder("temp");
 		Path errors = config.overwriteFile(temp, "errors_ind.log");
@@ -57,9 +58,13 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 				config.runGringo(source, gringo, errors).waitFor();
 				Path clasp = config.createFile(temp, config.getFilename() + "_ind.clasp");
 				config.runClasp(gringo, clasp, errors).waitFor();
+				config.getInducing().stop();
+				config.getParsing().start();
 				FileInputStream stream = new FileInputStream(clasp.toFile());
 				result = new Hypothesis(kernel, Clasp3FileParser.parse(stream));
 				stream.close();
+				config.getParsing().stop();
+				config.getInducing().start();
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines) {
 					line = line.trim();
@@ -92,6 +97,7 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 				// nothing, so that induced will remain null.
 			}
 		}
+		config.getInducing().stop();
 		assert invariant() : "Illegal state in DefaultInductiveSolver.solve(Config, Induced)";
 		return result;
 	}

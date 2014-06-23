@@ -56,17 +56,22 @@ public class Config {
 		}
 	}
 
+	private Clock abducing;
+
 	private String clasp;
 
 	private Path current;
 
-	private boolean debug;
-
 	// private Set<File> files;
 
-	private String gringo;
+	private boolean debug;
 
+	private Clock deducing;
+
+	private String gringo;
+	private Clock inducing;
 	private String name;
+	private Clock parsing;
 
 	/**
 	 * @param gringo
@@ -83,25 +88,18 @@ public class Config {
 			this.current = Paths.get(".").toRealPath();
 		} catch (IOException | SecurityException e) {
 			try {
-				this.current = Files.createTempDirectory("JHAIL_").toRealPath();
+				this.current = Files.createTempDirectory("XHAIL_").toRealPath();
 			} catch (IOException | SecurityException ee) {
 				this.current = Paths.get(".");
 			}
 		}
+		this.parsing = new Clock();
+		this.abducing = new Clock();
+		this.deducing = new Clock();
+		this.inducing = new Clock();
 		this.gringo = gringo;
 		this.clasp = clasp;
 		this.name = STDIN;
-		// this.files = new LinkedHashSet<>();
-		// for (File source : files)
-		// if (source.isFile()) {
-		// this.files.add(source);
-		// if (this.name.equals(STDIN)) {
-		// this.name = source.getName();
-		// int p = this.name.lastIndexOf('.');
-		// if (p > -1)
-		// this.name = this.name.substring(0, p);
-		// }
-		// }
 		this.debug = debug;
 		assert invariant() : "Illegal state in Config(String, String, boolean)";
 	}
@@ -181,9 +179,19 @@ public class Config {
 		return result;
 	}
 
+	public Clock getAbducing() {
+		assert invariant() : "Illegal state in Config.getAbducing()";
+		return abducing;
+	}
+
 	public Path getCurrentPath() {
 		assert invariant() : "Illegal state in Config.getCurrentPath()";
 		return current;
+	}
+
+	public Clock getDeducing() {
+		assert invariant() : "Illegal state in Config.getDeducing()";
+		return deducing;
 	}
 
 	public String getFilename() {
@@ -191,10 +199,21 @@ public class Config {
 		return name;
 	}
 
+	public Clock getInducing() {
+		assert invariant() : "Illegal state in Config.getInducing()";
+		return inducing;
+	}
+
+	public Clock getParsing() {
+		assert invariant() : "Illegal state in Config.getParsing()";
+		return parsing;
+	}
+
 	private boolean invariant() {
 		File file;
-		return (null != clasp && !clasp.isEmpty() && (file = new File(clasp)).isFile() && file.exists() && null != current && null != gringo
-				&& !gringo.isEmpty() && (file = new File(gringo)).isFile() && file.exists() && null != name && !name.isEmpty());
+		return (null != abducing && null != clasp && !clasp.isEmpty() && (file = new File(clasp)).isFile() && file.exists() && null != current
+				&& null != deducing && null != gringo && !gringo.isEmpty() && (file = new File(gringo)).isFile() && file.exists() && null != inducing
+				&& null != name && !name.isEmpty() && null != parsing);
 	}
 
 	public boolean isDebug() {
@@ -268,7 +287,7 @@ public class Config {
 	public void setName(String name) {
 		if (null == name || (name = name.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'name' argument in Config.setName(String): " + name);
-		int index = name.lastIndexOf(File.separator); 
+		int index = name.lastIndexOf(File.separator);
 		if (index > -1)
 			this.name = name.substring(index);
 		else

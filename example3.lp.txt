@@ -1,0 +1,277 @@
+
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.476s
+  parsing  : 0.053s
+  abducing : 0.055s
+  deducing : 0.019s
+  inducing : 0.027s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.487s
+  parsing  : 0.060s
+  abducing : 0.043s
+  deducing : 0.018s
+  inducing : 0.027s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.461s
+  parsing  : 0.060s
+  abducing : 0.041s
+  deducing : 0.018s
+  inducing : 0.024s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.488s
+  parsing  : 0.058s
+  abducing : 0.044s
+  deducing : 0.018s
+  inducing : 0.029s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.482s
+  parsing  : 0.066s
+  abducing : 0.050s
+  deducing : 0.020s
+  inducing : 0.023s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.516s
+  parsing  : 0.067s
+  abducing : 0.048s
+  deducing : 0.022s
+  inducing : 0.028s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.496s
+  parsing  : 0.054s
+  abducing : 0.045s
+  deducing : 0.018s
+  inducing : 0.020s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.488s
+  parsing  : 0.057s
+  abducing : 0.047s
+  deducing : 0.020s
+  inducing : 0.026s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.490s
+  parsing  : 0.054s
+  abducing : 0.043s
+  deducing : 0.023s
+  inducing : 0.027s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.490s
+  parsing  : 0.056s
+  abducing : 0.041s
+  deducing : 0.024s
+  inducing : 0.029s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.590s
+  parsing  : 0.064s
+  abducing : 0.128s
+  deducing : 0.025s
+  inducing : 0.027s
+xhail version 0.5.0
+
+Reading from example3.lp
+Solving...
+
+Model: p(a) q(a, b, c) q(a, b, d) r(b, d) t(a) t(b) t(c) t(d)
+
+Delta: p(+t(a))
+
+Kappa: p(V1) :- q(V1, V2, d), q(V1, V2, c).
+
+Answer: 1
+    p(V1) :- q(V1, V2, d).
+Answer: 2
+    p(V1) :- q(V1, V2, c).
+
+
+Answers    : 2
+Runtime    : 0.489s
+  parsing  : 0.054s
+  abducing : 0.047s
+  deducing : 0.017s
+  inducing : 0.027s
