@@ -32,7 +32,7 @@ public class XhailErrorListener extends BaseErrorListener {
 			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 		} else if (msg.startsWith("% error: ")) {
 			msg = msg.substring(9);
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
+			System.err.println(String.format("*** ERROR (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 		} else
 			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 	}
