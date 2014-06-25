@@ -146,27 +146,9 @@ public class XhailFileListener extends XhailBaseListener {
 	}
 
 	@Override
-	public void enterGroundInteger(GroundIntegerContext ctx) {
-		if (null != ctx)
-			builders.push(Builder.get(ctx.getText()));
-	}
-
-	@Override
 	public void enterGroundPredicate(GroundPredicateContext ctx) {
 		if (null != ctx)
 			builders.push(Builder.get(ctx.IDENTIFIER().getText()));
-	}
-
-	@Override
-	public void enterGroundString(GroundStringContext ctx) {
-		if (null != ctx)
-			builders.push(Builder.get(ctx.getText()));
-	}
-
-	@Override
-	public void enterGroundVariable(GroundVariableContext ctx) {
-		if (null != ctx)
-			builders.push(Builder.get(ctx.getText()));
 	}
 
 	@Override
@@ -337,6 +319,12 @@ public class XhailFileListener extends XhailBaseListener {
 	}
 
 	@Override
+	public void exitGroundInteger(GroundIntegerContext ctx) {
+		if (null != ctx)
+			builders.push(Builder.get(ctx.getText()));
+	}
+
+	@Override
 	public void exitGroundInterval(GroundIntervalContext ctx) {
 		if (null != ctx) {
 			String min = ctx.IDENTIFIER(0).getText();
@@ -368,7 +356,7 @@ public class XhailFileListener extends XhailBaseListener {
 	@Override
 	public void exitGroundMinus1(GroundMinus1Context ctx) {
 		if (null != ctx)
-			builders.push(Builder.get(Atom.ARITH_MINUS).append(ctx.groundAtom().getText()));
+			builders.push(Builder.get("-" + ctx.groundAtom().getText()));
 	}
 
 	@Override
@@ -453,12 +441,29 @@ public class XhailFileListener extends XhailBaseListener {
 			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
+	private boolean isNegValue(String text) {
+		if (null == text || (text = text.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'text' argument in XhailFileListener.isNegValue(String): " + text);
+		boolean result = ('-' == text.charAt(0));
+		for (int i = 1; result && i < text.length(); i++)
+			result = text.charAt(i) >= '0' && text.charAt(i) <= '9';
+		return result;
+	}
+
 	@Override
 	public void exitGroundPredicate(GroundPredicateContext ctx) {
 		if (null != ctx) {
 			Stack<Atom> atoms = new Stack<>();
-			for (int i = 0; i < ctx.groundTerm().size(); i++)
-				atoms.push(builders.pop().build());
+			for (int i = 0; i < ctx.groundTerm().size(); i++) {
+				Atom atom = builders.pop().build();
+				String name = atom.name();
+				if (0 == atom.arity() && isNegValue(name)) {
+					Atom discard = builders.peek().build();
+					if (0 == discard.arity() && name.equals("-" + discard.name()))
+						builders.pop();
+				}
+				atoms.push(atom);
+			}
 			Builder builder = builders.peek();
 			while (!atoms.empty())
 				builder.append(atoms.pop());
@@ -466,9 +471,21 @@ public class XhailFileListener extends XhailBaseListener {
 	}
 
 	@Override
+	public void exitGroundString(GroundStringContext ctx) {
+		if (null != ctx)
+			builders.push(Builder.get(ctx.getText()));
+	}
+
+	@Override
 	public void exitGroundTimes(GroundTimesContext ctx) {
 		if (null != ctx)
 			builders.push(Builder.get(Atom.ARITH_TIMES).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
+	}
+
+	@Override
+	public void exitGroundVariable(GroundVariableContext ctx) {
+		if (null != ctx)
+			builders.push(Builder.get(ctx.getText()));
 	}
 
 	@Override

@@ -155,7 +155,8 @@ public class Application {
 			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000.0));
 			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000.0));
 			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000.0));
-			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000, cpu % 1000));
+			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000,
+			// cpu % 1000));
 		} else
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));
 	}
@@ -244,8 +245,6 @@ public class Application {
 			joiner.add(atom.toString());
 		System.out.println(String.format("%s: %s", label, list.isEmpty() ? "[]" : joiner.toString()));
 	}
-
-
 
 	private static void printall(Collection<Set<Clause>> list) {
 		if (null == list)
