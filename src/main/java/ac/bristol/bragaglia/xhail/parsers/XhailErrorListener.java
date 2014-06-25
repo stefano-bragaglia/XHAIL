@@ -29,15 +29,12 @@ public class XhailErrorListener extends BaseErrorListener {
 	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
 		if (msg.startsWith("% warning: ")) {
 			msg = msg.substring(11);
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
-					charPositionInLine));
+			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 		} else if (msg.startsWith("% error: ")) {
 			msg = msg.substring(9);
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
-					charPositionInLine));
+			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 		} else
-			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), e.getMessage(), line,
-					charPositionInLine));
+			System.err.println(String.format("*** WARNING (%s): %s on sources at position %d:%d", Version.get().getTitle(), msg, line, charPositionInLine));
 	}
 
 }
