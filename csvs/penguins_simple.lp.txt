@@ -14,12 +14,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.437s
-  parsing  : 0.063s
-  abducing : 0.041s
-  deducing : 0.015s
-  inducing : 0.024s
+Answers     : 1
+Runtime     : 0.465s
+  parsing   : 0.075s
+  abducing  : 0.044s
+   a.gringo : 0.012s
+   a.clasp  : 0.008s
+  deducing  : 0.013s
+  inducing  : 0.027s
+   i.gringo : 0.011s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -35,12 +39,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.465s
-  parsing  : 0.061s
-  abducing : 0.044s
-  deducing : 0.014s
-  inducing : 0.029s
+Answers     : 1
+Runtime     : 0.458s
+  parsing   : 0.069s
+  abducing  : 0.045s
+   a.gringo : 0.012s
+   a.clasp  : 0.012s
+  deducing  : 0.014s
+  inducing  : 0.023s
+   i.gringo : 0.011s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -56,12 +64,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.451s
-  parsing  : 0.064s
-  abducing : 0.048s
-  deducing : 0.012s
-  inducing : 0.023s
+Answers     : 1
+Runtime     : 0.472s
+  parsing   : 0.069s
+  abducing  : 0.049s
+   a.gringo : 0.010s
+   a.clasp  : 0.012s
+  deducing  : 0.015s
+  inducing  : 0.031s
+   i.gringo : 0.015s
+   i.clasp  : 0.013s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -77,12 +89,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.491s
-  parsing  : 0.095s
-  abducing : 0.044s
-  deducing : 0.014s
-  inducing : 0.024s
+Answers     : 1
+Runtime     : 0.440s
+  parsing   : 0.060s
+  abducing  : 0.042s
+   a.gringo : 0.012s
+   a.clasp  : 0.008s
+  deducing  : 0.013s
+  inducing  : 0.027s
+   i.gringo : 0.010s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -98,12 +114,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.469s
-  parsing  : 0.067s
-  abducing : 0.058s
-  deducing : 0.015s
-  inducing : 0.024s
+Answers     : 1
+Runtime     : 0.463s
+  parsing   : 0.068s
+  abducing  : 0.047s
+   a.gringo : 0.015s
+   a.clasp  : 0.008s
+  deducing  : 0.016s
+  inducing  : 0.025s
+   i.gringo : 0.012s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -119,12 +139,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.443s
-  parsing  : 0.065s
-  abducing : 0.048s
-  deducing : 0.014s
-  inducing : 0.023s
+Answers     : 1
+Runtime     : 0.475s
+  parsing   : 0.081s
+  abducing  : 0.048s
+   a.gringo : 0.011s
+   a.clasp  : 0.012s
+  deducing  : 0.016s
+  inducing  : 0.025s
+   i.gringo : 0.011s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -140,12 +164,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.457s
-  parsing  : 0.068s
-  abducing : 0.039s
-  deducing : 0.012s
-  inducing : 0.026s
+Answers     : 1
+Runtime     : 0.467s
+  parsing   : 0.075s
+  abducing  : 0.046s
+   a.gringo : 0.012s
+   a.clasp  : 0.009s
+  deducing  : 0.015s
+  inducing  : 0.025s
+   i.gringo : 0.012s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -161,12 +189,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.463s
-  parsing  : 0.068s
-  abducing : 0.047s
-  deducing : 0.019s
-  inducing : 0.020s
+Answers     : 1
+Runtime     : 0.455s
+  parsing   : 0.067s
+  abducing  : 0.045s
+   a.gringo : 0.010s
+   a.clasp  : 0.010s
+  deducing  : 0.014s
+  inducing  : 0.025s
+   i.gringo : 0.010s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -182,12 +214,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.501s
-  parsing  : 0.101s
-  abducing : 0.050s
-  deducing : 0.018s
-  inducing : 0.030s
+Answers     : 1
+Runtime     : 0.457s
+  parsing   : 0.067s
+  abducing  : 0.045s
+   a.gringo : 0.012s
+   a.clasp  : 0.011s
+  deducing  : 0.011s
+  inducing  : 0.029s
+   i.gringo : 0.015s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -203,12 +239,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.463s
-  parsing  : 0.072s
-  abducing : 0.044s
-  deducing : 0.014s
-  inducing : 0.022s
+Answers     : 1
+Runtime     : 0.452s
+  parsing   : 0.068s
+  abducing  : 0.046s
+   a.gringo : 0.014s
+   a.clasp  : 0.009s
+  deducing  : 0.012s
+  inducing  : 0.024s
+   i.gringo : 0.014s
+   i.clasp  : 0.008s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -224,12 +264,16 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.464s
-  parsing  : 0.069s
-  abducing : 0.050s
-  deducing : 0.013s
-  inducing : 0.024s
+Answers     : 1
+Runtime     : 0.465s
+  parsing   : 0.068s
+  abducing  : 0.042s
+   a.gringo : 0.009s
+   a.clasp  : 0.009s
+  deducing  : 0.017s
+  inducing  : 0.023s
+   i.gringo : 0.011s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from penguins_simple.lp
@@ -245,9 +289,13 @@ Answer: 1
     flies(V1) :- not penguin(V1).
 
 
-Answers    : 1
-Runtime    : 0.449s
-  parsing  : 0.062s
-  abducing : 0.045s
-  deducing : 0.014s
-  inducing : 0.025s
+Answers     : 1
+Runtime     : 0.459s
+  parsing   : 0.071s
+  abducing  : 0.044s
+   a.gringo : 0.012s
+   a.clasp  : 0.009s
+  deducing  : 0.015s
+  inducing  : 0.025s
+   i.gringo : 0.012s
+   i.clasp  : 0.011s

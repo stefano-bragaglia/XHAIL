@@ -1,0 +1,277 @@
+
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.470s
+  parsing   : 0.047s
+  abducing  : 0.410s
+   a.gringo : 0.148s
+   a.clasp  : 0.194s
+  deducing  : 0.018s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.545s
+  parsing   : 0.049s
+  abducing  : 0.412s
+   a.gringo : 0.148s
+   a.clasp  : 0.196s
+  deducing  : 0.019s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.497s
+  parsing   : 0.048s
+  abducing  : 0.419s
+   a.gringo : 0.161s
+   a.clasp  : 0.191s
+  deducing  : 0.025s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.466s
+  parsing   : 0.048s
+  abducing  : 0.392s
+   a.gringo : 0.133s
+   a.clasp  : 0.190s
+  deducing  : 0.019s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.477s
+  parsing   : 0.052s
+  abducing  : 0.411s
+   a.gringo : 0.133s
+   a.clasp  : 0.213s
+  deducing  : 0.020s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.388s
+  parsing   : 0.050s
+  abducing  : 0.421s
+   a.gringo : 0.144s
+   a.clasp  : 0.202s
+  deducing  : 0.020s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.493s
+  parsing   : 0.048s
+  abducing  : 0.401s
+   a.gringo : 0.139s
+   a.clasp  : 0.189s
+  deducing  : 0.020s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.472s
+  parsing   : 0.051s
+  abducing  : 0.427s
+   a.gringo : 0.153s
+   a.clasp  : 0.205s
+  deducing  : 0.018s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.426s
+  parsing   : 0.051s
+  abducing  : 0.385s
+   a.gringo : 0.129s
+   a.clasp  : 0.190s
+  deducing  : 0.019s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.451s
+  parsing   : 0.048s
+  abducing  : 0.412s
+   a.gringo : 0.132s
+   a.clasp  : 0.210s
+  deducing  : 0.020s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.478s
+  parsing   : 0.048s
+  abducing  : 0.420s
+   a.gringo : 0.137s
+   a.clasp  : 0.214s
+  deducing  : 0.019s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s
+xhail version 0.5.0
+
+Reading from phone4_hardest.lp
+Solving...
+
+Model: []
+
+Delta: []
+
+Kappa: []
+
+
+
+Answers     : 0
+Runtime     : 1.433s
+  parsing   : 0.049s
+  abducing  : 0.411s
+   a.gringo : 0.135s
+   a.clasp  : 0.201s
+  deducing  : 0.017s
+  inducing  : 0.000s
+   i.gringo : 0.000s
+   i.clasp  : 0.000s

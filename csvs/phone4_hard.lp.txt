@@ -113,12 +113,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.788s
-  parsing  : 0.095s
-  abducing : 0.429s
-  deducing : 0.101s
-  inducing : 3.745s
+Answers     : 16
+Runtime     : 6.865s
+  parsing   : 0.095s
+  abducing  : 0.465s
+   a.gringo : 0.160s
+   a.clasp  : 0.231s
+  deducing  : 0.108s
+  inducing  : 3.594s
+   i.gringo : 1.461s
+   i.clasp  : 2.127s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -233,12 +237,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.822s
-  parsing  : 0.093s
-  abducing : 0.469s
-  deducing : 0.104s
-  inducing : 3.566s
+Answers     : 16
+Runtime     : 6.994s
+  parsing   : 0.094s
+  abducing  : 0.476s
+   a.gringo : 0.177s
+   a.clasp  : 0.232s
+  deducing  : 0.105s
+  inducing  : 3.802s
+   i.gringo : 1.646s
+   i.clasp  : 2.148s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -353,12 +361,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.965s
-  parsing  : 0.094s
-  abducing : 0.452s
-  deducing : 0.107s
-  inducing : 3.803s
+Answers     : 16
+Runtime     : 6.887s
+  parsing   : 0.094s
+  abducing  : 0.437s
+   a.gringo : 0.130s
+   a.clasp  : 0.233s
+  deducing  : 0.104s
+  inducing  : 3.572s
+   i.gringo : 1.431s
+   i.clasp  : 2.133s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -473,12 +485,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.822s
-  parsing  : 0.092s
-  abducing : 0.435s
-  deducing : 0.101s
-  inducing : 3.550s
+Answers     : 16
+Runtime     : 6.961s
+  parsing   : 0.098s
+  abducing  : 0.476s
+   a.gringo : 0.173s
+   a.clasp  : 0.227s
+  deducing  : 0.106s
+  inducing  : 3.612s
+   i.gringo : 1.537s
+   i.clasp  : 2.071s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -593,12 +609,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.977s
-  parsing  : 0.093s
-  abducing : 0.408s
-  deducing : 0.098s
-  inducing : 3.756s
+Answers     : 16
+Runtime     : 6.852s
+  parsing   : 0.089s
+  abducing  : 0.495s
+   a.gringo : 0.176s
+   a.clasp  : 0.253s
+  deducing  : 0.105s
+  inducing  : 3.599s
+   i.gringo : 1.512s
+   i.clasp  : 2.081s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -713,12 +733,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.754s
-  parsing  : 0.094s
-  abducing : 0.408s
-  deducing : 0.099s
-  inducing : 3.574s
+Answers     : 16
+Runtime     : 6.876s
+  parsing   : 0.097s
+  abducing  : 0.448s
+   a.gringo : 0.160s
+   a.clasp  : 0.213s
+  deducing  : 0.109s
+  inducing  : 3.776s
+   i.gringo : 1.530s
+   i.clasp  : 2.242s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -833,12 +857,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.523s
-  parsing  : 0.094s
-  abducing : 0.456s
-  deducing : 0.112s
-  inducing : 3.431s
+Answers     : 16
+Runtime     : 7.222s
+  parsing   : 0.098s
+  abducing  : 0.434s
+   a.gringo : 0.135s
+   a.clasp  : 0.223s
+  deducing  : 0.116s
+  inducing  : 3.909s
+   i.gringo : 1.466s
+   i.clasp  : 2.438s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -953,12 +981,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.533s
-  parsing  : 0.097s
-  abducing : 0.446s
-  deducing : 0.099s
-  inducing : 3.448s
+Answers     : 16
+Runtime     : 8.112s
+  parsing   : 0.106s
+  abducing  : 0.499s
+   a.gringo : 0.167s
+   a.clasp  : 0.239s
+  deducing  : 0.114s
+  inducing  : 4.907s
+   i.gringo : 1.845s
+   i.clasp  : 3.053s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -1073,12 +1105,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.793s
-  parsing  : 0.097s
-  abducing : 0.414s
-  deducing : 0.098s
-  inducing : 3.518s
+Answers     : 16
+Runtime     : 9.011s
+  parsing   : 0.175s
+  abducing  : 0.540s
+   a.gringo : 0.152s
+   a.clasp  : 0.315s
+  deducing  : 0.108s
+  inducing  : 5.301s
+   i.gringo : 2.030s
+   i.clasp  : 3.264s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -1193,12 +1229,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.931s
-  parsing  : 0.094s
-  abducing : 0.455s
-  deducing : 0.098s
-  inducing : 3.689s
+Answers     : 16
+Runtime     : 8.561s
+  parsing   : 0.115s
+  abducing  : 0.594s
+   a.gringo : 0.216s
+   a.clasp  : 0.298s
+  deducing  : 0.141s
+  inducing  : 4.557s
+   i.gringo : 1.927s
+   i.clasp  : 2.620s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -1313,12 +1353,16 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.819s
-  parsing  : 0.097s
-  abducing : 0.485s
-  deducing : 0.099s
-  inducing : 3.630s
+Answers     : 16
+Runtime     : 7.615s
+  parsing   : 0.098s
+  abducing  : 0.441s
+   a.gringo : 0.157s
+   a.clasp  : 0.208s
+  deducing  : 0.113s
+  inducing  : 4.187s
+   i.gringo : 1.755s
+   i.clasp  : 2.426s
 xhail version 0.5.0
 
 Reading from phone4_hard.lp
@@ -1433,9 +1477,13 @@ Answer: 16
     terminates(V1, V2, V3) :- eql(V1, dial(V4, V5, V6)).
 
 
-Answers    : 16
-Runtime    : 6.561s
-  parsing  : 0.088s
-  abducing : 0.466s
-  deducing : 0.103s
-  inducing : 3.467s
+Answers     : 16
+Runtime     : 6.947s
+  parsing   : 0.097s
+  abducing  : 0.442s
+   a.gringo : 0.145s
+   a.clasp  : 0.227s
+  deducing  : 0.106s
+  inducing  : 3.756s
+   i.gringo : 1.620s
+   i.clasp  : 2.129s

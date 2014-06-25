@@ -58,6 +58,10 @@ public class Config {
 
 	private Clock abducing;
 
+	private Clock abducing_clasp;
+
+	private Clock abducing_gringo;
+
 	private String clasp;
 
 	private Path current;
@@ -69,8 +73,15 @@ public class Config {
 	private Clock deducing;
 
 	private String gringo;
+
 	private Clock inducing;
+
+	private Clock inducing_clasp;
+
+	private Clock inducing_gringo;
+
 	private String name;
+
 	private Clock parsing;
 
 	/**
@@ -95,8 +106,12 @@ public class Config {
 		}
 		this.parsing = new Clock();
 		this.abducing = new Clock();
+		this.abducing_clasp = new Clock();
+		this.abducing_gringo = new Clock();
 		this.deducing = new Clock();
 		this.inducing = new Clock();
+		this.inducing_clasp = new Clock();
+		this.inducing_gringo = new Clock();
 		this.gringo = gringo;
 		this.clasp = clasp;
 		this.name = STDIN;
@@ -184,6 +199,16 @@ public class Config {
 		return abducing;
 	}
 
+	public Clock getAbducingClasp() {
+		assert invariant() : "Illegal state in Config.getAbducingClasp()";
+		return abducing_clasp;
+	}
+
+	public Clock getAbducingGringo() {
+		assert invariant() : "Illegal state in Config.getAbducingGringo()";
+		return abducing_gringo;
+	}
+
 	public Path getCurrentPath() {
 		assert invariant() : "Illegal state in Config.getCurrentPath()";
 		return current;
@@ -204,6 +229,16 @@ public class Config {
 		return inducing;
 	}
 
+	public Clock getInducingClasp() {
+		assert invariant() : "Illegal state in Config.getInducingClasp()";
+		return inducing_clasp;
+	}
+
+	public Clock getInducingGringo() {
+		assert invariant() : "Illegal state in Config.getInducingGringo()";
+		return inducing_gringo;
+	}
+
 	public Clock getParsing() {
 		assert invariant() : "Illegal state in Config.getParsing()";
 		return parsing;
@@ -211,9 +246,9 @@ public class Config {
 
 	private boolean invariant() {
 		File file;
-		return (null != abducing && null != clasp && !clasp.isEmpty() && (file = new File(clasp)).isFile() && file.exists() && null != current
-				&& null != deducing && null != gringo && !gringo.isEmpty() && (file = new File(gringo)).isFile() && file.exists() && null != inducing
-				&& null != name && !name.isEmpty() && null != parsing);
+		return (null != abducing && null != abducing_clasp && null != abducing_gringo && null != clasp && !clasp.isEmpty() && (file = new File(clasp)).isFile()
+				&& file.exists() && null != current && null != deducing && null != gringo && !gringo.isEmpty() && (file = new File(gringo)).isFile()
+				&& file.exists() && null != inducing && null != inducing_clasp && null != inducing_gringo && null != name && !name.isEmpty() && null != parsing);
 	}
 
 	public boolean isDebug() {

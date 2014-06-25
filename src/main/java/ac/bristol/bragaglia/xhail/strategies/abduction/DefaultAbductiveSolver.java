@@ -50,14 +50,20 @@ public class DefaultAbductiveSolver implements AbductiveStrategy {
 		if (problem.derive().dump(source.toFile())) {
 			try {
 				Path grounding = config.createFile(temp, config.getFilename() + "_abd.grounding");
-				if (config.isDebug())
+				if (config.isDebug()) {
+					config.getAbducingGringo().start();
 					config.runGringoT(source, grounding, errors).waitFor();
-				else
+					config.getAbducingGringo().stop();
+				} else
 					config.deleteFile(grounding);
 				Path gringo = config.createFile(temp, config.getFilename() + "_abd.gringo");
+				config.getAbducingGringo().start();
 				config.runGringo(source, gringo, errors).waitFor();
+				config.getAbducingGringo().stop();
 				Path clasp = config.createFile(temp, config.getFilename() + "_abd.clasp");
+				config.getAbducingClasp().start();
 				config.runClasp(gringo, clasp, errors).waitFor();
+				config.getAbducingClasp().stop();
 				config.getAbducing().stop();
 				config.getParsing().start();
 				FileInputStream stream = new FileInputStream(clasp.toFile());

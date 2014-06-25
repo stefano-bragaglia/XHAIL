@@ -18,12 +18,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.778s
-  parsing  : 0.204s
-  abducing : 0.104s
-  deducing : 0.016s
-  inducing : 0.036s
+Answers     : 1
+Runtime     : 3.744s
+  parsing   : 0.212s
+  abducing  : 0.104s
+   a.gringo : 0.039s
+   a.clasp  : 0.042s
+  deducing  : 0.018s
+  inducing  : 0.038s
+   i.gringo : 0.023s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -43,12 +47,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.480s
-  parsing  : 0.191s
-  abducing : 0.094s
-  deducing : 0.015s
-  inducing : 0.029s
+Answers     : 1
+Runtime     : 3.722s
+  parsing   : 0.214s
+  abducing  : 0.101s
+   a.gringo : 0.037s
+   a.clasp  : 0.038s
+  deducing  : 0.016s
+  inducing  : 0.031s
+   i.gringo : 0.018s
+   i.clasp  : 0.010s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -68,12 +76,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.345s
-  parsing  : 0.182s
-  abducing : 0.094s
-  deducing : 0.016s
-  inducing : 0.031s
+Answers     : 1
+Runtime     : 3.604s
+  parsing   : 0.227s
+  abducing  : 0.095s
+   a.gringo : 0.030s
+   a.clasp  : 0.041s
+  deducing  : 0.016s
+  inducing  : 0.035s
+   i.gringo : 0.022s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -93,12 +105,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.547s
-  parsing  : 0.187s
-  abducing : 0.094s
-  deducing : 0.013s
-  inducing : 0.034s
+Answers     : 1
+Runtime     : 3.551s
+  parsing   : 0.211s
+  abducing  : 0.100s
+   a.gringo : 0.035s
+   a.clasp  : 0.044s
+  deducing  : 0.016s
+  inducing  : 0.038s
+   i.gringo : 0.022s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -118,12 +134,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.572s
-  parsing  : 0.193s
-  abducing : 0.092s
-  deducing : 0.016s
-  inducing : 0.034s
+Answers     : 1
+Runtime     : 3.632s
+  parsing   : 0.217s
+  abducing  : 0.104s
+   a.gringo : 0.032s
+   a.clasp  : 0.046s
+  deducing  : 0.016s
+  inducing  : 0.034s
+   i.gringo : 0.020s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -143,12 +163,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.321s
-  parsing  : 0.191s
-  abducing : 0.090s
-  deducing : 0.016s
-  inducing : 0.030s
+Answers     : 1
+Runtime     : 3.677s
+  parsing   : 0.190s
+  abducing  : 0.093s
+   a.gringo : 0.032s
+   a.clasp  : 0.038s
+  deducing  : 0.016s
+  inducing  : 0.039s
+   i.gringo : 0.024s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -168,12 +192,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.502s
-  parsing  : 0.195s
-  abducing : 0.094s
-  deducing : 0.015s
-  inducing : 0.036s
+Answers     : 1
+Runtime     : 3.486s
+  parsing   : 0.207s
+  abducing  : 0.104s
+   a.gringo : 0.038s
+   a.clasp  : 0.041s
+  deducing  : 0.020s
+  inducing  : 0.036s
+   i.gringo : 0.021s
+   i.clasp  : 0.013s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -193,12 +221,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.670s
-  parsing  : 0.191s
-  abducing : 0.106s
-  deducing : 0.015s
-  inducing : 0.036s
+Answers     : 1
+Runtime     : 3.619s
+  parsing   : 0.194s
+  abducing  : 0.088s
+   a.gringo : 0.030s
+   a.clasp  : 0.032s
+  deducing  : 0.017s
+  inducing  : 0.037s
+   i.gringo : 0.021s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -218,12 +250,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.427s
-  parsing  : 0.196s
-  abducing : 0.098s
-  deducing : 0.014s
-  inducing : 0.034s
+Answers     : 1
+Runtime     : 3.583s
+  parsing   : 0.201s
+  abducing  : 0.098s
+   a.gringo : 0.040s
+   a.clasp  : 0.035s
+  deducing  : 0.016s
+  inducing  : 0.031s
+   i.gringo : 0.018s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -243,12 +279,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.564s
-  parsing  : 0.211s
-  abducing : 0.096s
-  deducing : 0.014s
-  inducing : 0.030s
+Answers     : 1
+Runtime     : 3.658s
+  parsing   : 0.228s
+  abducing  : 0.098s
+   a.gringo : 0.038s
+   a.clasp  : 0.041s
+  deducing  : 0.017s
+  inducing  : 0.034s
+   i.gringo : 0.018s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -268,12 +308,16 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.380s
-  parsing  : 0.197s
-  abducing : 0.098s
-  deducing : 0.014s
-  inducing : 0.036s
+Answers     : 1
+Runtime     : 3.658s
+  parsing   : 0.201s
+  abducing  : 0.098s
+   a.gringo : 0.035s
+   a.clasp  : 0.040s
+  deducing  : 0.013s
+  inducing  : 0.028s
+   i.gringo : 0.017s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from phone4_abd.lp
@@ -293,9 +337,13 @@ Answer: 1
     happens(pickUp(a2, p2), 2).
 
 
-Answers    : 1
-Runtime    : 3.391s
-  parsing  : 0.196s
-  abducing : 0.098s
-  deducing : 0.014s
-  inducing : 0.105s
+Answers     : 1
+Runtime     : 4.014s
+  parsing   : 0.228s
+  abducing  : 0.113s
+   a.gringo : 0.040s
+   a.clasp  : 0.048s
+  deducing  : 0.015s
+  inducing  : 0.037s
+   i.gringo : 0.022s
+   i.clasp  : 0.012s

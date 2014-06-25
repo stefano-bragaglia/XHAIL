@@ -145,12 +145,16 @@ public class Application {
 			System.out.println();
 			System.out.println();
 			time = System.currentTimeMillis() - time;
-			System.out.println(String.format("Answers    : %d", program.guess().size()));
-			System.out.println(String.format("Runtime    : %.3fs", time / 1000.0));
-			System.out.println(String.format("  parsing  : %.3fs", config.getParsing().getTime() / 1000.0));
-			System.out.println(String.format("  abducing : %.3fs", config.getAbducing().getTime() / 1000.0));
-			System.out.println(String.format("  deducing : %.3fs", config.getDeducing().getTime() / 1000.0));
-			System.out.println(String.format("  inducing : %.3fs", config.getInducing().getTime() / 1000.0));
+			System.out.println(String.format("Answers     : %d", program.guess().size()));
+			System.out.println(String.format("Runtime     : %.3fs", time / 1000.0));
+			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000.0));
+			System.out.println(String.format("  abducing  : %.3fs", config.getAbducing().getTime() / 1000.0));
+			System.out.println(String.format("   a.gringo : %.3fs", config.getAbducingGringo().getTime() / 1000.0));
+			System.out.println(String.format("   a.clasp  : %.3fs", config.getAbducingClasp().getTime() / 1000.0));
+			System.out.println(String.format("  deducing  : %.3fs", config.getDeducing().getTime() / 1000.0));
+			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000.0));
+			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000.0));
+			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000.0));
 			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000, cpu % 1000));
 		} else
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));

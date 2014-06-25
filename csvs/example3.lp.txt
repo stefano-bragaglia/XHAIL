@@ -16,12 +16,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.476s
-  parsing  : 0.053s
-  abducing : 0.055s
-  deducing : 0.019s
-  inducing : 0.027s
+Answers     : 2
+Runtime     : 0.559s
+  parsing   : 0.064s
+  abducing  : 0.044s
+   a.gringo : 0.012s
+   a.clasp  : 0.010s
+  deducing  : 0.018s
+  inducing  : 0.028s
+   i.gringo : 0.012s
+   i.clasp  : 0.013s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -39,12 +43,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.487s
-  parsing  : 0.060s
-  abducing : 0.043s
-  deducing : 0.018s
-  inducing : 0.027s
+Answers     : 2
+Runtime     : 0.490s
+  parsing   : 0.061s
+  abducing  : 0.045s
+   a.gringo : 0.011s
+   a.clasp  : 0.009s
+  deducing  : 0.019s
+  inducing  : 0.033s
+   i.gringo : 0.013s
+   i.clasp  : 0.017s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -62,12 +70,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.461s
-  parsing  : 0.060s
-  abducing : 0.041s
-  deducing : 0.018s
-  inducing : 0.024s
+Answers     : 2
+Runtime     : 0.487s
+  parsing   : 0.056s
+  abducing  : 0.042s
+   a.gringo : 0.013s
+   a.clasp  : 0.010s
+  deducing  : 0.019s
+  inducing  : 0.027s
+   i.gringo : 0.013s
+   i.clasp  : 0.011s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -85,12 +97,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.488s
-  parsing  : 0.058s
-  abducing : 0.044s
-  deducing : 0.018s
-  inducing : 0.029s
+Answers     : 2
+Runtime     : 0.495s
+  parsing   : 0.063s
+  abducing  : 0.047s
+   a.gringo : 0.016s
+   a.clasp  : 0.011s
+  deducing  : 0.019s
+  inducing  : 0.024s
+   i.gringo : 0.011s
+   i.clasp  : 0.010s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -108,12 +124,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.482s
-  parsing  : 0.066s
-  abducing : 0.050s
-  deducing : 0.020s
-  inducing : 0.023s
+Answers     : 2
+Runtime     : 0.487s
+  parsing   : 0.056s
+  abducing  : 0.048s
+   a.gringo : 0.015s
+   a.clasp  : 0.010s
+  deducing  : 0.017s
+  inducing  : 0.030s
+   i.gringo : 0.013s
+   i.clasp  : 0.014s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -131,12 +151,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.516s
-  parsing  : 0.067s
-  abducing : 0.048s
-  deducing : 0.022s
-  inducing : 0.028s
+Answers     : 2
+Runtime     : 0.497s
+  parsing   : 0.063s
+  abducing  : 0.043s
+   a.gringo : 0.012s
+   a.clasp  : 0.008s
+  deducing  : 0.020s
+  inducing  : 0.029s
+   i.gringo : 0.015s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -154,12 +178,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.496s
-  parsing  : 0.054s
-  abducing : 0.045s
-  deducing : 0.018s
-  inducing : 0.020s
+Answers     : 2
+Runtime     : 0.503s
+  parsing   : 0.065s
+  abducing  : 0.048s
+   a.gringo : 0.010s
+   a.clasp  : 0.011s
+  deducing  : 0.021s
+  inducing  : 0.024s
+   i.gringo : 0.012s
+   i.clasp  : 0.009s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -177,12 +205,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.488s
-  parsing  : 0.057s
-  abducing : 0.047s
-  deducing : 0.020s
-  inducing : 0.026s
+Answers     : 2
+Runtime     : 0.479s
+  parsing   : 0.059s
+  abducing  : 0.042s
+   a.gringo : 0.012s
+   a.clasp  : 0.008s
+  deducing  : 0.017s
+  inducing  : 0.028s
+   i.gringo : 0.013s
+   i.clasp  : 0.013s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -200,12 +232,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.490s
-  parsing  : 0.054s
-  abducing : 0.043s
-  deducing : 0.023s
-  inducing : 0.027s
+Answers     : 2
+Runtime     : 0.494s
+  parsing   : 0.057s
+  abducing  : 0.047s
+   a.gringo : 0.012s
+   a.clasp  : 0.010s
+  deducing  : 0.019s
+  inducing  : 0.028s
+   i.gringo : 0.013s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -223,12 +259,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.490s
-  parsing  : 0.056s
-  abducing : 0.041s
-  deducing : 0.024s
-  inducing : 0.029s
+Answers     : 2
+Runtime     : 0.484s
+  parsing   : 0.059s
+  abducing  : 0.043s
+   a.gringo : 0.014s
+   a.clasp  : 0.010s
+  deducing  : 0.016s
+  inducing  : 0.031s
+   i.gringo : 0.016s
+   i.clasp  : 0.012s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -246,12 +286,16 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.590s
-  parsing  : 0.064s
-  abducing : 0.128s
-  deducing : 0.025s
-  inducing : 0.027s
+Answers     : 2
+Runtime     : 0.491s
+  parsing   : 0.068s
+  abducing  : 0.048s
+   a.gringo : 0.012s
+   a.clasp  : 0.010s
+  deducing  : 0.019s
+  inducing  : 0.023s
+   i.gringo : 0.011s
+   i.clasp  : 0.008s
 xhail version 0.5.0
 
 Reading from example3.lp
@@ -269,9 +313,13 @@ Answer: 2
     p(V1) :- q(V1, V2, c).
 
 
-Answers    : 2
-Runtime    : 0.489s
-  parsing  : 0.054s
-  abducing : 0.047s
-  deducing : 0.017s
-  inducing : 0.027s
+Answers     : 2
+Runtime     : 0.491s
+  parsing   : 0.057s
+  abducing  : 0.047s
+   a.gringo : 0.012s
+   a.clasp  : 0.011s
+  deducing  : 0.025s
+  inducing  : 0.023s
+   i.gringo : 0.011s
+   i.clasp  : 0.010s

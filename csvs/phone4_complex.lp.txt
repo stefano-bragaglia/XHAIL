@@ -30,12 +30,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.087s
-  parsing  : 0.079s
-  abducing : 0.421s
-  deducing : 0.066s
-  inducing : 1.630s
+Answers     : 4
+Runtime     : 6.397s
+  parsing   : 0.097s
+  abducing  : 0.465s
+   a.gringo : 0.162s
+   a.clasp  : 0.229s
+  deducing  : 0.087s
+  inducing  : 2.448s
+   i.gringo : 1.007s
+   i.clasp  : 1.434s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -67,12 +71,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.067s
-  parsing  : 0.083s
-  abducing : 0.466s
-  deducing : 0.068s
-  inducing : 1.659s
+Answers     : 4
+Runtime     : 5.562s
+  parsing   : 0.080s
+  abducing  : 0.525s
+   a.gringo : 0.166s
+   a.clasp  : 0.267s
+  deducing  : 0.073s
+  inducing  : 1.723s
+   i.gringo : 0.772s
+   i.clasp  : 0.946s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -104,12 +112,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.250s
-  parsing  : 0.081s
-  abducing : 0.437s
-  deducing : 0.069s
-  inducing : 1.696s
+Answers     : 4
+Runtime     : 5.600s
+  parsing   : 0.093s
+  abducing  : 0.454s
+   a.gringo : 0.155s
+   a.clasp  : 0.228s
+  deducing  : 0.075s
+  inducing  : 1.876s
+   i.gringo : 0.807s
+   i.clasp  : 1.065s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -141,12 +153,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.300s
-  parsing  : 0.076s
-  abducing : 0.478s
-  deducing : 0.064s
-  inducing : 1.737s
+Answers     : 4
+Runtime     : 6.026s
+  parsing   : 0.090s
+  abducing  : 0.505s
+   a.gringo : 0.187s
+   a.clasp  : 0.235s
+  deducing  : 0.080s
+  inducing  : 1.966s
+   i.gringo : 0.953s
+   i.clasp  : 1.008s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -178,12 +194,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.199s
-  parsing  : 0.081s
-  abducing : 0.451s
-  deducing : 0.068s
-  inducing : 1.698s
+Answers     : 4
+Runtime     : 5.438s
+  parsing   : 0.087s
+  abducing  : 0.528s
+   a.gringo : 0.185s
+   a.clasp  : 0.276s
+  deducing  : 0.069s
+  inducing  : 1.752s
+   i.gringo : 0.816s
+   i.clasp  : 0.931s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -215,12 +235,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.293s
-  parsing  : 0.079s
-  abducing : 0.469s
-  deducing : 0.062s
-  inducing : 1.770s
+Answers     : 4
+Runtime     : 5.315s
+  parsing   : 0.073s
+  abducing  : 0.445s
+   a.gringo : 0.154s
+   a.clasp  : 0.219s
+  deducing  : 0.067s
+  inducing  : 1.814s
+   i.gringo : 0.873s
+   i.clasp  : 0.935s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -252,12 +276,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.328s
-  parsing  : 0.079s
-  abducing : 0.444s
-  deducing : 0.067s
-  inducing : 1.747s
+Answers     : 4
+Runtime     : 5.630s
+  parsing   : 0.091s
+  abducing  : 0.475s
+   a.gringo : 0.168s
+   a.clasp  : 0.240s
+  deducing  : 0.083s
+  inducing  : 1.898s
+   i.gringo : 0.906s
+   i.clasp  : 0.989s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -289,12 +317,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.466s
-  parsing  : 0.081s
-  abducing : 0.456s
-  deducing : 0.074s
-  inducing : 1.787s
+Answers     : 4
+Runtime     : 6.147s
+  parsing   : 0.086s
+  abducing  : 0.575s
+   a.gringo : 0.198s
+   a.clasp  : 0.275s
+  deducing  : 0.071s
+  inducing  : 1.956s
+   i.gringo : 0.900s
+   i.clasp  : 1.050s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -326,12 +358,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.486s
-  parsing  : 0.075s
-  abducing : 0.473s
-  deducing : 0.073s
-  inducing : 1.799s
+Answers     : 4
+Runtime     : 6.178s
+  parsing   : 0.083s
+  abducing  : 0.471s
+   a.gringo : 0.160s
+   a.clasp  : 0.235s
+  deducing  : 0.071s
+  inducing  : 2.305s
+   i.gringo : 1.116s
+   i.clasp  : 1.184s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -363,12 +399,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.189s
-  parsing  : 0.076s
-  abducing : 0.431s
-  deducing : 0.064s
-  inducing : 1.735s
+Answers     : 4
+Runtime     : 5.631s
+  parsing   : 0.089s
+  abducing  : 0.459s
+   a.gringo : 0.165s
+   a.clasp  : 0.218s
+  deducing  : 0.078s
+  inducing  : 1.849s
+   i.gringo : 0.887s
+   i.clasp  : 0.959s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -400,12 +440,16 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.352s
-  parsing  : 0.081s
-  abducing : 0.432s
-  deducing : 0.069s
-  inducing : 1.709s
+Answers     : 4
+Runtime     : 6.629s
+  parsing   : 0.083s
+  abducing  : 0.464s
+   a.gringo : 0.164s
+   a.clasp  : 0.229s
+  deducing  : 0.082s
+  inducing  : 2.060s
+   i.gringo : 0.915s
+   i.clasp  : 1.140s
 xhail version 0.5.0
 
 Reading from phone4_complex.lp
@@ -437,9 +481,13 @@ Answer: 4
     terminates(V1, V2, V3) :- eql(V1, pickUp(V4, V5)), eql(V2, idle(V5)).
 
 
-Answers    : 4
-Runtime    : 5.242s
-  parsing  : 0.083s
-  abducing : 0.470s
-  deducing : 0.069s
-  inducing : 1.692s
+Answers     : 4
+Runtime     : 5.779s
+  parsing   : 0.082s
+  abducing  : 0.474s
+   a.gringo : 0.159s
+   a.clasp  : 0.239s
+  deducing  : 0.096s
+  inducing  : 1.887s
+   i.gringo : 0.876s
+   i.clasp  : 1.002s

@@ -50,14 +50,20 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 		if (kernel.dump(source.toFile())) {
 			try {
 				Path grounding = config.createFile(temp, config.getFilename() + "_ind.grounding");
-				if (config.isDebug())
+				if (config.isDebug()) {
+					config.getInducingGringo().start();
 					config.runGringoT(source, grounding, errors).waitFor();
-				else
+					config.getInducingGringo().stop();
+				} else
 					config.deleteFile(grounding);
 				Path gringo = config.createFile(temp, config.getFilename() + "_ind.gringo");
+				config.getInducingGringo().start();
 				config.runGringo(source, gringo, errors).waitFor();
+				config.getInducingGringo().stop();
 				Path clasp = config.createFile(temp, config.getFilename() + "_ind.clasp");
+				config.getInducingClasp().start();
 				config.runClasp(gringo, clasp, errors).waitFor();
+				config.getInducingClasp().stop();
 				config.getInducing().stop();
 				config.getParsing().start();
 				FileInputStream stream = new FileInputStream(clasp.toFile());
