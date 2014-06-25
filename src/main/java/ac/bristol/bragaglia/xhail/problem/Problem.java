@@ -514,31 +514,6 @@ public class Problem extends Model {
 		assert invariant() : "Illegal state in Problem.processExamples(Model)";
 	}
 
-	// private void processExamplesMW(Model model) {
-	// if (null == model)
-	// throw new
-	// IllegalArgumentException("Illegal 'model' argument in Problem.processExamplesMW(Model): "
-	// + model);
-	// int maxPriority = 0;
-	// if (!modebodies.isEmpty())
-	// maxPriority = ((TreeMap<Integer, Map<Literal, ModeBodyData>>)
-	// modebodies).lastKey();
-	// for (ModeHeadData data : modeheads.values())
-	// maxPriority = data.maxPriority(maxPriority);
-	// if (!examples.isEmpty()) {
-	// StringJoiner joiner = new StringJoiner(", ");
-	// for (Literal key : examples.keySet()) {
-	// ExampleData value = examples.get(key);
-	// joiner.add(key.toString() + value.asData(maxPriority));
-	// if (value.isMute())
-	// model.addConstraint(String.format(":- %s%s.", key.negated() ? "" :
-	// "not ", key.atom().toString()));
-	// }
-	// model.addMaximize(String.format("#maximize[ %s ].", joiner.toString()));
-	// }
-	// assert invariant() : "Illegal state in Problem.processExamplesMW(Model)";
-	// }
-
 	/**
 	 * This utility method converts any modebody directive of this problem into
 	 * standard statements and adds them to the given non-<code>null</code>
@@ -607,13 +582,17 @@ public class Problem extends Model {
 				StringJoiner typesJoiner = new StringJoiner(", ");
 				StringJoiner varsJoiner = new StringJoiner(", ");
 				for (Atom term : key) {
-					i += 1;
-					termsJoiner.add(String.format("%s(V%d, %s)", term.name(), i, term.get(0).toPrint()));
-					if (term.get(0).isParameter())
-						typesJoiner.add(String.format("%s(V%d, %s)", term.get(0).name(), i, term.get(0).get(term.get(0).arity() - 1).toPrint()));
-					else
-						typesJoiner.add(String.format("%s(V%d)", term.get(0).toPrint(), i));
-					varsJoiner.add(String.format("V%d", i));
+					if (0 == term.arity()) {
+						termsJoiner.add(term.name());
+					} else {
+						i += 1;
+						termsJoiner.add(String.format("%s(V%d, %s)", term.name(), i, term.get(0).toPrint()));
+						if (term.get(0).isParameter())
+							typesJoiner.add(String.format("%s(V%d, %s)", term.get(0).name(), i, term.get(0).get(term.get(0).arity() - 1).toPrint()));
+						else
+							typesJoiner.add(String.format("%s(V%d)", term.get(0).toPrint(), i));
+						varsJoiner.add(String.format("V%d", i));
+					}
 					processModeTerms(model, term);
 				}
 				String terms = termsJoiner.toString();
