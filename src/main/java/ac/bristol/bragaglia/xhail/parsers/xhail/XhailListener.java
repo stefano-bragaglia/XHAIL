@@ -301,6 +301,17 @@ public interface XhailListener extends ParseTreeListener {
 	void exitPriority(@NotNull XhailParser.PriorityContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link XhailParser#DisplayPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterDisplayPredicate(@NotNull XhailParser.DisplayPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XhailParser#DisplayPredicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitDisplayPredicate(@NotNull XhailParser.DisplayPredicateContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link XhailParser#external}.
 	 * @param ctx the parse tree
 	 */
@@ -574,6 +585,17 @@ public interface XhailListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHead(@NotNull XhailParser.HeadContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link XhailParser#DisplayAll}.
+	 * @param ctx the parse tree
+	 */
+	void enterDisplayAll(@NotNull XhailParser.DisplayAllContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XhailParser#DisplayAll}.
+	 * @param ctx the parse tree
+	 */
+	void exitDisplayAll(@NotNull XhailParser.DisplayAllContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link XhailParser#GroundVariable}.

@@ -1,0 +1,64 @@
+$(function () {
+        $('#container').highcharts({
+            credits : {
+                enabled : false
+            },
+    
+            chart: {
+                type: 'column'
+            },
+
+            title: {
+                text: 'Efficiency'
+            },
+            subtitle: {
+                text: 'comparison between former and current version of XHAIL'
+            },
+            
+            xAxis: {
+                categories: ['example 1', 'example 2', 'example 3', 'penguins s', 'penguins u', 'phone4 ded', 'phone4 abd', 'phone4 ind', 'phone4 cplx', 'phone4 hard', 'phone4 hardest']
+            },
+    
+            yAxis: {
+                allowDecimals: false,
+                // min: 0,
+                type: 'logarithmic',
+                minorTickInterval: 0.1,
+                title: {
+                    text: 'Time (ms)'
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    }
+                }
+            },
+    
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>'+
+                        'Total: '+ this.point.stackTotal;
+                }
+            },
+    
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+    
+            series: [{
+                name: 'v0.4.0',
+                data: [200, 115, 231, 218, 134, 214, 667, 10810, 558398, 6311572, -1],
+                stack: 'v0.4.0'
+            }, {    
+                name: 'v.0.5.0',
+                data: [647, 671, 691, 661, 648, 7948, 8031, 7878, 7994, 7988, 8708],
+                stack: 'v.0.5.0'
+            }]
+        });
+    });
+    

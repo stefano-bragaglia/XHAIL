@@ -18,6 +18,8 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundsBothContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ComputeContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ConstantContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ConstraintClauseContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.DisplayAllContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.DisplayPredicateContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.DomainContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ExampleContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ExternalContext;
@@ -56,9 +58,6 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundStringContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundTimesContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundVariableContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundXorContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideAllContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideExplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.HideImplicitContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyConstantContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyInputContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyListContext;
@@ -69,9 +68,6 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.MinimizeContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ModeBodyContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ModeHeadContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.PriorityContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowAllContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowExplicitContext;
-import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.ShowImplicitContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.SignatureContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.WeightContext;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
@@ -494,23 +490,23 @@ public class XhailFileListener extends XhailBaseListener {
 			builders.push(Builder.get(Atom.BIT_XOR).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
-	@Override
-	public void exitHideAll(HideAllContext ctx) {
-		if (null != ctx)
-			problem.addHide(combine(ctx));
-	}
-
-	@Override
-	public void exitHideExplicit(HideExplicitContext ctx) {
-		if (null != ctx)
-			problem.addHide(combine(ctx));
-	}
-
-	@Override
-	public void exitHideImplicit(HideImplicitContext ctx) {
-		if (null != ctx)
-			problem.addHide(combine(ctx));
-	}
+	// @Override
+	// public void exitHideAll(HideAllContext ctx) {
+	// if (null != ctx)
+	// problem.addHide(combine(ctx));
+	// }
+	//
+	// @Override
+	// public void exitHideExplicit(HideExplicitContext ctx) {
+	// if (null != ctx)
+	// problem.addHide(combine(ctx));
+	// }
+	//
+	// @Override
+	// public void exitHideImplicit(HideImplicitContext ctx) {
+	// if (null != ctx)
+	// problem.addHide(combine(ctx));
+	// }
 
 	@Override
 	public void exitKeyConstant(KeyConstantContext ctx) {
@@ -586,22 +582,38 @@ public class XhailFileListener extends XhailBaseListener {
 			priority = Integer.parseInt(ctx.INTEGER().getText());
 	}
 
+	// @Override
+	// public void exitShowAll(ShowAllContext ctx) {
+	// if (null != ctx)
+	// problem.addShow(combine(ctx));
+	// }
+	//
+	// @Override
+	// public void exitShowExplicit(ShowExplicitContext ctx) {
+	// if (null != ctx)
+	// problem.addShow(combine(ctx));
+	// }
+	//
+	// @Override
+	// public void exitShowImplicit(ShowImplicitContext ctx) {
+	// if (null != ctx)
+	// problem.addShow(combine(ctx));
+	// }
+
 	@Override
-	public void exitShowAll(ShowAllContext ctx) {
-		if (null != ctx)
-			problem.addShow(combine(ctx));
+	public void exitDisplayPredicate(DisplayPredicateContext ctx) {
+		if (null == ctx)
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplay(DisplayContext): " + ctx);
+		String name = ctx.IDENTIFIER().getText();
+		int arity = Integer.valueOf(ctx.INTEGER().getText());
+		problem.addDisplay(name, arity);
 	}
 
 	@Override
-	public void exitShowExplicit(ShowExplicitContext ctx) {
-		if (null != ctx)
-			problem.addShow(combine(ctx));
-	}
-
-	@Override
-	public void exitShowImplicit(ShowImplicitContext ctx) {
-		if (null != ctx)
-			problem.addShow(combine(ctx));
+	public void exitDisplayAll(DisplayAllContext ctx) {
+		if (null == ctx)
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplayAll(DisplayAllContext): " + ctx);
+		problem.addDisplayAll();
 	}
 
 	@Override

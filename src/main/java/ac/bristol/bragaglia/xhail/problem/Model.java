@@ -276,7 +276,7 @@ public class Model {
 	 * @return <code>true</code> if the model did not already contain the given
 	 *         statement, <code>false</code> otherwise
 	 */
-	public boolean addHide(String hide) {
+	protected boolean addHide(String hide) {
 		if (null == hide || (hide = hide.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'hide' argument in Model.addHide(String): " + hide);
 		if (hide.equals("#hide."))
@@ -334,7 +334,7 @@ public class Model {
 	 * @return <code>true</code> if the model did not already contain the given
 	 *         statement, <code>false</code> otherwise
 	 */
-	public boolean addShow(String show) {
+	protected boolean addShow(String show) {
 		if (null == show || (show = show.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'show' argument in Model.addShow(String): " + show);
 		boolean result = true;

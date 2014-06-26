@@ -3,7 +3,8 @@
 % SYSTEM:  XHAIL ver 0.33
 % SUMMARY: EC Telephone Exchange System
 
-
+%% #display.
+#display holdsAt/2.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% TYPE DEFINITIONS %%%
@@ -185,6 +186,3 @@ happens(setDown(a2,p2),4).
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% None.
-
-#hide.
-#show holdsAt/2.

@@ -67,8 +67,8 @@ package ac.bristol.bragaglia.xhail.parsers.clasp3;
  answer
  :
  	'Answer: ' INTEGER NEWLINE // 
- 	(model NEWLINE // 
- 	('Optimization: ' values)? )?
+ 	model? NEWLINE // 
+ 	('Optimization: ' values)?
  ;
 
  model

@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.TreeSet;
 
 import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.parsers.XhailFileParser;
@@ -203,9 +204,18 @@ public class Program {
 	}
 
 	public Collection<Atom> model() {
-		Collection<Atom> result = Collections.emptySet();
+		Collection<Atom> result;
 		if (null != generalization)
-			result = generalization.model();
+			if (problem.isDisplayAll())
+				result = generalization.model();
+			else {
+				result = new TreeSet<>();
+				for (Atom candidate : generalization.model())
+					if (problem.isDisplayable(candidate))
+						result.add(candidate);
+			}
+		else
+			result = Collections.emptySet();
 		assert invariant() : "Illegal state in Program.model()";
 		return result;
 	}

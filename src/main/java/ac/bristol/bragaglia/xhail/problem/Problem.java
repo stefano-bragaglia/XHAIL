@@ -4,6 +4,7 @@
 package ac.bristol.bragaglia.xhail.problem;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -164,6 +165,13 @@ public class Problem extends Model {
 			return null != weight ? weight : 1;
 		}
 
+		public int maxPriority(int maxPriority) {
+			int result = getPriority();
+			if (maxPriority > result)
+				result = maxPriority;
+			return result;
+		}
+
 		@Override
 		public String toString() {
 			String result = "";
@@ -174,13 +182,6 @@ public class Problem extends Model {
 				result += upper;
 			}
 			result += asData();
-			return result;
-		}
-
-		public int maxPriority(int maxPriority) {
-			int result = getPriority();
-			if (maxPriority > result)
-				result = maxPriority;
 			return result;
 		}
 
@@ -227,6 +228,10 @@ public class Problem extends Model {
 			return String.format("%s%s_%d_%d(%s)", tag, name, weight, priority, list);
 	}
 
+	private boolean display;
+
+	private Map<String, Set<Integer>> displays;
+
 	/**
 	 * The set of example directives of this problem (plus annexes).
 	 */
@@ -259,12 +264,35 @@ public class Problem extends Model {
 	 */
 	public Problem() {
 		super();
+		this.display = false;
+		this.displays = new TreeMap<>();
 		this.examples = new TreeMap<>();
 		this.modebodies = new TreeMap<>();
 		this.modeheads = new TreeMap<>();
 		this.types = new TreeSet<>();
 		this.modified = false;
 		assert invariant() : "Illegal state in Problem()";
+	}
+
+	public boolean addDisplay(String name, int arity) {
+		if (null == name || (name = name.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'name' argument in Model.addDisplay(String, int): " + name);
+		if (arity < 0)
+			throw new IllegalArgumentException("Illegal 'arity' argument in Model.addDisplay(String, int): " + arity);
+		Set<Integer> set = displays.get(name);
+		if (null == set) {
+			set = new HashSet<>();
+			displays.put(name, set);
+		}
+		boolean result = set.add(arity);
+		modified |= result;
+		assert invariant() : "Illegal state in Model.addDisplay(String, int)";
+		return result;
+	}
+
+	public void addDisplayAll() {
+		display = true;
+		assert invariant() : "Illegal state in Problem.addDisplayAll()";
 	}
 
 	/**
@@ -417,7 +445,21 @@ public class Problem extends Model {
 	 *         <code>false</code> otherwise
 	 */
 	private boolean invariant() {
-		return (null != examples && null != modebodies && null != modeheads);
+		return (null != displays && null != examples && null != modebodies && null != modeheads);
+	}
+
+	public boolean isDisplayable(Atom candidate) {
+		if (null == candidate)
+			throw new IllegalArgumentException("Illegal 'candidate' argument in Problem.isDisplayable(Atom): " + candidate);
+		String name = candidate.name();
+		boolean result = displays.containsKey(name) && displays.get(name).contains(candidate.arity());
+		assert invariant() : "Illegal state in Problem.isDisplayable(Atom)";
+		return result;
+	}
+
+	public boolean isDisplayAll() {
+		assert invariant() : "Illegal state in Problem.isDisplayAll()";
+		return display;
 	}
 
 	/**
@@ -488,6 +530,19 @@ public class Problem extends Model {
 		return modebodies;
 	}
 
+	// private void processStandard(Model model) {
+	// if (null == model)
+	// throw new
+	// IllegalArgumentException("Illegal 'model' argument in Problem.processStandard(Model): "
+	// + model);
+	// if (!examples.isEmpty())
+	// for (Literal key : examples.keySet())
+	// if (examples.get(key).isMute())
+	// model.addConstraint(String.format(":- %s%s.", key.negated() ? "" :
+	// "not ", key.atom().toString()));
+	// assert invariant() : "Illegal state in Problem.processStandard(Model)";
+	// }
+
 	/**
 	 * This utility method converts any example directive of this problem into
 	 * standard statements and adds them to the given non-<code>null</code>
@@ -533,30 +588,6 @@ public class Problem extends Model {
 						processModeTerms(model, term);
 				}
 		assert invariant() : "Illegal state in Problem.processModeBodies(Model)";
-	}
-
-	/**
-	 * Adds recursion to processModeBodies(Model model) and
-	 * processModeHeads(Model model) issue #show directives.
-	 * 
-	 * @param model
-	 * @param term
-	 */
-	private void processModeTerms(Model model, Atom term) {
-		if (null == model)
-			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processModeTerms(Model, Atom): " + model);
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Problem.processModeTerms(Model, Atom): " + term);
-		int arity = term.arity();
-		String name = term.name();
-		if (name.equals(Atom.PAR_INPUT) || name.equals(Atom.PAR_OUTPUT) || name.equals(Atom.PAR_CONSTANT))
-			model.addShow(String.format("#show %s/%d.", term.get(arity - 1), 1));
-		else {
-			model.addShow(String.format("#show %s/%d.", name, arity));
-			for (int i = 0; i < arity; i++)
-				processModeTerms(model, term.get(i));
-		}
-		assert invariant() : "Illegal state in Problem.processModeTerms(Model, Atom)";
 	}
 
 	/**
@@ -615,18 +646,29 @@ public class Problem extends Model {
 		assert invariant() : "Illegal state in Problem.processModeHeads(Model)";
 	}
 
-	// private void processStandard(Model model) {
-	// if (null == model)
-	// throw new
-	// IllegalArgumentException("Illegal 'model' argument in Problem.processStandard(Model): "
-	// + model);
-	// if (!examples.isEmpty())
-	// for (Literal key : examples.keySet())
-	// if (examples.get(key).isMute())
-	// model.addConstraint(String.format(":- %s%s.", key.negated() ? "" :
-	// "not ", key.atom().toString()));
-	// assert invariant() : "Illegal state in Problem.processStandard(Model)";
-	// }
+	/**
+	 * Adds recursion to processModeBodies(Model model) and
+	 * processModeHeads(Model model) issue #show directives.
+	 * 
+	 * @param model
+	 * @param term
+	 */
+	private void processModeTerms(Model model, Atom term) {
+		if (null == model)
+			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processModeTerms(Model, Atom): " + model);
+		if (null == term)
+			throw new IllegalArgumentException("Illegal 'term' argument in Problem.processModeTerms(Model, Atom): " + term);
+		int arity = term.arity();
+		String name = term.name();
+		if (name.equals(Atom.PAR_INPUT) || name.equals(Atom.PAR_OUTPUT) || name.equals(Atom.PAR_CONSTANT))
+			model.addShow(String.format("#show %s/%d.", term.get(arity - 1), 1));
+		else {
+			model.addShow(String.format("#show %s/%d.", name, arity));
+			for (int i = 0; i < arity; i++)
+				processModeTerms(model, term.get(i));
+		}
+		assert invariant() : "Illegal state in Problem.processModeTerms(Model, Atom)";
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -361,6 +361,19 @@ public class XhailBaseListener implements XhailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDisplayPredicate(@NotNull XhailParser.DisplayPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDisplayPredicate(@NotNull XhailParser.DisplayPredicateContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExternal(@NotNull XhailParser.ExternalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -680,6 +693,19 @@ public class XhailBaseListener implements XhailListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitHead(@NotNull XhailParser.HeadContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDisplayAll(@NotNull XhailParser.DisplayAllContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDisplayAll(@NotNull XhailParser.DisplayAllContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

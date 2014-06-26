@@ -28,17 +28,17 @@ directive
 :
 	compute
 	| constant
+	| display
 	| domain
 	| example
 	| external
-	| hide
+//	| hide
 	| maximize
 	| minimize
 	| modeBody
 	| modeHead
-	| show
+//	| show
 	//  -----------
-
 ;
 
 compute
@@ -53,6 +53,14 @@ constant
 :
 	DIR_CONST IDENTIFIER EQUALS groundAtom DOT
 ;
+
+display
+:
+	DIR_DISPLAY DOT # DisplayAll 
+	| DIR_DISPLAY IDENTIFIER SLASH INTEGER DOT #DisplayPredicate 
+;
+
+
 
 domain
 :
@@ -509,6 +517,11 @@ DIR_COMPUTE
 DIR_CONST
 :
 	'#const'
+;
+
+DIR_DISPLAY
+:
+	'#display'
 ;
 
 DIR_DOMAIN

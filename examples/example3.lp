@@ -1,3 +1,8 @@
+#display p/1.
+#display q/3.
+#display r/2.
+% #display t/1.
+
 #modeh p(+t).
 
 #modeb q(+t, -t, $t).

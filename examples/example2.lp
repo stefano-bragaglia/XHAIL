@@ -1,13 +1,20 @@
-#example pp ( a ) .
-#example not pp ( b ) .
+#display pp/1.
+#display qq/1.
+#display rr/1.
+%% #display ss/1.
+%% #display tt/1.
 
-#modeh qq ( +tt ) .
-#modeh rr ( +tt ) .
+#modeh qq(+tt).
+#modeh rr(+tt).
 
-#modeb ss ( +tt ) .
+#modeb ss(+tt).
 
-pp ( X ) :- qq ( X ) .
-pp ( X ) :- rr ( X ) .
+#example pp(a).
+#example not pp(b).
 
-tt ( a ; b ; c ) .
-ss ( a ) .
+
+pp(X) :- qq(X).
+pp(X) :- rr(X).
+
+tt(a;b;c).
+ss(a).
