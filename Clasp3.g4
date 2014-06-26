@@ -26,7 +26,7 @@ package ac.bristol.bragaglia.xhail.parsers.clasp3;
  source
  :
  	'Reading from stdin' NEWLINE # sourceSTDIN
- 	| 'Reading from ' path NEWLINE # sourceFile // TODO fix
+ 	| 'Reading from ' path NEWLINE # sourceFile // TODO fix path, before or later!
 
  ;
 
