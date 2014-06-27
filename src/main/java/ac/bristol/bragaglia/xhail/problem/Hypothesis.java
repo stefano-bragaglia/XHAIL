@@ -3,9 +3,12 @@
  */
 package ac.bristol.bragaglia.xhail.problem;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -98,7 +101,7 @@ public class Hypothesis {
 		return result;
 	}
 
-	public Collection<Set<Clause>> clauses() {
+	public Collection<Entry<Set<Clause>, List<Integer>>> clauses() {
 		if (modified) {
 			for (int model = 0; model < count; model++) {
 				Set<Clause> set = clauses.get(model);
@@ -127,10 +130,46 @@ public class Hypothesis {
 			}
 			modified = false;
 		}
-		Collection<Set<Clause>> result = clauses.values();
-		assert invariant() : "Illegal state in Hypothesis.clauses()";
+		Set<Entry<Set<Clause>, List<Integer>>> result = new LinkedHashSet<>();
+		for (int model : clauses.keySet())
+			result.add(new SimpleEntry<Set<Clause>, List<Integer>>(clauses.get(model), values.get(model)));
+		assert invariant() : "Illegal state in Hypothesis.c()";
 		return result;
 	}
+
+	// public Collection<Set<Clause>> clauses() {
+	// if (modified) {
+	// for (int model = 0; model < count; model++) {
+	// Set<Clause> set = clauses.get(model);
+	// if (null == set) {
+	// set = new TreeSet<>();
+	// clauses.put(model, set);
+	// }
+	// Map<Integer, Clause> headmap = heads.get(model);
+	// if (null == headmap) {
+	// headmap = new TreeMap<>();
+	// heads.put(model, headmap);
+	// }
+	// Map<Integer, Map<Integer, Literal>> bodymap = bodies.get(model);
+	// if (null == bodymap) {
+	// bodymap = new TreeMap<>();
+	// bodies.put(model, bodymap);
+	// }
+	// set.clear();
+	// for (int c : headmap.keySet()) {
+	// Clause clause = headmap.get(c);
+	// if (bodymap.containsKey(c))
+	// for (Literal literal : bodymap.get(c).values())
+	// clause.append(literal);
+	// set.add(clause);
+	// }
+	// }
+	// modified = false;
+	// }
+	// Collection<Set<Clause>> result = clauses.values();
+	// assert invariant() : "Illegal state in Hypothesis.clauses()";
+	// return result;
+	// }
 
 	public Collection<Clause> clauses(int model) {
 		if (model < 0 || model >= count)

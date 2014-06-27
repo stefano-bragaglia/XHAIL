@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -59,7 +61,7 @@ public class Program {
 		System.out.println(atom);
 
 		Config config = new Config("/Library/Gringo/gringo", "/Library/Clasp/clasp", true);
-		int i;
+//		int i;
 		Program program = new Program(config);
 		program.solve();
 		// program.load("ac/bristol/bragaglia/jhail/altro.lp");
@@ -70,9 +72,9 @@ public class Program {
 		System.out.println("Delta:\t" + program.delta());
 		System.out.println("Kappa:\t" + program.kappa());
 		System.out.println("Guess:");
-		i = 1;
-		for (Collection<Clause> guess : program.guess())
-			System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
+//		i = 1;
+//		for (Collection<Clause> guess : program.guess())
+//			System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
 
 		System.out.println("Done.\n\n\n");
 
@@ -86,9 +88,9 @@ public class Program {
 		System.out.println("Delta:\t" + program.delta());
 		System.out.println("Kappa:\t" + program.kappa());
 		System.out.println("Guess:");
-		i = 1;
-		for (Collection<Clause> guess : program.guess())
-			System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
+//		i = 1;
+//		for (Collection<Clause> guess : program.guess())
+//			System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
 
 		System.out.println("Done.");
 
@@ -143,8 +145,8 @@ public class Program {
 		return problem;
 	}
 
-	public Collection<Set<Clause>> guess() {
-		Collection<Set<Clause>> result = Collections.emptySet();
+	public Collection<Map.Entry<Set<Clause>, List<Integer>>> guess() {
+		Collection<Map.Entry<Set<Clause>, List<Integer>>> result = Collections.emptySet();
 		if (null != hypothesis)
 			result = hypothesis.clauses();
 		assert invariant() : "Illegal state in Program.guess()";

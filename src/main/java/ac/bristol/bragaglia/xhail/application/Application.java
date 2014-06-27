@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringJoiner;
 
@@ -246,18 +248,28 @@ public class Application {
 		System.out.println(String.format("%s: %s", label, list.isEmpty() ? "[]" : joiner.toString()));
 	}
 
-	private static void printall(Collection<Set<Clause>> list) {
+	private static void printall(Collection<Entry<Set<Clause>, List<Integer>>> list) {
 		if (null == list)
 			throw new IllegalArgumentException("Illegal 'list' argument in Application.printall(Collection<Set<Clause>>): " + list);
 		int count = 0;
-		for (Set<? extends Object> objects : list) {
+		for (Entry<Set<Clause>, List<Integer>> entry : list) {
 			System.out.println(String.format("Answer: %d", ++count));
-			if (objects.isEmpty())
+			if (null == entry.getKey())
 				System.out.println("    []");
 			else
-				for (Object object : objects)
-					System.out.println(String.format("    %s", object.toString()));
+				for (Clause clause: entry.getKey()) 
+					System.out.println(String.format("    %s", clause.toPrint()));
+			if (null != entry.getValue())
+				System.out.println("optimal: " + entry.getValue());
 		}
+//		for (Set<? extends Object> objects : list) {
+//			System.out.println(String.format("Answer: %d", ++count));
+//			if (objects.isEmpty())
+//				System.out.println("    []");
+//			else
+//				for (Object object : objects)
+//					System.out.println(String.format("    %s", object.toString()));
+//		}
 	}
 
 	/**
