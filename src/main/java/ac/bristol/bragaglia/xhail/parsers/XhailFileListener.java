@@ -578,8 +578,11 @@ public class XhailFileListener extends XhailBaseListener {
 
 	@Override
 	public void exitPriority(PriorityContext ctx) {
-		if (null != ctx)
+		if (null != ctx) {
 			priority = Integer.parseInt(ctx.INTEGER().getText());
+			if (null != ctx.MINUS())
+				priority = -priority;
+		}
 	}
 
 	// @Override
@@ -618,8 +621,11 @@ public class XhailFileListener extends XhailBaseListener {
 
 	@Override
 	public void exitWeight(WeightContext ctx) {
-		if (null != ctx)
+		if (null != ctx) {
 			weight = Integer.parseInt(ctx.INTEGER().getText());
+			if (null != ctx.MINUS())
+				weight = -weight;
+		}
 	}
 
 }

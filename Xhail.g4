@@ -229,12 +229,12 @@ bounds
 
 weight
 :
-	EQUALS INTEGER
+	EQUALS MINUS? INTEGER
 ;
 
 priority
 :
-	AT INTEGER
+	AT MINUS? INTEGER
 ;
 
 //------------------------------------------------------------------------------
