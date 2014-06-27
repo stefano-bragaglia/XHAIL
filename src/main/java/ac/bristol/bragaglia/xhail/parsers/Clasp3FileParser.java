@@ -6,8 +6,9 @@ package ac.bristol.bragaglia.xhail.parsers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -27,22 +28,6 @@ public class Clasp3FileParser {
 
 	private static final Clasp3FileParser INSTANCE = new Clasp3FileParser();
 
-	private static final String PENGUINS = "ac/bristol/bragaglia/clasp3/parser/other.cl";
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		int i = 0;
-		Collection<Set<Atom>> models = parse(open(PENGUINS));
-		for (Set<Atom> model : models) {
-			System.out.println("-[ Model #" + i++ + " ]-------");
-			for (Atom atom : model)
-				System.out.println(atom.toString());
-		}
-		System.out.println("Done.");
-	}
-
 	public static InputStream open(String resource) {
 		if (null == resource || (resource = resource.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'resource' argument in Clasp3FileParser.open(String): " + resource);
@@ -61,10 +46,10 @@ public class Clasp3FileParser {
 		return result;
 	}
 
-	public static Collection<Set<Atom>> parse(InputStream stream) {
+	public static Map<List<Integer>, Set<Set<Atom>>> parse(InputStream stream) {
 		if (null == stream)
 			throw new IllegalArgumentException("Illegal 'stream' argument in Clasp3FileParser.parse(InputStream): " + stream);
-		Set<Set<Atom>> result = new LinkedHashSet<>();
+		Map<List<Integer>, Set<Set<Atom>>> result = new LinkedHashMap<>();
 		try {
 			ANTLRInputStream input = new ANTLRInputStream(stream);
 			Clasp3Lexer lexer = new Clasp3Lexer(input);

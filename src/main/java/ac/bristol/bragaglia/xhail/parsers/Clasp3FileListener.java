@@ -41,7 +41,7 @@ public class Clasp3FileListener extends Clasp3BaseListener {
 	// */
 	// private static Clasp3FileListener instance;
 
-	public static void accept(ParseTreeWalker walker, ParseTree tree, Set<Set<Atom>> output) {
+	public static void accept(ParseTreeWalker walker, ParseTree tree, Map<List<Integer>, Set<Set<Atom>>> output) {
 		if (null == walker)
 			throw new IllegalArgumentException("Illegal 'walker' argument in Clasp3FileListener.host(ParseTreeWalker, ParseTree, Set<Atom>): " + walker);
 		if (null == tree)
@@ -61,7 +61,7 @@ public class Clasp3FileListener extends Clasp3BaseListener {
 	// private int[] optimal;
 	private List<Integer> optimal;
 
-	private Set<Set<Atom>> output;
+	private Map<List<Integer>, Set<Set<Atom>>> output;
 
 	// private int[] values;
 	private List<Integer> values;
@@ -70,7 +70,7 @@ public class Clasp3FileListener extends Clasp3BaseListener {
 	 * Default constructor. The constructor is private because this is a
 	 * singleton class.
 	 */
-	private Clasp3FileListener(Set<Set<Atom>> output) {
+	private Clasp3FileListener(Map<List<Integer>, Set<Set<Atom>>> output) {
 		this.answers = new LinkedHashMap<>();
 		this.builders = new Stack<>();
 		this.optimal = Collections.emptyList();
@@ -161,14 +161,16 @@ public class Clasp3FileListener extends Clasp3BaseListener {
 		// boolean optimalNotEmpty = EMPTY != optimal;
 		// boolean answerContainsOptimal = answers.containsKey(optimal);
 		if (!optimal.isEmpty() && answers.containsKey(optimal))
-			output.addAll(answers.get(optimal));
-		else {
-			Set<Set<Atom>> last = null;
-			for (Set<Set<Atom>> model : answers.values())
-				last = model;
-			if (null != last)
-				output.addAll(last);
-		}
+			output.put(optimal, answers.get(optimal));
+		else
+			output = answers;
+		// {
+		// Set<Set<Atom>> last = null;
+		// for (Set<Set<Atom>> model : answers.values())
+		// last = model;
+		// if (null != last)
+		// output.addAll(last);
+		// }
 	}
 
 	@Override

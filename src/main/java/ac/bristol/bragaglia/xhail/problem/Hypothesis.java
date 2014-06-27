@@ -4,7 +4,7 @@
 package ac.bristol.bragaglia.xhail.problem;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -22,6 +22,8 @@ public class Hypothesis {
 
 	private Map<Integer, Map<Integer, Map<Integer, Literal>>> bodies;
 
+	private Map<Integer, List<Integer>> values;
+
 	// private Map<Integer, Map<Integer, Literal>> bodies = new TreeMap<>();
 
 	private Map<Integer, Set<Clause>> clauses;
@@ -38,31 +40,35 @@ public class Hypothesis {
 
 	private boolean modified;
 
-	public Hypothesis(Kernel kernel, Collection<Set<Atom>> hypothesis) {
+	public Hypothesis(Kernel kernel, Map<List<Integer>, Set<Set<Atom>>> hypothesis) {
 		if (null == kernel)
-			throw new IllegalArgumentException("Illegal 'kernel' argument in Hypothesis(Kernel, Collection<Set<Atom>>): " + kernel);
+			throw new IllegalArgumentException("Illegal 'kernel' argument in Hypothesis(Kernel, Map<List<Integer>, Set<Set<Atom>>>): " + kernel);
 		if (null == hypothesis)
-			throw new IllegalArgumentException("Illegal 'kernel' argument in Hypothesis(Kernel, Collection<Set<Atom>>): " + kernel);
+			throw new IllegalArgumentException("Illegal 'kernel' argument in Hypothesis(Kernel, Map<List<Integer>, Set<Set<Atom>>>): " + kernel);
 		this.bodies = new TreeMap<>();
 		this.clauses = new TreeMap<>();
 		this.count = 0;
 		this.heads = new TreeMap<>();
 		this.kernel = kernel;
 		this.modified = false;
+		this.values = new TreeMap<>();
 		this.setup(hypothesis);
 		assert invariant() : "Illegal state in Hypothesis(Kernel, Collection<Set<Atom>>)";
 	}
 
-	public boolean addUse(int model, int clause, int literal) {
+	public boolean addUse(int model, int clause, int literal, List<Integer> values) {
 		if (model < 0)
-			throw new IllegalArgumentException("Illegal 'model' argument in Hypothesis.addUse(int, int, int): " + model);
+			throw new IllegalArgumentException("Illegal 'model' argument in Hypothesis.addUse(int, int, int, List<Integer>): " + model);
 		if (clause < 1)
-			throw new IllegalArgumentException("Illegal 'clause' argument in Hypothesis.addUse(int, int, int): " + clause);
+			throw new IllegalArgumentException("Illegal 'clause' argument in Hypothesis.addUse(int, int, int, List<Integer>): " + clause);
 		if (literal < 0)
-			throw new IllegalArgumentException("Illegal 'literal' argument in Hypothesis.addUse(int, int, int): " + literal);
+			throw new IllegalArgumentException("Illegal 'literal' argument in Hypothesis.addUse(int, int, int, List<Integer>): " + literal);
+		if (null == values)
+			throw new IllegalArgumentException("Illegal 'values' argument in Hypothesis.addUse(int, int, int, List<Integer>): " + values);
 		boolean result = false;
 		if (model > count)
 			count = model;
+		this.values.put(model, values);
 		Map<Integer, Clause> headmap = heads.get(model);
 		if (null == headmap) {
 			headmap = new TreeMap<>();
@@ -94,21 +100,21 @@ public class Hypothesis {
 
 	public Collection<Set<Clause>> clauses() {
 		if (modified) {
-			for (int m = 0; m < count; m++) {
-				Set<Clause> set = clauses.get(m);
+			for (int model = 0; model < count; model++) {
+				Set<Clause> set = clauses.get(model);
 				if (null == set) {
 					set = new TreeSet<>();
-					clauses.put(m, set);
+					clauses.put(model, set);
 				}
-				Map<Integer, Clause> headmap = heads.get(m);
+				Map<Integer, Clause> headmap = heads.get(model);
 				if (null == headmap) {
 					headmap = new TreeMap<>();
-					heads.put(m, headmap);
+					heads.put(model, headmap);
 				}
-				Map<Integer, Map<Integer, Literal>> bodymap = bodies.get(m);
+				Map<Integer, Map<Integer, Literal>> bodymap = bodies.get(model);
 				if (null == bodymap) {
 					bodymap = new TreeMap<>();
-					bodies.put(m, bodymap);
+					bodies.put(model, bodymap);
 				}
 				set.clear();
 				for (int c : headmap.keySet()) {
@@ -145,7 +151,7 @@ public class Hypothesis {
 	}
 
 	private boolean invariant() {
-		return (null != bodies && null != clauses && null != heads && null != kernel);
+		return (null != bodies && null != clauses && null != heads && null != kernel && null != values);
 	}
 
 	public boolean isGeneralizable() {
@@ -159,22 +165,31 @@ public class Hypothesis {
 		return modified;
 	}
 
-	private void setup(Collection<Set<Atom>> hypothesis) {
+	private void setup(Map<List<Integer>, Set<Set<Atom>>> hypothesis) {
 		if (null == hypothesis)
-			throw new IllegalArgumentException("Illegal 'hypothesis' argument in Hypothesis.populate(Collection<Set<Atom>>): " + hypothesis);
+			throw new IllegalArgumentException("Illegal 'hypothesis' argument in Hypothesis.populate(Map<List<Integer>, Set<Set<Atom>>>): " + hypothesis);
 		heads.clear();
 		bodies.clear();
-		Iterator<Set<Atom>> iterator = hypothesis.iterator();
-		if (iterator.hasNext()) {
-			count = 0;
-			while (iterator.hasNext()) {
-				for (Atom fact : iterator.next())
-					if (fact.name().equals(Kernel.UCL) && 2 == fact.arity())
-						this.addUse(count, Integer.parseInt(fact.get(0).toString()), Integer.parseInt(fact.get(1).toString()));
+		count = 0;
+		for (List<Integer> values : hypothesis.keySet())
+			for (Set<Atom> set : hypothesis.get(values)) {
+				for (Atom fact : set)
+					if (Kernel.UCL.equals(fact.name()) && 2 == fact.arity())
+						this.addUse(count, Integer.parseInt(fact.get(0).toString()), Integer.parseInt(fact.get(1).toString()), values);
 				count += 1;
 			}
-		}
-		assert invariant() : "Illegal state in Hypothesis.populate(Collection<Set<Atom>>)";
+		// Iterator<Set<Atom>> iterator = hypothesis.iterator();
+		// if (iterator.hasNext()) {
+		// count = 0;
+		// while (iterator.hasNext()) {
+		// for (Atom fact : iterator.next())
+		// if (fact.name().equals(Kernel.UCL) && 2 == fact.arity())
+		// this.addUse(count, Integer.parseInt(fact.get(0).toString()),
+		// Integer.parseInt(fact.get(1).toString()));
+		// count += 1;
+		// }
+		// }
+		assert invariant() : "Illegal state in Hypothesis.populate(Map<List<Integer>, Set<Set<Atom>>>)";
 	}
 
 }

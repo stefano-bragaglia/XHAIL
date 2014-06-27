@@ -6,9 +6,9 @@ package ac.bristol.bragaglia.xhail.problem;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -125,18 +125,18 @@ public class Explanation {
 
 	protected Problem problem;
 
-	public Explanation(Problem problem, Collection<Set<Atom>> delta) {
+	public Explanation(Problem problem, Map<List<Integer>, Set<Set<Atom>>> delta) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in Explanation(Problem, Collection<Set<Atom>>): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in Explanation(Problem, Map<List<Integer>, Set<Set<Atom>>>): " + problem);
 		if (null == delta)
-			throw new IllegalArgumentException("Illegal 'delta' argument in Explanation(Problem, Collection<Set<Atom>>): " + delta);
+			throw new IllegalArgumentException("Illegal 'delta' argument in Explanation(Problem, Map<List<Integer>, Set<Set<Atom>>>): " + delta);
 		this.delta = new LinkedHashMap<>();
 		this.model = new TreeSet<>();
 		this.kappa = new LinkedHashSet<>();
 		this.modified = !problem.modebodies().isEmpty();
 		this.problem = problem;
 		this.setup(delta);
-		assert invariant() : "Illegal state in Explanation(Problem, Collection<Set<Atom>>)";
+		assert invariant() : "Illegal state in Explanation(Problem, Map<List<Integer>, Set<Set<Atom>>>)";
 	}
 
 	private boolean addDelta(Atom predicate, int weight, int priority) {
@@ -245,20 +245,31 @@ public class Explanation {
 	 * 
 	 * @param delta
 	 */
-	private void setup(Collection<Set<Atom>> delta) {
-		Iterator<Set<Atom>> iterator = delta.iterator();
-		if (iterator.hasNext()) {
-			Set<Atom> last = Collections.emptySet();
-			while (iterator.hasNext())
-				last = iterator.next();
-			for (Atom fact : last) {
-				String name = fact.name();
-				if (name.startsWith(Problem.TAG_ABDUCE)) {
-					String[] parts = name.split("_");
-					this.addDelta(fact, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
-				} else
-					this.addFact(fact);
-			}
+	private void setup(Map<List<Integer>, Set<Set<Atom>>> delta) {
+		Set<Atom> last = Collections.emptySet();
+		for (List<Integer> values : delta.keySet())
+			for (Set<Atom> set : delta.get(values))
+				last = set;
+		for (Atom fact : last) {
+			String name = fact.name();
+			if (name.startsWith(Problem.TAG_ABDUCE)) {
+				String[] parts = name.split("_");
+				this.addDelta(fact, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+			} else
+				this.addFact(fact);
+//		Iterator<Set<Atom>> iterator = delta.iterator();
+//		if (iterator.hasNext()) {
+//			Set<Atom> last = Collections.emptySet();
+//			while (iterator.hasNext())
+//				last = iterator.next();
+//			for (Atom fact : last) {
+//				String name = fact.name();
+//				if (name.startsWith(Problem.TAG_ABDUCE)) {
+//					String[] parts = name.split("_");
+//					this.addDelta(fact, Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+//				} else
+//					this.addFact(fact);
+//			}
 		}
 	}
 
