@@ -12,9 +12,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import ac.bristol.bragaglia.xhail.core.Problem;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailLexer;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser;
-import ac.bristol.bragaglia.xhail.problem.Problem;
 
 /**
  * @author stefano

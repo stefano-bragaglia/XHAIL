@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ac.bristol.bragaglia.xhail.application.Program;
 import ac.bristol.bragaglia.xhail.config.Config;
-import ac.bristol.bragaglia.xhail.problem.Program;
 
 /**
  * @author stefano

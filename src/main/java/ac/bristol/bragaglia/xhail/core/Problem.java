@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ac.bristol.bragaglia.xhail.problem;
+package ac.bristol.bragaglia.xhail.core;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -249,10 +249,7 @@ public class Problem extends Model {
 	 */
 	private Map<Atom, ModeHeadData> modeheads;
 
-	/**
-	 * The flag to tell if the model was modified.
-	 */
-	private boolean modified;
+	private Model model;
 
 	/**
 	 * The set of types defined in this problem.
@@ -270,7 +267,6 @@ public class Problem extends Model {
 		this.modebodies = new TreeMap<>();
 		this.modeheads = new TreeMap<>();
 		this.types = new TreeSet<>();
-		this.modified = false;
 		assert invariant() : "Illegal state in Problem()";
 	}
 
@@ -285,7 +281,8 @@ public class Problem extends Model {
 			displays.put(name, set);
 		}
 		boolean result = set.add(arity);
-		modified |= result;
+		if (result)
+			update();
 		assert invariant() : "Illegal state in Model.addDisplay(String, int)";
 		return result;
 	}
@@ -310,7 +307,8 @@ public class Problem extends Model {
 		ExampleData value = new ExampleData(weight, priority);
 		ExampleData previous = examples.put(fact, value);
 		boolean result = (null == previous || previous.equals(value));
-		modified |= result;
+		if (result)
+			update();
 		assert invariant() : "Illegal state in Problem.addExample(Literal, Integer, Integer)";
 		return result;
 	}
@@ -333,12 +331,12 @@ public class Problem extends Model {
 		if (null == bodies) {
 			bodies = new LinkedHashMap<>();
 			modebodies.put(p, bodies);
-			modified = true;
 		}
 		ModeBodyData value = new ModeBodyData(bound, weight, priority);
 		ModeBodyData previous = bodies.put(body, value);
 		boolean result = (null == previous || previous.equals(value));
-		modified |= result;
+		if (result)
+			update();
 		assert invariant() : "Illegal state in Problem.addModeBody(Literal, Integer, Integer, Integer)";
 		return result;
 	}
@@ -363,7 +361,8 @@ public class Problem extends Model {
 		ModeHeadData value = new ModeHeadData(min, max, weight, priority);
 		ModeHeadData previous = modeheads.put(head, value);
 		boolean result = (null == previous || previous.equals(value));
-		modified |= result;
+		if (result)
+			update();
 		assert invariant() : "Illegal state in Problem.addModeHead(Atom, Integer, Integer, Integer, Integer)";
 		return result;
 	}
@@ -376,10 +375,10 @@ public class Problem extends Model {
 	@Override
 	public void clear() {
 		super.clear();
-		modified = !(examples.isEmpty() && modebodies.isEmpty() && modeheads.isEmpty());
 		examples.clear();
 		modebodies.clear();
 		modeheads.size();
+		update();
 		assert invariant() : "Illegal state in Problem.clear()";
 	}
 
@@ -393,12 +392,63 @@ public class Problem extends Model {
 	 * @return the model equivalent to this problem
 	 */
 	public Model derive() {
-		Model result = new Model(this);
-		processModeHeads(result);
-		processModeBodies(result);
-		processExamples(result);
+		if (null == model || isModified()) {
+			model = new Model(this);
+			processModeHeads();
+			processExamples();
+			save();
+		}
 		assert invariant() : "Illegal state in Problem.derive()";
-		return result;
+		return model;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Problem other = (Problem) obj;
+		if (display != other.display)
+			return false;
+		if (displays == null) {
+			if (other.displays != null)
+				return false;
+		} else if (!displays.equals(other.displays))
+			return false;
+		if (examples == null) {
+			if (other.examples != null)
+				return false;
+		} else if (!examples.equals(other.examples))
+			return false;
+		if (modebodies == null) {
+			if (other.modebodies != null)
+				return false;
+		} else if (!modebodies.equals(other.modebodies))
+			return false;
+		if (modeheads == null) {
+			if (other.modeheads != null)
+				return false;
+		} else if (!modeheads.equals(other.modeheads))
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (types == null) {
+			if (other.types != null)
+				return false;
+		} else if (!types.equals(other.types))
+			return false;
+		return true;
 	}
 
 	/**
@@ -438,6 +488,32 @@ public class Problem extends Model {
 		assert invariant() : "Illegal state in Problem.findTypes(Atom)";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (display ? 1231 : 1237);
+		result = prime * result + ((displays == null) ? 0 : displays.hashCode());
+		result = prime * result + ((examples == null) ? 0 : examples.hashCode());
+		result = prime * result + ((modebodies == null) ? 0 : modebodies.hashCode());
+		result = prime * result + ((modeheads == null) ? 0 : modeheads.hashCode());
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((types == null) ? 0 : types.hashCode());
+		return result;
+	}
+
+	public Model induce() {
+		Model result = new Model(this);
+		processExamples(result);
+		assert invariant() : "Illegal state in Problem.induce()";
+		return result;
+	}
+
 	/**
 	 * Invariant check against the internal state.
 	 * 
@@ -473,18 +549,6 @@ public class Problem extends Model {
 	public boolean isGeneralizable() {
 		boolean result = !modeheads.isEmpty();
 		assert invariant() : "Illegal state in Problem.isGeneralizable()";
-		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ac.bristol.bragaglia.xhail.Model#isModified()
-	 */
-	@Override
-	public boolean isModified() {
-		boolean result = super.isModified() || modified;
-		assert invariant() : "Illegal state in Problem.isModified()";
 		return result;
 	}
 
@@ -530,32 +594,20 @@ public class Problem extends Model {
 		return modebodies;
 	}
 
-	// private void processStandard(Model model) {
-	// if (null == model)
-	// throw new
-	// IllegalArgumentException("Illegal 'model' argument in Problem.processStandard(Model): "
-	// + model);
-	// if (!examples.isEmpty())
-	// for (Literal key : examples.keySet())
-	// if (examples.get(key).isMute())
-	// model.addConstraint(String.format(":- %s%s.", key.negated() ? "" :
-	// "not ", key.atom().toString()));
-	// assert invariant() : "Illegal state in Problem.processStandard(Model)";
-	// }
-
 	/**
 	 * This utility method converts any example directive of this problem into
 	 * standard statements and adds them to the given non-<code>null</code>
 	 * model. Specifically, it adds the constraints for certain examples
 	 * (required in both the abductive and inductive phase) and the maximization
 	 * of examples coverage (required only in the abductive phase).
-	 * 
-	 * @param model
-	 *            the model to whom adding the converted example directives
 	 */
+	private void processExamples() {
+		processExamples(model);
+	}
+
 	private void processExamples(Model model) {
 		if (null == model)
-			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processExamples(Model): " + model);
+			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processExamples(model): " + model);
 		if (!examples.isEmpty()) {
 			StringJoiner joiner = new StringJoiner(", ");
 			for (Literal key : examples.keySet()) {
@@ -566,41 +618,15 @@ public class Problem extends Model {
 			}
 			model.addMaximize(String.format("#maximize[ %s ].", joiner.toString()));
 		}
-		assert invariant() : "Illegal state in Problem.processExamples(Model)";
-	}
-
-	/**
-	 * This utility method converts any modebody directive of this problem into
-	 * standard statements and adds them to the given non-<code>null</code>
-	 * model.
-	 * 
-	 * @param model
-	 *            the model to whom adding the converted modebody directives
-	 */
-	private void processModeBodies(Model model) {
-		if (null == model)
-			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processModeBodies(Model): " + model);
-		if (!modebodies.isEmpty())
-			for (int key : modebodies.keySet())
-				for (Literal body : modebodies.get(key).keySet()) {
-					model.addShow(String.format("#show %s/%d.", body.name(), body.arity()));
-					for (Atom term : body)
-						processModeTerms(model, term);
-				}
-		assert invariant() : "Illegal state in Problem.processModeBodies(Model)";
+		assert invariant() : "Illegal state in Problem.processExamples()";
 	}
 
 	/**
 	 * This utility method converts any modehead directive of this problem into
 	 * standard statements and adds them to the given non-<code>null</code>
 	 * model.
-	 * 
-	 * @param model
-	 *            the model to whom adding the converted modehead directives
 	 */
-	private void processModeHeads(Model model) {
-		if (null == model)
-			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processModeHeads(Model): " + model);
+	private void processModeHeads() {
 		if (!modeheads.isEmpty()) {
 			for (Atom key : modeheads.keySet()) {
 				int arity = key.arity();
@@ -624,16 +650,17 @@ public class Problem extends Model {
 							typesJoiner.add(String.format("%s(V%d)", term.get(0).toPrint(), i));
 						varsJoiner.add(String.format("V%d", i));
 					}
-					processModeTerms(model, term);
+					// processModeTerms(model, term);
 				}
 				String terms = termsJoiner.toString();
 				String types = typesJoiner.toString();
 				String vars = varsJoiner.toString();
 				String abduce = compose(TAG_ABDUCE, name, weight, priority, terms);
 				String type = compose(TAG_TYPE, name, weight, priority, vars);
-				model.addShow(String.format("#hide %s%s_%d_%d/%d .", TAG_TYPE, name, weight, priority, arity));
-				model.addShow(String.format("#show %s%s_%d_%d/%d .", TAG_ABDUCE, name, weight, priority, arity));
-				model.addShow(String.format("#show %s / %d .", name, arity));
+				model.addHide(String.format("#hide %s%s_%d_%d/%d.", TAG_TYPE, name, weight, priority, arity));
+				// model.addShow(String.format("#show %s%s_%d_%d/%d.",
+				// TAG_ABDUCE, name, weight, priority, arity));
+				// model.addShow(String.format("#show %s/%d.", name, arity));
 				model.addMinimize(String.format("#minimize[ %s%s : %s ].", abduce, value.asData(), type));
 				model.addClause(String.format("%s :- %s.", type, types));
 				if (vars.isEmpty())
@@ -643,50 +670,7 @@ public class Problem extends Model {
 				model.addClause(String.format("%s{ %s : %s }%s.", value.asLower(), abduce, type, value.asUpper()));
 			}
 		}
-		assert invariant() : "Illegal state in Problem.processModeHeads(Model)";
-	}
-
-	/**
-	 * Adds recursion to processModeBodies(Model model) and
-	 * processModeHeads(Model model) issue #show directives.
-	 * 
-	 * @param model
-	 * @param term
-	 */
-	private void processModeTerms(Model model, Atom term) {
-		if (null == model)
-			throw new IllegalArgumentException("Illegal 'model' argument in Problem.processModeTerms(Model, Atom): " + model);
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Problem.processModeTerms(Model, Atom): " + term);
-		int arity = term.arity();
-		String name = term.name();
-		if (name.equals(Atom.PAR_INPUT) || name.equals(Atom.PAR_OUTPUT) || name.equals(Atom.PAR_CONSTANT))
-			model.addShow(String.format("#show %s/%d.", term.get(arity - 1), 1));
-		else {
-			model.addShow(String.format("#show %s/%d.", name, arity));
-			for (int i = 0; i < arity; i++)
-				processModeTerms(model, term.get(i));
-		}
-		assert invariant() : "Illegal state in Problem.processModeTerms(Model, Atom)";
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ac.bristol.bragaglia.xhail.Model#save()
-	 */
-	@Override
-	public void save() {
-		super.save();
-		modified = false;
-		assert invariant() : "Illegal state in Problem.save()";
-	}
-
-	public Model standard() {
-		Model result = new Model(this);
-		// processStandard(result);
-		processExamples(result);
-		return result;
+		assert invariant() : "Illegal state in Problem.processModeHeads()";
 	}
 
 	/*

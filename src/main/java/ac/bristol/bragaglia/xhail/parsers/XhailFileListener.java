@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import ac.bristol.bragaglia.xhail.core.Problem;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailBaseListener;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.BoundSingleContext;
@@ -73,7 +74,6 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.WeightContext;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 import ac.bristol.bragaglia.xhail.predicates.Literal;
-import ac.bristol.bragaglia.xhail.problem.Problem;
 
 /**
  * @author stefano

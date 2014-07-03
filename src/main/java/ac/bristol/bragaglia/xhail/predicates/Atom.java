@@ -9,11 +9,104 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
+import ac.bristol.bragaglia.xhail.core.Memory;
+
 /**
  * @author stefano
  *
  */
 public class Atom implements Comparable<Atom>, Iterable<Atom> {
+
+	public static final int ID_ATOM = 3;
+
+	public static final int ID_LEVEL = 0;
+
+	public static final int ID_PRIORITY = 2;
+
+	public static final int ID_SCHEMA = 4;
+	public static final int ID_ACCESSORS = ID_SCHEMA;
+
+	public static final int ID_TYPES = 1;
+
+	public static final int ID_VARS = 0;
+
+	public static final int ID_WEIGHT = 1;
+
+	public static final String TAG_ACCESSORS = "#accessors";
+
+	public static final String TAG_NOTE = "#note";
+
+	public static final String TAG_TYPES = "#types";
+
+	public static final String TAG_VARS = "#vars";
+
+	/**
+	 * Returns a predicate annotation that includes specific information about a
+	 * given atom.
+	 * 
+	 * @param level
+	 *            the deduction level of the atom (as an <code>Atom</code>)
+	 * @param atom
+	 *            the atom to be annotated
+	 * @param schema
+	 *            the supporting schema of the atom
+	 * @param weight
+	 *            the weight associated to the supporting schema (as an
+	 *            <code>Atom</code>)
+	 * @param priority
+	 *            the priority associated to the supporting schema (as an
+	 *            <code>Atom</code>)
+	 * @return a predicate annotation including the above information
+	 */
+	public static Atom annotate(Atom level, Atom atom, Atom schema, Atom weight, Atom priority) {
+		if (null == level)
+			throw new IllegalArgumentException("Illegal 'level' argument in Deduction.annotate(Atom, Atom, Atom, Atom, Atom): " + level);
+		if (null == atom)
+			throw new IllegalArgumentException("Illegal 'atom' argument in Deduction.annotate(Atom, Atom, Atom, Atom, Atom): " + atom);
+		if (null == schema)
+			throw new IllegalArgumentException("Illegal 'schema' argument in Deduction.annotate(Atom, Atom, Atom, Atom, Atom): " + schema);
+		if (null == weight)
+			throw new IllegalArgumentException("Illegal 'weight' argument in Deduction.annotate(Atom, Atom, Atom, Atom, Atom): " + weight);
+		if (null == priority)
+			throw new IllegalArgumentException("Illegal 'priority' argument in Deduction.annotate(Atom, Atom, Atom, Atom, Atom): " + priority);
+		Builder builder = Builder.get(TAG_NOTE);
+		builder.append(level);
+		builder.append(weight);
+		builder.append(priority);
+		builder.append(atom);
+		builder.append(schema);
+		return builder.build();
+	}
+
+	/**
+	 * Returns a predicate annotation that includes specific information about a
+	 * given atom.
+	 * 
+	 * @param level
+	 *            the deduction level of the atom (as an <code>int</code>)
+	 * @param atom
+	 *            the atom to be annotated
+	 * @param schema
+	 *            the supporting schema of the atom
+	 * @param weight
+	 *            the weight associated to the supporting schema (as an
+	 *            <code>int</code>)
+	 * @param priority
+	 *            the priority associated to the supporting schema (as an
+	 *            <code>int</code>)
+	 * @return a predicate annotation including the above information
+	 */
+	public static Atom annotate(int level, Atom atom, Atom schema, int weight, int priority) {
+		if (level < 0)
+			throw new IllegalArgumentException("Illegal 'level' argument in Deduction.annotate(int, Atom, Atom, int, int): " + level);
+		if (null == atom)
+			throw new IllegalArgumentException("Illegal 'atom' argument in Deduction.annotate(int, Atom, Atom, int, int): " + atom);
+		if (null == schema)
+			throw new IllegalArgumentException("Illegal 'schema' argument in Deduction.annotate(int, Atom, Atom, int, int): " + schema);
+		return annotate(Builder.get(String.valueOf(level)).build(), atom, schema, //
+				Builder.get(String.valueOf(weight)).build(), //
+				Builder.get(String.valueOf(priority)).build());
+	}
 
 	public static final String ARITH_ABS = "#abs";
 
@@ -90,6 +183,17 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	}
 
 	/**
+	 * @param name
+	 * @param terms
+	 */
+	public Atom(String name, Atom[] terms) {
+		this.name = name;
+		this.terms = new Atom[terms.length];
+		for (int i = 0; i < terms.length; i++)
+			this.terms[i] = terms[i];
+	}
+
+	/**
 	 * @return
 	 */
 	public int arity() {
@@ -140,6 +244,7 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public Atom get(int i) {
 		return terms[i];
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -157,6 +262,7 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public boolean isParameter() {
 		return ((1 == terms.length || 2 == terms.length) && (name.equals(PAR_INPUT) || name.equals(PAR_OUTPUT) || name.equals(PAR_CONSTANT)));
 	}
+
 	public boolean isVariable() {
 		return terms.length == 0 && name.length() > 0 && name.charAt(0) >= 'A' && name.charAt(0) <= 'Z';
 	}
@@ -180,11 +286,16 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 			}
 		};
 	}
+
 	/**
 	 * @return
 	 */
 	public String name() {
 		return name;
+	}
+
+	public Atom[] terms() {
+		return terms;
 	}
 
 	public String toPrint() {
@@ -310,6 +421,30 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 				joiner.add(term.toString());
 			return String.format("%s(%s)", name, joiner.toString());
 		}
+	}
+
+	public Memory vars() {
+		Memory result = new Memory();
+		if (Atom.PAR_INPUT.equals(name) && 2 == terms.length)
+			result.append(terms[1], terms[0]);
+		else
+			for (Atom term : terms)
+				result.append(term.vars());
+		return result;
+	}
+
+	public Atom asHead() {
+		Atom result;
+		String name = this.name();
+		if (2 == arity() && (Atom.PAR_INPUT.equals(name) || Atom.PAR_OUTPUT.equals(name) || Atom.PAR_CONSTANT.equals(name)))
+			result = terms[0];
+		else {
+			Builder builder = Builder.get(name);
+			for (Atom term : terms)
+				builder.append(term.asHead());
+			result = builder.build();
+		}
+		return result;
 	}
 
 }

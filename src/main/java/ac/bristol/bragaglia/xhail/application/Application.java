@@ -15,15 +15,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.StringJoiner;
 
 import ac.bristol.bragaglia.xhail.config.Config;
+import ac.bristol.bragaglia.xhail.core.Answer;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
-import ac.bristol.bragaglia.xhail.problem.Program;
 
 /**
  * The main command-line application.
@@ -132,22 +129,48 @@ public class Application {
 			}
 		System.out.println("Solving...");
 		// long cpu = System.currentTimeMillis();
-		if (program.solve()) {
-			// long end = System.currentTimeMillis();
-			// cpu = end - cpu;
-			// time = end - time;
+		Collection<Answer> answers = program.solve();
+		if (null != answers) {
 			System.out.println();
-			print("Model", program.model());
-			System.out.println();
-			print("Delta", program.delta());
-			System.out.println();
-			println("Kappa", program.kappa());
-			System.out.println();
-			printall(program.guess());
-			System.out.println();
-			System.out.println();
+			int i = 1;
+			for (Answer answer : answers) {
+				// long end = System.currentTimeMillis();
+				// cpu = end - cpu;
+				// time = end - time;
+				System.out.println(String.format("Answer: %d", i++));
+				System.out.println("  model:");
+				System.out.print("    ");
+				for (Atom atom : answer.model())
+					System.out.print(" " + atom);
+				System.out.println();
+
+				System.out.println("  delta:");
+				System.out.print("    ");
+				for (Atom atom : answer.delta())
+					System.out.print(" " + atom);
+				System.out.println();
+
+				System.out.println("  kappa:");
+				for (Clause clause : answer.kernel())
+					System.out.println("    " + clause);
+
+				System.out.println("  guess:");
+				for (Clause clause : answer.hypothesis())
+					System.out.println("    " + clause);
+
+				System.out.print("  optimization:");
+				for (int value : answer.abdValues())
+					System.out.print(" " + value);
+				System.out.print(" |");
+				for (int value : answer.indValues())
+					System.out.print(" " + value);
+				System.out.println();
+
+				System.out.println();
+			}
+
 			time = System.currentTimeMillis() - time;
-			System.out.println(String.format("Answers     : %d", program.guess().size()));
+			System.out.println(String.format("Answers     : %d", answers.size()));
 			System.out.println(String.format("Runtime     : %.3fs", time / 1000.0));
 			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000.0));
 			System.out.println(String.format("  abducing  : %.3fs", config.getAbducing().getTime() / 1000.0));
@@ -237,41 +260,6 @@ public class Application {
 		}
 	}
 
-	private static void print(String label, Collection<Atom> list) {
-		if (null == label || (label = label.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'tag' argument in Application.print(String, Collection<Atom>): " + label);
-		if (null == list)
-			throw new IllegalArgumentException("Illegal 'list' argument in Application.print(String, Collection<Atom>): " + list);
-		StringJoiner joiner = new StringJoiner(" ");
-		for (Atom atom : list)
-			joiner.add(atom.toString());
-		System.out.println(String.format("%s: %s", label, list.isEmpty() ? "[]" : joiner.toString()));
-	}
-
-	private static void printall(Collection<Entry<Set<Clause>, List<Integer>>> list) {
-		if (null == list)
-			throw new IllegalArgumentException("Illegal 'list' argument in Application.printall(Collection<Set<Clause>>): " + list);
-		int count = 0;
-		for (Entry<Set<Clause>, List<Integer>> entry : list) {
-			System.out.println(String.format("Answer: %d", ++count));
-			if (null == entry.getKey())
-				System.out.println("    []");
-			else
-				for (Clause clause: entry.getKey()) 
-					System.out.println(String.format("    %s", clause.toPrint()));
-			if (null != entry.getValue())
-				System.out.println("optimal: " + entry.getValue());
-		}
-//		for (Set<? extends Object> objects : list) {
-//			System.out.println(String.format("Answer: %d", ++count));
-//			if (objects.isEmpty())
-//				System.out.println("    []");
-//			else
-//				for (Object object : objects)
-//					System.out.println(String.format("    %s", object.toString()));
-//		}
-	}
-
 	/**
 	 * Prints an help message.
 	 */
@@ -292,21 +280,6 @@ public class Application {
 		System.out.println(String.format("Example:   java -jar %s.jar  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  example.pl", Version.get()
 				.getTitle()));
 		System.out.println();
-	}
-
-	private static void println(String label, Collection<Clause> list) {
-		if (null == label || (label = label.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'tag' argument in Application.println(String, Collection<Clause>): " + label);
-		if (null == list)
-			throw new IllegalArgumentException("Illegal 'list' argument in Application.println(String, Collection<Clause>): " + list);
-
-		Iterator<? extends Object> iterator = list.iterator();
-		if (iterator.hasNext()) {
-			System.out.println(String.format("%s: %s", label, iterator.next().toString()));
-			while (iterator.hasNext())
-				System.out.println(String.format("       %s", iterator.next().toString()));
-		} else
-			System.out.println(String.format("%s: []", label));
 	}
 
 	/**

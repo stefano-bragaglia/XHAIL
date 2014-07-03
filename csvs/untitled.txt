@@ -1,0 +1,44 @@
+% redundant. :- not level(1, 1), level(1, 2).
+
+
+
+% done.   #hide.
+% done.   #show use_clause_literal/2.
+
+% done.   #minimize[ use_clause_literal(1, 0) =1 @1, use_clause_literal(1, 1) =1 @1 ].
+
+% done.   level(1, 0) :- use_clause_literal(1, 0).
+% done.   level(1, 1) :- use_clause_literal(1, 1).
+% done.   try_clause_literal(1, 1, V1) :- not use_clause_literal(1, 1), bird(V1).
+% done.   try_clause_literal(1, 1, V1) :- use_clause_literal(1, 1), bird(V1), not penguin(V1).
+% done.   { use_clause_literal(V1, 0) } :- clause(V1).
+
+% done.   :- not level(1, 0), level(1, 1).
+
+% done.   clause(1).
+% done.   literal(1, 1).
+
+
+
+
+
+flies(V1) :- use_clause_literal(1, 0), try_clause_literal(1, 1, V1), bird(V1).
+% done.   { use_clause_literal(V1, V2) } :- literal(V1, V2), clause(V1).
+
+
+
+
+
+
+
+% inherited.   #maximize[ flies(a;b) =1 @1, flies(c) =1 @1, not flies(d) =1 @1 ].
+
+% inherited.   bird ( X ) :- penguin ( X ) .
+
+% inherited.   :- flies(d).
+% inherited.   :- not flies(a;b).
+% inherited.   :- not flies(c).
+
+% inherited.   bird ( a ; b ; c ) .
+% inherited.   penguin ( d ) .
+

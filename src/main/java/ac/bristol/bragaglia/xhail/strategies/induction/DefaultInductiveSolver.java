@@ -7,23 +7,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import ac.bristol.bragaglia.xhail.application.Version;
 import ac.bristol.bragaglia.xhail.config.Config;
+import ac.bristol.bragaglia.xhail.core.Hypothesis;
+import ac.bristol.bragaglia.xhail.core.Kernel;
 import ac.bristol.bragaglia.xhail.parsers.Clasp3FileParser;
-import ac.bristol.bragaglia.xhail.problem.Hypothesis;
-import ac.bristol.bragaglia.xhail.problem.Kernel;
+import ac.bristol.bragaglia.xhail.predicates.Atom;
 
 /**
  * @author stefano
  *
  */
-public class DefaultInductiveSolver implements InductiveStrategy {
+public class DefaultInductiveSolver implements InductivePhase {
 
-	private static InductiveStrategy instance = null;
+	private static InductivePhase instance = null;
 
-	public static InductiveStrategy get() {
+	public static InductivePhase get() {
 		if (null == instance)
 			instance = new DefaultInductiveSolver();
 		return instance;
@@ -37,17 +41,18 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 	}
 
 	@Override
-	public Hypothesis solve(Config config, Kernel kernel) {
+	public Collection<Hypothesis> solve(Config config, Kernel kernel) {
 		if (null == config)
 			throw new IllegalArgumentException("Illegal 'config' argument in DefaultInductiveSolver.solve(Config, Kernel): " + config);
 		if (null == kernel)
 			throw new IllegalArgumentException("Illegal 'kernel' argument in DefaultInductiveSolver.solve(Config, Kernel): " + kernel);
 		config.getInducing().start();
-		Hypothesis result = null;
+		// Preparing the temporary folder and files for induction
+		Collection<Hypothesis> result = null;
 		Path temp = config.createFolder("temp");
 		Path errors = config.overwriteFile(temp, "errors_ind.log");
 		Path source = config.createFile(temp, config.getFilename() + "_ind.lp");
-		if (kernel.dump(source.toFile())) {
+		if (kernel.derive().dump(source.toFile())) {
 			try {
 				Path grounding = config.createFile(temp, config.getFilename() + "_ind.grounding");
 				if (config.isDebug()) {
@@ -66,11 +71,19 @@ public class DefaultInductiveSolver implements InductiveStrategy {
 				config.getInducingClasp().stop();
 				config.getInducing().stop();
 				config.getParsing().start();
+				// Acquiring the output (to be refactored!!!)
 				FileInputStream stream = new FileInputStream(clasp.toFile());
-				result = new Hypothesis(kernel, Clasp3FileParser.parse(stream));
+				Map<List<Integer>, Set<Set<Atom>>> answers = Clasp3FileParser.parse(stream);
+				// result = new Hypothesis(kernel,
+				// Clasp3FileParser.parse(stream));
+				result = Hypothesis.loadAll(kernel, answers);
+				// returns the class on answers corresponding to the optimal
+				// value or the whole set of answers if no optimal value is
+				// found
 				stream.close();
 				config.getParsing().stop();
 				config.getInducing().start();
+				// passing the error/warning messages over
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines) {
 					line = line.trim();
