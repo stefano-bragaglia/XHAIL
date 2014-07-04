@@ -558,7 +558,7 @@ public class Problem extends Model {
 		result &= examples.isEmpty();
 		result &= modebodies.isEmpty();
 		result &= modeheads.isEmpty();
-		result &= model.isEmpty();
+		result &= (null == model || model.isEmpty());
 		assert invariant() : "Illegal state in Problem.isEmpty()";
 		return result;
 	}
