@@ -15,6 +15,7 @@ import java.util.Set;
 import ac.bristol.bragaglia.xhail.application.Version;
 import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.core.Grounding;
+import ac.bristol.bragaglia.xhail.core.Model;
 import ac.bristol.bragaglia.xhail.core.Problem;
 import ac.bristol.bragaglia.xhail.parsers.Clasp3FileParser;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
@@ -52,7 +53,8 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 		Path temp = config.createFolder("temp");
 		Path errors = config.overwriteFile(temp, "errors_abd.log");
 		Path source = config.createFile(temp, config.getFilename() + "_abd.lp");
-		if (problem.derive().dump(source.toFile())) {
+		Model model = problem.isAbducible() ? problem.derive() : problem.reduce();
+		if (model.dump(source.toFile())) {
 			try {
 				Path grounding = config.createFile(temp, config.getFilename() + "_abd.grounding");
 				if (config.isDebug()) {

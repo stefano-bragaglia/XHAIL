@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import ac.bristol.bragaglia.xhail.core.Problem.ModeBodyData;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
@@ -32,7 +33,7 @@ public class Kernel extends Modifiable {
 
 	private static final String TCL = "try_clause_literal";
 
-	public static final String UCL = "use_clause_literal"; 
+	public static final String UCL = "use_clause_literal";
 
 	private static Atom generalize(Atom atom, Atom schema, Map<Atom, Builder> table, Set<Atom> vars, Set<Atom> types) {
 		if (null == atom)
@@ -211,13 +212,20 @@ public class Kernel extends Modifiable {
 				minimee.add(String.format("use_clause_literal(%d, 0) =%s @%s", cc, head.get(Atom.ID_WEIGHT), head.get(Atom.ID_PRIORITY)));
 
 				deriveLiterals(cc, clause, simple, levels, heads, minimee);
+
+				for (Atom type : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
+					Literal literal = new Literal(false, type);
+					if (!simple.contains(literal))
+						simple.append(literal);
+				}
 				clauses.add(simple);
 
-				for (int lvl : levels.keySet()) {
-					model.addClause(String.format("%s(%d, %d) :- %s.", LEVEL, cc, lvl, levels.get(lvl).toString()));
-					if (levels.containsKey(lvl + 1))
+				if (levels.size() > 1)
+					for (int lvl : levels.keySet()) {
+						model.addClause(String.format("%s(%d, %d) :- %s.", LEVEL, cc, lvl, levels.get(lvl).toString()));
+						// if (levels.containsKey(lvl + 1))
 						model.addConstraint(String.format(":- not %s(%d, %d), %s(%d, %d).", LEVEL, cc, lvl, LEVEL, cc, lvl + 1));
-				}
+					}
 				model.addFact(String.format("%s(%d).", CLAUSE, cc));
 			}
 			model.addHide("#hide.");
@@ -270,10 +278,12 @@ public class Kernel extends Modifiable {
 					simple.append(literal);
 			model.addClause(String.format("%s :- %s(1, 0), %s, %s.", simple.head().toString(), UCL, attemptee.toString(), heads));
 		} else
-			model.addClause(String.format("%s :- %s(1, 0).", simple.head().toString(), UCL));
+			model.addClause(String.format("%s :- %s(1, 0), %s.", simple.head().toString(), UCL, heads));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -328,7 +338,9 @@ public class Kernel extends Modifiable {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -346,9 +358,13 @@ public class Kernel extends Modifiable {
 		return (null != dataset && null != grounding);
 	}
 
-	public boolean isGeneralizable() {
-		boolean result = !dataset.isEmpty();
-		assert invariant() : "Illegal state in Kernel.isGeneralizable()";
+	public boolean isInducible() {
+		boolean result = false;
+		Iterator<Map<Literal, ModeBodyData>> iterator = grounding.problem().modes().values().iterator();
+		while (!result && iterator.hasNext())
+			result = iterator.next().size() > 0;
+		result &= !dataset.isEmpty();
+		assert invariant() : "Illegal state in Kernel.isInducible()";
 		return result;
 	}
 

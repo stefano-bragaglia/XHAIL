@@ -22,7 +22,7 @@ import ac.bristol.bragaglia.xhail.predicates.Literal;
 public class Hypothesis extends Modifiable {
 
 	public static Collection<Hypothesis> loadAll(Kernel kernel, Map<List<Integer>, Set<Set<Atom>>> answers) {
-		if (null == answers || 1 != answers.size())
+		if (null == answers || answers.size() > 1)
 			throw new IllegalArgumentException("Illegal 'answers' argument in Grounding.loadAll(Map<List<Integer>, Set<Set<Atom>>>): " + answers);
 		Set<Hypothesis> result = new LinkedHashSet<>();
 		for (List<Integer> values : answers.keySet())

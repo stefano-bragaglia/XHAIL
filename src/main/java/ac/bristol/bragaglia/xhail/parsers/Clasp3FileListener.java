@@ -163,7 +163,7 @@ public class Clasp3FileListener extends Clasp3BaseListener {
 		if (!optimal.isEmpty() && answers.containsKey(optimal))
 			output.put(optimal, answers.get(optimal));
 		else
-			output = answers;
+			output.putAll(answers);
 		// {
 		// Set<Set<Atom>> last = null;
 		// for (Set<Set<Atom>> model : answers.values())

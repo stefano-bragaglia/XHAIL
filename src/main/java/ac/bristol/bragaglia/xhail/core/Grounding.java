@@ -7,6 +7,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ import ac.bristol.bragaglia.xhail.predicates.Literal;
 public class Grounding extends Modifiable {
 
 	public static Collection<Grounding> loadAll(Problem problem, Map<List<Integer>, Set<Set<Atom>>> answers) {
-		if (null == answers || 1 != answers.size())
+		if (null == answers || answers.size() > 1)
 			throw new IllegalArgumentException("Illegal 'answers' argument in Grounding.loadAll(Map<List<Integer>, Set<Set<Atom>>>): " + answers);
 		Set<Grounding> result = new LinkedHashSet<>();
 		for (List<Integer> values : answers.keySet())
@@ -43,8 +44,46 @@ public class Grounding extends Modifiable {
 				Grounding grounding = new Grounding(problem, values);
 				for (Atom fact : answer)
 					grounding.addFact(fact);
-				result.add(grounding);
+				if (!grounding.isIncluded(result)) {
+					Set<Grounding> temp = new LinkedHashSet<>();
+					for (Grounding ground : result)
+						if (!ground.isIncluded(grounding))
+							temp.add(ground);
+					temp.add(grounding);
+					result = temp;
+				}
 			}
+		return result;
+	}
+
+	public boolean isIncluded(Collection<Grounding> groundings) {
+		if (null == groundings)
+			throw new IllegalArgumentException("Illegal 'groundings' argument in Grounding.isIncluded(Collection<Grounding>): " + groundings);
+		boolean result = false;
+		Iterator<Grounding> iterator = groundings.iterator();
+		while (!result && iterator.hasNext())
+			result = isIncluded(iterator.next());
+		assert invariant() : "Illegal state in Grounding.isIncluded(Collection<Groundings>)";
+		return result;
+	}
+
+	public boolean isIncluded(Grounding grounding) {
+		if (null == grounding)
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Grounding.isIncluded(Grounding): " + grounding);
+		boolean result = problem.equals(grounding.problem) && values.equals(grounding.values);
+		if (result) {
+			Iterator<Atom> modelIter = model.iterator();
+			while (result && modelIter.hasNext())
+				result = grounding.model.contains(modelIter.next());
+			Iterator<Integer> intIter = delta.keySet().iterator();
+			while (result && intIter.hasNext()) {
+				int priority = intIter.next();
+				Iterator<Abducible> deltaIter = delta.get(priority).iterator();
+				while (result && deltaIter.hasNext())
+					result = grounding.delta.containsKey(priority) && grounding.delta.get(priority).contains(deltaIter.next());
+			}
+		}
+		assert invariant() : "Illegal state in Grounding.isIncluded(Grounding)";
 		return result;
 	}
 
@@ -201,6 +240,15 @@ public class Grounding extends Modifiable {
 	 */
 	private boolean invariant() {
 		return (null != delta && null != model && null != values);
+	}
+
+	public boolean isDeducible() {
+		boolean result = false;
+		Iterator<Set<Abducible>> iterator = delta.values().iterator();
+		while (!result && iterator.hasNext())
+			result = iterator.next().size() > 0;
+		assert invariant() : "Illegal state in Grounding.isDeducible()";
+		return result;
 	}
 
 	private void level(int level, Set<String> found, Memory types, Memory vars, Memory history, Clause clause) {

@@ -56,10 +56,10 @@ public abstract class AbstractStrategy implements Strategy {
 		Collection<Grounding> groundings = abductiveSolver.solve(config, problem);
 		if (null != groundings)
 			for (Grounding grounding : groundings) {
-				if (problem.isGeneralizable()) {
+				if (grounding.isDeducible()) {
 					Kernel kernel = deductiveSolver.solve(config, grounding);
 					if (null != kernel) {
-						if (kernel.isGeneralizable()) {
+						if (kernel.isInducible()) {
 							Collection<Hypothesis> hypotheses = inductiveSolver.solve(config, kernel);
 							if (null != hypotheses) {
 								for (Hypothesis hypothesis : hypotheses)

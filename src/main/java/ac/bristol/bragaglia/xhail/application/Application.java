@@ -138,33 +138,53 @@ public class Application {
 				// cpu = end - cpu;
 				// time = end - time;
 				System.out.println(String.format("Answer: %d", i++));
-				System.out.println("  model:");
-				System.out.print("    ");
-				for (Atom atom : answer.model())
-					System.out.print(" " + atom);
-				System.out.println();
+				if (answer.model().size() > 0) {
+					System.out.println("  model (" + answer.count() + " fact/s):");
+					System.out.print("   ");
+					for (Atom atom : answer.model())
+						System.out.print(" " + atom);
+					System.out.println();
+				} else
+					System.out.println("  model:\n    -");
 
-				System.out.println("  delta:");
-				System.out.print("    ");
-				for (Atom atom : answer.delta())
-					System.out.print(" " + atom);
-				System.out.println();
+				if (answer.delta().size() > 0) {
+					System.out.println("  delta:");
+					System.out.print("   ");
+					for (Atom atom : answer.delta())
+						System.out.print(" " + atom);
+					System.out.println();
+				} else
+					System.out.println("  delta:\n    -");
 
-				System.out.println("  kappa:");
-				for (Clause clause : answer.kernel())
-					System.out.println("    " + clause);
+				if (answer.kernel().size() > 0) {
+					System.out.println("  kappa:");
+					for (Clause clause : answer.kernel())
+						System.out.println("    " + clause);
+				} else
+					System.out.println("  kappa:\n    -");
 
-				System.out.println("  guess:");
-				for (Clause clause : answer.hypothesis())
-					System.out.println("    " + clause);
+				if (answer.hypothesis().size() > 0) {
+					System.out.println("  guess:");
+					for (Clause clause : answer.hypothesis())
+						System.out.println("    " + clause);
+				} else
+					System.out.println("  guess:\n    -");
 
-				System.out.print("  optimization:");
-				for (int value : answer.abdValues())
-					System.out.print(" " + value);
-				System.out.print(" |");
-				for (int value : answer.indValues())
-					System.out.print(" " + value);
-				System.out.println();
+				System.out.println("  optimization");
+				if (answer.abdValues().size() > 0) {
+					System.out.print("    abducing:");
+					for (int value : answer.abdValues())
+						System.out.print(" " + value);
+					System.out.println();
+				} else
+					System.out.println("    abducing: -");
+				if (answer.indValues().size() > 0) {
+					System.out.print("    inducing:");
+					for (int value : answer.indValues())
+						System.out.print(" " + value);
+					System.out.println();
+				} else
+					System.out.println("    inducing: -");
 
 				System.out.println();
 			}

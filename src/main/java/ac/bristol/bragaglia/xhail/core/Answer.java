@@ -73,6 +73,12 @@ public class Answer {
 		return result;
 	}
 
+	public int count() {
+		int result = grounding.model().size();
+		assert invariant() : "Illegal state in Answer.count()";
+		return result;
+	}
+
 	public Collection<Abducible> delta() {
 		Collection<Abducible> result = grounding.delta();
 		assert invariant() : "Illegal state in Answer.delta()";

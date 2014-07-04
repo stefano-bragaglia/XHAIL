@@ -167,7 +167,7 @@ public class Program {
 	}
 
 	public boolean isGeneralizable() {
-		boolean result = problem.isGeneralizable();
+		boolean result = problem.isAbducible();
 		assert invariant() : "Illegal state in Program.isGeneralizable()";
 		return result;
 	}

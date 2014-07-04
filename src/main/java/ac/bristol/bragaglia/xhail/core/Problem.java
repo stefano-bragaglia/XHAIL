@@ -524,6 +524,20 @@ public class Problem extends Model {
 		return (null != displays && null != examples && null != modebodies && null != modeheads);
 	}
 
+	/**
+	 * Tells whether this problem is generalisable or not. A generalisable
+	 * problem is a problem with at least a head mode directive. Only in this
+	 * case, in fact, it is possible to have some abducibles.
+	 * 
+	 * @return <code>true</code> if the problem is generalisable,
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isAbducible() {
+		boolean result = !modeheads.isEmpty();
+		assert invariant() : "Illegal state in Problem.isAbducible()";
+		return result;
+	}
+
 	public boolean isDisplayable(Atom candidate) {
 		if (null == candidate)
 			throw new IllegalArgumentException("Illegal 'candidate' argument in Problem.isDisplayable(Atom): " + candidate);
@@ -536,20 +550,6 @@ public class Problem extends Model {
 	public boolean isDisplayAll() {
 		assert invariant() : "Illegal state in Problem.isDisplayAll()";
 		return display;
-	}
-
-	/**
-	 * Tells whether this problem is generalisable or not. A generalisable
-	 * problem is a problem with at least a head mode directive. Only in this
-	 * case, in fact, it is possible to have some abducibles.
-	 * 
-	 * @return <code>true</code> if the problem is generalisable,
-	 *         <code>false</code> otherwise
-	 */
-	public boolean isGeneralizable() {
-		boolean result = !modeheads.isEmpty();
-		assert invariant() : "Illegal state in Problem.isGeneralizable()";
-		return result;
 	}
 
 	/**
@@ -671,6 +671,12 @@ public class Problem extends Model {
 			}
 		}
 		assert invariant() : "Illegal state in Problem.processModeHeads()";
+	}
+
+	public Model reduce() {
+		Model result = new Model(this);
+		assert invariant() : "Illegal state in Problem.reduce()";
+		return result;
 	}
 
 	/*
