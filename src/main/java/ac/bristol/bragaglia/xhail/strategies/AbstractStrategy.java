@@ -53,27 +53,29 @@ public abstract class AbstractStrategy implements Strategy {
 		if (null == problem)
 			throw new IllegalArgumentException("Illegal 'problem' argument in AbstractStrategy.solve(Config, Problem): " + problem);
 		Set<Answer> result = new LinkedHashSet<>();
-		Collection<Grounding> groundings = abductiveSolver.solve(config, problem);
-		if (null != groundings)
-			for (Grounding grounding : groundings) {
-				if (grounding.isDeducible()) {
-					Kernel kernel = deductiveSolver.solve(config, grounding);
-					if (null != kernel) {
-						if (kernel.isInducible()) {
-							Collection<Hypothesis> hypotheses = inductiveSolver.solve(config, kernel);
-							if (null != hypotheses) {
-								for (Hypothesis hypothesis : hypotheses)
-									result.add(new Answer(problem, grounding, kernel, hypothesis));
+		if (!problem.isEmpty()) {
+			Collection<Grounding> groundings = abductiveSolver.solve(config, problem);
+			if (null != groundings)
+				for (Grounding grounding : groundings) {
+					if (grounding.isDeducible()) {
+						Kernel kernel = deductiveSolver.solve(config, grounding);
+						if (null != kernel) {
+							if (kernel.isInducible()) {
+								Collection<Hypothesis> hypotheses = inductiveSolver.solve(config, kernel);
+								if (null != hypotheses) {
+									for (Hypothesis hypothesis : hypotheses)
+										result.add(new Answer(problem, grounding, kernel, hypothesis));
+								} else
+									result.add(new Answer(problem, grounding, kernel));
 							} else
 								result.add(new Answer(problem, grounding, kernel));
 						} else
-							result.add(new Answer(problem, grounding, kernel));
-					} else
+							result.add(new Answer(problem, grounding));
+					} else {
 						result.add(new Answer(problem, grounding));
-				} else {
-					result.add(new Answer(problem, grounding));
+					}
 				}
-			}
+		}
 		assert invariant() : "Illegal state in AbstractStrategy.solve(Config, Problem)";
 		return result;
 	}

@@ -537,7 +537,7 @@ public class Problem extends Model {
 		assert invariant() : "Illegal state in Problem.isAbducible()";
 		return result;
 	}
-
+	
 	public boolean isDisplayable(Atom candidate) {
 		if (null == candidate)
 			throw new IllegalArgumentException("Illegal 'candidate' argument in Problem.isDisplayable(Atom): " + candidate);
@@ -550,6 +550,17 @@ public class Problem extends Model {
 	public boolean isDisplayAll() {
 		assert invariant() : "Illegal state in Problem.isDisplayAll()";
 		return display;
+	}
+
+	public boolean isEmpty() {
+		boolean result = display == false;
+		result &= displays.isEmpty();
+		result &= examples.isEmpty();
+		result &= modebodies.isEmpty();
+		result &= modeheads.isEmpty();
+		result &= model.isEmpty();
+		assert invariant() : "Illegal state in Problem.isEmpty()";
+		return result;
 	}
 
 	/**

@@ -574,6 +574,21 @@ public class Model extends Modifiable {
 				&& null != facts && null != maximizes && null != minimizes);
 	}
 
+	public boolean isEmpty() {
+		boolean result = clauses.isEmpty();
+		result &= computes.isEmpty();
+		result &= constants.isEmpty();
+		result &= constraints.isEmpty();
+		result &= domains.isEmpty();
+		result &= externals.isEmpty();
+		result &= facts.isEmpty();
+		result &= hideshows.isEmpty();
+		result &= maximizes.isEmpty();
+		result &= minimizes.isEmpty();
+		assert invariant() : "Illegal state in Model.isEmpty()";
+		return result;
+	}
+
 	/**
 	 * Returns the maximize directives of the model as a collection.
 	 * 
