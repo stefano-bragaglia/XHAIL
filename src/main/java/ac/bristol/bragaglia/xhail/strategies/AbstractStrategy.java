@@ -80,38 +80,4 @@ public abstract class AbstractStrategy implements Strategy {
 		return result;
 	}
 
-	// @Override
-	// public boolean solve(Program program) {
-	// if (null == program)
-	// throw new
-	// IllegalArgumentException("Illegal 'program' argument in AbstractStrategy.solve(Program): "
-	// + program);
-	// boolean result = false;
-	// Config config = program.getConfig();
-	// Collection<Grounding> groundings = abductiveSolver.solve(config,
-	// program.getProblem());
-	// if (null != groundings)
-	// for (Grounding grounding : groundings) {
-	// // not needed anymore: we collect answers instead
-	// // Program.inject(explanation, program);
-	// if (program.isGeneralizable()) {
-	// Kernel kernel = deductiveSolver.solve(config, explanation);
-	// if (null != kernel) {
-	// Program.inject(kernel, program);
-	// if (kernel.isGeneralizable()) {
-	// Hypothesis hypothesis = inductiveSolver.solve(config, kernel);
-	// if (null != hypothesis) {
-	// Program.inject(hypothesis, program);
-	// result = true;
-	// }
-	// } else
-	// result = true;
-	// }
-	// } else
-	// result = true;
-	// }
-	// assert invariant() : "Illegal state in AbstractStrategy.solve()";
-	// return result;
-	// }
-
 }

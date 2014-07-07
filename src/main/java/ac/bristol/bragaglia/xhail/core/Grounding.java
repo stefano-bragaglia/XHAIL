@@ -44,14 +44,17 @@ public class Grounding extends Modifiable {
 				Grounding grounding = new Grounding(problem, values);
 				for (Atom fact : answer)
 					grounding.addFact(fact);
-				if (!grounding.isIncluded(result)) {
-					Set<Grounding> temp = new LinkedHashSet<>();
-					for (Grounding ground : result)
-						if (!ground.isIncluded(grounding))
-							temp.add(ground);
-					temp.add(grounding);
-					result = temp;
-				}
+				// Add a grounding only if not included in any other
+				// and replace others with this one if they are included in it
+				result.add(grounding);
+				// if (!grounding.isIncluded(result)) {
+				// Set<Grounding> temp = new LinkedHashSet<>();
+				// for (Grounding ground : result)
+				// if (!ground.isIncluded(grounding))
+				// temp.add(ground);
+				// temp.add(grounding);
+				// result = temp;
+				// }
 			}
 		return result;
 	}

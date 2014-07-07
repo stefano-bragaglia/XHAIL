@@ -270,6 +270,19 @@ public class XhailBaseListener implements XhailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterKeyNumber(@NotNull XhailParser.KeyNumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitKeyNumber(@NotNull XhailParser.KeyNumberContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGroundNotEquals(@NotNull XhailParser.GroundNotEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -85,10 +85,9 @@ public class Hypothesis extends Modifiable {
 						if (0 != ll)
 							current.append(kernel.get(cc, ll));
 					for (int ll : set)
-						if (0 != ll)
-							for (Literal literal : kernel.types(cc, ll))
-								if (!current.contains(literal))
-									current.append(literal);
+						for (Literal literal : kernel.types(cc, ll))
+							if (!current.contains(literal))
+								current.append(literal);
 					clauses.add(current);
 				}
 			}

@@ -4,6 +4,7 @@
 package ac.bristol.bragaglia.xhail;
 
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class ProblemTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		config = new Config(GRINGO, CLASP, true);
+		config = new Config(GRINGO, CLASP, true, false);
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class ProblemTest {
 	@Before
 	public void setUp() throws Exception {
 		program = new Program(config);
-		program.load("ac/bristol/bragaglia/xhail/abstract.lp");
+		// program.load("ac/bristol/bragaglia/xhail/abstract.lp");
 	}
 
 	/**
@@ -48,6 +49,11 @@ public class ProblemTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void testCreate() {
+		assertNotNull(program);
 	}
 
 	@Test

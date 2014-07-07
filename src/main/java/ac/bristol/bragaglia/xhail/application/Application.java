@@ -45,6 +45,11 @@ public class Application {
 	private static boolean debug = false;
 
 	/**
+	 * The <code>mute</code> flag.
+	 */
+	private static boolean mute = false;
+
+	/**
 	 * The <code>files</code> to process.
 	 */
 	private static Set<File> files = new LinkedHashSet<>();
@@ -117,7 +122,7 @@ public class Application {
 	 */
 	private static void execute() {
 		long time = System.currentTimeMillis();
-		Config config = new Config(gringo, clasp, debug);
+		Config config = new Config(gringo, clasp, debug, mute);
 		Program program = new Program(config);
 		if (0 == files.size()) {
 			System.out.println("Reading from stdin");
@@ -138,37 +143,37 @@ public class Application {
 				// cpu = end - cpu;
 				// time = end - time;
 				System.out.println(String.format("Answer: %d", i++));
+				System.out.println("  model (" + answer.count() + " fact/s):");
 				if (answer.model().size() > 0) {
-					System.out.println("  model (" + answer.count() + " fact/s):");
 					System.out.print("   ");
 					for (Atom atom : answer.model())
 						System.out.print(" " + atom);
 					System.out.println();
 				} else
-					System.out.println("  model:\n    -");
+					System.out.println("    -");
 
+				System.out.println("  delta (" + answer.delta().size() + " abducible/s):");
 				if (answer.delta().size() > 0) {
-					System.out.println("  delta:");
 					System.out.print("   ");
 					for (Atom atom : answer.delta())
 						System.out.print(" " + atom);
 					System.out.println();
 				} else
-					System.out.println("  delta:\n    -");
+					System.out.println("    -");
 
+				System.out.println("  kappa (" + answer.kernel().size() + " clause/s):");
 				if (answer.kernel().size() > 0) {
-					System.out.println("  kappa:");
 					for (Clause clause : answer.kernel())
 						System.out.println("    " + clause);
 				} else
-					System.out.println("  kappa:\n    -");
+					System.out.println("    -");
 
+				System.out.println("  guess (" + answer.hypothesis().size() + " clause/s):");
 				if (answer.hypothesis().size() > 0) {
-					System.out.println("  guess:");
 					for (Clause clause : answer.hypothesis())
 						System.out.println("    " + clause);
 				} else
-					System.out.println("  guess:\n    -");
+					System.out.println("    -");
 
 				System.out.println("  optimization");
 				if (answer.abdValues().size() > 0) {
@@ -237,6 +242,10 @@ public class Application {
 				case "--help":
 					help = true;
 					break;
+				case "-m":
+				case "--mute":
+					mute = true;
+					break;
 				case "-s":
 				case "--search":
 					search = true;
@@ -294,6 +303,7 @@ public class Application {
 		System.out.println("  --debug,-d          : Leave temporary files in ./temp");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
 		System.out.println("  --help,-h           : Print this help and exit");
+		System.out.println("  --mute,-m           : Suppress warning messages");
 		System.out.println("  --search,-s         : Search for clasp 3 and gringo 3");
 		System.out.println("  --version,-v        : Print version information and exit");
 		System.out.println();
@@ -316,7 +326,7 @@ public class Application {
 				list += " " + file.getPath();
 			System.out.println();
 			System.out.println("Next time try to invoke the application with the following parameters:");
-			System.out.println(String.format("  java -jar %s.jar -c %s -g %s%s%s", Version.get().getTitle(), clasp, gringo, debug ? " debug" : "", list));
+			System.out.println(String.format("  java -jar %s.jar -c %s -g %s%s%s", Version.get().getTitle(), clasp, gringo, debug ? " -d" : "", list));
 		}
 		System.out.println();
 	}

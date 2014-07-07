@@ -3,9 +3,11 @@
  */
 package ac.bristol.bragaglia.xhail.predicates;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
@@ -16,6 +18,43 @@ import ac.bristol.bragaglia.xhail.core.Memory;
  *
  */
 public class Atom implements Comparable<Atom>, Iterable<Atom> {
+
+	public static final String ARITH_ABS = "#abs";
+
+	public static final String ARITH_ASSIGN = "#assign";
+
+	public static final String ARITH_DIVIDE = "#div";
+
+	public static final String ARITH_MINUS = "#minus";
+	public static final String ARITH_MODULUS = "#mod";
+
+	public static final String ARITH_PLUS = "#plus";
+
+	public static final String ARITH_POWER = "#pow";
+
+	public static final String ARITH_TIMES = "#times";
+
+	public static final String BIT_AND = "#and";
+
+	public static final String BIT_NOT = "#not";
+
+	public static final String BIT_OR = "#or";
+
+	public static final String BIT_XOR = "#xor";
+
+	public static final String COMP_EQ = "#eq";
+
+	public static final String COMP_GE = "#ge";
+
+	public static final String COMP_GT = "#gt";
+
+	public static final String COMP_LE = "#le";
+
+	public static final String COMP_LT = "#lt";
+
+	public static final String COMP_NE = "#ne";
+
+	public static final String CON_SYMBOL = "$";
 
 	public static final int ID_ATOM = 3;
 
@@ -31,6 +70,20 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public static final int ID_VARS = 0;
 
 	public static final int ID_WEIGHT = 1;
+
+	public static final String INP_SYMBOL = "+";
+
+	public static final String INTERVAL = "#interval";
+
+	public static final String OUP_SYMBOL = "-";
+
+	public static final String PAR_CONSTANT = "parConstant";
+
+	public static final String PAR_INPUT = "parInput";
+
+	public static final String PAR_OUTPUT = "parOutput";
+
+	public static final String POOLING = "#pooling";
 
 	public static final String TAG_ACCESSORS = "#accessors";
 
@@ -108,58 +161,6 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 				Builder.get(String.valueOf(priority)).build());
 	}
 
-	public static final String ARITH_ABS = "#abs";
-
-	public static final String ARITH_ASSIGN = "#assign";
-
-	public static final String ARITH_DIVIDE = "#div";
-
-	public static final String ARITH_MINUS = "#minus";
-
-	public static final String ARITH_MODULUS = "#mod";
-
-	public static final String ARITH_PLUS = "#plus";
-
-	public static final String ARITH_POWER = "#pow";
-
-	public static final String ARITH_TIMES = "#times";
-
-	public static final String BIT_AND = "#and";
-
-	public static final String BIT_NOT = "#not";
-
-	public static final String BIT_OR = "#or";
-
-	public static final String BIT_XOR = "#xor";
-
-	public static final String COMP_EQ = "#eq";
-
-	public static final String COMP_GE = "#ge";
-
-	public static final String COMP_GT = "#gt";
-
-	public static final String COMP_LE = "#le";
-
-	public static final String COMP_LT = "#lt";
-
-	public static final String COMP_NE = "#ne";
-
-	public static final String CON_SYMBOL = "$";
-
-	public static final String INP_SYMBOL = "+";
-
-	public static final String INTERVAL = "#interval";
-
-	public static final String OUP_SYMBOL = "-";
-
-	public static final String PAR_CONSTANT = "con_tag";
-
-	public static final String PAR_INPUT = "inp_tag";
-
-	public static final String PAR_OUTPUT = "oup_tag";
-
-	public static final String POOLING = "#pooling";
-
 	/**
 	 * 
 	 */
@@ -174,6 +175,17 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	 * @param name
 	 * @param terms
 	 */
+	public Atom(String name, Atom[] terms) {
+		this.name = name;
+		this.terms = new Atom[terms.length];
+		for (int i = 0; i < terms.length; i++)
+			this.terms[i] = terms[i];
+	}
+
+	/**
+	 * @param name
+	 * @param terms
+	 */
 	public Atom(String name, Collection<Atom> terms) {
 		int i = 0;
 		this.name = name;
@@ -183,21 +195,24 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	}
 
 	/**
-	 * @param name
-	 * @param terms
-	 */
-	public Atom(String name, Atom[] terms) {
-		this.name = name;
-		this.terms = new Atom[terms.length];
-		for (int i = 0; i < terms.length; i++)
-			this.terms[i] = terms[i];
-	}
-
-	/**
 	 * @return
 	 */
 	public int arity() {
 		return terms.length;
+	}
+
+	public Atom asHead() {
+		Atom result;
+		String name = this.name();
+		if (2 == arity() && (Atom.PAR_INPUT.equals(name) || Atom.PAR_OUTPUT.equals(name) || Atom.PAR_CONSTANT.equals(name)))
+			result = terms[0];
+		else {
+			Builder builder = Builder.get(name);
+			for (Atom term : terms)
+				builder.append(term.asHead());
+			result = builder.build();
+		}
+		return result;
 	}
 
 	@Override
@@ -433,18 +448,33 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 		return result;
 	}
 
-	public Atom asHead() {
-		Atom result;
-		String name = this.name();
-		if (2 == arity() && (Atom.PAR_INPUT.equals(name) || Atom.PAR_OUTPUT.equals(name) || Atom.PAR_CONSTANT.equals(name)))
-			result = terms[0];
-		else {
-			Builder builder = Builder.get(name);
-			for (Atom term : terms)
-				builder.append(term.asHead());
-			result = builder.build();
+	public void decode(List<String> fixes, List<String> heads, List<String> vars, List<String> types) {
+		if (null == fixes)
+			throw new IllegalArgumentException("Illegal 'fixes' argument in Atom.deduce(List<String>, List<String>, List<String>, List<String>): " + fixes);
+		if (null == heads)
+			throw new IllegalArgumentException("Illegal 'heads' argument in Atom.deduce(List<String>, List<String>, List<String>, List<String>): " + heads);
+		if (null == vars)
+			throw new IllegalArgumentException("Illegal 'vars' argument in Atom.deduce(List<String>, List<String>, List<String>, List<String>): " + vars);
+		if (null == types)
+			throw new IllegalArgumentException("Illegal 'fixes' argument in Atom.deduce(List<String>, List<String>, List<String>, List<String>): " + types);
+		if (0 == terms.length) {
+			fixes.add(name);
+			heads.add(name);
+		} else if (1 == terms.length && ( name.equals(PAR_INPUT) || name.equals(PAR_OUTPUT) || name.equals(PAR_CONSTANT) ) ) {
+			String var = String.format("V%d", vars.size() + 1);
+			String type = terms[0].toString();
+			fixes.add(String.format("%s(%s, %s)", name, var, type));
+			heads.add(var);
+			vars.add(var);
+			types.add(String.format("%s(%s)", type, var));
+		} else {
+			List<String> nestFixes = new ArrayList<>();
+			List<String> nestHeads = new ArrayList<>();
+			for (Atom nested : terms) 
+				nested.decode(nestFixes, nestHeads, vars, types);
+			fixes.add(String.format("%s(%s)", name, String.join(", ", nestFixes)));
+			heads.add(String.format("%s(%s)", name, String.join(", ", nestHeads)));
 		}
-		return result;
 	}
 
 }

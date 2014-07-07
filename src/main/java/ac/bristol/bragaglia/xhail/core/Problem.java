@@ -3,9 +3,11 @@
  */
 package ac.bristol.bragaglia.xhail.core;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -196,37 +198,6 @@ public class Problem extends Model {
 	 * The constant prefix for types.
 	 */
 	public static final String TAG_TYPE = "typ_";
-
-	/**
-	 * This utility method takes the given non-<code>null</code> non-empty tag,
-	 * the given non-<code>null</code> non-empty name, the given weight value,
-	 * the given priority value and the given non-<code>null</code> non-empty
-	 * list to generate and return the resulting predicate.
-	 * 
-	 * @param tag
-	 *            the tag to use
-	 * @param name
-	 *            the name to use
-	 * @param weight
-	 *            the weight to use
-	 * @param priority
-	 *            the priority to use
-	 * @param list
-	 *            the list to use
-	 * @return the resulting predicate
-	 */
-	private static String compose(String tag, String name, int weight, int priority, String list) {
-		if (null == tag || (tag = tag.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'tag' argument in Problem.compose(String, String, int, int, String): " + tag);
-		if (null == name || (name = name.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'name' argument in Problem.compose(String, String, int, int, String): " + name);
-		if (null == list)
-			throw new IllegalArgumentException("Illegal 'list' argument in Problem.compose(String, String, int, int, String): " + list);
-		if (list.isEmpty())
-			return String.format("%s%s_%d_%d", tag, name, weight, priority);
-		else
-			return String.format("%s%s_%d_%d(%s)", tag, name, weight, priority, list);
-	}
 
 	private boolean display;
 
@@ -537,7 +508,7 @@ public class Problem extends Model {
 		assert invariant() : "Illegal state in Problem.isAbducible()";
 		return result;
 	}
-	
+
 	public boolean isDisplayable(Atom candidate) {
 		if (null == candidate)
 			throw new IllegalArgumentException("Illegal 'candidate' argument in Problem.isDisplayable(Atom): " + candidate);
@@ -639,55 +610,31 @@ public class Problem extends Model {
 	 */
 	private void processModeHeads() {
 		if (!modeheads.isEmpty()) {
-			for (Atom key : modeheads.keySet()) {
-				int arity = key.arity();
-				String name = key.name();
-				ModeHeadData value = modeheads.get(key);
-				int weight = value.getWeight();
-				int priority = value.getPriority();
-				int i = 0;
-				StringJoiner termsJoiner = new StringJoiner(", ");
-				StringJoiner typesJoiner = new StringJoiner(", ");
-				StringJoiner varsJoiner = new StringJoiner(", ");
-				for (Atom term : key) {
-					if (0 == term.arity()) {
-						termsJoiner.add(term.name());
-					} else {
-						i += 1;
-						termsJoiner.add(String.format("%s(V%d, %s)", term.name(), i, term.get(0).toPrint()));
-						if (term.get(0).isParameter())
-							typesJoiner.add(String.format("%s(V%d, %s)", term.get(0).name(), i, term.get(0).get(term.get(0).arity() - 1).toPrint()));
-						else
-							typesJoiner.add(String.format("%s(V%d)", term.get(0).toPrint(), i));
-						varsJoiner.add(String.format("V%d", i));
-					}
-					// processModeTerms(model, term);
-				}
-				String terms = termsJoiner.toString();
-				String types = typesJoiner.toString();
-				String vars = varsJoiner.toString();
-				String abduce = compose(TAG_ABDUCE, name, weight, priority, terms);
-				String type = compose(TAG_TYPE, name, weight, priority, vars);
-				model.addHide(String.format("#hide %s%s_%d_%d/%d.", TAG_TYPE, name, weight, priority, arity));
-				// model.addShow(String.format("#show %s%s_%d_%d/%d.",
-				// TAG_ABDUCE, name, weight, priority, arity));
-				// model.addShow(String.format("#show %s/%d.", name, arity));
-				model.addMinimize(String.format("#minimize[ %s%s : %s ].", abduce, value.asData(), type));
-				model.addClause(String.format("%s :- %s.", type, types));
-				if (vars.isEmpty())
-					model.addClause(String.format("%s :- %s, %s.", name, type, abduce));
+			for (Atom mode : modeheads.keySet()) {
+				List<String> fixes = new ArrayList<String>();
+				List<String> heads = new ArrayList<String>();
+				List<String> vars = new ArrayList<String>();
+				List<String> types = new ArrayList<String>();
+				ModeHeadData data = modeheads.get(mode);
+				for (Atom term : mode)
+					term.decode(fixes, heads, vars, types);
+				String name = mode.name();
+				String nameHead = heads.size() > 0 ? String.format("%s(%s)", name, String.join(", ", heads)) : name;
+				String abduce = String.format("%s%s_%d_%d", TAG_ABDUCE, name, data.getWeight(), data.getPriority());
+				String abduceHead = fixes.size() > 0 ? String.format("%s(%s)", abduce, String.join(", ", fixes)) : abduce;
+				String type = String.format("%s%s", TAG_TYPE, name);
+				String typeHead = vars.size() > 0 ? String.format("%s(%s)", type, String.join(", ", vars)) : type;
+				model.addHide(String.format("#hide %s/%d.", type, vars.size()));
+				model.addMinimize(String.format("#minimize[ %s%s : %s ].", abduceHead, data.asData(), typeHead));
+				model.addClause(String.format("%s{ %s : %s }%s.", data.asLower(), abduceHead, typeHead, data.asUpper()));
+				model.addClause(String.format("%s :- %s, %s.", nameHead, typeHead, abduceHead));
+				if (vars.size() > 0) // var.size() == types.size()
+					model.addClause(String.format("%s :- %s.", typeHead, String.join(", ", types)));
 				else
-					model.addClause(String.format("%s(%s) :- %s, %s.", name, vars, type, abduce));
-				model.addClause(String.format("%s{ %s : %s }%s.", value.asLower(), abduce, type, value.asUpper()));
+					model.addClause(String.format("%s.", typeHead));
 			}
 		}
 		assert invariant() : "Illegal state in Problem.processModeHeads()";
-	}
-
-	public Model reduce() {
-		Model result = new Model(this);
-		assert invariant() : "Illegal state in Problem.reduce()";
-		return result;
 	}
 
 	/*

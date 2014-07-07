@@ -62,6 +62,7 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundXorContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyConstantContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyInputContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyListContext;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyNumberContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeyOutputContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.KeySignatureContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.MaximizeContext;
@@ -214,6 +215,22 @@ public class XhailFileListener extends XhailBaseListener {
 	public void exitConstraintClause(ConstraintClauseContext ctx) {
 		if (null != ctx)
 			problem.addConstraint(combine(ctx));
+	}
+
+	@Override
+	public void exitDisplayAll(DisplayAllContext ctx) {
+		if (null == ctx)
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplayAll(DisplayAllContext): " + ctx);
+		problem.addDisplayAll();
+	}
+
+	@Override
+	public void exitDisplayPredicate(DisplayPredicateContext ctx) {
+		if (null == ctx)
+			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplay(DisplayContext): " + ctx);
+		String name = ctx.IDENTIFIER().getText();
+		int arity = Integer.valueOf(ctx.INTEGER().getText());
+		problem.addDisplay(name, arity);
 	}
 
 	@Override
@@ -437,15 +454,6 @@ public class XhailFileListener extends XhailBaseListener {
 			builders.push(Builder.get(Atom.ARITH_POWER).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
 
-	private boolean isNegValue(String text) {
-		if (null == text || (text = text.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'text' argument in XhailFileListener.isNegValue(String): " + text);
-		boolean result = ('-' == text.charAt(0));
-		for (int i = 1; result && i < text.length(); i++)
-			result = text.charAt(i) >= '0' && text.charAt(i) <= '9';
-		return result;
-	}
-
 	@Override
 	public void exitGroundPredicate(GroundPredicateContext ctx) {
 		if (null != ctx) {
@@ -484,12 +492,6 @@ public class XhailFileListener extends XhailBaseListener {
 			builders.push(Builder.get(ctx.getText()));
 	}
 
-	@Override
-	public void exitGroundXor(GroundXorContext ctx) {
-		if (null != ctx)
-			builders.push(Builder.get(Atom.BIT_XOR).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
-	}
-
 	// @Override
 	// public void exitHideAll(HideAllContext ctx) {
 	// if (null != ctx)
@@ -507,6 +509,12 @@ public class XhailFileListener extends XhailBaseListener {
 	// if (null != ctx)
 	// problem.addHide(combine(ctx));
 	// }
+
+	@Override
+	public void exitGroundXor(GroundXorContext ctx) {
+		if (null != ctx)
+			builders.push(Builder.get(Atom.BIT_XOR).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
+	}
 
 	@Override
 	public void exitKeyConstant(KeyConstantContext ctx) {
@@ -537,6 +545,16 @@ public class XhailFileListener extends XhailBaseListener {
 	}
 
 	@Override
+	public void exitKeyNumber(KeyNumberContext ctx) {
+		if (null != ctx) {
+			int value = Integer.valueOf(ctx.INTEGER().getText());
+			if (null != ctx.MINUS())
+				value = -value;
+			builders.push(Builder.get(String.valueOf(value)));
+		}
+	}
+
+	@Override
 	public void exitKeyOutput(KeyOutputContext ctx) {
 		if (null != ctx)
 			builders.push(Builder.get(Atom.PAR_OUTPUT).append(ctx.IDENTIFIER().getText()));
@@ -546,6 +564,8 @@ public class XhailFileListener extends XhailBaseListener {
 	public void exitKeySignature(KeySignatureContext ctx) {
 		// if (null != ctx)
 		// builders.push(builders.pop());
+		
+		// Empty because the other Key are called recursively and deal with this Key's parts.
 	}
 
 	@Override
@@ -576,15 +596,6 @@ public class XhailFileListener extends XhailBaseListener {
 			throw new IllegalStateException("The stack should be empty!");
 	}
 
-	@Override
-	public void exitPriority(PriorityContext ctx) {
-		if (null != ctx) {
-			priority = Integer.parseInt(ctx.INTEGER().getText());
-			if (null != ctx.MINUS())
-				priority = -priority;
-		}
-	}
-
 	// @Override
 	// public void exitShowAll(ShowAllContext ctx) {
 	// if (null != ctx)
@@ -604,19 +615,12 @@ public class XhailFileListener extends XhailBaseListener {
 	// }
 
 	@Override
-	public void exitDisplayPredicate(DisplayPredicateContext ctx) {
-		if (null == ctx)
-			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplay(DisplayContext): " + ctx);
-		String name = ctx.IDENTIFIER().getText();
-		int arity = Integer.valueOf(ctx.INTEGER().getText());
-		problem.addDisplay(name, arity);
-	}
-
-	@Override
-	public void exitDisplayAll(DisplayAllContext ctx) {
-		if (null == ctx)
-			throw new IllegalArgumentException("Illegal 'ctx' argument in XhailFileListener.exitDisplayAll(DisplayAllContext): " + ctx);
-		problem.addDisplayAll();
+	public void exitPriority(PriorityContext ctx) {
+		if (null != ctx) {
+			priority = Integer.parseInt(ctx.INTEGER().getText());
+			if (null != ctx.MINUS())
+				priority = -priority;
+		}
 	}
 
 	@Override
@@ -626,6 +630,15 @@ public class XhailFileListener extends XhailBaseListener {
 			if (null != ctx.MINUS())
 				weight = -weight;
 		}
+	}
+
+	private boolean isNegValue(String text) {
+		if (null == text || (text = text.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'text' argument in XhailFileListener.isNegValue(String): " + text);
+		boolean result = ('-' == text.charAt(0));
+		for (int i = 1; result && i < text.length(); i++)
+			result = text.charAt(i) >= '0' && text.charAt(i) <= '9';
+		return result;
 	}
 
 }

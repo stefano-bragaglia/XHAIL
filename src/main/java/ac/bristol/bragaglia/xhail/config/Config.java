@@ -80,6 +80,8 @@ public class Config {
 
 	private Clock inducing_gringo;
 
+	private boolean mute;
+
 	private String name;
 
 	private Clock parsing;
@@ -88,13 +90,14 @@ public class Config {
 	 * @param gringo
 	 * @param clasp
 	 * @param debug
+	 * @param mute
 	 */
-	public Config(String gringo, String clasp, boolean debug) {
+	public Config(String gringo, String clasp, boolean debug, boolean mute) {
 		File file;
 		if (null == gringo || (gringo = gringo.trim()).isEmpty() || !(file = new File(gringo)).isFile() || !file.exists())
-			throw new IllegalArgumentException("Illegal 'gringo' argument in Config(String, String, boolean): " + gringo);
+			throw new IllegalArgumentException("Illegal 'gringo' argument in Config(String, String, boolean, boolean): " + gringo);
 		if (null == clasp || (clasp = clasp.trim()).isEmpty() || !(file = new File(clasp)).isFile() || !file.exists())
-			throw new IllegalArgumentException("Illegal 'clasp' argument in Config(String, String, boolean): " + clasp);
+			throw new IllegalArgumentException("Illegal 'clasp' argument in Config(String, String, boolean, boolean): " + clasp);
 		try {
 			this.current = Paths.get(".").toRealPath();
 		} catch (IOException | SecurityException e) {
@@ -116,6 +119,7 @@ public class Config {
 		this.clasp = clasp;
 		this.name = STDIN;
 		this.debug = debug;
+		this.mute = mute;
 		assert invariant() : "Illegal state in Config(String, String, boolean)";
 	}
 
@@ -254,6 +258,11 @@ public class Config {
 	public boolean isDebug() {
 		assert invariant() : "Illegal state in Config.isDebug()";
 		return debug;
+	}
+
+	public boolean isMute() {
+		assert invariant() : "Illegal state in Config.isMute()";
+		return mute;
 	}
 
 	public Path overwriteFile(Path path, String name) {

@@ -224,6 +224,17 @@ public interface XhailListener extends ParseTreeListener {
 	void exitGroundPower2(@NotNull XhailParser.GroundPower2Context ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link XhailParser#KeyNumber}.
+	 * @param ctx the parse tree
+	 */
+	void enterKeyNumber(@NotNull XhailParser.KeyNumberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XhailParser#KeyNumber}.
+	 * @param ctx the parse tree
+	 */
+	void exitKeyNumber(@NotNull XhailParser.KeyNumberContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link XhailParser#GroundNotEquals}.
 	 * @param ctx the parse tree
 	 */

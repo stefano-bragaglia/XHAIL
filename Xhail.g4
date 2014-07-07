@@ -129,6 +129,7 @@ key
 	| MINUS IDENTIFIER # KeyOutput
 	| HASH IDENTIFIER # KeyConstant
 	| signature # KeySignature
+	| MINUS? INTEGER # KeyNumber
 ;
 
 minimize

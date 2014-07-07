@@ -73,7 +73,7 @@ public class DefaultInductiveSolver implements InductivePhase {
 				config.getParsing().start();
 				// Acquiring the output (to be refactored!!!)
 				FileInputStream stream = new FileInputStream(clasp.toFile());
-				Map<List<Integer>, Set<Set<Atom>>> answers = Clasp3FileParser.parse(stream);
+				Map<List<Integer>, Set<Set<Atom>>> answers = Clasp3FileParser.parse(stream, config.isMute());
 				// result = new Hypothesis(kernel,
 				// Clasp3FileParser.parse(stream));
 				result = Hypothesis.loadAll(kernel, answers);
@@ -84,16 +84,13 @@ public class DefaultInductiveSolver implements InductivePhase {
 				config.getParsing().stop();
 				config.getInducing().start();
 				// passing the error/warning messages over
+				boolean blocking = false;
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines) {
 					line = line.trim();
+					blocking |= line.toLowerCase().contains("error");
 					if (!line.isEmpty()) {
-						if (line.startsWith("% warning: ")) {
-							line = line.substring(11);
-							if (line.endsWith(":") || line.endsWith("!"))
-								line = line.substring(0, line.length() - 1);
-							System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
-						} else if (line.startsWith("ERROR: ")) {
+						if (line.startsWith("ERROR: ")) {
 							line = line.substring(7);
 							if (line.endsWith(":") || line.endsWith("!"))
 								line = line.substring(0, line.length() - 1);
@@ -108,10 +105,19 @@ public class DefaultInductiveSolver implements InductivePhase {
 							if (line.endsWith(":") || line.endsWith("!"))
 								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** ERROR (%s): %s on induction", Version.get().getTitle(), line));
-						} else
-							System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
+						} else if (!config.isMute()) {
+							if (line.startsWith("% warning: ")) {
+								line = line.substring(11);
+								if (line.endsWith(":") || line.endsWith("!"))
+									line = line.substring(0, line.length() - 1);
+								System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
+							} else
+								System.err.println(String.format("*** WARNING (%s): %s on induction", Version.get().getTitle(), line));
+						}
 					}
 				}
+				if (blocking)
+					result = null;
 			} catch (InterruptedException | IOException | SecurityException e) {
 				// nothing, so that induced will remain null.
 			}

@@ -15,7 +15,6 @@ import java.util.Set;
 import ac.bristol.bragaglia.xhail.application.Version;
 import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.core.Grounding;
-import ac.bristol.bragaglia.xhail.core.Model;
 import ac.bristol.bragaglia.xhail.core.Problem;
 import ac.bristol.bragaglia.xhail.parsers.Clasp3FileParser;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
@@ -53,8 +52,7 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 		Path temp = config.createFolder("temp");
 		Path errors = config.overwriteFile(temp, "errors_abd.log");
 		Path source = config.createFile(temp, config.getFilename() + "_abd.lp");
-		Model model = problem.isAbducible() ? problem.derive() : problem.reduce();
-		if (model.dump(source.toFile())) {
+		if (problem.derive().dump(source.toFile())) {
 			try {
 				Path grounding = config.createFile(temp, config.getFilename() + "_abd.grounding");
 				if (config.isDebug()) {
@@ -75,7 +73,7 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 				config.getParsing().start();
 				// Acquiring the output
 				FileInputStream stream = new FileInputStream(clasp.toFile());
-				Map<List<Integer>, Set<Set<Atom>>> answers = Clasp3FileParser.parse(stream);
+				Map<List<Integer>, Set<Set<Atom>>> answers = Clasp3FileParser.parse(stream, config.isMute());
 				result = Grounding.loadAll(problem, answers);
 				// returns the class on answers corresponding to the optimal
 				// value or the whole set of answers if no optimal value is
@@ -84,16 +82,13 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 				config.getParsing().stop();
 				config.getAbducing().start();
 				// passing the error/warning messages over
+				boolean blocking = false;
 				List<String> lines = Files.readAllLines(errors);
 				for (String line : lines) {
 					line = line.trim();
+					blocking |= line.toLowerCase().contains("error");
 					if (!line.isEmpty()) {
-						if (line.startsWith("% warning: ")) {
-							line = line.substring(11);
-							if (line.endsWith(":") || line.endsWith("!"))
-								line = line.substring(0, line.length() - 1);
-							System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
-						} else if (line.startsWith("ERROR: ")) {
+						if (line.startsWith("ERROR: ")) {
 							line = line.substring(7);
 							if (line.endsWith(":") || line.endsWith("!"))
 								line = line.substring(0, line.length() - 1);
@@ -108,10 +103,19 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 							if (line.endsWith(":") || line.endsWith("!"))
 								line = line.substring(0, line.length() - 1);
 							System.err.println(String.format("*** ERROR (%s): %s on abduction", Version.get().getTitle(), line));
-						} else
-							System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
+						} else if (!config.isMute()) {
+							if (line.startsWith("% warning: ")) {
+								line = line.substring(11);
+								if (line.endsWith(":") || line.endsWith("!"))
+									line = line.substring(0, line.length() - 1);
+								System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
+							} else
+								System.err.println(String.format("*** WARNING (%s): %s on abduction", Version.get().getTitle(), line));
+						}
 					}
 				}
+				if (blocking)
+					result = null;
 			} catch (InterruptedException | IOException | SecurityException e) {
 				// nothing, so that Explanation will remain null.
 			}
@@ -120,5 +124,4 @@ public class DefaultAbductiveSolver implements AbductivePhase {
 		assert invariant() : "Illegal state in DefaultAbductiveSolver.solve(Config, Problem)";
 		return result;
 	}
-
 }

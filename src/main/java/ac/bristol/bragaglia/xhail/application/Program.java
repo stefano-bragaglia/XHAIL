@@ -22,95 +22,7 @@ import ac.bristol.bragaglia.xhail.strategies.Strategy;
  */
 public class Program {
 
-	// public static void inject(Explanation generalization, Program program) {
-	// if (null == generalization)
-	// throw new
-	// IllegalArgumentException("Illegal 'generalization' argument in Program.inject(Generalization, Program): "
-	// + generalization);
-	// if (null == program)
-	// throw new
-	// IllegalArgumentException("Illegal 'program' argument in Program.inject(Generalization, Program): "
-	// + program);
-	// program.generalization = generalization;
-	// }
-
-	// public static void inject(Hypothesis hypothesis, Program program) {
-	// if (null == hypothesis)
-	// throw new
-	// IllegalArgumentException("Illegal 'hypothesis' argument in Program.inject(Hypothesis, Program): "
-	// + hypothesis);
-	// if (null == program)
-	// throw new
-	// IllegalArgumentException("Illegal 'program' argument in Program.inject(Hypothesis, Program): "
-	// + program);
-	// program.hypothesis = hypothesis;
-	// }
-
-	// public static void inject(Kernel kernel, Program program) {
-	// if (null == kernel)
-	// throw new
-	// IllegalArgumentException("Illegal 'kernel' argument in Program.inject(Solution, Program): "
-	// + kernel);
-	// if (null == program)
-	// throw new
-	// IllegalArgumentException("Illegal 'program' argument in Program.inject(Solution, Program): "
-	// + program);
-	// program.kernel = kernel;
-	// }
-
-	// /**
-	// * @param args
-	// */
-	// public static void main(String[] args) {
-	//
-	// Atom atom =
-	// Builder.get("example").append(Builder.get(Atom.PAR_CONSTANT).append("value").append("type").build()).build();
-	// System.out.println(atom);
-	//
-	// Config config = new Config("/Library/Gringo/gringo",
-	// "/Library/Clasp/clasp", true);
-	// // int i;
-	// Program program = new Program(config);
-	// program.solve();
-	// // program.load("ac/bristol/bragaglia/jhail/altro.lp");
-	// program.load("ac/bristol/bragaglia/jhail/parser/penguins.lp");
-	// System.out.println(program.problem());
-	// program.solve();
-	// System.out.println("Model:\t" + program.model());
-	// System.out.println("Delta:\t" + program.delta());
-	// System.out.println("Kappa:\t" + program.kappa());
-	// System.out.println("Guess:");
-	// // i = 1;
-	// // for (Collection<Clause> guess : program.guess())
-	// // System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
-	//
-	// System.out.println("Done.\n\n\n");
-	//
-	// program = new Program(config);
-	// program.solve();
-	// program.load("ac/bristol/bragaglia/jhail/altro.lp");
-	// // program.load("ac/bristol/bragaglia/jhail/parser/penguins.lp");
-	// System.out.println(program.problem());
-	// program.solve();
-	// System.out.println("Model:\t" + program.model());
-	// System.out.println("Delta:\t" + program.delta());
-	// System.out.println("Kappa:\t" + program.kappa());
-	// System.out.println("Guess:");
-	// // i = 1;
-	// // for (Collection<Clause> guess : program.guess())
-	// // System.out.println(String.format(" #%d\t%s", i++, guess.toString()));
-	//
-	// System.out.println("Done.");
-	//
-	// }
-
 	private Config config;
-
-	// private Explanation generalization;
-
-	// private Hypothesis hypothesis;
-
-	// private Kernel kernel;
 
 	private Problem problem;
 
@@ -127,21 +39,10 @@ public class Program {
 		if (null == strategy)
 			throw new IllegalArgumentException("Illegal 'strategy' argument in Program(Config, Strategy): " + strategy);
 		this.config = config;
-		// this.generalization = null;
-		// this.hypothesis = null;
-		// this.kernel = null;
 		this.problem = new Problem();
 		this.strategy = strategy;
 		assert invariant() : "Illegal state in Program(Config, Strategy)";
 	}
-
-	// public Collection<Atom> delta() {
-	// Collection<Atom> result = Collections.emptySet();
-	// if (null != generalization)
-	// result = generalization.delta();
-	// assert invariant() : "Illegal state in Program.delta()";
-	// return result;
-	// }
 
 	public Config getConfig() {
 		assert invariant() : "Illegal state in Program.getConfig()";
@@ -153,15 +54,6 @@ public class Program {
 		return problem;
 	}
 
-	// public Collection<Map.Entry<Set<Clause>, List<Integer>>> guess() {
-	// Collection<Map.Entry<Set<Clause>, List<Integer>>> result =
-	// Collections.emptySet();
-	// if (null != hypothesis)
-	// result = hypothesis.clauses();
-	// assert invariant() : "Illegal state in Program.guess()";
-	// return result;
-	// }
-
 	protected boolean invariant() {
 		return (null != config && null != problem && null != strategy);
 	}
@@ -171,14 +63,6 @@ public class Program {
 		assert invariant() : "Illegal state in Program.isGeneralizable()";
 		return result;
 	}
-
-	// public Collection<Clause> kappa() {
-	// Collection<Clause> result = Collections.emptySet();
-	// if (null != kernel)
-	// result = kernel.kappa();
-	// assert invariant() : "Illegal state in Program.kappa()";
-	// return result;
-	// }
 
 	public void load(File file) {
 		if (null == file)
@@ -201,35 +85,10 @@ public class Program {
 	public void load(InputStream stream) {
 		if (null == stream)
 			throw new IllegalArgumentException("Illegal 'stream' argument in Program.load(InputStream): " + stream);
-		XhailFileParser.parse(problem, stream);
+		XhailFileParser.parse(problem, stream, config.isMute());
 		config.setName("stream");
 		assert invariant() : "Illegal state in Program.load(InputStream)";
 	}
-
-	public void load(String resource) {
-		if (null == resource || (resource = resource.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'resource' argument in Program.load(String): " + resource);
-		this.load(XhailFileParser.open(resource));
-		config.setName("resource");
-		assert invariant() : "Illegal state in Program.load(String)";
-	}
-
-	// public Collection<Atom> model() {
-	// Collection<Atom> result;
-	// if (null != generalization)
-	// if (problem.isDisplayAll())
-	// result = generalization.model();
-	// else {
-	// result = new TreeSet<>();
-	// for (Atom candidate : generalization.model())
-	// if (problem.isDisplayable(candidate))
-	// result.add(candidate);
-	// }
-	// else
-	// result = Collections.emptySet();
-	// assert invariant() : "Illegal state in Program.model()";
-	// return result;
-	// }
 
 	public Problem problem() {
 		assert invariant() : "Illegal state in Program.problem()";
