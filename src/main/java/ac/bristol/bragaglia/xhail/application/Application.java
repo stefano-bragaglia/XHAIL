@@ -28,6 +28,16 @@ import ac.bristol.bragaglia.xhail.predicates.Clause;
  * @author stefano
  */
 public class Application {
+	
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
 
 	/**
 	 * The path to the <code>clasp</code> application.
@@ -142,8 +152,11 @@ public class Application {
 				// long end = System.currentTimeMillis();
 				// cpu = end - cpu;
 				// time = end - time;
+				if (!blind) System.out.print(ANSI_RED);
 				System.out.println(String.format("Answer: %d", i++));
+				if (!blind) System.out.print(ANSI_GREEN);
 				System.out.println("  model (" + answer.count() + " fact/s):");
+				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.model().size() > 0) {
 					System.out.print("   ");
 					for (Atom atom : answer.model())
@@ -152,7 +165,9 @@ public class Application {
 				} else
 					System.out.println("    -");
 
+				if (!blind) System.out.print(ANSI_GREEN);
 				System.out.println("  delta (" + answer.delta().size() + " abducible/s):");
+				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.delta().size() > 0) {
 					System.out.print("   ");
 					for (Atom atom : answer.delta())
@@ -161,20 +176,25 @@ public class Application {
 				} else
 					System.out.println("    -");
 
+				if (!blind) System.out.print(ANSI_GREEN);
 				System.out.println("  kappa (" + answer.kernel().size() + " clause/s):");
+				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.kernel().size() > 0) {
 					for (Clause clause : answer.kernel())
 						System.out.println("    " + clause);
 				} else
 					System.out.println("    -");
 
+				if (!blind) System.out.print(ANSI_GREEN);
 				System.out.println("  guess (" + answer.hypothesis().size() + " clause/s):");
+				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.hypothesis().size() > 0) {
 					for (Clause clause : answer.hypothesis())
 						System.out.println("    " + clause);
 				} else
 					System.out.println("    -");
 
+				if (!blind) System.out.print(ANSI_CYAN);
 				System.out.println("  optimization");
 				if (answer.abdValues().size() > 0) {
 					System.out.print("    abducing:");
@@ -195,6 +215,7 @@ public class Application {
 			}
 
 			time = System.currentTimeMillis() - time;
+			if (!blind) System.out.print(ANSI_YELLOW);
 			System.out.println(String.format("Answers     : %d", answers.size()));
 			System.out.println(String.format("Runtime     : %.3fs", time / 1000.0));
 			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000.0));
@@ -205,13 +226,14 @@ public class Application {
 			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000.0));
 			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000.0));
 			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000.0));
+			if (!blind) System.out.print(ANSI_RESET);
 			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000,
 			// cpu % 1000));
 		} else
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));
 	}
 
-//	private static boolean blind = false;
+	private static boolean blind = false;
 	
 	/**
 	 * Main application.
@@ -228,10 +250,10 @@ public class Application {
 		boolean version = false;
 		for (int i = 0; i < args.length; i++)
 			switch (args[i]) {
-//				case "-b":
-//				case "--blind":
-//					blind = true;
-//					break;
+				case "-b":
+				case "--blind":
+					blind = true;
+					break;
 				case "-c":
 				case "--clasp":
 					clasp = args[++i];
@@ -272,6 +294,7 @@ public class Application {
 					}
 			}
 		if (!errors) {
+			if (!blind) System.out.print(ANSI_WHITE);
 			if (help)
 				printHelp();
 			else if (version)
