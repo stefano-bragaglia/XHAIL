@@ -124,8 +124,10 @@ public class Grounding extends Modifiable {
 		if (name.startsWith(Problem.TAG_ABDUCE)) {
 			String[] parts = name.split("_");
 			name = parts[1];
-			int weight = Integer.parseInt(parts[2]);
-			int priority = Integer.parseInt(parts[3]);
+			for (int i = 2; i <= parts.length - 3; i++)
+				name += "_" + parts[i];
+			int weight = Integer.parseInt(parts[parts.length - 2]);
+			int priority = Integer.parseInt(parts[parts.length - 1]);
 			Set<Abducible> group = delta.get(priority);
 			if (null == group) {
 				group = new TreeSet<>();

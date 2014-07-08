@@ -211,6 +211,8 @@ public class Application {
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));
 	}
 
+//	private static boolean blind = false;
+	
 	/**
 	 * Main application.
 	 * 
@@ -226,6 +228,10 @@ public class Application {
 		boolean version = false;
 		for (int i = 0; i < args.length; i++)
 			switch (args[i]) {
+//				case "-b":
+//				case "--blind":
+//					blind = true;
+//					break;
 				case "-c":
 				case "--clasp":
 					clasp = args[++i];
