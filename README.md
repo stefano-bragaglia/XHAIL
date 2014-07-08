@@ -13,7 +13,6 @@ In order to solve these problems you need to fulfil some requirements.
 They can be divided in *compiling requirements* and *runtime requirements*.
 
 ### Compiling XHAIL
-
 The source files included in this repository are organised on the typical structure of a *Maven* Java project, with separate folders for actual implementation and testing purposes. 
 Both these directories are further divided in two subfolders for Java code and resources.
 
