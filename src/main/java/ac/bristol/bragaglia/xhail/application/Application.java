@@ -328,6 +328,7 @@ public class Application {
 		System.out.println();
 		System.out.println("Options:");
 		System.out.println();
+		System.out.println("  --blind,-b          : Remove colours from the program output");
 		System.out.println("  --clasp,-c <path>   : Use given <path> as path for clasp 3");
 		System.out.println("  --debug,-d          : Leave temporary files in ./temp");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
