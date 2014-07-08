@@ -12,3 +12,14 @@ This repository contains both the source files and some example problems for **X
 In order to solve these problems you need to fulfil some requirements.
 They can be divided in *compiling requirements* and *runtime requirements*.
 
+### Compiling XHAIL
+
+The source files included in this repository are organised on the typical structure of a *Maven* Java project, with separate folders for actual implementation and testing purposes. 
+Both these directories are further divided in two subfolders for Java code and resources.
+
+The whole project was developed in Java using Eclipse as Integrated Development Environment (IDE) with the inclusion of Gradle (an interesting and powerful alternative to Maven) as a compiling assistant.
+The IDE has been also equipped with an Eclipse plugin (an additional framework to help people implement IDEs for specific languages) to exploit ANTLR v4 to define the new XHAIL language and provide parsing functionalities and another one to support Gradle from within the IDE. 
+To compile XHAIL it suffice to have a computer equipped with a recent version of Java and Gradle.
+To edit and modify it, it is suggested to install the whole software cited above.
+
+The procedure to do so
