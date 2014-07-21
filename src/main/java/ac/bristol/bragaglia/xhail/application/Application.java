@@ -177,7 +177,7 @@ public class Application {
 					System.out.println("    -");
 
 				if (!blind) System.out.print(ANSI_GREEN);
-				System.out.println("  kappa (" + answer.kernel().size() + " clause/s):");
+				System.out.println("  kernel (" + answer.kernel().size() + " clause/s):");
 				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.kernel().size() > 0) {
 					for (Clause clause : answer.kernel())
@@ -186,7 +186,7 @@ public class Application {
 					System.out.println("    -");
 
 				if (!blind) System.out.print(ANSI_GREEN);
-				System.out.println("  guess (" + answer.hypothesis().size() + " clause/s):");
+				System.out.println("  hypotheses (" + answer.hypothesis().size() + " clause/s):");
 				if (!blind) System.out.print(ANSI_RESET);
 				if (answer.hypothesis().size() > 0) {
 					for (Clause clause : answer.hypothesis())

@@ -195,43 +195,65 @@ public class Kernel extends Modifiable {
 	}
 
 	private void deriveClauses() {
+		boolean selector = false;
 		clauses = new LinkedHashSet<>();
 		model = grounding.problem().induce();
 		if (dataset.size() > 0) {
-			Map<Integer, StringJoiner> levels = new TreeMap<>();
-			StringJoiner minimee = new StringJoiner(", ");
-			int cc = 0;
-			for (Clause clause : dataset) {
-				cc += 1;
-				Atom head = clause.head();
-				Clause simple = new Clause(head.get(Atom.ID_ATOM));
-				deriveLevel(cc, 0, new Literal(false, head), levels);
-
-				// TODO possible errors with more complex problems?
-				String heads = join(head, Atom.ID_TYPES);
-				minimee.add(String.format("use_clause_literal(%d, 0) =%s @%s", cc, head.get(Atom.ID_WEIGHT), head.get(Atom.ID_PRIORITY)));
-
-				deriveLiterals(cc, clause, simple, levels, heads, minimee);
-
-				for (Atom type : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
-					Literal literal = new Literal(false, type);
-					if (!simple.contains(literal))
-						simple.append(literal);
-				}
-				clauses.add(simple);
-
-				if (levels.size() > 1)
-					for (int lvl : levels.keySet()) {
-						model.addClause(String.format("%s(%d, %d) :- %s.", LEVEL, cc, lvl, levels.get(lvl).toString()));
-						// if (levels.containsKey(lvl + 1))
-						model.addConstraint(String.format(":- not %s(%d, %d), %s(%d, %d).", LEVEL, cc, lvl, LEVEL, cc, lvl + 1));
+			if (selector) {
+				model.addHide("#hide.");
+				model.addShow(String.format("#show %s/2.", UCL));
+				model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
+				int cc = 0;
+				for (Clause clause : dataset) {
+					cc += 1;
+					model.addClause(String.format("clause(%d).", cc));
+					model.addClause(String.format("{ %s(V1, V2) } :- clause(V1), literal(V1, V2).", UCL));
+					int ll = 0;
+					for (Literal literal : clause) { 
+						ll += 1;
+						model.addClause(String.format("literal(%d, %d).", cc, ll));
+						
 					}
-				model.addFact(String.format("%s(%d).", CLAUSE, cc));
+					
+				}
+				
+				
+			} else {
+				Map<Integer, StringJoiner> levels = new TreeMap<>();
+				StringJoiner minimee = new StringJoiner(", ");
+				int cc = 0;
+				for (Clause clause : dataset) {
+					cc += 1;
+					Atom head = clause.head();
+					Clause simple = new Clause(head.get(Atom.ID_ATOM));
+					deriveLevel(cc, 0, new Literal(false, head), levels);
+
+					// TODO possible errors with more complex problems?
+					String heads = join(head, Atom.ID_TYPES);
+					minimee.add(String.format("use_clause_literal(%d, 0) =%s @%s", cc, head.get(Atom.ID_WEIGHT), head.get(Atom.ID_PRIORITY)));
+
+					deriveLiterals(cc, clause, simple, levels, heads, minimee);
+
+					for (Atom type : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
+						Literal literal = new Literal(false, type);
+						if (!simple.contains(literal))
+							simple.append(literal);
+					}
+					clauses.add(simple);
+
+					if (levels.size() > 1)
+						for (int lvl : levels.keySet()) {
+							model.addClause(String.format("%s(%d, %d) :- %s.", LEVEL, cc, lvl, levels.get(lvl).toString()));
+							// if (levels.containsKey(lvl + 1))
+							model.addConstraint(String.format(":- not %s(%d, %d), %s(%d, %d).", LEVEL, cc, lvl, LEVEL, cc, lvl + 1));
+						}
+					model.addFact(String.format("%s(%d).", CLAUSE, cc));
+				}
+				model.addHide("#hide.");
+				model.addShow(String.format("#show %s/2.", UCL));
+				model.addMinimize(String.format("#minimize[ %s ].", minimee.toString()));
+				model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
 			}
-			model.addHide("#hide.");
-			model.addShow(String.format("#show %s/2.", UCL));
-			model.addMinimize(String.format("#minimize[ %s ].", minimee.toString()));
-			model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
 
 		}
 	}

@@ -35,5 +35,5 @@ else
 		echo ""
 		echo "" >> $name
 	done	
-	echo "File '$name' with these results succesfully created!"
+	echo "File '$name' with these results successfully created!"
 fi
