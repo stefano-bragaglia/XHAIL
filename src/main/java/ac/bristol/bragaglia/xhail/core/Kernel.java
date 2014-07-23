@@ -27,13 +27,35 @@ public class Kernel extends Modifiable {
 
 	private static final String CLAUSE = "clause";
 
-	private static final String LEVEL = "level";
+	private static final String LEVEL = "clause_level";
 
 	private static final String LITERAL = "literal";
 
 	private static final String TCL = "try_clause_literal";
 
 	public static final String UCL = "use_clause_literal";
+
+	private static String combine(Atom atom, int id) {
+		if (null == atom)
+			throw new IllegalArgumentException("Illegal 'atom' argument in Kernel.combine(Atom, int): " + atom);
+		if (id != Atom.ID_VARS && id != Atom.ID_TYPES)
+			throw new IllegalArgumentException("Illegal 'id' argument in Kernel.combine(Atom, int): " + id);
+		String result = "";
+		for (Atom term : atom.get(Atom.ID_ACCESSORS).get(id))
+			result += ", " + term.toString();
+		return result;
+	}
+
+	private static int convert(String value) {
+		int result = -1;
+		try {
+			result = Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			System.err.println("I received '" + value + "' as a number, but I can't deal with it!");
+			System.exit(-1);
+		}
+		return result;
+	}
 
 	private static Atom generalize(Atom atom, Atom schema, Map<Atom, Builder> table, Set<Atom> vars, Set<Atom> types) {
 		if (null == atom)
@@ -138,17 +160,6 @@ public class Kernel extends Modifiable {
 		return new Literal(literal.negated(), generalize(literal.atom(), table));
 	}
 
-	private static String join(Atom atom, int index) {
-		if (null == atom)
-			throw new IllegalArgumentException("Illegal 'atom' argument in Kernel.join(Atom, int): " + atom);
-		if (index != Atom.ID_VARS && index != Atom.ID_TYPES)
-			throw new IllegalArgumentException("Illegal 'index' argument in Kernel.join(Atom, int): " + index);
-		StringJoiner joiner = new StringJoiner(", ");
-		for (Atom term : atom.get(Atom.ID_ACCESSORS).get(index))
-			joiner.add(term.toString());
-		return joiner.toString();
-	}
-
 	private Set<Clause> clauses;
 
 	private Set<Clause> dataset;
@@ -195,112 +206,68 @@ public class Kernel extends Modifiable {
 	}
 
 	private void deriveClauses() {
-		boolean selector = false;
 		clauses = new LinkedHashSet<>();
 		model = grounding.problem().induce();
 		if (dataset.size() > 0) {
-			if (selector) {
-				model.addHide("#hide.");
-				model.addShow(String.format("#show %s/2.", UCL));
-				model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
-				int cc = 0;
-				for (Clause clause : dataset) {
-					cc += 1;
-					model.addClause(String.format("clause(%d).", cc));
-					model.addClause(String.format("{ %s(V1, V2) } :- clause(V1), literal(V1, V2).", UCL));
-					int ll = 0;
-					for (Literal literal : clause) { 
-						ll += 1;
-						model.addClause(String.format("literal(%d, %d).", cc, ll));
-						
-					}
-					
+			String min = "";
+			int cc = 0;
+			for (Clause clause : dataset) {
+				cc += 1;
+				String choices = "";
+
+				Atom head = clause.head();
+				Clause simple = new Clause(head.get(Atom.ID_ATOM));
+				for (Atom term : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
+					Literal type = new Literal(false, term);
+					if (!simple.contains(type))
+						simple.append(type);
 				}
-				
-				
-			} else {
-				Map<Integer, StringJoiner> levels = new TreeMap<>();
-				StringJoiner minimee = new StringJoiner(", ");
-				int cc = 0;
-				for (Clause clause : dataset) {
-					cc += 1;
-					Atom head = clause.head();
-					Clause simple = new Clause(head.get(Atom.ID_ATOM));
-					deriveLevel(cc, 0, new Literal(false, head), levels);
 
-					// TODO possible errors with more complex problems?
-					String heads = join(head, Atom.ID_TYPES);
-					minimee.add(String.format("use_clause_literal(%d, 0) =%s @%s", cc, head.get(Atom.ID_WEIGHT), head.get(Atom.ID_PRIORITY)));
-
-					deriveLiterals(cc, clause, simple, levels, heads, minimee);
-
-					for (Atom type : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
-						Literal literal = new Literal(false, type);
-						if (!simple.contains(literal))
-							simple.append(literal);
+				int ll = 0;
+				for (Literal literal : clause) {
+					ll += 1;
+					int lvl = convert(literal.get(Atom.ID_LEVEL).toString());
+					Literal desired = new Literal(literal.negated(), literal.get(Atom.ID_ATOM));
+					if (!simple.contains(desired))
+						simple.append(desired);
+					for (Atom term : literal.atom().get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
+						Literal type = new Literal(false, term);
+						if (!simple.contains(type))
+							simple.append(type);
 					}
-					clauses.add(simple);
 
-					if (levels.size() > 1)
-						for (int lvl : levels.keySet()) {
-							model.addClause(String.format("%s(%d, %d) :- %s.", LEVEL, cc, lvl, levels.get(lvl).toString()));
-							// if (levels.containsKey(lvl + 1))
-							model.addConstraint(String.format(":- not %s(%d, %d), %s(%d, %d).", LEVEL, cc, lvl, LEVEL, cc, lvl + 1));
-						}
-					model.addFact(String.format("%s(%d).", CLAUSE, cc));
+					String vars = combine(literal.atom(), Atom.ID_VARS);
+					String types = combine(literal.atom(), Atom.ID_TYPES);
+					String uses = String.format("%s(%d, %d)", UCL, cc, ll);
+					String tries = String.format("%s(%d, %d%s)", TCL, cc, ll, vars);
+					String level = String.format("%s(%d, %d)", LEVEL, cc, lvl);
+					min += (min.isEmpty() ? "" : ", ") + String.format("%s =%s @%s", uses, literal.get(Atom.ID_WEIGHT), literal.get(Atom.ID_PRIORITY));
+					choices += ", " + tries;
+
+					model.addClause(String.format("%s :- not %s%s.", tries, uses, types));
+					model.addClause(String.format("%s :- %s%s, %s.", tries, uses, types, desired.toString()));
+					model.addClause(String.format("%s :- %s.", level, uses));
+					if (lvl > 0)
+						model.addConstraint(String.format(":- not clause_level(%d, %d), %s.", cc, lvl - 1, level));
+					model.addFact(String.format("%s(%d, %d).", LITERAL, cc, ll));
 				}
-				model.addHide("#hide.");
-				model.addShow(String.format("#show %s/2.", UCL));
-				model.addMinimize(String.format("#minimize[ %s ].", minimee.toString()));
-				model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
+				String types = combine(head, Atom.ID_TYPES);
+				String uses = String.format("%s(%d, 0)", UCL, cc);
+				min += (min.isEmpty() ? "" : ", ") + String.format("%s =%s @%s", uses, head.get(Atom.ID_WEIGHT), head.get(Atom.ID_PRIORITY));
+
+				model.addClause(String.format("{ %s(V1, V2) } :- %s(V1), %s(V1, V2).", UCL, CLAUSE, LITERAL));
+				model.addClause(String.format("%s(%d, 0) :- %s(%d, 0).", LEVEL, cc, UCL, cc));
+				model.addClause(String.format("%s :- %s%s%s.", simple.head().toString(), uses, choices, types));
+				model.addFact(String.format("%s(%d).", CLAUSE, cc));
+
+				clauses.add(simple);
 			}
-
+			model.addHide("#hide.");
+			model.addShow(String.format("#show %s/2.", UCL));
+			model.addClause(String.format("{ %s(V1, 0) } :- clause(V1).", UCL));
+			if (!min.isEmpty())
+				model.addClause(String.format("#minimize[ %s ].", min));
 		}
-	}
-
-	private void deriveLevel(int cc, int ll, Literal literal, Map<Integer, StringJoiner> levels) {
-		int level = Integer.parseInt(literal.get(Atom.ID_LEVEL).toString());
-		StringJoiner levelee = levels.get(level);
-		if (null == levelee) {
-			levelee = new StringJoiner(", ");
-			levels.put(level, levelee);
-		}
-		levelee.add(String.format("%s(%d, %d)", UCL, cc, ll));
-	}
-
-	private void deriveLiterals(int cc, Clause clause, Clause simple, Map<Integer, StringJoiner> levels, String heads, StringJoiner minimee) {
-		if (clause.count() > 0) {
-			int ll = 0;
-			Set<Literal> suffix = new TreeSet<>();
-			StringJoiner attemptee = new StringJoiner(", ");
-
-			for (Literal literal : clause) {
-				ll += 1;
-				Literal desired = new Literal(literal.negated(), literal.get(Atom.ID_ATOM));
-				deriveLevel(cc, ll, literal, levels);
-
-				String types = join(literal.atom(), Atom.ID_TYPES);
-				String vars = join(literal.atom(), Atom.ID_VARS);
-				String tries = String.format("%s(%d, %d, %s)", TCL, cc, ll, vars);
-				attemptee.add(tries);
-				minimee.add(String.format("%s(%d, %d) =%s @%s", UCL, cc, ll, literal.get(Atom.ID_WEIGHT), literal.get(Atom.ID_PRIORITY)));
-
-				if (!simple.contains(desired))
-					simple.append(desired);
-				for (Atom type : literal.atom().get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES))
-					suffix.add(new Literal(false, type));
-
-				model.addClause(String.format("{ %s(V1, V2) } :- %s(V1, V2), %s(V1).", UCL, LITERAL, CLAUSE));
-				model.addClause(String.format("%s :- %s(%d, %d), %s, %s.", tries, UCL, cc, ll, types, desired.toString()));
-				model.addClause(String.format("%s :- not %s(%d, %d), %s.", tries, UCL, cc, ll, types));
-				model.addFact(String.format("%s(%d, %d).", LITERAL, cc, ll));
-			}
-			for (Literal literal : suffix)
-				if (!simple.contains(literal))
-					simple.append(literal);
-			model.addClause(String.format("%s :- %s(1, 0), %s, %s.", simple.head().toString(), UCL, attemptee.toString(), heads));
-		} else
-			model.addClause(String.format("%s :- %s(1, 0), %s.", simple.head().toString(), UCL, heads));
 	}
 
 	/*
