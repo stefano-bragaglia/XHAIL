@@ -435,6 +435,11 @@ public class Problem extends Model {
 		return result;
 	}
 
+	protected Map<Literal, ExampleData> evidendes() {
+		assert invariant() : "Illegal state in Problem.evidences()";
+		return examples;
+	}
+
 	/**
 	 * Recursively parses the given non-<code>null</code> atom to find all its
 	 * type definitions. A type definition is any term preceded by a

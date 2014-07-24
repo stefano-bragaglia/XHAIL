@@ -1,9 +1,10 @@
-%%%%%%%%%%%%%%%%%%%%%%%% AUTHOR:  Oliver Ray 
+%%%%%%%%%%%%%%%%%%%%%%%
+% AUTHOR:  Oliver Ray 
 % DATE:	   22/04/2008
 % SYSTEM:  XHAIL ver 0.33
 % SUMMARY: EC Telephone Exchange System
 
-#display.
+#display happens/2.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%

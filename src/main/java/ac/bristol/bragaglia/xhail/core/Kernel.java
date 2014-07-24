@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringJoiner;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import ac.bristol.bragaglia.xhail.core.Problem.ModeBodyData;
@@ -217,24 +215,18 @@ public class Kernel extends Modifiable {
 
 				Atom head = clause.head();
 				Clause simple = new Clause(head.get(Atom.ID_ATOM));
-				for (Atom term : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
-					Literal type = new Literal(false, term);
-					if (!simple.contains(type))
-						simple.append(type);
-				}
+				Set<Literal> literals = new TreeSet<>();
+				for (Atom term : head.get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES))
+					literals.add(new Literal(false, term));
 
 				int ll = 0;
 				for (Literal literal : clause) {
 					ll += 1;
 					int lvl = convert(literal.get(Atom.ID_LEVEL).toString());
 					Literal desired = new Literal(literal.negated(), literal.get(Atom.ID_ATOM));
-					if (!simple.contains(desired))
-						simple.append(desired);
-					for (Atom term : literal.atom().get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES)) {
-						Literal type = new Literal(false, term);
-						if (!simple.contains(type))
-							simple.append(type);
-					}
+					literals.add(desired);
+					for (Atom term : literal.atom().get(Atom.ID_ACCESSORS).get(Atom.ID_TYPES))
+						literals.add(new Literal(false, term));
 
 					String vars = combine(literal.atom(), Atom.ID_VARS);
 					String types = combine(literal.atom(), Atom.ID_TYPES);
@@ -260,6 +252,8 @@ public class Kernel extends Modifiable {
 				model.addClause(String.format("%s :- %s%s%s.", simple.head().toString(), uses, choices, types));
 				model.addFact(String.format("%s(%d).", CLAUSE, cc));
 
+				for (Literal literal : literals)
+					simple.append(literal);
 				clauses.add(simple);
 			}
 			model.addHide("#hide.");
@@ -270,6 +264,18 @@ public class Kernel extends Modifiable {
 		}
 	}
 
+//	private static void findVars(Atom atom, Set<String> store) {
+//		if (null == atom)
+//			throw new IllegalArgumentException("Illegal 'atom' argument in Kernel.findVars(Atom, Set<String>): " + atom);
+//		if (null == store)
+//			throw new IllegalArgumentException("Illegal 'store' argument in Kernel.findVars(Atom, Set<String>): " + store);
+//		if (atom.isVariable())
+//			store.add(atom.name());
+//		else
+//			for (Atom term : atom)
+//				findVars(term, store);
+//	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

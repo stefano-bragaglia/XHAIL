@@ -21,6 +21,7 @@ import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.core.Answer;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
+import ac.bristol.bragaglia.xhail.predicates.Literal;
 
 /**
  * The main command-line application.
@@ -28,7 +29,7 @@ import ac.bristol.bragaglia.xhail.predicates.Clause;
  * @author stefano
  */
 public class Application {
-	
+
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";
@@ -152,11 +153,14 @@ public class Application {
 				// long end = System.currentTimeMillis();
 				// cpu = end - cpu;
 				// time = end - time;
-				if (!blind) System.out.print(ANSI_RED);
+				if (!blind)
+					System.out.print(ANSI_RED);
 				System.out.println(String.format("Answer: %d", i++));
-				if (!blind) System.out.print(ANSI_GREEN);
+				if (!blind)
+					System.out.print(ANSI_GREEN);
 				System.out.println("  model (" + answer.count() + " fact/s):");
-				if (!blind) System.out.print(ANSI_RESET);
+				if (!blind)
+					System.out.print(ANSI_RESET);
 				if (answer.model().size() > 0) {
 					System.out.print("   ");
 					for (Atom atom : answer.model())
@@ -165,9 +169,11 @@ public class Application {
 				} else
 					System.out.println("    -");
 
-				if (!blind) System.out.print(ANSI_GREEN);
+				if (!blind)
+					System.out.print(ANSI_GREEN);
 				System.out.println("  delta (" + answer.delta().size() + " abducible/s):");
-				if (!blind) System.out.print(ANSI_RESET);
+				if (!blind)
+					System.out.print(ANSI_RESET);
 				if (answer.delta().size() > 0) {
 					System.out.print("   ");
 					for (Atom atom : answer.delta())
@@ -176,25 +182,43 @@ public class Application {
 				} else
 					System.out.println("    -");
 
-				if (!blind) System.out.print(ANSI_GREEN);
+				if (!blind)
+					System.out.print(ANSI_GREEN);
 				System.out.println("  kernel (" + answer.kernel().size() + " clause/s):");
-				if (!blind) System.out.print(ANSI_RESET);
+				if (!blind)
+					System.out.print(ANSI_RESET);
 				if (answer.kernel().size() > 0) {
 					for (Clause clause : answer.kernel())
 						System.out.println("    " + clause);
 				} else
 					System.out.println("    -");
 
-				if (!blind) System.out.print(ANSI_GREEN);
+				if (!blind)
+					System.out.print(ANSI_GREEN);
 				System.out.println("  hypotheses (" + answer.hypothesis().size() + " clause/s):");
-				if (!blind) System.out.print(ANSI_RESET);
+				if (!blind)
+					System.out.print(ANSI_RESET);
 				if (answer.hypothesis().size() > 0) {
 					for (Clause clause : answer.hypothesis())
 						System.out.println("    " + clause);
 				} else
 					System.out.println("    -");
 
-				if (!blind) System.out.print(ANSI_CYAN);
+				if (!blind)
+					System.out.print(ANSI_GREEN);
+				System.out.println("  coverage (" + answer.cover().size() + " example/s out of " + answer.evidences() + "):");
+				if (!blind)
+					System.out.print(ANSI_RESET);
+				if (answer.cover().size() > 0) {
+					System.out.print("   ");
+					for (Literal literal : answer.cover())
+						System.out.print(" " + literal);
+					System.out.println();
+				} else
+					System.out.println("    -");
+
+				if (!blind)
+					System.out.print(ANSI_CYAN);
 				System.out.println("  optimization");
 				if (answer.abdValues().size() > 0) {
 					System.out.print("    abducing:");
@@ -215,7 +239,8 @@ public class Application {
 			}
 
 			time = System.currentTimeMillis() - time;
-			if (!blind) System.out.print(ANSI_YELLOW);
+			if (!blind)
+				System.out.print(ANSI_YELLOW);
 			System.out.println(String.format("Answers     : %d", answers.size()));
 			System.out.println(String.format("Runtime     : %.3fs", time / 1000.0));
 			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000.0));
@@ -226,7 +251,8 @@ public class Application {
 			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000.0));
 			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000.0));
 			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000.0));
-			if (!blind) System.out.print(ANSI_RESET);
+			if (!blind)
+				System.out.print(ANSI_RESET);
 			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000,
 			// cpu % 1000));
 		} else
@@ -234,7 +260,7 @@ public class Application {
 	}
 
 	private static boolean blind = false;
-	
+
 	/**
 	 * Main application.
 	 * 
@@ -294,7 +320,8 @@ public class Application {
 					}
 			}
 		if (!errors) {
-			if (!blind) System.out.print(ANSI_WHITE);
+			if (!blind)
+				System.out.print(ANSI_WHITE);
 			if (help)
 				printHelp();
 			else if (version)

@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import ac.bristol.bragaglia.xhail.predicates.Abducible;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
+import ac.bristol.bragaglia.xhail.predicates.Literal;
 
 /**
  * @author stefano
@@ -79,6 +80,12 @@ public class Answer {
 		return result;
 	}
 
+	public Collection<Literal> cover() {
+		Collection<Literal> result = grounding.cover();
+		assert invariant() : "Illegal state in Answer.cover()";
+		return result;
+	}
+
 	public Collection<Abducible> delta() {
 		Collection<Abducible> result = grounding.delta();
 		assert invariant() : "Illegal state in Answer.delta()";
@@ -120,6 +127,12 @@ public class Answer {
 		} else if (!problem.equals(other.problem))
 			return false;
 		return true;
+	}
+
+	public int evidences() {
+		int result = problem.evidendes().size();
+		assert invariant() : "Illegal state in Answer.evidences()";
+		return result;
 	}
 
 	/*
@@ -187,7 +200,8 @@ public class Answer {
 	 */
 	@Override
 	public String toString() {
-		return "Answer [\n  problem=" + problem + ",\n  grounding=" + grounding + ",\n  kernel=" + kernel + ",\n  hypothesis=" + hypothesis + "\n]";
+		return "Answer [\n  problem=" + problem + ",\n  grounding=" + grounding + ",\n  kernel=" + kernel + ",\n  hypothesis=" + hypothesis + ",\n coverage="
+				+ cover() + "\n]";
 	}
 
 }

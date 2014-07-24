@@ -4,7 +4,7 @@
 % SUMMARY: EC Telephone Exchange System
 
 
-#display.
+#display initiates/3.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% TYPE DEFINITIONS %%%

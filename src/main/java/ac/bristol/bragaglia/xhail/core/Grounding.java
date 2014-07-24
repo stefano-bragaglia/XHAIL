@@ -17,6 +17,7 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import ac.bristol.bragaglia.xhail.core.Problem.ExampleData;
 import ac.bristol.bragaglia.xhail.core.Problem.ModeBodyData;
 import ac.bristol.bragaglia.xhail.predicates.Abducible;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
@@ -361,6 +362,21 @@ public class Grounding extends Modifiable {
 	public Collection<Integer> values() {
 		assert invariant() : "Illegal state in Grounding.values()";
 		return values;
+	}
+
+	private Map<Literal, ExampleData> cover;
+
+	public Collection<Literal> cover() {
+		if (null == cover || isModified()) {
+			cover = new TreeMap<>();
+			Map<Literal, ExampleData> master = problem.evidendes();
+			for (Literal literal : master.keySet())
+				if (literal.negated() != model.contains(literal.atom()))
+					cover.put(literal, master.get(literal));
+		}
+		Collection<Literal> result = cover.keySet();
+		assert invariant() : "Illegal state in Grounding.cover()";
+		return result;
 	}
 
 }

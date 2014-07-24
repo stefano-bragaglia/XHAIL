@@ -281,7 +281,7 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public boolean isVariable() {
 		return terms.length == 0 && name.length() > 0 && name.charAt(0) >= 'A' && name.charAt(0) <= 'Z';
 	}
-
+	
 	@Override
 	public Iterator<Atom> iterator() {
 		return new Iterator<Atom>() {
