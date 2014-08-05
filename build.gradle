@@ -27,7 +27,6 @@ jar {
     destinationDir = project.file('/usr/local/' + rootProject.name + '-' + version + '/')
 }
 
-
 repositories {
 	mavenLocal()
     mavenCentral()

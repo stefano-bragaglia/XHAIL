@@ -21,7 +21,7 @@ public class Clock {
 
 	public long getTime() {
 		if (active)
-			return time + System.currentTimeMillis() - elapsed;
+			return time + System.nanoTime() - elapsed;
 		else
 			return time;
 	}
@@ -39,13 +39,13 @@ public class Clock {
 	public void start() {
 		if (!active) {
 			active = true;
-			elapsed = System.currentTimeMillis();
+			elapsed = System.nanoTime();
 		}
 	}
 
 	public void stop() {
 		if (active) {
-			time += System.currentTimeMillis() - elapsed;
+			time += System.nanoTime() - elapsed;
 			active = false;
 		}
 	}

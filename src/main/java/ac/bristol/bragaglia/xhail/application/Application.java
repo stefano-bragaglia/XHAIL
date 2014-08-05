@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.core.Answer;
@@ -131,8 +134,21 @@ public class Application {
 	/**
 	 * Executes the application's main task.
 	 */
-	private static void execute() {
-		long time = System.currentTimeMillis();
+	private static void execute(long seconds) {
+		final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		if (seconds > 0) {
+			/* ScheduledFuture<?> handler = */scheduler.schedule(new Runnable() {
+				@Override
+				public void run() {
+					// if (null != handler)
+					// handler.cancel(false);
+					scheduler.shutdownNow();
+					System.err.println(String.format("*** Info  (%s): solving took too long, interrupted after %d second/s", Version.get().getTitle(), seconds));
+					System.exit(-1);
+				}
+			}, seconds, TimeUnit.SECONDS);
+		}
+		long time = System.nanoTime();
 		Config config = new Config(gringo, clasp, debug, mute);
 		Program program = new Program(config);
 		if (0 == files.size()) {
@@ -144,13 +160,13 @@ public class Application {
 				program.load(file);
 			}
 		System.out.println("Solving...");
-		// long cpu = System.currentTimeMillis();
+		// long cpu = System.nanoTime();
 		Collection<Answer> answers = program.solve();
 		if (null != answers) {
 			System.out.println();
 			int i = 1;
 			for (Answer answer : answers) {
-				// long end = System.currentTimeMillis();
+				// long end = System.nanoTime();
 				// cpu = end - cpu;
 				// time = end - time;
 				if (!blind)
@@ -238,25 +254,27 @@ public class Application {
 				System.out.println();
 			}
 
-			time = System.currentTimeMillis() - time;
+			time = System.nanoTime() - time;
 			if (!blind)
 				System.out.print(ANSI_YELLOW);
 			System.out.println(String.format("Answers     : %d", answers.size()));
-			System.out.println(String.format("Runtime     : %.3fs", time / 1000.0));
-			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000.0));
-			System.out.println(String.format("  abducing  : %.3fs", config.getAbducing().getTime() / 1000.0));
-			System.out.println(String.format("   a.gringo : %.3fs", config.getAbducingGringo().getTime() / 1000.0));
-			System.out.println(String.format("   a.clasp  : %.3fs", config.getAbducingClasp().getTime() / 1000.0));
-			System.out.println(String.format("  deducing  : %.3fs", config.getDeducing().getTime() / 1000.0));
-			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000.0));
-			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000.0));
-			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000.0));
+			System.out.println(String.format("Runtime     : %.3fs", time / 1000000000.0));
+			System.out.println(String.format("  parsing   : %.3fs", config.getParsing().getTime() / 1000000000.0));
+			System.out.println(String.format("  abducing  : %.3fs", config.getAbducing().getTime() / 1000000000.0));
+			System.out.println(String.format("   a.gringo : %.3fs", config.getAbducingGringo().getTime() / 1000000000.0));
+			System.out.println(String.format("   a.clasp  : %.3fs", config.getAbducingClasp().getTime() / 1000000000.0));
+			System.out.println(String.format("  deducing  : %.3fs", config.getDeducing().getTime() / 1000000000.0));
+			System.out.println(String.format("  inducing  : %.3fs", config.getInducing().getTime() / 1000000000.0));
+			System.out.println(String.format("   i.gringo : %.3fs", config.getInducingGringo().getTime() / 1000000000.0));
+			System.out.println(String.format("   i.clasp  : %.3fs", config.getInducingClasp().getTime() / 1000000000.0));
 			if (!blind)
 				System.out.print(ANSI_RESET);
-			// System.out.println(String.format("CPU Time : %d.%ds", cpu / 1000,
-			// cpu % 1000));
+			// System.out.println(String.format("CPU Time : %d.%ds", cpu /
+			// 1000000000,
+			// cpu % 1000000000));
 		} else
 			System.err.println(String.format("*** ERROR (%s): Unexpected error while trying to solve current program", Version.get().getTitle()));
+		scheduler.shutdownNow();
 	}
 
 	private static boolean blind = false;
@@ -274,6 +292,7 @@ public class Application {
 		boolean help = false;
 		boolean search = false;
 		boolean version = false;
+		long seconds = -1;
 		for (int i = 0; i < args.length; i++)
 			switch (args[i]) {
 				case "-b":
@@ -295,6 +314,16 @@ public class Application {
 				case "-h":
 				case "--help":
 					help = true;
+					break;
+				case "-k":
+				case "--kill":
+					try {
+						seconds = Long.parseUnsignedLong(args[++i]);
+					} catch (NumberFormatException e) {
+						System.err.println(String.format("*** ERROR (%s): '%s' is not a valid amount of seconds", Version.get().getTitle(), args[i]));
+						System.err.println(String.format("*** Info  (%s): Try '-h' or '--help' for usage information", Version.get().getTitle()));
+						errors = true;
+					}
 					break;
 				case "-m":
 				case "--mute":
@@ -340,7 +369,7 @@ public class Application {
 								.getTitle()));
 					System.err.println(String.format("*** Info  (%s): Try '-h' or '--help' for usage information", Version.get().getTitle()));
 				} else
-					execute();
+					execute(seconds);
 			}
 		}
 	}
@@ -360,6 +389,7 @@ public class Application {
 		System.out.println("  --debug,-d          : Leave temporary files in ./temp");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
 		System.out.println("  --help,-h           : Print this help and exit");
+		System.out.println("  --kill,-k <num>     : Stop the program after <num> seconds");
 		System.out.println("  --mute,-m           : Suppress warning messages");
 		System.out.println("  --search,-s         : Search for clasp 3 and gringo 3");
 		System.out.println("  --version,-v        : Print version information and exit");
@@ -471,8 +501,8 @@ public class Application {
 
 		System.out.println(Version.get().toString());
 		System.out.println();
-		System.out.println("Copyright (c) Oliver Ray");
 		System.out.println("Copyright (c) Stefano Bragaglia");
+		System.out.println("Copyright (c) Oliver Ray");
 		System.out.println();
 		System.out.println("GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>");
 		System.out.println(String.format("'%s' is free software: you are free to change and redistribute it.", Version.get().getTitle()));

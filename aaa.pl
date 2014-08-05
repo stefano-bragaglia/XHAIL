@@ -14,7 +14,7 @@ reaction(1, retractable, "I00074", 1, [reactant(medium, 1, "C00074")], [reactant
 reaction(2, retractable, "I00078", 1, [reactant(medium, 1, "C00078")], [reactant(cytosol, 1, "C00078")]).
 reaction(3, retractable, "I00079", 1, [reactant(medium, 1, "C00079")], [reactant(cytosol, 1, "C00079")]).
 reaction(4, retractable, "I00082", 1, [reactant(medium, 1, "C00082")], [reactant(cytosol, 1, "C00082")]).
-reaction(5, retractable, "I00108", 1," [reactant(medium, 1, "C00108")], [reactant(cytosol, 1, "C00108")]). %
+reaction(5, retractable, "I00108", 1, [reactant(medium, 1, "C00108")], [reactant(cytosol, 1, "C00108")]). %
 reaction(6, retractable, "I00166", 2, [reactant(medium, 1, "C00166")], [reactant(cytosol, 1, "C00166")]).
 reaction(7, retractable, "I00463", 1, [reactant(medium, 1, "C00463")], [reactant(cytosol, 1, "C00463")]).
 reaction(8, retractable, "I00493", 1, [reactant(medium, 1, "C00493")], [reactant(cytosol, 1, "C00493")]).
@@ -79,7 +79,7 @@ reaction(882, assertable, "E", 1, [reactant(cytosol, 1, "C00001"), reactant(cyto
 %=====================================================================
 % enzyme(
 %  1(integer): Unique enzyme-complex identifier, 
-%  2(modifiable|certian): Whether enzyme-complex is completely known or not
+%  2(modifiable|certain): Whether enzyme-complex is completely known or not
 %  3(string): Label (usually EC number, if available)
 %  4(list): known ORFs in the enzyme-complex
 %  5(list): known reactions catalysed by the enzyme-complex
