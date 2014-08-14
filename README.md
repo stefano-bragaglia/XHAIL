@@ -89,3 +89,22 @@ Since **XHAIL** internally uses *ANTLR 4* to parse its language and relies on *G
 
 
 ### Running XHAIL
+
+    xhail version 0.5.1
+    
+    Usage:     java -jar xhail.jar  [options]  [files]
+    
+    Options:
+    
+      --blind,-b          : Remove colours from the program output
+      --clasp,-c <path>   : Use given <path> as path for clasp 3
+      --debug,-d          : Leave temporary files in ./temp
+      --gringo,-g <path>  : Use given <path> as path for gringo 3
+      --help,-h           : Print this help and exit
+      --kill,-k <num>     : Stop the program after <num> seconds
+      --mute,-m           : Suppress warning messages
+      --search,-s         : Search for clasp 3 and gringo 3
+      --version,-v        : Print version information and exit
+    
+    Example:   java -jar xhail.jar  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  example.pl
+
