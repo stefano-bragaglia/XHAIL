@@ -5,7 +5,7 @@ XHAIL
 
 The system takes a background theory *B* and a set of examples *E* as input to return a set of hypotheses *H* that entail *E* with respect to *B* as output. The hypothesis space is constrained by a set of user-defined mode declarations and is filtered by a compression heuristic that prefers hypotheses with fewer literals.
 
-![**XHAIL** output](https://github.com/stefano-bragaglia/XHAIL/blob/master/output.png "Title")
+![**XHAIL** output](https://github.com/stefano-bragaglia/XHAIL/blob/master/output.png "**XHAIL**")
 
 Requirements
 ------------
