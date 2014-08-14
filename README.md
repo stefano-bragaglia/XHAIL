@@ -22,7 +22,7 @@ Many operative systems already have a *JVM* installed. You can check if your mac
     Java(TM) SE Runtime Environment (build 1.8.0_11-b12)
     Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)
 
-If no *Java* environment is installed or the one available is of the wrong type or version, you need to install a new one. The *JVM* appropriate for your machine can be downloaded from the [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) site. Follow the instructions that you can find there to complete the installation. Even if it is not strictly needed to run the application, it is highly suggested that you set some environment variables for *Java*. If you need instructions, you can find several guides online appropriate for your own operative system. 
+If no *Java* environment is installed or the one available is of the wrong type or version, you need to install a new one. Multiple *JVM*s can coexist on the same machine. The *JVM* appropriate for your machine can be downloaded from the [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) site. Follow the instructions that you can find there to complete the installation. Even if it is not strictly needed to run the application, it is highly suggested that you set some environment variables for *Java*. If you need instructions, you can find several guides online appropriate for your own operative system. 
 
 ### Obtaining XHAIL
 
