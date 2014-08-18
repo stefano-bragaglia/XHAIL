@@ -998,6 +998,19 @@ public class XhailBaseListener implements XhailListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGroundDifferent(@NotNull XhailParser.GroundDifferentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGroundDifferent(@NotNull XhailParser.GroundDifferentContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGroundGreater(@NotNull XhailParser.GroundGreaterContext ctx) { }
 	/**
 	 * {@inheritDoc}

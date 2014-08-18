@@ -54,6 +54,8 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 
 	public static final String COMP_NE = "#ne";
 
+	public static final String COMP_DIFF = "#diff";
+
 	public static final String CON_SYMBOL = "$";
 
 	public static final int ID_ATOM = 3;
@@ -277,6 +279,13 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 	public boolean isParameter() {
 		return ((1 == terms.length || 2 == terms.length) && (name.equals(PAR_INPUT) || name.equals(PAR_OUTPUT) || name.equals(PAR_CONSTANT)));
 	}
+	
+	public boolean hasVariables() {
+		boolean result = this.isVariable();
+		for (int i = 0; !result && i < terms.length; i++)
+			result = terms[i].hasVariables();
+		return result;
+	}
 
 	public boolean isVariable() {
 		return terms.length == 0 && name.length() > 0 && name.charAt(0) >= 'A' && name.charAt(0) <= 'Z';
@@ -359,6 +368,8 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 			return terms[0].toPrint() + "<" + terms[1].toPrint();
 		} else if (COMP_NE.equals(name) && 2 == arity()) {
 			return terms[0].toPrint() + "!=" + terms[1].toPrint();
+		} else if (COMP_DIFF.equals(name) && 2 == arity()) {
+			return terms[0].toPrint() + "\\=" + terms[1].toPrint();
 		} else {
 			if (0 == arity())
 				return name;
@@ -416,6 +427,8 @@ public class Atom implements Comparable<Atom>, Iterable<Atom> {
 			return terms[0].toString() + "<" + terms[1].toString();
 		} else if (COMP_NE.equals(name) && 2 == arity()) {
 			return terms[0].toString() + "!=" + terms[1].toString();
+		} else if (COMP_DIFF.equals(name) && 2 == arity()) {
+			return terms[0].toString() + "\\=" + terms[1].toString();
 		} else if (PAR_INPUT.equals(name) && 2 == arity()) {
 			return INP_SYMBOL + terms[1].toString() + "(" + terms[0].toString() + ")";
 		} else if (PAR_INPUT.equals(name) && 1 == arity()) {

@@ -35,6 +35,10 @@ public class Clause implements Comparable<Clause>, Iterable<Literal> {
 		body[count++] = literal;
 		return this;
 	}
+	
+	public boolean hasHeadVariables() {
+		return head.hasVariables();
+	}
 
 	public Clause appendAll(Collection<Literal> literals) {
 		for (Literal literal : literals)

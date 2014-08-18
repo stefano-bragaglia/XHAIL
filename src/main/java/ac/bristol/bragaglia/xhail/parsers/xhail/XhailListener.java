@@ -840,6 +840,17 @@ public interface XhailListener extends ParseTreeListener {
 	void exitShowExplicit(@NotNull XhailParser.ShowExplicitContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link XhailParser#GroundDifferent}.
+	 * @param ctx the parse tree
+	 */
+	void enterGroundDifferent(@NotNull XhailParser.GroundDifferentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link XhailParser#GroundDifferent}.
+	 * @param ctx the parse tree
+	 */
+	void exitGroundDifferent(@NotNull XhailParser.GroundDifferentContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link XhailParser#GroundGreater}.
 	 * @param ctx the parse tree
 	 */

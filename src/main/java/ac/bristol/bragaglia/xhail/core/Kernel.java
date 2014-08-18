@@ -264,18 +264,22 @@ public class Kernel extends Modifiable {
 		}
 	}
 
-//	private static void findVars(Atom atom, Set<String> store) {
-//		if (null == atom)
-//			throw new IllegalArgumentException("Illegal 'atom' argument in Kernel.findVars(Atom, Set<String>): " + atom);
-//		if (null == store)
-//			throw new IllegalArgumentException("Illegal 'store' argument in Kernel.findVars(Atom, Set<String>): " + store);
-//		if (atom.isVariable())
-//			store.add(atom.name());
-//		else
-//			for (Atom term : atom)
-//				findVars(term, store);
-//	}
-	
+	// private static void findVars(Atom atom, Set<String> store) {
+	// if (null == atom)
+	// throw new
+	// IllegalArgumentException("Illegal 'atom' argument in Kernel.findVars(Atom, Set<String>): "
+	// + atom);
+	// if (null == store)
+	// throw new
+	// IllegalArgumentException("Illegal 'store' argument in Kernel.findVars(Atom, Set<String>): "
+	// + store);
+	// if (atom.isVariable())
+	// store.add(atom.name());
+	// else
+	// for (Atom term : atom)
+	// findVars(term, store);
+	// }
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -354,11 +358,18 @@ public class Kernel extends Modifiable {
 	}
 
 	public boolean isInducible() {
-		boolean result = false;
-		Iterator<Map<Literal, ModeBodyData>> iterator = grounding.problem().modes().values().iterator();
-		while (!result && iterator.hasNext())
-			result = iterator.next().size() > 0;
-		result &= !dataset.isEmpty();
+		boolean result = true;
+//		boolean result = false;
+//		Iterator<Clause> iter = clauses.iterator();
+//		if (iter.hasNext())
+//			while (!result && iter.hasNext())
+//				result = iter.next().head().hasVariables();
+//		if (!result) {
+//			Iterator<Map<Literal, ModeBodyData>> iterator = grounding.problem().modes().values().iterator();
+//			while (!result && iterator.hasNext())
+//				result = iterator.next().size() > 0;
+//			result &= !dataset.isEmpty();			
+//		}
 		assert invariant() : "Illegal state in Kernel.isInducible()";
 		return result;
 	}

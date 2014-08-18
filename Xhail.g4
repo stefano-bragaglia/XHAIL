@@ -182,6 +182,7 @@ groundTerm
 	| groundAtom COMP_LE groundTerm # GroundLessEquals
 	| groundAtom COMP_LT groundTerm # GroundLess
 	| groundAtom COMP_NE groundTerm # GroundNotEquals
+	| groundAtom COMP_DIFF groundTerm # GroundDifferent
 	| groundAtom PLUS groundTerm # GroundPlus
 	| MINUS groundAtom # GroundMinus1
 	| groundAtom MINUS groundTerm # GroundMinus2
@@ -357,6 +358,7 @@ atom
 	| predicate COMP_LE predicate
 	| predicate COMP_LT predicate
 	| predicate COMP_NE predicate
+	| predicate COMP_DIFF predicate
 	| BAR number BAR
 	| ARITH_ABS PAREN_LEFT number PAREN_RIGHT
 	| number MINUS number
@@ -508,6 +510,11 @@ COMP_NE
 	'!='
 ;
 
+COMP_DIFF
+:
+	'\\='
+;
+
 //------------------------------------------------------------------------------
 
 DIR_COMPUTE
@@ -632,6 +639,11 @@ DOT
 DOTS
 :
 	'..'
+;
+
+DIFFERENT
+:
+	'\\='
 ;
 
 EQUALS

@@ -31,6 +31,7 @@ import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAbsolute2Conte
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAndContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAssign1Context;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundAssign2Context;
+import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDifferentContext;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide1Context;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide2Context;
 import ac.bristol.bragaglia.xhail.parsers.xhail.XhailParser.GroundDivide3Context;
@@ -407,6 +408,13 @@ public class XhailFileListener extends XhailBaseListener {
 		if (null != ctx)
 			builders.push(Builder.get(Atom.COMP_NE).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
 	}
+
+	@Override
+	public void exitGroundDifferent(GroundDifferentContext ctx) {
+		if (null != ctx)
+			builders.push(Builder.get(Atom.COMP_DIFF).append(ctx.groundAtom().getText()).append(ctx.groundTerm().getText()));
+	}
+
 
 	@Override
 	public void exitGroundOr(GroundOrContext ctx) {
