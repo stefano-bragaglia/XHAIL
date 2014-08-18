@@ -358,7 +358,6 @@ public class Kernel extends Modifiable {
 	}
 
 	public boolean isInducible() {
-		boolean result = true;
 //		boolean result = false;
 //		Iterator<Clause> iter = clauses.iterator();
 //		if (iter.hasNext())
@@ -370,6 +369,7 @@ public class Kernel extends Modifiable {
 //				result = iterator.next().size() > 0;
 //			result &= !dataset.isEmpty();			
 //		}
+		boolean result = true;
 		assert invariant() : "Illegal state in Kernel.isInducible()";
 		return result;
 	}
