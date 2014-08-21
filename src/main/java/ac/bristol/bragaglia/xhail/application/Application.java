@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import ac.bristol.bragaglia.xhail.config.Config;
 import ac.bristol.bragaglia.xhail.core.Answer;
-import ac.bristol.bragaglia.xhail.core.Kernel;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Clause;
 import ac.bristol.bragaglia.xhail.predicates.Literal;
