@@ -8,7 +8,8 @@
 #modeb penguin(+bird):1.
 #modeb not penguin(+bird) :3.
 
-#example flies(a;b) @2.
+#example flies(a) @2.
+#example flies(b) @2.
 #example flies(c) =5 @2.
 #example not flies(d) =3 @2.
 
