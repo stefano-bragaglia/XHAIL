@@ -1,4 +1,0 @@
-xhail version 0.5.1
-
-Reading from theory.pl
-Reading from networks_aaa/network7.pl
