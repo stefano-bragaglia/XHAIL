@@ -6,7 +6,7 @@ do
 	echo -n ",Learn$K"
 done
 echo ""
-for N in {0..215}
+for N in {7..215}
 do
 	echo -n network$N
 	for K in {1..40}

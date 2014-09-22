@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import ac.bristol.bragaglia.xhail.core.Problem.ModeBodyData;
 import ac.bristol.bragaglia.xhail.predicates.Atom;
 import ac.bristol.bragaglia.xhail.predicates.Builder;
 import ac.bristol.bragaglia.xhail.predicates.Clause;

@@ -1,0 +1,6 @@
+xhail version 0.5.1
+
+Reading from theory.pl
+Reading from networks/network5.pl
+Reading from tests/cnst6.pl
+Solving...

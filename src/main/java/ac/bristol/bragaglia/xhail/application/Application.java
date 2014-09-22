@@ -97,7 +97,7 @@ public class Application {
 	 * The <code>PATHS</code> where <code>gringo</code> and <code>clasp</code>
 	 * most likely are.
 	 */
-	private static final String[] PATHS = { "/Library/Gringo/", "/Library/Clasp/", "/usr/local/gringo/", "/usr/local/clasp/", "C:\\Gringo\\", "C:\\Clasp\\" };
+	private static final String[] PATHS = { "/Library/Gringo/", "/Library/Clasp/", "/usr/bin/gringo/", "/usr/bin/clasp/", "/usr/bin/",  "/usr/local/gringo/", "/usr/local/clasp/", "/usr/local/", "C:\\Gringo\\", "C:\\Clasp\\" };
 
 	/**
 	 * Checks whether the program described by the non-\code>null</code>
@@ -123,7 +123,10 @@ public class Application {
 			Process process = new ProcessBuilder(program, "--version").start();
 			process.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			boolean result = reader.readLine().indexOf(signature) > -1;
+			String line;
+			boolean result = false;
+			while (!result && null != (line = reader.readLine())) 
+				result = line.toLowerCase().indexOf(signature) > -1;			
 			reader.close();
 			return result;
 		} catch (IOException | InterruptedException e) {
