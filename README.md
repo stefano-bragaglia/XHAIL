@@ -86,7 +86,48 @@ Since **XHAIL** internally uses *ANTLR 4* to parse its language and relies on *G
 
 ### Configuring XHAIL
 
+**XHAIL** delegates some of the reasoning tasks it performs to an external *ASP* engine, which is therefore required to work properly. 
+The *ASP* platform that we have chosen to use is *Gringo*/*Clasp*.
+These tools in fact support many interesting features and often win *ASP* competitions.
+In particular, we aim to use the 3rd major release of *Gringo*/*Clasp* because it is the most recent version supporting *reification*, which is required by the **XHAIL** procedure.
+Notice that *reification* is not currently supported by the latest major release because these tools are undergoing a language standardisation process but it should be reintroduced soon.
+These tools are part of the *Potsdam Answer Set Solving Collection* (POTASSCO), more information is available on the [web site](http://potassco.sourceforge.net) of the project.
 
+The following paragraphs illustrate how to download and install both *Gringo* and *Clasp*.
+You can download sources from the official web site, but you can also conveniently find compiled binaries on [SourceForge](http://sourceforge.net/projects/potassco/) in the *Files* section. 
+You need to repeat the following steps for both *Gringo* which is used to ground problems, and *Clasp* which finds the stable models within the grounded knowledge base returned by the other tool. 
+Enter *Gringo*'s (*Clasp*'s) folder and then the folder for the most recent version among those of the 3rd major release.
+At the time of writing this guide, the most recent version of *Gringo v3* (*Clasp v3*) is **3.0.5** (**3.1.0**).
+Now select the package that is appropriate for your system and the download should start in a few seconds.
+Further instructions are provided within the package.
+Please take note of the folder where the binaries will sit as it will be needed later.
+
+If the procedure has been completed successfully, you should now be able to run the following commands on the command line or a terminal and get the given output:
+
+    > /usr/local/bin/gringo --version
+	
+    gringo 3.0.5
+    
+    Copyright (C) Arne König
+    Copyright (C) Benjamin Kaufmann
+    Copyright (C) Roland Kaminski
+    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+    Gringo is free software: you are free to change and redistribute it.
+    There is NO WARRANTY, to the extent permitted by law.
+
+or simply `gringo --version` if the target folder is on the `path`, and
+
+    > /usr/local/bin/clasp --version
+	
+	clasp version 3.0.3
+	Address model: 64-bit
+	Configuration: WITH_THREADS=0
+	Copyright (C) Benjamin Kaufmann
+	License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>
+	clasp is free software: you are free to change and redistribute it.
+	There is NO WARRANTY, to the extent permitted by law.
+	
+or simply `clasp --version` if the target folder is on the `path`.
 
 ### Running XHAIL
 
