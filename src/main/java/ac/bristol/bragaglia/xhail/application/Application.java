@@ -100,7 +100,7 @@ public class Application {
 	private static final String[] PATHS = { "/Library/Gringo/", "/Library/Clasp/", "/usr/bin/gringo/", "/usr/bin/clasp/", "/usr/bin/",  "/usr/local/gringo/", "/usr/local/clasp/", "/usr/local/", "C:\\Gringo\\", "C:\\Clasp\\" };
 
 	/**
-	 * Checks whether the program described by the non-\code>null</code>
+	 * Checks whether the program described by the non-<code>null</code>
 	 * non-empty <code>program</code> string is an executable file whose version
 	 * number matches with the given <code>signature</code>.
 	 * 
