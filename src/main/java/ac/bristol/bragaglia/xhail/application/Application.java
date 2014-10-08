@@ -92,6 +92,7 @@ public class Application {
 	 * The signature of <code>gringo 3</code>.
 	 */
 	private static final String GRINGO_SIGNATURE = "gringo 3.";
+	private static final String GRINGO_SIGNATURE_EXE = "gringo.exe 3.";
 
 	/**
 	 * The <code>PATHS</code> where <code>gringo</code> and <code>clasp</code>
@@ -363,8 +364,8 @@ public class Application {
 				System.out.println();
 				if (search)
 					printSearch();
-				if (!check(gringo, GRINGO_SIGNATURE) || !check(clasp, CLASP_SIGNATURE)) {
-					if (!check(gringo, GRINGO_SIGNATURE))
+				if ((!check(gringo, GRINGO_SIGNATURE) && !check(gringo, GRINGO_SIGNATURE_EXE))|| !check(clasp, CLASP_SIGNATURE)) {
+					if (!check(gringo, GRINGO_SIGNATURE) && !check(gringo, GRINGO_SIGNATURE_EXE))
 						System.err.println(String.format("*** ERROR (%s): '%s*' needed to run %s", Version.get().getTitle(), GRINGO_SIGNATURE, Version.get()
 								.getTitle()));
 					if (!check(clasp, CLASP_SIGNATURE))
