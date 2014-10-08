@@ -230,3 +230,11 @@ In either cases, the following output is produced:
 
 ### Some details about XHAIL syntax
 ...
+
+![`#display` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/display.png "`#display`")
+
+![`#example` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/example.png "`#example`")
+
+![`#modeh` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeh.png "`#modeh`")
+
+![`#modeb` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeb.png "`#modeb`")
