@@ -73,7 +73,7 @@ so that next time you want to run **XHAIL**, you can simply type `xhail --versio
 
 Be sure to save the batch script in a folder which is included in the `PATH` environment variable.
 
-#### Modify XHAIL
+#### Modifying XHAIL
 
 This implementation of **XHAIL** is still young and, even if we did our best to remove any bug, there might still be some. If you find any, please report them and we will do our best to correct them. We highly encourage you to fix them yourself, to experiment with the application and ultimately to contribute to it. If you plan to do so, you might need some additional information about the tools that we used to write **XHAIL**.
 
@@ -129,7 +129,13 @@ or simply `gringo --version` if the target folder is on the `path`, and
 	
 or simply `clasp --version` if the target folder is on the `path`.
 
+**Notice** that some valid versions of *Gringo*/*Clasp* may have a slightly different output which makes **XHAIL** unable to properly recognise them. 
+In such an unfortunate event, please report it and it will be fixed as soon as possible.
+
 ### Running XHAIL
+
+After the *Gringo*/*Clasp* tools have been installed and the *Java* wrapper has been compiled, **XHAIL** can eventually be run.
+If launched with `--help` (or `-h`) as an argument, it produces the following help message that includes an example of usage and the list of admitted arguments:
 
     xhail version 0.5.1
     
@@ -149,3 +155,78 @@ or simply `clasp --version` if the target folder is on the `path`.
     
     Example:   java -jar xhail.jar  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  example.pl
 
+**Notice** that all the arguments are optional except for `--gringo <path>` (or `-g <path>`) and `--clasp <path>` (or `-c <path>`) that must both be specified to notify the path (either absolute or relative, provided that includes the full name of the application, i.e.: `C:\ASP\gringo.exe`) of the two programs.
+
+**Notice** also that the argument `--search` (or `-s`) can be used in place of either `--gringo <path>` (or `-g <path>`) and `--clasp <path>` (or `-c <path>`). 
+This argument triggers a routine that recursively visits the folders of the first logical drive of the machine starting from its root, therefore it may take a while to complete.
+To be precise, this routine first tries to visit a few common locations where *Gringo*/*Clasp* may have been installed to avoid the recursive search and speed up operations.
+Such locations are the following:
+
+- `/Library/Gringo/`
+- `/Library/Clasp/`
+- `/usr/bin/gringo/`
+- `/usr/bin/clasp/`
+- `/usr/bin/`
+- `/usr/local/gringo/`
+- `/usr/local/clasp/`
+- `/usr/local/`
+- `C:\Gringo\`
+- `C:\Clasp\`
+
+The other arguments are pretty self-explanatory:
+
+- `--blind` (or `-b`) inhibits the usage of ANSI colour codes to generate the program's output; this is useful when redirecting the program's output as otherwise it would be hardly readable
+- `--debug` (or `-d`) saves a copy of temporary files in `./temp` for debugging purposes
+- `--help` (or `-h`) prints the help message above
+- `--kill <num>` (or `-k <num>`) interrupts the execution after the given amount of seconds (if it would normally takes longer than this)
+- `--mute` (or `-m`) hides all the warning messages reported by *Gringo* and *Clasp* (critical halting errors are still reported)
+- `--version` (or `-v`) simply displays current version information and gracefully exits.
+
+**Notice** that the path of any program to solve (either absolute or relative, including full name and extension) may be passed as an argument and **XHAIL** will automatically try to load and solve it.
+If more than one file is specified, they will all be loaded and considered as a unique problem to solve.
+Therefore the statements in one file may hide similar statements previously loaded from other files.
+If no file is specified, anything typed or redirected to the standard input (up to the *EOF* is received) will be considered as the problem to solve.
+
+The following example, for instance, uses the applications `/Library/Clasp/clasp` and `/Library/Gringo/gringo` as sources for *Clasp* and *Gringo*, solves the problem in the relative path `./examples/toys/penguins_weighted.pl`, ignores warning messages and does not use colourful output:
+
+    xhail  -b  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
+
+If no `alias` was defined for **XHAIL**, the command line is the following: 
+
+    java -jar xhail.jar  -b  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
+
+In either cases, the following output is produced:
+
+    xhail version 0.5.1
+    
+    Reading from ./examples/toys/penguins_weighted.pl
+    Solving...
+    
+    Answer: 1
+      model (8 fact/s):
+        flies(a) flies(b) flies(c) penguin(d)
+      delta (3 abducible/s):
+        flies(+bird(a)) flies(+bird(b)) flies(+bird(c))
+      kernel (1 clause/s):
+        flies(V1) :- bird(V1), not penguin(V1).
+      hypotheses (1 clause/s):
+        flies(V1) :- bird(V1).
+      coverage (4 example/s out of 4):
+        flies(a) flies(b) flies(c) not flies(d)
+      optimization
+        abducing: 0 15
+        inducing: 0 6
+    
+    Answers     : 1
+    Runtime     : 0.228s
+      parsing   : 0.038s
+      abducing  : 0.020s
+       a.gringo : 0.006s
+       a.clasp  : 0.004s
+      deducing  : 0.006s
+      inducing  : 0.012s
+       i.gringo : 0.004s
+       i.clasp  : 0.004s
+
+### Some details about XHAIL syntax
+...
