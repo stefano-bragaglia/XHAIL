@@ -249,11 +249,11 @@ In regards of the *variations* with respect to the basic *ASP* language, conside
   - normally, no fact is displayed in the output,
   - it is possible to include some facts of a given kind in the output by specifying a pattern (a predicate identifier and an arity number) as follows:
 
-      **`#display`**  `<identifier>` **`/`** `<arity>`** `.`**
+      **`#display`**  `<identifier>`  **`/`**  `<arity>`  **`.`**
 
   - it is also possible to use the directive without patterns to require all the facts to be included in the output:
 
-      **`#display.`**
+      **`#display`**  **`.`**
 
     Please refer to the following *syntax diagram* (*railroad diagram*) for the **`#display`** directive:
 	
@@ -263,18 +263,18 @@ In regards of the *variations* with respect to the basic *ASP* language, conside
 
 * we introduce a few specific directives to specifically support the nonmonotonic learning tasks:
   - **`#example`** is used to provide positive or negative *evidences* that the **XHAIL** procedure tries to cover when building a unifying hypothesis to explain them; the typical syntax for these statements is as follows:
-  
-      **`#example`**  `[not]`  `<atom>`**`.`**
+
+      **`#example`**  `[not]`  `<atom>`  **`.`**
 	  
   - **`#modeh`** is used to state *head mode declarations* which are used to express what might be needed to assume to trigger the construction of the hypotheses; the syntax for these statements is the following:
 
-      **`#modeh`**  `<scheme>`**`.`**
+      **`#modeh`**  `<scheme>`  **`.`**
 	
 	where the *scheme* is any predicate whose atoms may be preceded by a **`+`**, a **`-`** or a **`$`** to respectively express the so-called *input variables*, *output variables* and *constants* of the mode declarations. 
 
   - **`#modeb`** is used to state *body mode declarations* which are used to express the things to consider when trying to explain the things assumed thanks to the *head mode declarations* to explain the *examples* and successfully build the hypotheses; their syntax is:
 
-      **`#modeb`**  `[not]`  `<scheme>`**`.`**
+      **`#modeb`**  `[not]`  `<scheme>`  **`.`**
 	
 	where the *scheme* is again any predicate whose atoms may be preceded by a **`+`** (*input variables*), a **`-`** (*output variables*) or a **`$`** (*constants*).
 	
