@@ -229,12 +229,89 @@ In either cases, the following output is produced:
        i.clasp  : 0.004s
 
 ### Some details about XHAIL syntax
-...
 
-![`#display` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/display.png "`#display`")
+The language that is currently supported by **XHAIL** is very similar to *Gringo*/*Clasp* own language.
+This is due to the fact that **XHAIL** may be seen as an extension for nonmonotonic abductive/deductive/inductive learning of the *Potassco* tools.
+
+A detailed description of all the **XHAIL** language's productions would probably be too tedious, therefore the basic constructs will be given for granted.
+It suffice to say that the language's core is the same as *ASP* which, in turn, is very similar to *Prolog*.
+In case you are familiar with it, it lacks *lists* but offers some other features like *disjunctions* (`a `**`|`**` b :- c.`), *intervals* (`1`**`..`**`5`), *conditions* (`a(X) :- r(X,Y) `**`:`**` b(Y).`), *pooling* (`a`**`;`**`b`), *aggregates* (**`#avg`**, **`#count`**, **`#even`**, **`#max`**, **`#min`**, **`#odd`**, **`#sum`**) and *optimisations* (**`#maximize`**, **`#minimize`**). 
+On top of that, **XHAIL** also offers some other *meta-statements* or *directives* that are still introduced by an hash symbol (**`#`**) but differs from the above (i.e.: **`#const`**, **`#domain`**, **`#external`**, **`#show`**, **`#hide`**, **`#compute`**).
+The reader that requires any help with these productions or wants to explore these topics may refer to the official user guide ([A User’s Guide to `gringo`, `clasp`, `clingo`, and `iclingo` (version 3.x)](http://www.cs.utexas.edu/~vl/teaching/388L/clingo_guide.pdf)). 
+
+#### XHAIL-specific productions
+
+Therefore, in the following, only the differences between the **XHAIL** language and the above basic *ASP* language will be discussed.
+First of all, it is convenient to distinguish the differences in *variations* with respect to the basic *ASP* language and in *extensions* to support **bias**.
+In regards of the *variations* with respect to the basic *ASP* language, consider the following:
+
+* due to some internal optimisation, **`#show`** and **`#hide`** are no longer supported; they are replaced by **XHAIL**'s own directive **`#display`** whose semantics is as follows: 
+  - normally, no fact is displayed in the output,
+  - it is possible to include some facts of a given kind in the output by specifying a pattern (a predicate identifier and an arity number) as follows:
+
+      **`#display`**  `<identifier>`**`/`**`<arity>`**`.`**
+
+  - it is also possible to use the directive without patterns to require all the facts to be included in the output:
+
+      **`#display.`**
+
+    Please refer to the following *syntax diagram* (*railroad diagram*) for the **`#display`** directive:
+	
+    ![`#display` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/display.png "`#display`")
+
+* **`#maximize`**, **`#minimize`** and **`#compute`** are still supported, but we highly discourage to use them because if not used with extra care, they may interfere with the internal logic of the **XHAIL** procedure.
+
+* we introduce a few specific directives to specifically support the nonmonotonic learning tasks:
+  - **`#example`** is used to provide positive or negative *evidences* that the **XHAIL** procedure tries to cover when building a unifying hypothesis to explain them; the typical syntax for these statements is as follows:
+  
+      **`#example`**  `[not]`  `<atom>`**`.`**
+	  
+  - **`#modeh`** is used to state *head mode declarations* which are used to express what might be needed to assume to trigger the construction of the hypotheses; the syntax for these statements is the following:
+
+      **`#modeh`**  `<scheme>`**`.`**
+	
+	where the *scheme* is any predicate whose atoms may be preceded by a **`+`**, a **`-`** or a **`$`** to respectively express the so-called *input variables*, *output variables* and *constants* of the mode declarations. 
+
+  - **`#modeb`** is used to state *body mode declarations* which are used to express the things to consider when trying to explain the things assumed thanks to the *head mode declarations* to explain the *examples* and successfully build the hypotheses; their syntax is:
+
+      **`#modeb`**  `[not]`  `<scheme>`**`.`**
+	
+	where the *scheme* is again any predicate whose atoms may be preceded by a **`+`** (*input variables*), a **`-`** (*output variables*) or a **`$`** (*constants*).
+	
+   The *syntax diagrams* (*railroad diagrams*) for **`#example`**, **`#modeh`** and **`#modeb`** statements are provided in the section below.
+
+#### XHAIL language bias
+
+These extensions further improve the **XHAIL** language introducing a more sophisticated way to model domains and providing the user a powerful facility to help him explore the hypotheses space.
+Generally speaking, they allow to express weights, priorities and constraints on examples and mode declarations to polarise the way in which the answers are fond.
+
+*Weights* (introduced by the symbol **`=`**) can be applied to **`#example`**, **`#modeh`** and **`#modeb`** and express the cost (or reward) that is involved when an *example* is covered or a *mode declaration* is used.
+Notice that the **XHAIL** procedure tries to cover as much examples as possible and tries to find the most general hypothesis (an hypothesis is more general than another if it is more compact).
+Notice that the *default weight* for *examples* and *mode declarations* is `1`.
+Also notice that annotating an *example* with a weight means to make it defeasible since it introduces the cost that it is possible to pay *not* to cover that *example* and still solve the problem.
+Consequently any *unweighted example* must be covered to be able to solve the given problem.
+
+*Priorities* (introduced by the symbol **`@`**) can also be applied to **`#example`**, **`#modeh`** and **`#modeb`** and are used to partition *examples* and *mode declarations* into groups: statements pertaining to a more important groups are considered before statements pertaining to other groups.
+An easier way to understand this concept involves buckets. 
+Suppose to have a bucket for each priority value. 
+All the above considerations about the *weights* of *examples* and *mode declarations* still applies, but rather than being considered all together, they are applied *per groups*.
+For each group or bucket, **XHAIL** still tries to cover as much *pertaining examples* as possible while using as least *pertaining mode declarations* as possible to produce hypotheses.
+Buckets are considered in decreasing order of importance so they might produce slightly different results with respect to the case without priorities.
+Notice that the *default priority* value for *examples* and *mode declarations* is `1` which means that in the most general case all there is only a bucket with priority `1` and all the *weights* are applied to it.
+
+Finally, *constraints* (introduced by the symbol **`:`**) apply only to **`#modeh`** and **`#modeb`** and express how many times it is possible to use them when building hypotheses.
+A *constraint* typically consists in a range (in the form: `low`**`-`**`high`) which express the minimum amount of times that a *mode declaration* must be used to obtain a valid hypothesis and, similarly, the maximum number of utilisations not to be exceed to get valid answers.
+Notice that it is possible to skip the lower bound: in that case it will implicitly be assigned to `0`.
+Also notice that it is only possible to express the upper bound for **`#modeb`** because the lower bound is necessarily `0`.
+
+Please refer to the following *syntax diagram* (*railroad diagram*) as a guidance on how to use *weights* and *priorities* with **`#example`**s:
 
 ![`#example` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/example.png "`#example`")
 
+Similarly, please refer to the following *syntax diagram* (*railroad diagram*) to understand how to use *weights*, *priorities* and *constraints* with **`#modeh`**s:
+
 ![`#modeh` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeh.png "`#modeh`")
+
+Last but not least, please refer to the following *syntax diagram* (*railroad diagram*) as an help for *weights*, *priorities* and *constraints* with **`#modeb`**s:
 
 ![`#modeb` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeb.png "`#modeb`")
