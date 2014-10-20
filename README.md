@@ -90,7 +90,7 @@ Since **XHAIL** internally uses *ANTLR 4* to parse its language and relies on *G
 The *ASP* platform that we have chosen to use is *Gringo*/*Clasp*.
 These tools in fact support many interesting features and often win *ASP* competitions.
 In particular, we aim to use the 3rd major release of *Gringo*/*Clasp* because it is the most recent version supporting *reification*, which is required by the **XHAIL** procedure.
-Notice that *reification* is not currently supported by the latest major release because these tools are undergoing a language standardisation process but it should be reintroduced soon.
+**Notice** that *reification* is not currently supported by the latest major release because these tools are undergoing a language standardisation process but it should be reintroduced soon.
 These tools are part of the *Potsdam Answer Set Solving Collection* (POTASSCO), more information is available on the [web site](http://potassco.sourceforge.net) of the project.
 
 The following paragraphs illustrate how to download and install both *Gringo* and *Clasp*.
@@ -286,9 +286,9 @@ These extensions further improve the **XHAIL** language introducing a more sophi
 Generally speaking, they allow to express weights, priorities and constraints on examples and mode declarations to polarise the way in which the answers are fond.
 
 *Weights* (introduced by the symbol **`=`**) can be applied to **`#example`**, **`#modeh`** and **`#modeb`** and express the cost (or reward) that is involved when an *example* is covered or a *mode declaration* is used.
-Notice that the **XHAIL** procedure tries to cover as much examples as possible and tries to find the most general hypothesis (an hypothesis is more general than another if it is more compact).
-Notice that the *default weight* for *examples* and *mode declarations* is `1`.
-Also notice that annotating an *example* with a weight means to make it defeasible since it introduces the cost that it is possible to pay *not* to cover that *example* and still solve the problem.
+**Notice** that the **XHAIL** procedure tries to cover as much examples as possible and tries to find the most general hypothesis (an hypothesis is more general than another if it is more compact).
+**Notice** that the *default weight* for *examples* and *mode declarations* is `1`.
+**Also notice** that annotating an *example* with a weight means to make it defeasible since it introduces the cost that it is possible to pay *not* to cover that *example* and still solve the problem.
 Consequently any *unweighted example* must be covered to be able to solve the given problem.
 
 *Priorities* (introduced by the symbol **`@`**) can also be applied to **`#example`**, **`#modeh`** and **`#modeb`** and are used to partition *examples* and *mode declarations* into groups: statements pertaining to a more important groups are considered before statements pertaining to other groups.
@@ -297,12 +297,12 @@ Suppose to have a bucket for each priority value.
 All the above considerations about the *weights* of *examples* and *mode declarations* still applies, but rather than being considered all together, they are applied *per groups*.
 For each group or bucket, **XHAIL** still tries to cover as much *pertaining examples* as possible while using as least *pertaining mode declarations* as possible to produce hypotheses.
 Buckets are considered in decreasing order of importance so they might produce slightly different results with respect to the case without priorities.
-Notice that the *default priority* value for *examples* and *mode declarations* is `1` which means that in the most general case all there is only a bucket with priority `1` and all the *weights* are applied to it.
+**Notice* that the *default priority* value for *examples* and *mode declarations* is `1` which means that in the most general case all there is only a bucket with priority `1` and all the *weights* are applied to it.
 
 Finally, *constraints* (introduced by the symbol **`:`**) apply only to **`#modeh`** and **`#modeb`** and express how many times it is possible to use them when building hypotheses.
 A *constraint* typically consists in a range (in the form: `low`**`-`**`high`) which express the minimum amount of times that a *mode declaration* must be used to obtain a valid hypothesis and, similarly, the maximum number of utilisations not to be exceed to get valid answers.
-Notice that it is possible to skip the lower bound: in that case it will implicitly be assigned to `0`.
-Also notice that it is only possible to express the upper bound for **`#modeb`** because the lower bound is necessarily `0`.
+**Notice** that it is possible to skip the lower bound: in that case it will implicitly be assigned to `0`.
+**Also notice** that it is only possible to express the upper bound for **`#modeb`** because the lower bound is necessarily `0`.
 
 Please refer to the following *syntax diagram* (*railroad diagram*) as a guidance on how to use *weights* and *priorities* with **`#example`**s:
 
