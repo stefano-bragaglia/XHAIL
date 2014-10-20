@@ -249,7 +249,7 @@ In regards of the *variations* with respect to the basic *ASP* language, conside
   - normally, no fact is displayed in the output,
   - it is possible to include some facts of a given kind in the output by specifying a pattern (a predicate identifier and an arity number) as follows:
 
-      **`#display`**  `<identifier>`**`/`**`<arity>`**`.`**
+      **`#display`**  `<identifier>` **`/`** `<arity>`** `.`**
 
   - it is also possible to use the directive without patterns to require all the facts to be included in the output:
 
@@ -304,14 +304,14 @@ A *constraint* typically consists in a range (in the form: `low`**`-`**`high`) w
 **Notice** that it is possible to skip the lower bound: in that case it will implicitly be assigned to `0`.
 **Also notice** that it is only possible to express the upper bound for **`#modeb`** because the lower bound is necessarily `0`.
 
-Please refer to the following *syntax diagram* (*railroad diagram*) as a guidance on how to use *weights* and *priorities* with **`#example`**s:
+Please refer to the following *syntax diagram* (*railroad diagram*) as a guidance on how to use *weights* and *priorities* with **`#example`** statements:
 
 ![`#example` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/example.png "`#example`")
 
-Similarly, please refer to the following *syntax diagram* (*railroad diagram*) to understand how to use *weights*, *priorities* and *constraints* with **`#modeh`**s:
+Similarly, please refer to the following *syntax diagram* (*railroad diagram*) to understand how to use *weights*, *priorities* and *constraints* with **`#modeh`** statements:
 
 ![`#modeh` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeh.png "`#modeh`")
 
-Last but not least, please refer to the following *syntax diagram* (*railroad diagram*) as an help for *weights*, *priorities* and *constraints* with **`#modeb`**s:
+Last but not least, please refer to the following *syntax diagram* (*railroad diagram*) as an help for *weights*, *priorities* and *constraints* with **`#modeb`** statements:
 
 ![`#modeb` construct](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/modeb.png "`#modeb`")
