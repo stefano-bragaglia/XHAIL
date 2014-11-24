@@ -7,6 +7,43 @@ The system takes a background theory *B* and a set of examples *E* as input to r
 
 ![**XHAIL** output](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/output.png "**XHAIL**")
 
+The picture shows the answer to the well-known problem of penguins as computed by **XHAIL**.
+In this problem, we know that penguins are a species of birds.
+We have 4 individuals: some birds (`a`, `b` and `c`) and a penguin (`d`).
+This information is called background knowledge, or simply background.
+All the evidences show that `a` and `b` fly, `c` is very likely to fly and `d` is rather likely not to fly.
+This information is commonly referred to as examples.
+Last but not least, we know that birds typically fly and birds may (or may not) be penguins.
+This information is known as mode declarations.
+The answer provided by **XHAIL** suggests that each bird that is not a penguin flies.
+The problem is encoded by the following statements:
+
+    %% penguins.lp
+    %%%%%%%%%%%%%%%
+    
+    #display flies/1.
+    #display penguin/1.
+    
+    %% B. Background
+    bird(X):-penguin(X).
+    bird(a;b;c).
+    penguin(d).
+    
+    %% E. Examples
+    #example flies(a) @2.
+    #example flies(b) @2.
+    #example flies(c) =5 @2.
+    #example not flies(d) =3 @2.
+    
+    %% M. Modes
+    #modeh flies(+bird) :0-100 =4.
+    #modeb penguin(+bird) :1 @2.
+    #modeb not penguin(+bird) :3.
+    
+    %% Answer:
+	% flies(V1):-not penguin(V1),bird(V1).
+
+
 Requirements
 ------------
 
