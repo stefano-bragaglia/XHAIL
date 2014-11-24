@@ -7,7 +7,9 @@ targetCompatibility = 1.8
 
 group = 'ac.bristol.bragaglia'
 version = '0.5.1'
-mainClassName = 'ac.bristol.bragaglia.xhail.application.Application'
+
+mainClassName = 'xhail.Application'
+
 // applicationDefaultJvmArgs = ["-v", "--version"]
 // run {
 // 	args '-v' '--version'
@@ -16,7 +18,7 @@ mainClassName = 'ac.bristol.bragaglia.xhail.application.Application'
 jar {
     manifest {
         attributes 'Implementation-Title': rootProject.name, 'Implementation-Version': version
-        mainAttributes 'Main-Class': mainClassName
+		mainAttributes 'Main-Class': mainClassName
     }
     from { 
     	configurations.compile.collect { 
@@ -28,13 +30,12 @@ jar {
 }
 
 repositories {
-	mavenLocal()
+   	mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-	// compile 'ac.bristol.bragaglia:clasp3-parser:0.1.0'
-	// compile 'ac.bristol.bragaglia:xhail-parser:0.1.0'
-	compile 'org.antlr:antlr4-runtime:4.2.2'
+	compile 'org.apache.commons:commons-collections4:4.0'
+	compile 'org.apache.commons:commons-lang3:3.3.2'
     testCompile 'junit:junit:4.11'
 }
