@@ -2,13 +2,10 @@
 #display q/0.
 #display r/0.
 
-#modeh q.
-#modeh r.
+p :- q, r.
+q :- r.
 
 #example p.
 
-
-p :- q, r.
-
-q :- r.
-
+#modeh q.
+#modeh r.

@@ -286,7 +286,6 @@ public class Utils {
 				Files.createDirectory(folder);
 			Path path = folder.resolve(file.getFileName());
 			try {
-				System.out.println(path);
 				PrintWriter writer = new PrintWriter(path.toFile());
 				writer.print(content);
 				writer.close();

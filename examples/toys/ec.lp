@@ -1,4 +1,6 @@
 % — Background Theory(B)— %
+#display event/1.
+#display fluent/1.
 #domain time(S;T).
 
 holdsAt(F, T):- happens(E, S), S<T, initiates(E, F, S), not clipped(S, F, T). 
@@ -7,12 +9,12 @@ holdsAt(F, T):- initially(F), not clipped(0, F, T).
 
 time(0 .. 9). 
 sugar(lactose;glucose). 
-event(add(G );use(G)) :- sugar(G). 
+event(add(G);use(G)) :- sugar(G). 
 fluent(available(G)) :- sugar(G).
 
 initiates(add(G), available(G), T):- sugar(G), time(T). 
 terminates(use(G), available(G), T):- sugar(G), time(T). 
- :- happens(use(G), T), not holdsAt(available(G), T). 
+:- happens(use(G), T), not holdsAt(available(G), T). 
 
 happens(add(lactose), 0). 
 happens(add(glucose), 0). 

@@ -50,8 +50,7 @@ public enum States implements State {
 					break;
 				case '.':
 					statement += (char) ch;
-					context.append(statement);
-					statement = "";
+					context.setState(DOT);
 					break;
 				case '%':
 					context.setState(COMMENT);
@@ -61,6 +60,48 @@ public enum States implements State {
 			}
 			return false;
 		}
+	},
+	DOT {
+//		context.append(statement);
+//		statement = "";
+
+		public boolean process(Context context) {
+			int ch = context.read();
+			switch (ch) {
+				case -1:
+					context.append(statement);
+					context.setState(EOF);
+					break;
+				case '\n':
+				case '\r':
+				case '\f':
+				case '\t':
+				case ' ':
+					context.append(statement);
+					statement = "";		
+					context.setState(NORMAL);
+			break;
+				case '\"':
+					context.append(statement);
+					statement = "" + (char) ch;
+					context.setState(STRING);
+					break;
+				case '.':
+					statement += (char) ch;
+					context.setState(NORMAL);
+					break;
+				case '%':
+					context.append(statement);
+					statement = "";
+					context.setState(COMMENT);
+					break;
+				default:
+					context.append(statement);
+					statement = "" + (char) ch;
+					context.setState(NORMAL);
+			}
+			return false;
+		}		
 	},
 	STRING {
 		public boolean process(Context context) {
