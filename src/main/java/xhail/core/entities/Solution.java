@@ -80,7 +80,8 @@ public class Solution implements Iterable<Set<Atom>> {
 					if (line.startsWith("OPTIMUM FOUND") || line.startsWith("SATISFIABLE") || line.startsWith("UNKNOWN"))
 						break;
 					if (line.startsWith("UNSATISFIABLE")) {
-						Logger.error("unsatisfiable problem");
+						System.out.println(String.format("\n*** Info  (%s): UNSATISFIABLE problem", Logger.SIGNATURE));
+						System.exit(0);
 						break;
 					}
 					if (line.startsWith(OPTIMIZATION)) {

@@ -162,9 +162,9 @@ public class Parser {
 	private void parseAt() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '@' but EOL found");
+			throw new ParserErrorException("expected '@' but EOF found in '" + source + "'");
 		if ('@' != current)
-			throw new ParserErrorException("expected '@' but '" + current + "' found");
+			throw new ParserErrorException("expected '@' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
@@ -188,27 +188,27 @@ public class Parser {
 	private void parseColon() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected ':' but EOL found");
+			throw new ParserErrorException("expected ':' but EOF found in '" + source + "'");
 		if (':' != current)
-			throw new ParserErrorException("expected ':' but '" + current + "' found");
+			throw new ParserErrorException("expected ':' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
 	private void parseComma() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected ',' but EOL found");
+			throw new ParserErrorException("expected ',' but EOF found in '" + source + "'");
 		if (',' != current)
-			throw new ParserErrorException("expected ',' but '" + current + "' found");
+			throw new ParserErrorException("expected ',' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
 	private void parseDash() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '-' but EOL found");
+			throw new ParserErrorException("expected '-' but EOF found in '" + source + "'");
 		if ('-' != current)
-			throw new ParserErrorException("expected '-' but '" + current + "' found");
+			throw new ParserErrorException("expected '-' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
@@ -216,9 +216,9 @@ public class Parser {
 		String identifier = parseIdentifier();
 		parseSlash();
 		if (null == current)
-			throw new ParserErrorException("expected '0..9' but EOL found");
+			throw new ParserErrorException("expected '0..9' but EOF found in '" + source + "'");
 		if (!Character.isDigit(current))
-			throw new ParserErrorException("expected '0..9' but '" + current + "' found");
+			throw new ParserErrorException("expected '0..9' but '" + current + "' found in '" + source + "'");
 		Number number = parseNumber();
 		return new Display.Builder(identifier).setArity(number.getValue()).build();
 	}
@@ -226,15 +226,15 @@ public class Parser {
 	private void parseEOF() throws ParserErrorException {
 		skip();
 		if (null != current)
-			throw new ParserErrorException("expected EOL but '" + current + "' found");
+			throw new ParserErrorException("expected EOF but '" + current + "' found in '" + source + "'");
 	}
 
 	private void parseEqual() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '=' but EOL found");
+			throw new ParserErrorException("expected '=' but EOF found in '" + source + "'");
 		if ('=' != current)
-			throw new ParserErrorException("expected '=' but '" + current + "' found");
+			throw new ParserErrorException("expected '=' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
@@ -275,22 +275,22 @@ public class Parser {
 	private Term parseGroundTerm() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'TERM' but EOL found");
+			throw new ParserErrorException("expected 'TERM' but EOF found in '" + source + "'");
 		if (Character.isLowerCase(current))
 			return parseAtom();
 		if (Character.isDigit(current) || '-' == current)
 			return parseNumber();
 		if ('\"' == current)
 			return parseQuotation();
-		throw new ParserErrorException("expected 'TERM' but '" + current + "' found");
+		throw new ParserErrorException("expected 'TERM' but '" + current + "' found in '" + source + "'");
 	}
 
 	private String parseIdentifier() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'a..z' but EOL found");
+			throw new ParserErrorException("expected 'a..z' but EOF found in '" + source + "'");
 		if (!Character.isLowerCase(current))
-			throw new ParserErrorException("expected 'a..z' but '" + current + "' found");
+			throw new ParserErrorException("expected 'a..z' but '" + current + "' found in '" + source + "'");
 		String result = "" + current;
 		while (iterator.hasNext()) {
 			current = iterator.next();
@@ -304,9 +304,9 @@ public class Parser {
 	private void parseLeftParen() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '(' but EOL found");
+			throw new ParserErrorException("expected '(' but EOF found in '" + source + "'");
 		if ('(' != current)
-			throw new ParserErrorException("expected '(' but '" + current + "' found");
+			throw new ParserErrorException("expected '(' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
@@ -357,16 +357,16 @@ public class Parser {
 	private Number parseNumber() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '-' or '0..9' but EOL found");
+			throw new ParserErrorException("expected '-' or '0..9' but EOF found in '" + source + "'");
 		boolean negative;
 		if (negative = (current == '-')) {
 			current = iterator.next();
 			skip();
 		}
 		if (null == current)
-			throw new ParserErrorException("expected '0..9' but EOL found");
+			throw new ParserErrorException("expected '0..9' but EOF found in '" + source + "'");
 		if (!Character.isDigit(current))
-			throw new ParserErrorException("expected '0..9' but '" + current + "' found");
+			throw new ParserErrorException("expected '0..9' but '" + current + "' found in '" + source + "'");
 		int result = (current - '0');
 		current = iterator.next();
 		while (null != current && Character.isDigit(current)) {
@@ -379,7 +379,7 @@ public class Parser {
 	private Placemarker parsePlacemarker() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'TERM' but EOL found");
+			throw new ParserErrorException("expected 'TERM' but EOF found in '" + source + "'");
 		Type type;
 		if ('+' == current) {
 			type = Type.INPUT;
@@ -391,16 +391,16 @@ public class Parser {
 			type = Type.CONSTANT;
 			current = iterator.next();
 		} else
-			throw new ParserErrorException("expected '+', '-' or '$' but '" + current + "' found");
+			throw new ParserErrorException("expected '+', '-' or '$' but '" + current + "' found in '" + source + "'");
 		return new Placemarker.Builder(parseIdentifier()).setType(type).build();
 	}
 
 	private Quotation parseQuotation() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '\"' but EOL found");
+			throw new ParserErrorException("expected '\"' but EOF found in '" + source + "'");
 		if ('\"' != current)
-			throw new ParserErrorException("expected '\"' but '" + current + "' found");
+			throw new ParserErrorException("expected '\"' but '" + current + "' found in '" + source + "'");
 		String result = "" + current;
 		current = iterator.next();
 		while (null != current && '\"' != current) {
@@ -408,7 +408,7 @@ public class Parser {
 			current = iterator.next();
 		}
 		if (null == current)
-			throw new ParserErrorException("expected '\"' but EOL found");
+			throw new ParserErrorException("expected '\"' but EOF found in '" + source + "'");
 		result += current;
 		current = iterator.next();
 		return new Quotation.Builder(result).build();
@@ -417,9 +417,9 @@ public class Parser {
 	private void parseRightParen() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected ')' but EOL found");
+			throw new ParserErrorException("expected ')' but EOF found in '" + source + "'");
 		if (')' != current)
-			throw new ParserErrorException("expected ')' but '" + current + "' found");
+			throw new ParserErrorException("expected ')' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
@@ -443,7 +443,7 @@ public class Parser {
 	private SchemeTerm parseSchemeTerm() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'SCHEMETERM' but EOL found");
+			throw new ParserErrorException("expected 'SCHEMETERM' but EOF found in '" + source + "'");
 		if (Character.isLowerCase(current))
 			return parseScheme();
 		if ('+' == current || '-' == current || '$' == current)
@@ -452,22 +452,22 @@ public class Parser {
 			return parseNumber();
 		if ('\"' == current)
 			return parseQuotation();
-		throw new ParserErrorException("expected 'SCHEMETERM' but '" + current + "' found");
+		throw new ParserErrorException("expected 'SCHEMETERM' but '" + current + "' found in '" + source + "'");
 	}
 
 	private void parseSlash() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected '/' but EOL found");
+			throw new ParserErrorException("expected '/' but EOF found in '" + source + "'");
 		if ('/' != current)
-			throw new ParserErrorException("expected '/' but '" + current + "' found");
+			throw new ParserErrorException("expected '/' but '" + current + "' found in '" + source + "'");
 		current = iterator.next();
 	}
 
 	private Term parseTerm() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'TERM' but EOL found");
+			throw new ParserErrorException("expected 'TERM' but EOF found in '" + source + "'");
 		if (Character.isLowerCase(current))
 			return parseAtom();
 		if (Character.isUpperCase(current) || '_' == current)
@@ -476,15 +476,15 @@ public class Parser {
 			return parseNumber();
 		if ('\"' == current)
 			return parseQuotation();
-		throw new ParserErrorException("expected 'TERM' but '" + current + "' found");
+		throw new ParserErrorException("expected 'TERM' but '" + current + "' found in '" + source + "'");
 	}
 
 	private Variable parseVariable() throws ParserErrorException {
 		skip();
 		if (null == current)
-			throw new ParserErrorException("expected 'A..Z' or '_' but EOL found");
+			throw new ParserErrorException("expected 'A..Z' or '_' but EOF found in '" + source + "'");
 		if (!Character.isUpperCase(current) && '_' != current)
-			throw new ParserErrorException("expected 'A..Z' or '_' but '" + current + "' found");
+			throw new ParserErrorException("expected 'A..Z' or '_' but '" + current + "' found in '" + source + "'");
 		String result = "" + current;
 		while (iterator.hasNext()) {
 			current = iterator.next();
@@ -496,9 +496,7 @@ public class Parser {
 	}
 
 	private void skip() {
-		// while (null == current && iterator.hasNext() || current <= ' ')
 		while (null != current && current <= ' ')
-			// && iterator.hasNext())
 			current = iterator.next();
 	}
 
