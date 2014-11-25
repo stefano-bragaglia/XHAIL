@@ -102,18 +102,19 @@ public class Solution implements Iterable<Set<Atom>> {
 			}
 		}
 
-		private void handle(String content) {
-			if (null == content || (content = content.trim()).isEmpty())
-				throw new IllegalArgumentException("Illegal 'content' argument in Solution.Builder.handle(String): " + content);
+		public Builder parse(Grounding grounding) {
+			if (null == grounding)
+				throw new IllegalArgumentException("Illegal 'grounding' argument in Solution.Builder.parse(Grounding): " + grounding);
+			this.answer = null;
+			this.answers.clear();
+			this.values = new String[0];
 
 			String line;
 			BufferedReader reader;
 			try {
 				Process gringo = new ProcessBuilder(this.gringo).start();
 				// Input
-				PrintStream printer = new PrintStream(gringo.getOutputStream());
-				printer.print(content);
-				printer.close();
+				Utils.save(grounding, gringo.getOutputStream());
 				// Error
 				try {
 					String message = "";
@@ -155,15 +156,6 @@ public class Solution implements Iterable<Set<Atom>> {
 			} catch (IOException e) {
 				Logger.error("cannot instantiate the 'gringo' process");
 			}
-		}
-
-		public Builder parse(Grounding grounding) {
-			if (null == grounding)
-				throw new IllegalArgumentException("Illegal 'grounding' argument in Solution.Builder.parse(Grounding): " + grounding);
-			this.answer = null;
-			this.answers.clear();
-			this.values = new String[0];
-			handle(Utils.toString(grounding));
 			return this;
 		}
 
@@ -173,7 +165,57 @@ public class Solution implements Iterable<Set<Atom>> {
 			this.answer = null;
 			this.answers.clear();
 			this.values = new String[0];
-			handle(Utils.toString(problem));
+			String line;
+			BufferedReader reader;
+			try {
+				Process gringo = new ProcessBuilder(this.gringo).start();
+				// Input
+				Utils.save(problem, gringo.getOutputStream());
+				
+//				try {
+					
+					try {
+						Process clasp = new ProcessBuilder(this.clasp).start();
+						// Pipe
+						try {
+							Pipe pipe = new Pipe(gringo, clasp);
+							new Thread(pipe).start();
+							clasp.waitFor();
+							
+							// Error
+							String message = "";
+							reader = new BufferedReader(new InputStreamReader(clasp.getErrorStream()));
+							while (null != (line = reader.readLine())) {
+								line = line.trim();
+								if (!line.isEmpty()) {
+									if (!message.isEmpty())
+										message += "\n  " + line;
+									else if (line.startsWith(ERROR))
+										message = line.substring(ERROR.length());
+									else if (line.startsWith(WARNING))
+										Logger.warning(config.isMute(), line.substring(WARNING.length()));
+									else
+										System.err.println(line);
+								}
+							}
+							if (!message.isEmpty())
+								Logger.error(message);
+							reader.close();
+							
+							// Output
+							handle(clasp.getInputStream());
+						} catch (IllegalThreadStateException | InterruptedException e) {
+							Logger.error("broken pipe among 'gringo' and 'clasp'");
+						}
+					} catch (IOException e) {
+						Logger.error("cannot instantiate the 'clasp' process");
+					}
+//				} catch (IOException e) {
+//					Logger.error("cannot send data to the 'gringo' process");
+//				}
+			} catch (IOException e) {
+				Logger.error("cannot instantiate the 'gringo' process");
+			}
 			return this;
 		}
 

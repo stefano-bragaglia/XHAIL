@@ -301,7 +301,7 @@ public class Problem {
 		long time;
 		Answers.Builder result = new Answers.Builder(config);
 		if (config.isDebug())
-			Utils.save(Paths.get(config.getName() + "_0_abd.lp"), Utils.toString(this));
+			Utils.save(this, Paths.get(config.getName() + "_0_abd.lp"));
 		// 1. Run the abductive + deductive phases
 		time = System.nanoTime();
 		Solution abdPhase = new Solution.Builder(config).parse(this).build();
@@ -312,7 +312,7 @@ public class Problem {
 			Grounding grounding = new Grounding.Builder(this).addAtoms(abdAtoms).build();
 			Answer.Builder builder = new Answer.Builder(grounding);
 			if (config.isDebug())
-				Utils.save(Paths.get(config.getName() + "_" + i++ + "_ind.lp"), Utils.toString(grounding));
+				Utils.save(grounding, Paths.get(config.getName() + "_" + i++ + "_ind.lp"));
 			// 3. If the grounding has no generalised clauses
 			time = System.nanoTime();
 			grounding.getGeneralisation();

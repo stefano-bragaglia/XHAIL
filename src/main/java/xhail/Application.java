@@ -15,6 +15,7 @@ import java.util.concurrent.TimeoutException;
 import xhail.core.Config;
 import xhail.core.Finder;
 import xhail.core.Logger;
+import xhail.core.Utils;
 import xhail.core.entities.Answers;
 import xhail.core.entities.Problem;
 
@@ -184,9 +185,10 @@ public class Application implements Callable<Answers> {
 	 * 
 	 */
 	public void execute() {
-		if (format)
-			System.out.println("\n" + problem.toString());
-		else
+		if (format){
+			System.out.println();
+			Utils.dump(problem, System.out);
+		}else
 			try {
 				final Future<Answers> task = service.submit(this);
 				Answers answers = kill > 0 ? task.get(kill, TimeUnit.SECONDS) : task.get();

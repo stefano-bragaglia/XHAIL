@@ -3,8 +3,10 @@
  */
 package xhail.core;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -217,6 +219,50 @@ public class Utils {
 		return result;
 	}
 
+	public static boolean dump(Problem problem, OutputStream stream) {
+		if (null == problem)
+			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, OutputStream): " + problem);
+		if (null == stream)
+			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Problem, OutputStream): " + stream);
+		try {
+			PrintStream printer = new PrintStream(stream);
+			Collection<Display> displays = problem.getDisplays();
+			if (displays.size() > 0) {
+				for (Display display : displays)
+					printer.println(display.toString());
+				printer.println();
+			}
+			Collection<String> background = problem.getBackground();
+			if (background.size() > 0) {
+				printer.println("%% B. Background");
+				for (String statement : background)
+					printer.println(statement);
+				printer.println();
+			}
+			Collection<Example> examples = problem.getExamples();
+			if (examples.size() > 0) {
+				printer.println("%% E. Examples");
+				for (Example example : examples)
+					printer.println(example.toString());
+				printer.println();
+			}
+			Collection<ModeH> modeHs = problem.getModeHs();
+			Collection<ModeB> modeBs = problem.getModeBs();
+			if (modeHs.size() > 0 || modeBs.size() > 0) {
+				printer.println("%% M. Modes");
+				for (ModeH mode : modeHs)
+					printer.println(mode);
+				for (ModeB mode : modeBs)
+					printer.println(mode);
+				printer.println();
+			}
+			return true;
+		} catch (Exception e) {
+			Logger.error("cannot stream data to process");
+		}
+		return false;
+	}
+
 	public static Collection<String> listAtoms(String label, Collection<Atom> atoms) {
 		if (null == label || (label = label.trim()).isEmpty())
 			throw new IllegalArgumentException("Illegal 'label' argument in Utils.listAtoms(String, Collection<Atom>): " + label);
@@ -277,19 +323,54 @@ public class Utils {
 		return result;
 	}
 
-	public static boolean save(Path file, String content) {
-		if (null == content)
-			throw new IllegalArgumentException("Illegal 'content' argument in Utils.save(String): " + content);
+	public static boolean save(Grounding grounding, OutputStream stream) {
+		if (null == grounding)
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, OutputStream): " + grounding);
+		if (null == stream)
+			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Grounding, OutputStream): " + stream);
+		try {
+			PrintStream printer = new PrintStream(stream);
+			for (String filter : convert(grounding))
+				printer.println(filter);
+			printer.println();
+			printer.println("%%% B. Background");
+			for (String statement : grounding.getBackground())
+				printer.println(statement);
+			for (Display display : grounding.getDisplays())
+				printer.println(convert(display));
+			printer.println();
+			printer.println("%%% E. Examples");
+			for (Example example : grounding.getExamples())
+				for (String statement : convert(example))
+					printer.println(statement);
+			printer.println();
+			printer.println("%%% M. Modes");
+			printer.println("{ use_clause_literal(V1,0) }:-clause(V1).");
+			printer.println("{ use_clause_literal(V1,V2) }:-clause(V1),literal(V1,V2).");
+			printer.println();
+			for (String statement : convert(grounding.getGeneralisation()))
+				printer.println(statement);
+			printer.println();
+			printer.close();
+			return true;
+		} catch (Exception e) {
+			Logger.error("cannot stream data to process");
+		}
+		return false;
+	}
+
+	public static boolean save(Grounding grounding, Path path) {
+		if (null == grounding)
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, Path): " + grounding);
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Grounding, Path): " + path);
 		try {
 			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
 			if (!Files.exists(folder))
 				Files.createDirectory(folder);
-			Path path = folder.resolve(file.getFileName());
+			Path file = folder.resolve(path.getFileName());
 			try {
-				PrintWriter writer = new PrintWriter(path.toFile());
-				writer.print(content);
-				writer.close();
-				return true;
+				return save(grounding, new FileOutputStream(file.toFile()));
 			} catch (IOException e) {
 				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
 			}
@@ -300,72 +381,116 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean save(String content, Path path) {
-		if (null == content)
-			throw new IllegalArgumentException("Illegal 'content' argument in Utils.save(String, Path): " + content);
-		if (null == path)
-			throw new IllegalArgumentException("Illegal 'path' argument in Problem.save(String, Path): " + path);
+	public static boolean save(Problem problem, OutputStream stream) {
+		if (null == problem)
+			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, OutputStream): " + problem);
+		if (null == stream)
+			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Problem, OutputStream): " + stream);
 		try {
-			PrintWriter writer = new PrintWriter(path.toFile());
-			writer.print(content);
-			writer.close();
+			PrintStream printer = new PrintStream(stream);
+			for (String filter : convert(problem))
+				printer.println(filter);
+			printer.println();
+			printer.println("%%% B. Background");
+			for (String statement : problem.getBackground())
+				printer.println(statement);
+			for (Display display : problem.getDisplays())
+				printer.println(convert(display));
+			printer.println();
+			printer.println("%%% E. Examples");
+			for (Example example : problem.getExamples())
+				for (String statement : convert(example))
+					printer.println(statement);
+			printer.println();
+			printer.println("%%% M. Modes");
+			for (ModeH mode : problem.getModeHs())
+				for (String statement : convert(mode))
+					printer.println(statement);
+			printer.println();
+			printer.close();
 			return true;
-		} catch (IOException e) {
-			Logger.error(String.format("cannot write to '%s'", path.getFileName().toString()));
+		} catch (Exception e) {
+			Logger.error("cannot stream data to process");
 		}
 		return false;
 	}
 
-	public static String toString(Grounding grounding) {
-		if (null == grounding)
-			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.convert(Grounding): " + grounding);
-		StringBuilder builder = new StringBuilder();
-		for (String filter : convert(grounding))
-			builder.append(filter + "\n");
-		builder.append("\n");
-		builder.append("%%% B. Background\n");
-		for (String statement : grounding.getBackground())
-			builder.append(statement + "\n");
-		for (Display display : grounding.getDisplays())
-			builder.append(convert(display) + "\n");
-		builder.append("\n");
-		builder.append("%%% E. Examples\n");
-		for (Example example : grounding.getExamples())
-			for (String statement : convert(example))
-				builder.append(statement + "\n");
-		builder.append("\n");
-		builder.append("%%% M. Modes\n");
-		builder.append("{ use_clause_literal(V1,0) }:-clause(V1).\n");
-		builder.append("{ use_clause_literal(V1,V2) }:-clause(V1),literal(V1,V2).\n");
-		builder.append("\n");
-		for (String statement : convert(grounding.getGeneralisation()))
-			builder.append(statement + "\n");
-		return builder.toString();
+	public static boolean save(Problem problem, Path path) {
+		if (null == problem)
+			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, Path): " + problem);
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Problem, Path): " + path);
+		try {
+			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
+			if (!Files.exists(folder))
+				Files.createDirectory(folder);
+			Path file = folder.resolve(path.getFileName());
+			try {
+				return save(problem, new FileOutputStream(file.toFile()));
+			} catch (IOException e) {
+				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
+			}
+		} catch (IOException e) {
+			Logger.warning(false, "cannot create 'temp' folder (do we have rights?)");
+			System.err.println(e);
+		}
+		return false;
 	}
 
-	public static String toString(Problem problem) {
-		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.convert(Problem): " + problem);
-		StringBuilder builder = new StringBuilder();
-		for (String filter : convert(problem))
-			builder.append(filter + "\n");
-		builder.append("\n");
-		builder.append("%%% B. Background\n");
-		for (String statement : problem.getBackground())
-			builder.append(statement + "\n");
-		for (Display display : problem.getDisplays())
-			builder.append(convert(display) + "\n");
-		builder.append("\n");
-		builder.append("%%% E. Examples\n");
-		for (Example example : problem.getExamples())
-			for (String statement : convert(example))
-				builder.append(statement + "\n");
-		builder.append("\n");
-		builder.append("%%% M. Modes\n");
-		for (ModeH mode : problem.getModeHs())
-			for (String statement : convert(mode))
-				builder.append(statement + "\n");
-		return builder.toString();
-	}
+	// public static String toString(Problem problem) {
+	// if (null == problem)
+	// throw new
+	// IllegalArgumentException("Illegal 'problem' argument in Utils.convert(Problem): "
+	// + problem);
+	// StringBuilder builder = new StringBuilder();
+	// for (String filter : convert(problem))
+	// builder.append(filter + "\n");
+	// builder.append("\n");
+	// builder.append("%%% B. Background\n");
+	// for (String statement : problem.getBackground())
+	// builder.append(statement + "\n");
+	// for (Display display : problem.getDisplays())
+	// builder.append(convert(display) + "\n");
+	// builder.append("\n");
+	// builder.append("%%% E. Examples\n");
+	// for (Example example : problem.getExamples())
+	// for (String statement : convert(example))
+	// builder.append(statement + "\n");
+	// builder.append("\n");
+	// builder.append("%%% M. Modes\n");
+	// for (ModeH mode : problem.getModeHs())
+	// for (String statement : convert(mode))
+	// builder.append(statement + "\n");
+	// return builder.toString();
+	// }
+
+	// public static String toString(Grounding grounding) {
+	// if (null == grounding)
+	// throw new
+	// IllegalArgumentException("Illegal 'grounding' argument in Utils.convert(Grounding): "
+	// + grounding);
+	// StringBuilder builder = new StringBuilder();
+	// for (String filter : convert(grounding))
+	// builder.append(filter + "\n");
+	// builder.append("\n");
+	// builder.append("%%% B. Background\n");
+	// for (String statement : grounding.getBackground())
+	// builder.append(statement + "\n");
+	// for (Display display : grounding.getDisplays())
+	// builder.append(convert(display) + "\n");
+	// builder.append("\n");
+	// builder.append("%%% E. Examples\n");
+	// for (Example example : grounding.getExamples())
+	// for (String statement : convert(example))
+	// builder.append(statement + "\n");
+	// builder.append("\n");
+	// builder.append("%%% M. Modes\n");
+	// builder.append("{ use_clause_literal(V1,0) }:-clause(V1).\n");
+	// builder.append("{ use_clause_literal(V1,V2) }:-clause(V1),literal(V1,V2).\n");
+	// builder.append("\n");
+	// for (String statement : convert(grounding.getGeneralisation()))
+	// builder.append(statement + "\n");
+	// return builder.toString();
+	// }
 
 }
