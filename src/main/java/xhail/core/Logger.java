@@ -137,6 +137,7 @@ public class Logger {
 		System.out.println("  --blind,-b          : Remove colours from the program output");
 		System.out.println("  --clasp,-c <path>   : Use given <path> as path for clasp 3");
 		System.out.println("  --debug,-d          : Leave temporary files in ./temp");
+		System.out.println("  --format,-f         : Nicely format and print current problem");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
 		System.out.println("  --help,-h           : Print this help and exit");
 		System.out.println("  --kill,-k <num>     : Stop the program after <num> seconds");
@@ -159,8 +160,8 @@ public class Logger {
 			throw new IllegalArgumentException("Illegal 'answers' argument in Logger.stampAnswers(Answers): " + answers);
 		Config config = answers.getConfig();
 		Iterator<Answer> iterator = answers.iterator();
+		System.out.println();
 		if (iterator.hasNext()) {
-			System.out.println();
 			for (int id = 1; iterator.hasNext() && config.isAll() || 1 == id; id++) {
 				Answer answer = iterator.next();
 				stampSection(config, String.format("Answer %d:", id));
@@ -170,8 +171,8 @@ public class Logger {
 				stampSubSection(config, "hypothesis", convertClauses(answer.getHypothesis()));
 				stampSubSection(config, "uncovered", convertLiterals(answer.getCover()));
 				stampSignature(config, answer.getSignature());
+				System.out.println();
 			}
-			System.out.println();
 			int remaining = answers.size() - 1;
 			if (!config.isAll() && remaining > 0) {
 				if (!config.isBlind())

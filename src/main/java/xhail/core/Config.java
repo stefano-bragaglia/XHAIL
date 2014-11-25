@@ -21,12 +21,14 @@ public class Config {
 		private Path clasp = null;
 		private boolean debug = false;
 		String errors = "";
+		private boolean format = false;
 		private Path gringo = null;
 		private boolean help = false;
 		private long kill = 0L;
 		private boolean mute = false;
 		private boolean search = false;
 		private LinkedHashSet<Path> sources = new LinkedHashSet<>();
+
 		private boolean version = false;
 
 		public Builder addSource(String source) {
@@ -88,6 +90,11 @@ public class Config {
 			return this;
 		}
 
+		public Builder setFormat(boolean format) {
+			this.format = format;
+			return this;
+		}
+
 		public Builder setGringo(String gringo) {
 			if (null == gringo || (gringo = gringo.trim()).isEmpty())
 				throw new IllegalArgumentException("Illegal 'gringo' argument in Application.Builder.setGringo(String): " + gringo);
@@ -134,6 +141,8 @@ public class Config {
 
 	private final boolean debug;
 
+	private final boolean format;
+
 	private Path gringo;
 
 	private final boolean help;
@@ -142,17 +151,13 @@ public class Config {
 
 	private final boolean mute;
 
+	private final String name;
+
 	private final boolean search;
 
 	private final Path[] sources;
 
 	private final boolean version;
-
-	private final String name;
-
-	public final String getName() {
-		return name;
-	}
 
 	private Config(Builder builder) {
 		if (null == builder)
@@ -161,6 +166,7 @@ public class Config {
 		this.blind = builder.blind;
 		this.clasp = builder.clasp;
 		this.debug = builder.debug;
+		this.format = builder.format;
 		this.gringo = builder.gringo;
 		this.help = builder.help;
 		this.kill = builder.kill;
@@ -192,8 +198,16 @@ public class Config {
 		return kill;
 	}
 
+	public final String getName() {
+		return name;
+	}
+
 	public final Path[] getSources() {
 		return sources;
+	}
+
+	public final boolean hasSources() {
+		return sources.length > 0;
 	}
 
 	public final boolean isAll() {
@@ -206,6 +220,10 @@ public class Config {
 
 	public final boolean isDebug() {
 		return debug;
+	}
+
+	public final boolean isFormat() {
+		return format;
 	}
 
 	public final boolean isHelp() {
@@ -230,10 +248,6 @@ public class Config {
 
 	public void setGringo(Path gringo) {
 		this.gringo = gringo;
-	}
-
-	public final boolean hasSources() {
-		return sources.length > 0;
 	}
 
 }

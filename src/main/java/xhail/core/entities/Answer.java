@@ -4,6 +4,7 @@
 package xhail.core.entities;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import xhail.core.Buildable;
 import xhail.core.Utils;
@@ -175,7 +176,7 @@ public class Answer {
 
 		this.cover = null == builder.hypothesis ? grounding.getCover() : hypothesis.getCover();
 		this.delta = grounding.getDelta();
-		this.hypothesisClauses = hypothesis.explains();
+		this.hypothesisClauses = null == builder.hypothesis? Collections.emptySet(): hypothesis.explains();
 		this.kernel = grounding.getKernel();
 		this.model = null == builder.hypothesis ? grounding.getModel() : hypothesis.getModel();
 

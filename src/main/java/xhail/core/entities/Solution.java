@@ -4,6 +4,7 @@
 package xhail.core.entities;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,15 +16,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
 import xhail.core.Logger;
 import xhail.core.Pipe;
 import xhail.core.Utils;
+import xhail.core.parser.OutputStates;
 import xhail.core.parser.Parser;
+import xhail.core.parser.Splitter;
 import xhail.core.terms.Atom;
 
 /**
@@ -34,17 +35,11 @@ public class Solution implements Iterable<Set<Atom>> {
 
 	public static class Builder implements Buildable<Solution> {
 
-		private final String[] gringo;
-
-		private final String[] clasp;
-
 		private static final String[] ARGS = { "--opt-mode=optN", "--verbose=0" };
 
 		private static final String ERROR = "ERROR: ";
 
 		private static final String OPTIMIZATION = "Optimization: ";
-
-		private final static Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
 
 		private static final String WARNING = "% warning: ";
 
@@ -52,7 +47,11 @@ public class Solution implements Iterable<Set<Atom>> {
 
 		private Set<Set<String>> answers = new HashSet<>();
 
+		private final String[] clasp;
+
 		private Config config;
+
+		private final String[] gringo;
 
 		private String[] values = new String[0];
 
@@ -94,19 +93,15 @@ public class Solution implements Iterable<Set<Atom>> {
 							this.answers.add(answer);
 							this.answer = null;
 						}
-					} else {
-						this.answer = new HashSet<>();
-						Matcher regexMatcher = regex.matcher(line);
-						while (regexMatcher.find())
-							this.answer.add(regexMatcher.group());
-					}
+					} else
+						this.answer = new HashSet<>(new Splitter(OutputStates.NORMAL).parse(new ByteArrayInputStream(line.getBytes())));
 				}
 				reader.close();
 			} catch (IOException e) {
 				Logger.error("cannot read from process");
 			}
 		}
-		
+
 		private void handle(String content) {
 			if (null == content || (content = content.trim()).isEmpty())
 				throw new IllegalArgumentException("Illegal 'content' argument in Solution.Builder.handle(String): " + content);

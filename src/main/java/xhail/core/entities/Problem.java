@@ -17,6 +17,7 @@ import xhail.core.Buildable;
 import xhail.core.Config;
 import xhail.core.Logger;
 import xhail.core.Utils;
+import xhail.core.parser.InputStates;
 import xhail.core.parser.Parser;
 import xhail.core.parser.Splitter;
 import xhail.core.statements.Display;
@@ -136,7 +137,7 @@ public class Problem {
 		public Builder parse(InputStream stream) {
 			if (null == stream)
 				throw new IllegalArgumentException("Illegal 'stream' argument in Problem.Builder.parse(InputStream): " + stream);
-			for (String statement : new Splitter().parse(stream))
+			for (String statement : new Splitter(InputStates.NORMAL).parse(stream))
 				addBackground(statement);
 			return this;
 		}
@@ -145,8 +146,7 @@ public class Problem {
 			if (null == path)
 				throw new IllegalArgumentException("Illegal 'path' argument in Problem.Builder.parse(Path): " + path);
 			try {
-				for (String statement : new Splitter().parse(new FileInputStream(path.toFile())))
-					addBackground(statement);
+				parse(new FileInputStream(path.toFile()));
 			} catch (FileNotFoundException e) {
 				Logger.error("cannot find file '" + path.getFileName().toString() + "'");
 			}

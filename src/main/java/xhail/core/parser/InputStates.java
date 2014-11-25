@@ -7,15 +7,8 @@ package xhail.core.parser;
  * @author stefano
  *
  */
-public enum States implements State {
+public enum InputStates implements State {
 
-	INITIAL {
-		public boolean process(Context context) {
-			// super.process(context);
-			context.setState(NORMAL);
-			return false;
-		}
-	},
 	NORMAL {
 		public boolean process(Context context) {
 			int ch = context.read();
@@ -62,9 +55,6 @@ public enum States implements State {
 		}
 	},
 	DOT {
-//		context.append(statement);
-//		statement = "";
-
 		public boolean process(Context context) {
 			int ch = context.read();
 			switch (ch) {
@@ -111,6 +101,10 @@ public enum States implements State {
 					context.append(statement);
 					context.setState(EOF);
 					break;
+				case '\\':
+					statement += (char) ch;
+					context.setState(ESCAPE);
+					break;
 				case '\"':
 					statement += (char) ch;
 					context.setState(NORMAL);
@@ -120,6 +114,21 @@ public enum States implements State {
 			}
 			return false;
 		}
+	},
+	ESCAPE {
+		public boolean process(Context context) {
+			int ch = context.read();
+			switch (ch) {
+				case -1:
+					context.append(statement);
+					context.setState(EOF);
+					break;
+				default:
+					statement += (char) ch;
+					context.setState(STRING);
+			}
+			return false;
+		}		
 	},
 	COMMENT {
 		public boolean process(Context context) {

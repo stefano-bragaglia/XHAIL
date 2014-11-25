@@ -70,6 +70,10 @@ public class Application implements Callable<Answers> {
 					case "--debug":
 						builder.setDebug(true);
 						break;
+					case "-f":
+					case "--format":
+						builder.setFormat(true);
+						break;
 					case "-g":
 					case "--gringo":
 						if (args.length - i <= 1)
@@ -112,6 +116,8 @@ public class Application implements Callable<Answers> {
 
 	private final long kill;
 
+	private final boolean format;
+
 	private final Problem problem;
 
 	private Application(Config config) {
@@ -123,33 +129,36 @@ public class Application implements Callable<Answers> {
 		if (config.isVersion())
 			Logger.version();
 		Logger.header(config);
-		Finder finder = new Finder(" 3.", "gringo", "clasp");
-		finder.test("gringo", config.getGringo());
-		finder.test("clasp", config.getClasp());
-		if (!finder.isFound() && config.isSearch()) {
-			Logger.message("Locating needed applications...");
-			boolean found = false;
-			for (int i = 0; !found && i < PATHS.length; i++)
-				found = finder.find(PATHS[i], false);
-			if (!found)
-				found = finder.find(ROOT, true);
-			config.setGringo(finder.get("gringo"));
-			config.setClasp(finder.get("clasp"));
-			if (found)
-				Logger.found(config);
-		}
-		if (!finder.isFound()) {
-			String message = "";
-			if (null == finder.get("gringo"))
-				message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
-			if (null == finder.get("clasp"))
-				if (message.isEmpty())
-					message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
-				else
-					message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
-			Logger.error(message);
+		if (!config.isFormat()) {
+			Finder finder = new Finder(" 3.", "gringo", "clasp");
+			finder.test("gringo", config.getGringo());
+			finder.test("clasp", config.getClasp());
+			if (!finder.isFound() && config.isSearch()) {
+				Logger.message("Locating needed applications...");
+				boolean found = false;
+				for (int i = 0; !found && i < PATHS.length; i++)
+					found = finder.find(PATHS[i], false);
+				if (!found)
+					found = finder.find(ROOT, true);
+				config.setGringo(finder.get("gringo"));
+				config.setClasp(finder.get("clasp"));
+				if (found)
+					Logger.found(config);
+			}
+			if (!finder.isFound()) {
+				String message = "";
+				if (null == finder.get("gringo"))
+					message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
+				if (null == finder.get("clasp"))
+					if (message.isEmpty())
+						message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
+					else
+						message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
+				Logger.error(message);
+			}
 		}
 
+		this.format = config.isFormat();
 		this.kill = config.getKill();
 		Problem.Builder problem = new Problem.Builder(config);
 		if (config.hasSources())
@@ -175,17 +184,23 @@ public class Application implements Callable<Answers> {
 	 * 
 	 */
 	public void execute() {
-		try {
-			final Future<Answers> task = service.submit(this);
-			Answers answers = kill > 0 ? task.get(kill, TimeUnit.SECONDS) : task.get();
-			Logger.stampAnswers(answers);
-		} catch (final TimeoutException e) {
-			Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
-		} catch (final Exception e) {
-			Logger.error("unexpected runtime error:\n  " + e.getMessage());
-		} finally {
-			service.shutdownNow();
-		}
+		if (format)
+			System.out.println("\n" + problem.toString());
+		else
+			try {
+				final Future<Answers> task = service.submit(this);
+				Answers answers = kill > 0 ? task.get(kill, TimeUnit.SECONDS) : task.get();
+				Logger.stampAnswers(answers);
+			} catch (final TimeoutException e) {
+				Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
+			} catch (final Exception e) {
+				String message = "unexpected runtime error:\n  " + e.getMessage();
+				for (StackTraceElement element : e.getStackTrace())
+					message += "\n    " + element.toString();
+				Logger.error(message);
+			} finally {
+				service.shutdownNow();
+			}
 	}
 
 }

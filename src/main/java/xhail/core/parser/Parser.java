@@ -292,12 +292,15 @@ public class Parser {
 		if (!Character.isLowerCase(current))
 			throw new ParserErrorException("expected 'a..z' but '" + current + "' found in '" + source + "'");
 		String result = "" + current;
-		while (iterator.hasNext()) {
+		if (!iterator.hasNext())
 			current = iterator.next();
-			if (null == current || !(Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current))
-				break;
-			result += current;
-		}
+		else
+			while (iterator.hasNext()) {
+				current = iterator.next();
+				if (null == current || !(Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current))
+					break;
+				result += current;
+			}
 		return result;
 	}
 
