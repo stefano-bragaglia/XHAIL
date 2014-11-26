@@ -3,11 +3,9 @@
  */
 package xhail.core;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author stefano
@@ -15,36 +13,40 @@ import java.io.OutputStreamWriter;
  */
 public class Pipe implements Runnable {
 
-	private BufferedReader reader;
+	private InputStream input;
 
-	private BufferedWriter writer;
+	private OutputStream output;
 
 	public Pipe(Process source, Process target) {
 		if (null == source)
 			throw new IllegalArgumentException("Illegal 'source' argument in Pipe.Pipe(Process, Process): " + source);
 		if (null == target)
 			throw new IllegalArgumentException("Illegal 'target' argument in Pipe.Pipe(Process, Process): " + target);
-		this.reader = new BufferedReader(new InputStreamReader(source.getInputStream()));
-		this.writer = new BufferedWriter(new OutputStreamWriter(target.getOutputStream()));
+		this.input = source.getInputStream();
+		this.output = target.getOutputStream();
 	}
 
 	@Override
 	public void run() {
 		try {
-			String line;
-			while (null != (line = reader.readLine()))
-				writer.write(line + "\n");
+			int read = 1;
+			byte[] buffer = new byte[512];
+			while (read > -1) {
+				read = input.read(buffer, 0, buffer.length);
+				if (read > -1)
+					output.write(buffer, 0, read);
+			}
 		} catch (IOException e) {
 			Logger.error("broken pipe between Gringo and Clasp");
 		} finally {
 			try {
-				reader.close();
+				input.close();
 			} catch (IOException e) {
 				Logger.warning(false, "cannot close the pipe from Gringo");
 				e.printStackTrace();
 			}
 			try {
-				writer.close();
+				output.close();
 			} catch (IOException e) {
 				Logger.warning(false, "cannot close the pipe to Clasp");
 			}

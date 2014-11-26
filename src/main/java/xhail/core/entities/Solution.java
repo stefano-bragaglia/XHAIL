@@ -34,6 +34,8 @@ import xhail.core.terms.Atom;
  */
 public class Solution implements Iterable<Set<Atom>> {
 
+	public static int calls = 0;
+
 	public static class Builder implements Buildable<Solution> {
 
 		private static final String[] ARGS = { "--opt-mode=optN", "--verbose=0" };
@@ -110,7 +112,7 @@ public class Solution implements Iterable<Set<Atom>> {
 			this.answers.clear();
 			this.values = new String[0];
 			this.gringo[1] = tempfile;
-
+			calls += 1;
 			String line;
 			BufferedReader reader;
 			try {
