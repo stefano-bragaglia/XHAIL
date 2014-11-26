@@ -188,7 +188,7 @@ public class Logger {
 		}
 		stampStat(config, String.format("Answers     : %d", answers.count()));
 		stampStat(config, String.format("  optimal   : %d", answers.size()));
-		stampStat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : 1));
+		stampStat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
 		stampStat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", //
 				(System.nanoTime() - Application.time) / NORMALIZER, //
 				(Application.loading - Application.time) / NORMALIZER, //

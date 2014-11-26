@@ -8,7 +8,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -60,7 +61,7 @@ public class Solution implements Iterable<Set<Atom>> {
 				throw new IllegalArgumentException("Illegal 'config' argument in Solution.Builder(Config): " + config);
 			this.config = config;
 			this.clasp = Utils.combine(config.getClasp(), ARGS);
-			this.gringo = Utils.combine(config.getGringo());
+			this.gringo = Utils.combine(config.getGringo(), " ");
 		}
 
 		@Override
@@ -102,59 +103,68 @@ public class Solution implements Iterable<Set<Atom>> {
 			}
 		}
 
-		public Builder parse(Grounding grounding) {
-			if (null == grounding)
-				throw new IllegalArgumentException("Illegal 'grounding' argument in Solution.Builder.parse(Grounding): " + grounding);
+		private void parse(String tempfile) {
+			if (null == tempfile || (tempfile = tempfile.trim()).isEmpty())
+				throw new IllegalArgumentException("Illegal 'name' argument in Solution.Builder.parse(String): " + tempfile);
 			this.answer = null;
 			this.answers.clear();
 			this.values = new String[0];
+			this.gringo[1] = tempfile;
 
 			String line;
 			BufferedReader reader;
 			try {
-				Process gringo = new ProcessBuilder(this.gringo).start();
 				// Input
-				Utils.save(grounding, gringo.getOutputStream());
-				// Error
+				Process gringo = new ProcessBuilder(this.gringo).start();
 				try {
-					String message = "";
-					reader = new BufferedReader(new InputStreamReader(gringo.getErrorStream()));
-					while (null != (line = reader.readLine())) {
-						line = line.trim();
-						if (!line.isEmpty()) {
-							if (!message.isEmpty())
-								message += "\n  " + line;
-							else if (line.startsWith(ERROR))
-								message = line.substring(ERROR.length());
-							else if (line.startsWith(WARNING))
-								Logger.warning(config.isMute(), line.substring(WARNING.length()));
-							else
-								System.err.println(line);
-						}
-					}
-					if (!message.isEmpty())
-						Logger.error(message);
-					reader.close();
+					Process clasp = new ProcessBuilder(this.clasp).start();
+					// Pipe
 					try {
-						Process clasp = new ProcessBuilder(this.clasp).start();
-						// Pipe
-						try {
-							Pipe pipe = new Pipe(gringo, clasp);
-							new Thread(pipe).start();
-							clasp.waitFor();
-							// Output
-							handle(clasp.getInputStream());
-						} catch (IllegalThreadStateException | InterruptedException e) {
-							Logger.error("broken pipe among 'gringo' and 'clasp'");
+						Pipe pipe = new Pipe(gringo, clasp);
+						new Thread(pipe).start();
+						clasp.waitFor();
+						// Error
+						String message = "";
+						reader = new BufferedReader(new InputStreamReader(clasp.getErrorStream()));
+						while (null != (line = reader.readLine())) {
+							line = line.trim();
+							if (!line.isEmpty()) {
+								if (!message.isEmpty())
+									message += "\n  " + line;
+								else if (line.startsWith(ERROR))
+									message = line.substring(ERROR.length());
+								else if (line.startsWith(WARNING))
+									Logger.warning(config.isMute(), line.substring(WARNING.length()));
+								else
+									System.err.println(line);
+							}
 						}
-					} catch (IOException e) {
-						Logger.error("cannot instantiate the 'clasp' process");
+						if (!message.isEmpty())
+							Logger.error(message);
+						reader.close();
+						// Output
+						handle(clasp.getInputStream());
+					} catch (IllegalThreadStateException | InterruptedException e) {
+						Logger.error("broken pipe among 'gringo' and 'clasp'");
 					}
 				} catch (IOException e) {
-					Logger.error("cannot send data to the 'gringo' process");
+					Logger.error("cannot instantiate the 'clasp' process");
 				}
 			} catch (IOException e) {
 				Logger.error("cannot instantiate the 'gringo' process");
+			}
+		}
+
+		public Builder parse(Grounding grounding) {
+			if (null == grounding)
+				throw new IllegalArgumentException("Illegal 'grounding' argument in Solution.Builder.parse(Grounding): " + grounding);
+			try {
+				final Path path = Files.createTempFile("xhail", ".tmp");
+				path.toFile().deleteOnExit();
+				Utils.save(grounding, Files.newOutputStream(path));
+				parse(path.toAbsolutePath().toString());
+			} catch (IOException e) {
+				Logger.error("cannot send data to processes");
 			}
 			return this;
 		}
@@ -162,59 +172,13 @@ public class Solution implements Iterable<Set<Atom>> {
 		public Builder parse(Problem problem) {
 			if (null == problem)
 				throw new IllegalArgumentException("Illegal 'problem' argument in Solution.Builder.parse(Problem): " + problem);
-			this.answer = null;
-			this.answers.clear();
-			this.values = new String[0];
-			String line;
-			BufferedReader reader;
 			try {
-				Process gringo = new ProcessBuilder(this.gringo).start();
-				// Input
-				Utils.save(problem, gringo.getOutputStream());
-				
-//				try {
-					
-					try {
-						Process clasp = new ProcessBuilder(this.clasp).start();
-						// Pipe
-						try {
-							Pipe pipe = new Pipe(gringo, clasp);
-							new Thread(pipe).start();
-							clasp.waitFor();
-							
-							// Error
-							String message = "";
-							reader = new BufferedReader(new InputStreamReader(clasp.getErrorStream()));
-							while (null != (line = reader.readLine())) {
-								line = line.trim();
-								if (!line.isEmpty()) {
-									if (!message.isEmpty())
-										message += "\n  " + line;
-									else if (line.startsWith(ERROR))
-										message = line.substring(ERROR.length());
-									else if (line.startsWith(WARNING))
-										Logger.warning(config.isMute(), line.substring(WARNING.length()));
-									else
-										System.err.println(line);
-								}
-							}
-							if (!message.isEmpty())
-								Logger.error(message);
-							reader.close();
-							
-							// Output
-							handle(clasp.getInputStream());
-						} catch (IllegalThreadStateException | InterruptedException e) {
-							Logger.error("broken pipe among 'gringo' and 'clasp'");
-						}
-					} catch (IOException e) {
-						Logger.error("cannot instantiate the 'clasp' process");
-					}
-//				} catch (IOException e) {
-//					Logger.error("cannot send data to the 'gringo' process");
-//				}
+				final Path path = Files.createTempFile("xhail", ".tmp");
+				path.toFile().deleteOnExit();
+				Utils.save(problem, Files.newOutputStream(path));
+				parse(path.toAbsolutePath().toString());
 			} catch (IOException e) {
-				Logger.error("cannot instantiate the 'gringo' process");
+				Logger.error("cannot send data to processes");
 			}
 			return this;
 		}

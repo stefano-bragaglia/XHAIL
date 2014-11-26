@@ -177,6 +177,10 @@ public class Answers implements Iterable<Answer> {
 		return result;
 	}
 
+	public final boolean isEmpty() {
+		return (0 == this.answers.length);
+	}
+
 	@Override
 	public Iterator<Answer> iterator() {
 		return new ArrayIterator<>(answers);
@@ -185,7 +189,7 @@ public class Answers implements Iterable<Answer> {
 	public final int size() {
 		return answers.length;
 	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
