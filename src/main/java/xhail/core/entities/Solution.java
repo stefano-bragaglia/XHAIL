@@ -99,6 +99,10 @@ public class Solution implements Iterable<Set<Atom>> {
 					} else
 						this.answer = new HashSet<>(new Splitter(OutputStates.NORMAL).parse(new ByteArrayInputStream(line.getBytes())));
 				}
+				if (null != answer) {
+					this.answers.add(answer);
+					this.answer = null;					
+				}
 				reader.close();
 			} catch (IOException e) {
 				Logger.error("cannot read from process");
