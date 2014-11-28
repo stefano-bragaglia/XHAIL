@@ -149,31 +149,33 @@ public class Application implements Callable<Answers> {
 		if (config.isVersion())
 			Logger.version();
 		Logger.header(config);
-		Finder finder = new Finder(" 3.", "gringo", "clasp");
-		finder.test("gringo", config.getGringo());
-		finder.test("clasp", config.getClasp());
-		if (!finder.isFound() && config.isSearch()) {
-			Logger.message("Locating needed applications...");
-			boolean found = false;
-			for (int i = 0; !found && i < PATHS.length; i++)
-				found = finder.find(PATHS[i], false);
-			if (!found)
-				found = finder.find(ROOT, true);
-			config.setGringo(finder.get("gringo"));
-			config.setClasp(finder.get("clasp"));
-			if (found)
-				Logger.found(config);
-		}
-		if (!finder.isFound()) {
-			String message = "";
-			if (null == finder.get("gringo"))
-				message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
-			if (null == finder.get("clasp"))
-				if (message.isEmpty())
-					message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
-				else
-					message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
-			Logger.error(message);
+		if (!config.isPrettify() || config.getIndex() > 0) {
+			Finder finder = new Finder(" 3.", "gringo", "clasp");
+			finder.test("gringo", config.getGringo());
+			finder.test("clasp", config.getClasp());
+			if (!finder.isFound() && config.isSearch()) {
+				Logger.message("Locating needed applications...");
+				boolean found = false;
+				for (int i = 0; !found && i < PATHS.length; i++)
+					found = finder.find(PATHS[i], false);
+				if (!found)
+					found = finder.find(ROOT, true);
+				config.setGringo(finder.get("gringo"));
+				config.setClasp(finder.get("clasp"));
+				if (found)
+					Logger.found(config);
+			}
+			if (!finder.isFound()) {
+				String message = "";
+				if (null == finder.get("gringo"))
+					message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
+				if (null == finder.get("clasp"))
+					if (message.isEmpty())
+						message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
+					else
+						message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
+				Logger.error(message);
+			}
 		}
 
 		this.config = config;
