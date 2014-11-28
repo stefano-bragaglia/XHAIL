@@ -6,15 +6,16 @@ package xhail.core.entities;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
-import xhail.Application;
 import xhail.core.Buildable;
 import xhail.core.Config;
+import xhail.core.Dialer;
 import xhail.core.Logger;
 import xhail.core.Utils;
 import xhail.core.parser.InputStates;
@@ -24,13 +25,12 @@ import xhail.core.statements.Display;
 import xhail.core.statements.Example;
 import xhail.core.statements.ModeB;
 import xhail.core.statements.ModeH;
-import xhail.core.terms.Atom;
 
 /**
  * @author stefano
  *
  */
-public class Problem {
+public class Problem implements Solvable {
 
 	public static class Builder implements Buildable<Problem> {
 
@@ -137,7 +137,7 @@ public class Problem {
 		public Builder parse(InputStream stream) {
 			if (null == stream)
 				throw new IllegalArgumentException("Illegal 'stream' argument in Problem.Builder.parse(InputStream): " + stream);
-			for (String statement : new Splitter(InputStates.NORMAL).parse(stream))
+			for (String statement : new Splitter(InputStates.INITIAL).parse(stream))
 				addBackground(statement);
 			return this;
 		}
@@ -260,7 +260,7 @@ public class Problem {
 		return true;
 	}
 
-	public Collection<String> getBackground() {
+	public final Collection<String> getBackground() {
 		return background;
 	}
 
@@ -268,19 +268,19 @@ public class Problem {
 		return config;
 	}
 
-	public Collection<Display> getDisplays() {
+	public final Collection<Display> getDisplays() {
 		return displays;
 	}
 
-	public Collection<Example> getExamples() {
+	public final Collection<Example> getExamples() {
 		return examples;
 	}
 
-	public Collection<ModeB> getModeBs() {
+	public final Collection<ModeB> getModeBs() {
 		return modeBs;
 	}
 
-	public Collection<ModeH> getModeHs() {
+	public final Collection<ModeH> getModeHs() {
 		return modeHs;
 	}
 
@@ -296,50 +296,25 @@ public class Problem {
 		return result;
 	}
 
+	public final boolean needsModel() {
+		return !displays.isEmpty();
+	}
+
+	@Override
+	public boolean save(OutputStream stream) {
+		return Utils.save(this, stream);
+	}
+
 	public final Answers solve() {
-		int i = 1;
-		long time;
-		Answers.Builder result = new Answers.Builder(config);
-		if (config.isDebug())
-			Utils.save(this, Paths.get(config.getName() + "_0_abd.lp"));
-		// 1. Run the abductive + deductive phases
-		time = System.nanoTime();
-		Solution abdPhase = new Solution.Builder(config).parse(this).build();
-		result.addAbduction(System.nanoTime() - time);
-		for (Set<Atom> abdAtoms : abdPhase.getAnswers()) {
-			// 2. For each grounding (or best answer for phase), start to build
-			// an answer
-			Grounding grounding = new Grounding.Builder(this).addAtoms(abdAtoms).build();
-			Answer.Builder builder = new Answer.Builder(grounding);
-			if (config.isDebug())
-				Utils.save(grounding, Paths.get(config.getName() + "_" + i++ + "_ind.lp"));
-			// 3. If the grounding has no generalised clauses
-			time = System.nanoTime();
-			grounding.getGeneralisation();
-			result.addDeduction(System.nanoTime() - time);
-			if (!grounding.isInducible()) {
-				// 3a. Append the grounding as an answer
-				result.addAnswer(builder.build());
-				if (Application.answer < 0)
-					Application.answer = System.nanoTime();
-			} else {
-				// 3b. Run the inductive phases
-				time = System.nanoTime();
-				Solution indPhase = new Solution.Builder(config).parse(grounding).build();
-				result.addInduction(System.nanoTime() - time);
-				for (Set<Atom> indAtoms : indPhase.getAnswers()) {
-					// 4. For each hypothesis (or best answer for phase),
-					// complete the answer
-					Hypothesis hypothesis = new Hypothesis.Builder(grounding).addAtoms(indAtoms).build();
-					// 5. Append the grounding + hypothesis as an answer
-					result.addAnswer(builder.clone().setHypothesis(hypothesis).build());
-					if (Application.answer < 0)
-						Application.answer = System.nanoTime();
-				}
-			}
-			// NB: 'Answers' organises answers and only show the optimal ones
+		Answers.Builder builder = new Answers.Builder(config);
+		Values values = new Values();
+		Dialer dialer = new Dialer.Builder(config, this).build();
+		Map.Entry<Values, Collection<String>> entry = Answers.timeAbduction(dialer);
+		for (String output : entry.getValue()) {
+			Grounding grounding = Answers.timeDeduction(this, output);
+			values = grounding.solve(values, builder);
 		}
-		return result.build();
+		return builder.build();
 	}
 
 	@Override

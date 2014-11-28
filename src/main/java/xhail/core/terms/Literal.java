@@ -11,7 +11,7 @@ import xhail.core.Buildable;
  * @author stefano
  *
  */
-public class Literal {
+public class Literal implements Comparable<Literal> {
 
 	public static class Builder implements Buildable<Literal> {
 
@@ -68,6 +68,14 @@ public class Literal {
 	}
 
 	@Override
+	public int compareTo(Literal o) {
+		int result = atom.compareTo(o.atom);
+		if (0 == result)
+			return Boolean.compare(o.negated, negated);
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -104,12 +112,12 @@ public class Literal {
 		return atom.getScheme();
 	}
 
-	public final int getWeight() {
-		return atom.getWeight();
-	}
-	
 	public Collection<Variable> getVariables() {
 		return atom.getVariables();
+	}
+
+	public final int getWeight() {
+		return atom.getWeight();
 	}
 
 	@Override

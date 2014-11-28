@@ -261,11 +261,11 @@ public class Scheme implements SchemeTerm, Iterable<Scheme> {
 	}
 
 	@Override
-	public boolean subsumes(final Term term, final Set<Atom> facts) {
+	public boolean subsumes(final Term term, final Collection<Atom> facts) {
 		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Scheme.subsumes(Term): " + term);
+			throw new IllegalArgumentException("Illegal 'term' argument in Scheme.subsumes(Term, Collection<Atom>): " + term);
 		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Scheme.subsumes(Term, Set<Atom>): " + facts);
+			throw new IllegalArgumentException("Illegal 'facts' argument in Scheme.subsumes(Term, Collection<Atom>): " + facts);
 		if (term instanceof Atom) {
 			Atom other = (Atom) term;
 			boolean result = identifier.equals(other.getIdentifier()) && terms.length == other.getArity();

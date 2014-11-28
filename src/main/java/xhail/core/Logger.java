@@ -7,16 +7,14 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
-import xhail.Application;
 import xhail.core.entities.Answer;
-import xhail.core.entities.Answer.Signature;
 import xhail.core.entities.Answers;
-import xhail.core.entities.Solution;
 import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Literal;
@@ -39,8 +37,6 @@ public class Logger {
 
 	private static Set<String> memory = new HashSet<>();
 
-	private static final double NORMALIZER = 1_000_000_000.0;
-
 	public static final String SIGNATURE = "xhail";
 
 	public static final String VERSION = "0.5.1";
@@ -52,7 +48,7 @@ public class Logger {
 	private static String convertAtoms(Collection<Atom> atoms) {
 		if (null == atoms)
 			throw new IllegalArgumentException("Illegal 'atoms' argument in Logger.convertAtoms(Collection<Atom>): " + atoms);
-		Set<String> result = new TreeSet<>();
+		Set<String> result = new LinkedHashSet<>();
 		for (Atom atom : atoms)
 			result.add(atom.toString());
 		return StringUtils.join(result, " ");
@@ -70,7 +66,7 @@ public class Logger {
 	private static String convertLiterals(Collection<Literal> literals) {
 		if (null == literals)
 			throw new IllegalArgumentException("Illegal 'literals' argument in Logger.convertLiterals(Collection<Literal>): " + literals);
-		Set<String> result = new TreeSet<>();
+		Set<String> result = new LinkedHashSet<>();
 		for (Literal literal : literals)
 			result.add(literal.toString());
 		return StringUtils.join(result, " ");
@@ -138,11 +134,12 @@ public class Logger {
 		System.out.println("  --blind,-b          : Remove colours from the program output");
 		System.out.println("  --clasp,-c <path>   : Use given <path> as path for clasp 3");
 		System.out.println("  --debug,-d          : Leave temporary files in ./temp");
-		System.out.println("  --format,-f         : Nicely format and print current problem");
+		System.out.println("  --full,-f           : Show a more detailed output");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
 		System.out.println("  --help,-h           : Print this help and exit");
 		System.out.println("  --kill,-k <num>     : Stop the program after <num> seconds");
 		System.out.println("  --mute,-m           : Suppress warning messages");
+		System.out.println("  --prettify,-p       : Nicely format current problem");
 		System.out.println("  --search,-s         : Search for clasp 3 and gringo 3");
 		System.out.println("  --version,-v        : Print version information and exit");
 		System.out.println();
@@ -161,17 +158,21 @@ public class Logger {
 			throw new IllegalArgumentException("Illegal 'answers' argument in Logger.stampAnswers(Answers): " + answers);
 		Config config = answers.getConfig();
 		Iterator<Answer> iterator = answers.iterator();
-		System.out.println();
 		if (iterator.hasNext()) {
 			for (int id = 1; iterator.hasNext() && config.isAll() || 1 == id; id++) {
 				Answer answer = iterator.next();
 				stampSection(config, String.format("Answer %d:", id));
-				stampSubSection(config, "model", convertAtoms(answer.getModel()));
-				stampSubSection(config, "delta", convertAtoms(answer.getDelta()));
-				stampSubSection(config, "kernel", convertClauses(answer.getKernel()));
-				stampSubSection(config, "hypothesis", convertClauses(answer.getHypothesis()));
-				stampSubSection(config, "uncovered", convertLiterals(answer.getCover()));
-				stampSignature(config, answer.getSignature());
+				if (config.isFull()) {
+					if (answer.needsModel())
+						stampSubSection(config, "model", convertAtoms(answer.getModel()));
+					stampSubSection(config, "delta", convertAtoms(answer.getDelta()));
+					stampSubSection(config, "kernel", convertClauses(answer.getKernel()));
+				}
+				stampSubSection(config, "hypothesis", convertClauses(answer.getHypotheses()));
+				if (config.isFull()) {
+					stampSubSection(config, "uncovered", convertLiterals(answer.getUncover()));
+					stampSubSection(config, "covered", convertLiterals(answer.getCover()));
+				}
 				System.out.println();
 			}
 			int remaining = answers.size() - 1;
@@ -190,14 +191,11 @@ public class Logger {
 		stampStat(config, String.format("Answers     : %d", answers.count()));
 		stampStat(config, String.format("  optimal   : %d", answers.size()));
 		stampStat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
-		stampStat(config, String.format("Calls       : %d", Solution.calls));
-		stampStat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", //
-				(System.nanoTime() - Application.time) / NORMALIZER, //
-				(Application.loading - Application.time) / NORMALIZER, //
-				Application.answer < 0 ? 0 : (Application.answer - Application.time) / NORMALIZER));
-		stampStat(config, String.format("  abduction : %.3fs", answers.getAbduction() / NORMALIZER));
-		stampStat(config, String.format("  deduction : %.3fs", answers.getDeduction() / NORMALIZER));
-		stampStat(config, String.format("  induction : %.3fs\n", answers.getInduction() / NORMALIZER));
+		stampStat(config, String.format("Calls       : %d", Dialer.calls()));
+		stampStat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
+		stampStat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
+		stampStat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
+		stampStat(config, String.format("  induction : %.3fs\n", Answers.getInduction()));
 	}
 
 	public static void stampSection(Config config, String label) {
@@ -210,24 +208,13 @@ public class Logger {
 		System.out.println(label);
 	}
 
-	public static void stampSignature(Config config, Signature signature) {
-		if (null == config)
-			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampSignature(Config, Signature): " + config);
-		if (null == signature)
-			throw new IllegalArgumentException("Illegal 'signature' argument in Utils.stampSignature(Config, Signature): " + signature);
-		if (!config.isBlind())
-			System.out.print(ANSI_CYAN);
-		System.out.format("  signature:\n    %d example/s  %d clause/s  %d literal/s  %d phase/s\n", //
-				signature.getExamples() - signature.getUncovers(), signature.getClauses(), signature.getLiterals(), signature.getPhases());
-	}
-
 	public static void stampStat(Config config, String value) {
 		if (null == config)
 			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampStat(Config, String): " + config);
 		if (null == value)
 			throw new IllegalArgumentException("Illegal 'value' argument in Utils.stampStat(Config, String): " + value);
 		if (!config.isBlind())
-			System.out.print(ANSI_YELLOW);
+			System.out.print(ANSI_CYAN);
 		System.out.println(value);
 	}
 

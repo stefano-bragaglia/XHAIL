@@ -14,7 +14,11 @@ import java.util.Set;
 import org.apache.commons.collections4.iterators.ArrayIterator;
 
 import xhail.core.Buildable;
+import xhail.core.Config;
 import xhail.core.statements.Display;
+import xhail.core.statements.Example;
+import xhail.core.statements.ModeB;
+import xhail.core.statements.ModeH;
 import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Literal;
@@ -30,11 +34,11 @@ public class Hypothesis implements Iterable<Atom> {
 
 	public static class Builder implements Buildable<Hypothesis> {
 
-		private Set<Literal> cover = new HashSet<>();
+		private Set<Literal> covered = new HashSet<>();
 		private Grounding grounding;
 		private Set<Atom> literals = new HashSet<>();
-
 		private Set<Atom> model = new HashSet<>();
+		private Set<Literal> uncovered = new HashSet<>();
 
 		public Builder(Grounding grounding) {
 			if (null == grounding)
@@ -45,16 +49,30 @@ public class Hypothesis implements Iterable<Atom> {
 		public Builder addAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Hypothesis.Builder.addAtom(Atom): " + atom);
-			if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+			if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					cover.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+					covered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+				}
+			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+				Term term = atom.getTerm(0);
+				if (term instanceof Atom) {
+					boolean negated = ((Atom) term).getIdentifier().equals("true");
+					uncovered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
 			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
 				model.add((Atom) atom.getTerm(0));
 			else
 				literals.add(atom);
+			return this;
+		}
+
+		public Builder addAtoms(Collection<Atom> atoms) {
+			if (null == atoms)
+				throw new IllegalArgumentException("Illegal 'indAtoms' argument in Hypothesis.Builder.addAtoms(Collection<Atom>): " + atoms);
+			for (Atom atom : atoms)
+				addAtom(atom);
 			return this;
 		}
 
@@ -65,7 +83,7 @@ public class Hypothesis implements Iterable<Atom> {
 
 		public Builder clearAtom() {
 			this.model.clear();
-			this.cover.clear();
+			this.covered.clear();
 			this.literals.clear();
 			return this;
 		}
@@ -77,20 +95,18 @@ public class Hypothesis implements Iterable<Atom> {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					cover.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+					covered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+				}
+			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+				Term term = atom.getTerm(0);
+				if (term instanceof Atom) {
+					boolean negated = ((Atom) term).getIdentifier().equals("true");
+					uncovered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
 			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
 				model.remove((Atom) atom.getTerm(0));
 			else
 				literals.remove((Atom) atom);
-			return this;
-		}
-
-		public Builder addAtoms(Collection<Atom> atoms) {
-			if (null == atoms)
-				throw new IllegalArgumentException("Illegal 'indAtoms' argument in Hypothesis.Builder.addAtoms(Collection<Atom>): " + atoms);
-			for (Atom atom : atoms)
-				addAtom(atom);
 			return this;
 		}
 
@@ -106,7 +122,7 @@ public class Hypothesis implements Iterable<Atom> {
 
 	private Set<Clause> clauses;
 
-	private final Set<Literal> cover;
+	private final Set<Literal> covered;
 
 	private final Grounding grounding;
 
@@ -114,13 +130,16 @@ public class Hypothesis implements Iterable<Atom> {
 
 	private final Set<Atom> model;
 
+	private final Set<Literal> uncovered;
+
 	private Hypothesis(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Hypothesis(Hypothesis.Builder): " + builder);
-		this.cover = new HashSet<>(builder.cover);
+		this.covered = builder.covered;
 		this.grounding = builder.grounding;
-		this.literals = new HashSet<>(builder.literals);
-		this.model = new HashSet<>(builder.model);
+		this.literals = builder.literals;
+		this.model = builder.model;
+		this.uncovered = builder.uncovered;
 	}
 
 	@Override
@@ -132,6 +151,21 @@ public class Hypothesis implements Iterable<Atom> {
 		if (getClass() != obj.getClass())
 			return false;
 		Hypothesis other = (Hypothesis) obj;
+		if (clauses == null) {
+			if (other.clauses != null)
+				return false;
+		} else if (!clauses.equals(other.clauses))
+			return false;
+		if (covered == null) {
+			if (other.covered != null)
+				return false;
+		} else if (!covered.equals(other.covered))
+			return false;
+		if (grounding == null) {
+			if (other.grounding != null)
+				return false;
+		} else if (!grounding.equals(other.grounding))
+			return false;
 		if (literals == null) {
 			if (other.literals != null)
 				return false;
@@ -142,20 +176,47 @@ public class Hypothesis implements Iterable<Atom> {
 				return false;
 		} else if (!model.equals(other.model))
 			return false;
+		if (uncovered == null) {
+			if (other.uncovered != null)
+				return false;
+		} else if (!uncovered.equals(other.uncovered))
+			return false;
 		return true;
 	}
 
-	// @Override
-	// public int compareTo(Hypothesis o) {
-	// int result = coverage.length - o.examples.length;
-	// if (0 == result)
-	// result = explains().size() - o.explains().size();
-	// if (0 == result)
-	// result = literals.length - o.literals.length;
-	// return result;
-	// }
+	public final Collection<String> getBackground() {
+		return grounding.getBackground();
+	}
 
-	public Collection<Clause> explains() {
+	public final Config getConfig() {
+		return grounding.getConfig();
+	}
+
+	public final Collection<Literal> getCovered() {
+		return covered;
+	}
+
+	public final Collection<Atom> getDelta() {
+		return grounding.getDelta();
+	}
+
+	public final Collection<Display> getDisplays() {
+		return grounding.getDisplays();
+	}
+
+	public final Collection<Example> getExamples() {
+		return grounding.getExamples();
+	}
+
+	public final Collection<Clause> getGeneralisation() {
+		return grounding.getGeneralisation();
+	}
+
+	public Grounding getGrounding() {
+		return grounding;
+	}
+
+	public final Collection<Clause> getHypotheses() {
 		if (null == clauses) {
 			clauses = new HashSet<>();
 			Clause[] library = grounding.getGeneralisation().toArray(new Clause[grounding.getGeneralisation().size()]);
@@ -186,40 +247,46 @@ public class Hypothesis implements Iterable<Atom> {
 				Clause.Builder builder = builders.get(c);
 				for (Literal literal : types.get(c))
 					builder.addLiteral(literal);
-				Clause clause = builder.build();
-				if (clause.getSize() > 0)
-					clauses.add(clause);
+				clauses.add(builder.build());
 			}
 		}
 		return clauses;
 	}
 
-	public final Collection<Literal> getCover() {
-		return cover;
+	public final Collection<Clause> getKernel() {
+		return grounding.getKernel();
 	}
 
-	public final Collection<Display> getDisplays() {
-		return grounding.getDisplays();
+	public final Collection<ModeB> getModeBs() {
+		return grounding.getModeBs();
 	}
 
-	public Grounding getGrounding() {
-		return grounding;
-	}
-
-	public final Collection<Atom> getLiterals() {
-		return literals;
+	public final Collection<ModeH> getModeHs() {
+		return grounding.getModeHs();
 	}
 
 	public final Collection<Atom> getModel() {
 		return model;
 	}
 
+	public final Problem getProblem() {
+		return grounding.getProblem();
+	}
+
+	public final Collection<Literal> getUncovered() {
+		return uncovered;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((clauses == null) ? 0 : clauses.hashCode());
+		result = prime * result + ((covered == null) ? 0 : covered.hashCode());
+		result = prime * result + ((grounding == null) ? 0 : grounding.hashCode());
 		result = prime * result + ((literals == null) ? 0 : literals.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((uncovered == null) ? 0 : uncovered.hashCode());
 		return result;
 	}
 
@@ -228,13 +295,8 @@ public class Hypothesis implements Iterable<Atom> {
 		return new ArrayIterator<>(literals);
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Hypothesis:\n");
-		for (Clause clause : explains())
-			builder.append("  " + clause + "\n");
-		return builder.toString();
+	public final boolean needsModel() {
+		return grounding.needsModel();
 	}
 
 }

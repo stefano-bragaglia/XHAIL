@@ -148,11 +148,11 @@ public class Quotation implements Term, SchemeTerm {
 	}
 
 	@Override
-	public boolean subsumes(final Term term, final Set<Atom> facts) {
+	public boolean subsumes(final Term term, final Collection<Atom> facts) {
 		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.subsumes(Term): " + term);
+			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.subsumes(Term, Collection<Atom>): " + term);
 		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Quotation.subsumes(Term, Set<Atom>): " + facts);
+			throw new IllegalArgumentException("Illegal 'facts' argument in Quotation.subsumes(Term, Collection<Atom>): " + facts);
 		if (term instanceof Quotation) {
 			Quotation other = (Quotation) term;
 			return content == other.getContent();

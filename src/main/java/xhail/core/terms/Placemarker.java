@@ -22,6 +22,8 @@ public class Placemarker implements SchemeTerm {
 
 		private String identifier;
 
+		private int index = 0;
+
 		private Type type = Type.CONSTANT;
 
 		public Builder(String identifier) {
@@ -39,6 +41,11 @@ public class Placemarker implements SchemeTerm {
 			if (null == identifier || (identifier = identifier.trim()).isEmpty() || identifier.charAt(0) < 'a' || identifier.charAt(0) > 'z')
 				throw new IllegalArgumentException("Illegal 'identifier' argument in Placemarker.Builder.setIdentifier(String): " + identifier);
 			this.identifier = identifier;
+			return this;
+		}
+
+		public Builder setIndex(int index) {
+			this.index = index;
 			return this;
 		}
 
@@ -85,11 +92,18 @@ public class Placemarker implements SchemeTerm {
 
 	private final Type type;
 
+	private final Atom variable;
+
 	private Placemarker(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Placemarker(Placemarker.Builder): " + builder);
 		this.identifier = builder.identifier;
 		this.type = builder.type;
+		this.variable = new Atom.Builder(builder.identifier).addTerm(new Variable.Builder("V" + builder.index).build()).build();
+	}
+
+	public final Atom asVariable() {
+		return variable;
 	}
 
 	public final SchemeTerm decode() {
@@ -190,11 +204,11 @@ public class Placemarker implements SchemeTerm {
 	}
 
 	@Override
-	public boolean subsumes(final Term term, final Set<Atom> facts) {
+	public boolean subsumes(final Term term, final Collection<Atom> facts) {
 		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Placemarker.subsumes(Term, Set<Atom>): " + term);
+			throw new IllegalArgumentException("Illegal 'term' argument in Placemarker.subsumes(Term, Collection<Atom>): " + term);
 		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Placemarker.subsumes(Term, Set<Atom>): " + facts);
+			throw new IllegalArgumentException("Illegal 'facts' argument in Placemarker.subsumes(Term, Collection<Atom>): " + facts);
 		if (term instanceof Atom) {
 			Atom other = (Atom) term;
 			if (0 == other.getArity()) {

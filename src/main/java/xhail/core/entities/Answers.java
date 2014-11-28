@@ -4,17 +4,19 @@
 package xhail.core.entities;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.apache.commons.collections4.iterators.ArrayIterator;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
-import xhail.core.entities.Answer.Signature;
+import xhail.core.Dialer;
+import xhail.core.parser.Parser;
+import xhail.core.terms.Atom;
 
 /**
  * @author stefano
@@ -24,15 +26,13 @@ public class Answers implements Iterable<Answer> {
 
 	public static class Builder implements Buildable<Answers> {
 
-		private long abduction = 0;
+		private Set<Answer> answers = new HashSet<>();
 
 		private Config config;
 
-		private long deduction = 0;
+		private int count = 0;
 
-		private long induction = 0;
-
-		private TreeMap<Signature, Set<Answer>> map = new TreeMap<>();
+		private Values values = null;
 
 		public Builder(Config config) {
 			if (null == config)
@@ -40,93 +40,162 @@ public class Answers implements Iterable<Answer> {
 			this.config = config;
 		}
 
-		public Builder addAbduction(long time) {
-			if (time > 0)
-				abduction += time;
-			return this;
-		}
-
-		public Builder addAnswer(Answer answer) {
-			if (null == answer)
-				throw new IllegalArgumentException("Illegal 'answers' argument in Answers.Builder.addAnswer(Answer): " + answer);
-			Signature signature = answer.getSignature();
-			Set<Answer> set = map.get(signature);
-			if (null == set) {
-				set = new HashSet<>();
-				map.put(signature, set);
-			}
-			set.add(answer);
-			return this;
-		}
-
-		public Builder addDeduction(long time) {
-			if (time > 0)
-				deduction += time;
-			return this;
-		}
-
-		public Builder addInduction(long time) {
-			if (time > 0)
-				induction += time;
-			return this;
-		}
-
 		@Override
 		public Answers build() {
 			return new Answers(this);
 		}
 
-		public Builder clearAnswers() {
-			map.clear();
+		public Builder clear() {
+			first = -1L;
+			this.answers.clear();
+			this.count = 0;
+			this.values = null;
 			return this;
 		}
 
-		public Builder removeAnswer(Answer answer) {
+		public Builder put(Values values, Answer answer) {
+			if (null == values)
+				throw new IllegalArgumentException("Illegal 'values' argument in Answers.Builder.putAnswer(Values, Answer): " + values);
 			if (null == answer)
-				throw new IllegalArgumentException("Illegal 'answers' argument in Answers.Builder.removeAnswer(Answer): " + answer);
-			Signature signature = answer.getSignature();
-			Set<Answer> set = map.get(signature);
-			if (null != set)
-				set.remove(answer);
+				throw new IllegalArgumentException("Illegal 'answer' argument in Answers.Builder.putAnswer(Values, Answer): " + answer);
+			if (first < 0L)
+				first = System.nanoTime();
+			int order = null == this.values ? -1 : values.compareTo(this.values);
+			if (order < 0) {
+				this.answers.clear();
+				this.values = values;
+			}
+			if (order <= 0)
+				this.answers.add(answer);
+			count += 1;
+			return this;
+		}
+
+		public Builder remove(Values values, Answer answer) {
+			if (null == values)
+				throw new IllegalArgumentException("Illegal 'values' argument in Answers.Builder.removeAnswer(Values, Answer): " + values);
+			if (null == answer)
+				throw new IllegalArgumentException("Illegal 'answer' argument in Answers.Builder.removeAnswer(Values, Answer): " + answer);
+			if (null != this.values && 0 == values.compareTo(this.values))
+				if (this.answers.remove(answer))
+					count -= 1;
 			return this;
 		}
 
 	}
 
-	private final long abduction;
+	private static long abduction = 0L;
+	private static long deduction = 0L;
+	private static long first = -1L;
+	private static long induction = 0L;
+	private static long loading = -1L;
+	private static final double NORMALIZER = 1_000_000_000.0;
+
+	private static long start = -1L;
+
+	public static final double getAbduction() {
+		return abduction / NORMALIZER;
+	}
+
+	public static final double getDeduction() {
+		return deduction / NORMALIZER;
+	}
+
+	public static final double getFirst() {
+		if (first < 0L || start < 0L)
+			return 0L;
+		return (first - start) / NORMALIZER;
+	}
+
+	public static final double getInduction() {
+		return induction / NORMALIZER;
+	}
+
+	public static final double getLoading() {
+		if (loading < 0L || start < 0L)
+			return 0L;
+		return (loading - start) / NORMALIZER;
+	}
+
+	public static final double getNow() {
+		if (start < 0L)
+			return 0L;
+		return (System.nanoTime() - start) / NORMALIZER;
+	}
+
+	public static final void loaded() {
+		if (loading < 0L)
+			loading = System.nanoTime();
+	}
+
+	public static final void started() {
+		if (start < 0L)
+			start = System.nanoTime();
+	}
+
+	public static Map.Entry<Values, Collection<String>> timeAbduction(Dialer dialer) {
+		if (null == dialer)
+			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
+		long time = System.nanoTime();
+		Map.Entry<Values, Collection<String>> result = dialer.execute();
+		abduction += (System.nanoTime() - time);
+		return result;
+	}
+
+	public static Hypothesis timeDeduction(Grounding grounding, String output) {
+		if (null == grounding)
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Answers.timeDeduction(Grounding, String): " + grounding);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Grounding, String): " + output);
+		long time = System.nanoTime();
+		Collection<Atom> atoms = Parser.parseAnswer(output);
+		Hypothesis result = new Hypothesis.Builder(grounding).addAtoms(atoms).build();
+		result.getHypotheses();
+		deduction += (System.nanoTime() - time);
+		return result;
+	}
+
+	public static Grounding timeDeduction(Problem problem, String output) {
+		if (null == problem)
+			throw new IllegalArgumentException("Illegal 'problem' argument in Answers.timeDeduction(Problem, String): " + problem);
+		if (null == output)
+			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Problem, String): " + output);
+		long time = System.nanoTime();
+		Collection<Atom> atoms = Parser.parseAnswer(output);
+		Grounding result = new Grounding.Builder(problem).addAtoms(atoms).build();
+		result.getGeneralisation();
+		deduction += (System.nanoTime() - time);
+		return result;
+	}
+
+	public static Map.Entry<Values, Collection<String>> timeInduction(Dialer dialer) {
+		if (null == dialer)
+			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
+		long time = System.nanoTime();
+		Map.Entry<Values, Collection<String>> result = dialer.execute();
+		induction += (System.nanoTime() - time);
+		return result;
+	}
 
 	private final Answer[] answers;
 
 	private final Config config;
 
-	private final long deduction;
+	private final int count;
 
-	private final long induction;
-
-	private final Map<Signature, Set<Answer>> whole;
+	private final Values values;
 
 	private Answers(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Answers(Answers.Builder): " + builder);
-		if (builder.map.isEmpty())
-			this.answers = new Answer[0];
-		else {
-			Set<Answer> set = builder.map.get(builder.map.firstKey());
-			this.answers = set.toArray(new Answer[set.size()]);
-		}
-		this.abduction = builder.abduction;
-		this.deduction = builder.deduction;
-		this.induction = builder.induction;
-		this.whole = new TreeMap<>(builder.map);
+		this.answers = builder.answers.toArray(new Answer[builder.answers.size()]);
 		this.config = builder.config;
+		this.count = builder.count;
+		this.values = builder.values;
 	}
 
 	public final int count() {
-		int result = 0;
-		for (Set<Answer> part : whole.values())
-			if (null != part)
-				result += part.size();
-		return result;
+		return count;
 	}
 
 	@Override
@@ -140,20 +209,21 @@ public class Answers implements Iterable<Answer> {
 		Answers other = (Answers) obj;
 		if (!Arrays.equals(answers, other.answers))
 			return false;
+		if (values == null) {
+			if (other.values != null)
+				return false;
+		} else if (!values.equals(other.values))
+			return false;
 		return true;
 	}
 
-	public final long getAbduction() {
-		return abduction;
-	}
-
-	public Answer getAnswer(int index) {
-		if (index < 0 || index >= whole.size())
+	public final Answer getAnswer(int index) {
+		if (index < 0 || index >= answers.length)
 			throw new IndexOutOfBoundsException("Illegal 'index' argument in Answers.getAnswer(int): " + index);
 		return answers[index];
 	}
 
-	public Answer[] getAnswers() {
+	public final Answer[] getAnswers() {
 		return answers;
 	}
 
@@ -161,12 +231,8 @@ public class Answers implements Iterable<Answer> {
 		return config;
 	}
 
-	public final long getDeduction() {
-		return deduction;
-	}
-
-	public final long getInduction() {
-		return induction;
+	public final Values getValues() {
+		return values;
 	}
 
 	@Override
@@ -174,11 +240,12 @@ public class Answers implements Iterable<Answer> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(answers);
+		result = prime * result + ((values == null) ? 0 : values.hashCode());
 		return result;
 	}
 
 	public final boolean isEmpty() {
-		return (0 == this.answers.length);
+		return (0 == answers.length);
 	}
 
 	@Override
@@ -188,20 +255,6 @@ public class Answers implements Iterable<Answer> {
 
 	public final int size() {
 		return answers.length;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		int i = 1;
-		for (Answer answer : answers) {
-			builder.append("Answer " + i + ":\n");
-			for (String line : answer.toString().split("\n"))
-				builder.append("  " + line + "\n");
-			builder.append("\n");
-			i += 1;
-		}
-		return builder.toString();
 	}
 
 }

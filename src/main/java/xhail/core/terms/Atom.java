@@ -22,8 +22,8 @@ import xhail.core.terms.Placemarker.Type;
  * @author stefano
  *
  */
-public class Atom implements Term, Iterable<Atom> {
-	
+public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
+
 	public static class Builder implements Buildable<Atom> {
 
 		private String identifier;
@@ -156,6 +156,17 @@ public class Atom implements Term, Iterable<Atom> {
 		this.scheme = builder.scheme;
 		this.terms = builder.terms.toArray(new Term[builder.terms.size()]);
 		this.weight = builder.weight;
+	}
+
+	@Override
+	public int compareTo(Atom o) {
+		int result = identifier.compareTo(o.identifier);
+		if (0 == result)
+			result = o.terms.length - terms.length;
+		if (0 == result)
+			for (int i = 0; 0 == result && i < terms.length; i++)
+				result = o.terms[i].toString().compareTo(terms[i].toString());
+		return result;
 	}
 
 	@Override
@@ -306,8 +317,6 @@ public class Atom implements Term, Iterable<Atom> {
 		} else
 			return null;
 	}
-
-	// private Set<Term> variables;
 
 	@Override
 	public String toString() {

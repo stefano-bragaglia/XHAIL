@@ -9,6 +9,13 @@ package xhail.core.parser;
  */
 public enum InputStates implements State {
 
+	INITIAL {
+		public boolean process(Context context) {
+			statement = "";
+			context.setState(NORMAL);
+			return false;
+		}
+	},
 	NORMAL {
 		public boolean process(Context context) {
 			int ch = context.read();
@@ -68,9 +75,9 @@ public enum InputStates implements State {
 				case '\t':
 				case ' ':
 					context.append(statement);
-					statement = "";		
+					statement = "";
 					context.setState(NORMAL);
-			break;
+					break;
 				case '\"':
 					context.append(statement);
 					statement = "" + (char) ch;
@@ -91,7 +98,7 @@ public enum InputStates implements State {
 					context.setState(NORMAL);
 			}
 			return false;
-		}		
+		}
 	},
 	STRING {
 		public boolean process(Context context) {
@@ -128,7 +135,7 @@ public enum InputStates implements State {
 					context.setState(STRING);
 			}
 			return false;
-		}		
+		}
 	},
 	COMMENT {
 		public boolean process(Context context) {

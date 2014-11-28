@@ -42,6 +42,7 @@ public class Utils {
 		filters = new LinkedHashSet<>();
 		filters.add("#hide.");
 		filters.add("#show display_fact/1.");
+		filters.add("#show covered_example/2.");
 		filters.add("#show uncovered_example/2.");
 		// filters.add("#show use_clause_literal/2.");
 	}
@@ -80,13 +81,15 @@ public class Utils {
 			throw new IllegalArgumentException("Illegal 'example' argument in Utils.Converter(Example): " + example);
 		Atom atom = example.getAtom();
 		boolean negated = example.isNegated();
-		String notnot = negated ? "" : "not ";
+		String yes = negated ? "not " : "";
+		String not = negated ? "" : "not ";
 		Set<String> result = new LinkedHashSet<>();
 		result.add(String.format("%% %s", example.toString()));
 		result.add(String.format("#maximize[ %s%s =%d @%d ].", negated ? "not " : "", atom, example.getWeight(), example.getPriority()));
 		if (!example.isDefeasible())
-			result.add(String.format(":-%s%s.", notnot, atom));
-		result.add(String.format("uncovered_example(%s,%s):-%s%s.", negated ? "true" : "false", atom, notnot, atom));
+			result.add(String.format(":-%s%s.", not, atom));
+		result.add(String.format("covered_example(%s,%s):-%s%s.", negated ? "true" : "false", atom, yes, atom));
+		result.add(String.format("uncovered_example(%s,%s):-%s%s.", negated ? "true" : "false", atom, not, atom));
 		return result;
 	}
 
@@ -180,7 +183,6 @@ public class Utils {
 	public static Collection<String> convert(ModeH mode) {
 		if (null == mode)
 			throw new IllegalArgumentException("Illegal 'mode' argument in Utils.convert(ModeH): " + mode);
-		int i = 0;
 		String typing = "";
 		String listing = "";
 		Set<Variable> vars = new HashSet<>();
@@ -188,10 +190,10 @@ public class Utils {
 		Atom atom = (Atom) scheme.generalises(vars);
 		Set<String> result = new LinkedHashSet<>();
 		for (Placemarker placemarker : scheme.getPlacemarkers()) {
-			String type = String.format("%s(V%d)", placemarker.getIdentifier(), ++i);
-			typing += " :" + type;
-			listing += "," + type;
+			typing += " :" + placemarker.asVariable();
+			listing += "," + placemarker.asVariable();
 		}
+		
 		result.add(String.format("%% %s", mode.toString()));
 		result.add(String.format("%d { abduced_%s%s } %d.", mode.getLower(), atom, typing, mode.getUpper()));
 		result.add(String.format("#minimize[ abduced_%s =%d @%d%s ].", atom, mode.getWeigth(), mode.getPriority(), typing));
@@ -436,61 +438,5 @@ public class Utils {
 		}
 		return false;
 	}
-
-	// public static String toString(Problem problem) {
-	// if (null == problem)
-	// throw new
-	// IllegalArgumentException("Illegal 'problem' argument in Utils.convert(Problem): "
-	// + problem);
-	// StringBuilder builder = new StringBuilder();
-	// for (String filter : convert(problem))
-	// builder.append(filter + "\n");
-	// builder.append("\n");
-	// builder.append("%%% B. Background\n");
-	// for (String statement : problem.getBackground())
-	// builder.append(statement + "\n");
-	// for (Display display : problem.getDisplays())
-	// builder.append(convert(display) + "\n");
-	// builder.append("\n");
-	// builder.append("%%% E. Examples\n");
-	// for (Example example : problem.getExamples())
-	// for (String statement : convert(example))
-	// builder.append(statement + "\n");
-	// builder.append("\n");
-	// builder.append("%%% M. Modes\n");
-	// for (ModeH mode : problem.getModeHs())
-	// for (String statement : convert(mode))
-	// builder.append(statement + "\n");
-	// return builder.toString();
-	// }
-
-	// public static String toString(Grounding grounding) {
-	// if (null == grounding)
-	// throw new
-	// IllegalArgumentException("Illegal 'grounding' argument in Utils.convert(Grounding): "
-	// + grounding);
-	// StringBuilder builder = new StringBuilder();
-	// for (String filter : convert(grounding))
-	// builder.append(filter + "\n");
-	// builder.append("\n");
-	// builder.append("%%% B. Background\n");
-	// for (String statement : grounding.getBackground())
-	// builder.append(statement + "\n");
-	// for (Display display : grounding.getDisplays())
-	// builder.append(convert(display) + "\n");
-	// builder.append("\n");
-	// builder.append("%%% E. Examples\n");
-	// for (Example example : grounding.getExamples())
-	// for (String statement : convert(example))
-	// builder.append(statement + "\n");
-	// builder.append("\n");
-	// builder.append("%%% M. Modes\n");
-	// builder.append("{ use_clause_literal(V1,0) }:-clause(V1).\n");
-	// builder.append("{ use_clause_literal(V1,V2) }:-clause(V1),literal(V1,V2).\n");
-	// builder.append("\n");
-	// for (String statement : convert(grounding.getGeneralisation()))
-	// builder.append(statement + "\n");
-	// return builder.toString();
-	// }
 
 }

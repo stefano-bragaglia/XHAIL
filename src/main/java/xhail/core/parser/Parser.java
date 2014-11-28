@@ -136,6 +136,8 @@ public class Parser {
 	private final Iterator<Character> iterator;
 
 	private final String source;
+	
+	private int index = 0;
 
 	public Parser(String source) {
 		if (null == source)
@@ -395,7 +397,7 @@ public class Parser {
 			current = iterator.next();
 		} else
 			throw new ParserErrorException("expected '+', '-' or '$' but '" + current + "' found in '" + source + "'");
-		return new Placemarker.Builder(parseIdentifier()).setType(type).build();
+		return new Placemarker.Builder(parseIdentifier()).setType(type).setIndex(++index).build();
 	}
 
 	private Quotation parseQuotation() throws ParserErrorException {

@@ -21,6 +21,6 @@ public interface SchemeTerm {
 
 	public Map<Term, Collection<Term>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts);
 
-	public boolean subsumes(final Term term, final Set<Atom> facts);
-
+	public boolean subsumes(final Term term, final Collection<Atom> facts);
+	
 }

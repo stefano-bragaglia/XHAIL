@@ -6,6 +6,8 @@ package xhail;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -13,17 +15,24 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import xhail.core.Config;
+import xhail.core.Dialer;
 import xhail.core.Finder;
 import xhail.core.Logger;
 import xhail.core.Utils;
 import xhail.core.entities.Answers;
+import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
+import xhail.core.parser.Parser;
 
 /**
  * @author stefano
  *
  */
 public class Application implements Callable<Answers> {
+
+	static {
+		Answers.started();
+	}
 
 	/**
 	 * The <code>PATHS</code> where <code>gringo</code> and <code>clasp</code>
@@ -35,12 +44,6 @@ public class Application implements Callable<Answers> {
 	private static final Path ROOT = Paths.get(".").toAbsolutePath().getRoot().normalize();
 
 	private static final ExecutorService service = Executors.newSingleThreadExecutor();
-
-	public static long answer = -1;
-
-	public static long loading;
-
-	public static long time = System.nanoTime();
 
 	/**
 	 * @param args
@@ -72,8 +75,8 @@ public class Application implements Callable<Answers> {
 						builder.setDebug(true);
 						break;
 					case "-f":
-					case "--format":
-						builder.setFormat(true);
+					case "--full":
+						builder.setFull(true);
 						break;
 					case "-g":
 					case "--gringo":
@@ -97,6 +100,24 @@ public class Application implements Callable<Answers> {
 					case "--mute":
 						builder.setMute(true);
 						break;
+					case "-p":
+					case "--prettify":
+						builder.setPrettify(true);
+						if (args.length - i > 1) {
+							String arg = args[i + 1].trim();
+							int index = 0;
+							boolean found = true;
+							for (int p = 0; found && p < arg.length(); p++) {
+								found = Character.isDigit(arg.charAt(p));
+								if (found)
+									index = 10 * index + (arg.charAt(p) - '0');
+							}
+							if (found) {
+								builder.setIndex(index);
+								i += 1;
+							}
+						}
+						break;
 					case "-s":
 					case "--search":
 						builder.setSearch(true);
@@ -115,9 +136,7 @@ public class Application implements Callable<Answers> {
 		application.execute();
 	}
 
-	private final long kill;
-
-	private final boolean format;
+	private final Config config;
 
 	private final Problem problem;
 
@@ -130,37 +149,34 @@ public class Application implements Callable<Answers> {
 		if (config.isVersion())
 			Logger.version();
 		Logger.header(config);
-		if (!config.isFormat()) {
-			Finder finder = new Finder(" 3.", "gringo", "clasp");
-			finder.test("gringo", config.getGringo());
-			finder.test("clasp", config.getClasp());
-			if (!finder.isFound() && config.isSearch()) {
-				Logger.message("Locating needed applications...");
-				boolean found = false;
-				for (int i = 0; !found && i < PATHS.length; i++)
-					found = finder.find(PATHS[i], false);
-				if (!found)
-					found = finder.find(ROOT, true);
-				config.setGringo(finder.get("gringo"));
-				config.setClasp(finder.get("clasp"));
-				if (found)
-					Logger.found(config);
-			}
-			if (!finder.isFound()) {
-				String message = "";
-				if (null == finder.get("gringo"))
-					message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
-				if (null == finder.get("clasp"))
-					if (message.isEmpty())
-						message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
-					else
-						message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
-				Logger.error(message);
-			}
+		Finder finder = new Finder(" 3.", "gringo", "clasp");
+		finder.test("gringo", config.getGringo());
+		finder.test("clasp", config.getClasp());
+		if (!finder.isFound() && config.isSearch()) {
+			Logger.message("Locating needed applications...");
+			boolean found = false;
+			for (int i = 0; !found && i < PATHS.length; i++)
+				found = finder.find(PATHS[i], false);
+			if (!found)
+				found = finder.find(ROOT, true);
+			config.setGringo(finder.get("gringo"));
+			config.setClasp(finder.get("clasp"));
+			if (found)
+				Logger.found(config);
+		}
+		if (!finder.isFound()) {
+			String message = "";
+			if (null == finder.get("gringo"))
+				message += String.format("'gringo v3.*' needed to run %s", Logger.SIGNATURE);
+			if (null == finder.get("clasp"))
+				if (message.isEmpty())
+					message += String.format("'clasp v3.*' needed to run %s", Logger.SIGNATURE);
+				else
+					message += String.format("\n*** ERROR (%s): 'clasp v3.*' needed to run %s", Logger.SIGNATURE, Logger.SIGNATURE);
+			Logger.error(message);
 		}
 
-		this.format = config.isFormat();
-		this.kill = config.getKill();
+		this.config = config;
 		Problem.Builder problem = new Problem.Builder(config);
 		if (config.hasSources())
 			for (Path path : config.getSources()) {
@@ -172,12 +188,12 @@ public class Application implements Callable<Answers> {
 			problem.parse(System.in);
 		}
 		this.problem = problem.build();
-		loading = System.nanoTime();
+		Answers.loaded();
 	}
 
 	@Override
 	public Answers call() throws Exception {
-		Logger.message("\nSolving...");
+		Logger.message("\nSolving...\n");
 		return problem.solve();
 	}
 
@@ -185,15 +201,38 @@ public class Application implements Callable<Answers> {
 	 * 
 	 */
 	public void execute() {
-		if (format){
+		if (config.isPrettify()) {
 			System.out.println();
-			Utils.dump(problem, System.out);
-		}else
+			int index = config.getIndex();
+			switch (index) {
+				case -1:
+					Utils.dump(problem, System.out);
+					break;
+				case 0:
+					Utils.save(problem, System.out);
+					break;
+				default:
+					Dialer dialer = new Dialer.Builder(config, problem).build();
+					String[] outputs = dialer.execute().getValue().toArray(new String[0]);
+					if (index <= outputs.length)
+						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.out);
+					else
+						Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem", Logger.SIGNATURE));
+			}
+		} else {
+			long kill = config.getKill();
 			try {
 				final Future<Answers> task = service.submit(this);
-				Answers answers = kill > 0 ? task.get(kill, TimeUnit.SECONDS) : task.get();
+				Answers answers = kill > 0L ? task.get(kill, TimeUnit.SECONDS) : task.get();
 				Logger.stampAnswers(answers);
-			} catch (final TimeoutException e) {
+
+			} catch (CancellationException e) {
+				Logger.message(String.format("*** Info  (%s): computation was cancelled", Logger.SIGNATURE));
+			} catch (ExecutionException e) {
+				Logger.message(String.format("*** Info  (%s): computation threw an exception", Logger.SIGNATURE));
+			} catch (InterruptedException e) {
+				Logger.message(String.format("*** Info  (%s): current thread was interrupted while waiting", Logger.SIGNATURE));
+			} catch (TimeoutException e) {
 				Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
 			} catch (final Exception e) {
 				String message = "unexpected runtime error:\n  " + e.getMessage();
@@ -203,6 +242,6 @@ public class Application implements Callable<Answers> {
 			} finally {
 				service.shutdownNow();
 			}
+		}
 	}
-
 }

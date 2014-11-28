@@ -3,6 +3,7 @@
  */
 package xhail.core.entities;
 
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import xhail.core.Buildable;
+import xhail.core.Config;
+import xhail.core.Dialer;
 import xhail.core.Utils;
 import xhail.core.statements.Display;
 import xhail.core.statements.Example;
@@ -29,16 +32,16 @@ import xhail.core.terms.Variable;
  * @author stefano
  *
  */
-public class Grounding {
+public class Grounding implements Solvable {
 
 	public static class Builder implements Buildable<Grounding> {
 
-		private Set<Literal> cover = new HashSet<>();
+		private Set<Literal> covered = new HashSet<>();
 		private Set<Atom> delta = new HashSet<>();
 		private Set<Atom> facts = new HashSet<>();
 		private Set<Atom> model = new HashSet<>();
-
 		private Problem problem;
+		private Set<Literal> uncovered = new HashSet<>();
 
 		public Builder(Problem problem) {
 			if (null == problem)
@@ -51,11 +54,17 @@ public class Grounding {
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.addAtom(Atom): " + atom);
 			if (atom.getIdentifier().startsWith("abduced_"))
 				delta.add(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+			else if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					cover.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+					covered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+				}
+			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+				Term term = atom.getTerm(0);
+				if (term instanceof Atom) {
+					boolean negated = ((Atom) term).getIdentifier().equals("true");
+					uncovered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
 			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
 				model.add((Atom) atom.getTerm(0));
@@ -77,11 +86,12 @@ public class Grounding {
 			return new Grounding(this);
 		}
 
-		public Builder clearAtom() {
-			this.cover.clear();
+		public Builder clear() {
+			this.covered.clear();
 			this.delta.clear();
 			this.facts.clear();
 			this.model.clear();
+			this.uncovered.clear();
 			return this;
 		}
 
@@ -90,11 +100,17 @@ public class Grounding {
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.removeAtom(Atom): " + atom);
 			if (atom.getIdentifier().startsWith("abduced_"))
 				delta.remove(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+			else if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					cover.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+					covered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
+				}
+			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+				Term term = atom.getTerm(0);
+				if (term instanceof Atom) {
+					boolean negated = ((Atom) term).getIdentifier().equals("true");
+					uncovered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
 			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
 				model.remove((Atom) atom.getTerm(0));
@@ -113,7 +129,28 @@ public class Grounding {
 
 	}
 
-	private final Set<Literal> cover;
+	public static final Map<SchemeTerm, Set<Atom>> getParts(final Collection<ModeB> modes, final Collection<Atom> facts) {
+		if (null == modes)
+			throw new IllegalArgumentException("Illegal 'modes' argument in Grounding.getParts(Collection<ModeB>, Collection<Atom>): " + modes);
+		Map<SchemeTerm, Set<Atom>> result = new HashMap<>();
+		for (ModeB mode : modes) {
+			Scheme scheme = mode.getScheme();
+			result.put(scheme, new HashSet<>());
+			for (Placemarker placemarker : scheme.getPlacemarkers())
+				if (!result.containsKey(placemarker))
+					result.put(placemarker, new HashSet<>());
+		}
+		for (SchemeTerm scheme : result.keySet()) {
+			Set<Atom> part = result.get(scheme);
+			for (Atom fact : facts) {
+				if (scheme.subsumes(fact, facts))
+					part.add(fact);
+			}
+		}
+		return result;
+	}
+
+	private final Set<Literal> covered;
 
 	private final Set<Atom> delta;
 
@@ -129,30 +166,18 @@ public class Grounding {
 
 	private final Problem problem;
 
+	private final Set<Literal> uncovered;
+
 	private Grounding(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding(Grounding.Builder): " + builder);
-		this.cover = new HashSet<>(builder.cover);
-		this.delta = new HashSet<>(builder.delta);
-		this.facts = new HashSet<>(builder.facts);
-		this.model = new HashSet<>(builder.model);
-		this.parts = new HashMap<>();
-		for (ModeB mode : builder.problem.getModeBs()) {
-			Scheme scheme = mode.getScheme();
-			this.parts.put(scheme, new HashSet<>());
-
-			for (Placemarker placemarker : scheme.getPlacemarkers())
-				if (!this.parts.containsKey(placemarker))
-					this.parts.put(placemarker, new HashSet<>());
-		}
-		for (SchemeTerm scheme : this.parts.keySet()) {
-			Set<Atom> part = this.parts.get(scheme);
-			for (Atom fact : facts) {
-				if (scheme.subsumes(fact, facts))
-					part.add(fact);
-			}
-		}
+		this.covered = builder.covered;
+		this.delta = builder.delta;
+		this.facts = builder.facts;
+		this.model = builder.model;
+		this.parts = getParts(builder.problem.getModeBs(), builder.facts);
 		this.problem = builder.problem;
+		this.uncovered = builder.uncovered;
 	}
 
 	@Override
@@ -164,10 +189,25 @@ public class Grounding {
 		if (getClass() != obj.getClass())
 			return false;
 		Grounding other = (Grounding) obj;
+		if (covered == null) {
+			if (other.covered != null)
+				return false;
+		} else if (!covered.equals(other.covered))
+			return false;
 		if (delta == null) {
 			if (other.delta != null)
 				return false;
 		} else if (!delta.equals(other.delta))
+			return false;
+		if (facts == null) {
+			if (other.facts != null)
+				return false;
+		} else if (!facts.equals(other.facts))
+			return false;
+		if (generalisation == null) {
+			if (other.generalisation != null)
+				return false;
+		} else if (!generalisation.equals(other.generalisation))
 			return false;
 		if (kernel == null) {
 			if (other.kernel != null)
@@ -179,6 +219,21 @@ public class Grounding {
 				return false;
 		} else if (!model.equals(other.model))
 			return false;
+		if (parts == null) {
+			if (other.parts != null)
+				return false;
+		} else if (!parts.equals(other.parts))
+			return false;
+		if (problem == null) {
+			if (other.problem != null)
+				return false;
+		} else if (!problem.equals(other.problem))
+			return false;
+		if (uncovered == null) {
+			if (other.uncovered != null)
+				return false;
+		} else if (!uncovered.equals(other.uncovered))
+			return false;
 		return true;
 	}
 
@@ -186,8 +241,12 @@ public class Grounding {
 		return problem.getBackground();
 	}
 
-	public final Collection<Literal> getCover() {
-		return cover;
+	public final Config getConfig() {
+		return problem.getConfig();
+	}
+
+	public final Collection<Literal> getCovered() {
+		return covered;
 	}
 
 	public final Collection<Atom> getDelta() {
@@ -198,15 +257,11 @@ public class Grounding {
 		return problem.getDisplays();
 	}
 
-	public Collection<Example> getExamples() {
+	public final Collection<Example> getExamples() {
 		return problem.getExamples();
 	}
 
-	public final Collection<Atom> getFacts() {
-		return facts;
-	}
-
-	public Collection<Clause> getGeneralisation() {
+	public final Collection<Clause> getGeneralisation() {
 		if (null == generalisation) {
 			generalisation = new LinkedHashSet<>();
 			for (Clause clause : getKernel()) {
@@ -233,7 +288,7 @@ public class Grounding {
 		return generalisation;
 	}
 
-	public Collection<Clause> getKernel() {
+	public final Collection<Clause> getKernel() {
 		if (null == kernel) {
 			kernel = new LinkedHashSet<>();
 			for (Atom alpha : delta)
@@ -263,7 +318,6 @@ public class Grounding {
 															.setPriority(mode.getPriority()).build()).setNegated(mode.isNegated()).setLevel(level).build());
 													next.addAll(found);
 												}
-
 											}
 									}
 								} else
@@ -298,58 +352,64 @@ public class Grounding {
 		return problem.getModeHs();
 	}
 
-	public Collection<Atom> getModel() {
+	public final Collection<Atom> getModel() {
 		return model;
-	}
-
-	public final Collection<Atom> getPart(SchemeTerm scheme) {
-		return parts.get(scheme);
 	}
 
 	public final Problem getProblem() {
 		return problem;
 	}
 
+	public final Collection<Literal> getUncovered() {
+		return uncovered;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((covered == null) ? 0 : covered.hashCode());
 		result = prime * result + ((delta == null) ? 0 : delta.hashCode());
+		result = prime * result + ((facts == null) ? 0 : facts.hashCode());
+		result = prime * result + ((generalisation == null) ? 0 : generalisation.hashCode());
 		result = prime * result + ((kernel == null) ? 0 : kernel.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((parts == null) ? 0 : parts.hashCode());
+		result = prime * result + ((problem == null) ? 0 : problem.hashCode());
+		result = prime * result + ((uncovered == null) ? 0 : uncovered.hashCode());
 		return result;
 	}
 
-	public final boolean isInducible() {
-		return getGeneralisation().size() > 0;
+	public final boolean needsInduction() {
+		return !getKernel().isEmpty();
+	}
+
+	public final boolean needsModel() {
+		return problem.needsModel();
 	}
 
 	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		for (String line : Utils.listAtoms("Model", model))
-			builder.append(line + "\n");
-		for (String line : Utils.listAtoms("Delta", delta))
-			builder.append(line + "\n");
-		for (String line : Utils.listAtoms("Facts", facts))
-			builder.append(line + "\n");
+	public boolean save(OutputStream stream) {
+		return Utils.save(this, stream);
+	}
 
-		builder.append("Matches:\n");
-		for (SchemeTerm scheme : parts.keySet()) {
-			builder.append("  " + scheme + " -->");
-			for (Term term : parts.get(scheme))
-				builder.append(" " + term);
-			builder.append("\n");
-		}
-
-		for (String line : Utils.listClauses("Kernel", getKernel()))
-			builder.append(line + "\n");
-		for (String line : Utils.listClauses("Generalisation", getGeneralisation()))
-			builder.append(line + "\n");
-		for (String line : Utils.listLiterals("Uncovered examples", cover))
-			builder.append(line + "\n");
-
-		return builder.toString();
+	public Values solve(Values values, Answers.Builder builder) {
+		if (null == values)
+			throw new IllegalArgumentException("Illegal 'values' argument in Grounding.solve(Values, Answers.Builder): " + values);
+		if (null == builder)
+			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding.solve(Values, Answers.Builder): " + builder);
+		Values result = values;
+		if (this.needsInduction()) {
+			Dialer dialer = new Dialer.Builder(problem.getConfig(), this, values).build();
+			Map.Entry<Values, Collection<String>> entry = Answers.timeInduction(dialer);
+			result = entry.getKey();
+			for (String output : entry.getValue()) {
+				Hypothesis hypothesis = Answers.timeDeduction(this, output);
+				builder.put(entry.getKey(), new Answer.Builder(this).setHypothesis(hypothesis).build());
+			}
+		} else
+			builder.put(new Values(), new Answer.Builder(this).build());
+		return result;
 	}
 
 }

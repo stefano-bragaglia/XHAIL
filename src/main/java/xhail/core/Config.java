@@ -21,11 +21,13 @@ public class Config {
 		private Path clasp = null;
 		private boolean debug = false;
 		String errors = "";
-		private boolean format = false;
+		private boolean full = false;
 		private Path gringo = null;
 		private boolean help = false;
+		private int index = -1;
 		private long kill = 0L;
 		private boolean mute = false;
+		private boolean prettify = false;
 		private boolean search = false;
 		private LinkedHashSet<Path> sources = new LinkedHashSet<>();
 
@@ -63,7 +65,7 @@ public class Config {
 
 		public Builder removeSource(String source) {
 			if (null == source)
-				throw new IllegalArgumentException("Illegal 'source' argument in Application.Builder.addSource(Path): " + source);
+				throw new IllegalArgumentException("Illegal 'source' argument in Application.Builder.removeSource(Path): " + source);
 			sources.remove(Paths.get(source));
 			return this;
 		}
@@ -90,8 +92,8 @@ public class Config {
 			return this;
 		}
 
-		public Builder setFormat(boolean format) {
-			this.format = format;
+		public Builder setFull(boolean full) {
+			this.full = full;
 			return this;
 		}
 
@@ -107,6 +109,11 @@ public class Config {
 			return this;
 		}
 
+		public Builder setIndex(int index) {
+			this.index = index < -1 ? -1 : index;
+			return this;
+		}
+
 		public Builder setKill(String kill) {
 			try {
 				this.kill = Long.parseUnsignedLong(kill);
@@ -118,6 +125,11 @@ public class Config {
 
 		public Builder setMute(boolean mute) {
 			this.mute = mute;
+			return this;
+		}
+
+		public Builder setPrettify(boolean prettify) {
+			this.prettify = prettify;
 			return this;
 		}
 
@@ -141,17 +153,21 @@ public class Config {
 
 	private final boolean debug;
 
-	private final boolean format;
+	private final boolean full;
 
 	private Path gringo;
 
 	private final boolean help;
+
+	private final int index;
 
 	private final long kill;
 
 	private final boolean mute;
 
 	private final String name;
+
+	private final boolean prettify;
 
 	private final boolean search;
 
@@ -166,8 +182,9 @@ public class Config {
 		this.blind = builder.blind;
 		this.clasp = builder.clasp;
 		this.debug = builder.debug;
-		this.format = builder.format;
+		this.full = builder.full;
 		this.gringo = builder.gringo;
+		this.index = builder.index;
 		this.help = builder.help;
 		this.kill = builder.kill;
 		String name = "stdin";
@@ -179,8 +196,9 @@ public class Config {
 			if (name.isEmpty())
 				name = "file";
 		}
-		this.name = name;
 		this.mute = builder.mute;
+		this.name = name;
+		this.prettify = builder.prettify;
 		this.search = builder.search;
 		this.sources = builder.sources.toArray(new Path[builder.sources.size()]);
 		this.version = builder.version;
@@ -192,6 +210,10 @@ public class Config {
 
 	public Path getGringo() {
 		return gringo;
+	}
+
+	public final int getIndex() {
+		return index;
 	}
 
 	public final long getKill() {
@@ -222,8 +244,8 @@ public class Config {
 		return debug;
 	}
 
-	public final boolean isFormat() {
-		return format;
+	public final boolean isFull() {
+		return full;
 	}
 
 	public final boolean isHelp() {
@@ -232,6 +254,10 @@ public class Config {
 
 	public final boolean isMute() {
 		return mute;
+	}
+
+	public final boolean isPrettify() {
+		return prettify;
 	}
 
 	public final boolean isSearch() {

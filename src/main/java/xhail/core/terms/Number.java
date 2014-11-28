@@ -141,11 +141,11 @@ public class Number implements Term, SchemeTerm {
 	}
 
 	@Override
-	public boolean subsumes(final Term term, final Set<Atom> facts) {
+	public boolean subsumes(final Term term, final Collection<Atom> facts) {
 		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Number.subsumes(Term): " + term);
+			throw new IllegalArgumentException("Illegal 'term' argument in Number.subsumes(Term, Collection<Atom>): " + term);
 		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Number.subsumes(Term, Set<Atom>): " + facts);
+			throw new IllegalArgumentException("Illegal 'facts' argument in Number.subsumes(Term, Collection<Atom>): " + facts);
 		if (term instanceof Number) {
 			Number other = (Number) term;
 			return value == other.getValue();
