@@ -3,8 +3,13 @@
  */
 package xhail.core.statements;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import xhail.core.Buildable;
+import xhail.core.terms.Atom;
 import xhail.core.terms.Scheme;
+import xhail.core.terms.Variable;
 
 /**
  * @author stefano
@@ -16,10 +21,10 @@ public class ModeH {
 
 		private int lower = 0;
 		private int priority = 1;
-		private int upper = Integer.MAX_VALUE;
-		private int weight = 1;
-
 		private Scheme scheme;
+		private int upper = Integer.MAX_VALUE;
+
+		private int weight = 1;
 
 		public Builder(Scheme scheme) {
 			if (null == scheme)
@@ -27,9 +32,10 @@ public class ModeH {
 			this.scheme = scheme;
 		}
 
+		private static int COUNT = 0;
 		@Override
 		public ModeH build() {
-			return new ModeH(this);
+			return new ModeH(this, COUNT++);
 		}
 
 		public Builder setLower(int lower) {
@@ -80,13 +86,30 @@ public class ModeH {
 	private final int upper;
 
 	private final int weight;
+	
+	private final int id;
 
-	private ModeH(Builder builder) {
+	private ModeH(Builder builder, int id) {
+		this.id = id;
 		this.lower = builder.lower;
 		this.priority = builder.priority;
 		this.scheme = builder.scheme;
 		this.upper = builder.upper;
 		this.weight = builder.weight;
+	}
+
+	public final String[] asClauses() {
+		Set<Variable> vars = new HashSet<>();
+		String atom = ((Atom) scheme.generalises(vars)).toString();
+		String types = scheme.getTypes().length > 0 ? " :" + String.join(" :", scheme.getTypes()) : "";
+		String list = scheme.getTypes().length > 0 ? "," + String.join(",", scheme.getTypes()) : "";
+		String[] result = new String[5];
+		result[0] = String.format("%% %s", toString());
+		result[1] = String.format("%d { abduced_%s%s } %d.", lower, atom, types, upper);
+		result[2] = String.format("#minimize[ abduced_%s =%d @%d%s ].", atom, weight, priority, types);
+		result[3] = String.format("%s:-abduced_%s%s.", atom, atom, list);
+		result[4] = String.format("number_abduced(%d,V):-V:=#count{ abduced_%s%s }.", id, atom, types);
+		return result;
 	}
 
 	@Override
@@ -114,16 +137,16 @@ public class ModeH {
 		return true;
 	}
 
-	public Scheme getScheme() {
-		return scheme;
-	}
-
 	public int getLower() {
 		return lower;
 	}
 
 	public int getPriority() {
 		return priority;
+	}
+
+	public Scheme getScheme() {
+		return scheme;
 	}
 
 	public int getUpper() {

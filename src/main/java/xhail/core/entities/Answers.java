@@ -33,7 +33,7 @@ public class Answers implements Iterable<Answer> {
 		private int count = 0;
 
 		private Values values = null;
-
+		
 		public Builder(Config config) {
 			if (null == config)
 				throw new IllegalArgumentException("Illegal 'config' argument in Answers.Builder.Builder(Config): " + config);
@@ -51,6 +51,10 @@ public class Answers implements Iterable<Answer> {
 			this.count = 0;
 			this.values = null;
 			return this;
+		}
+
+		public final boolean isEmpty() {
+			return answers.isEmpty();
 		}
 
 		public Builder put(Values values, Answer answer) {

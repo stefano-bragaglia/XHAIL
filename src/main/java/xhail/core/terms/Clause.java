@@ -100,8 +100,8 @@ public class Clause implements Iterable<Literal> {
 		return true;
 	}
 
-	public Collection<Literal> getBody() {
-		return Arrays.asList(body);
+	public Literal[] getBody() {
+		return body;
 	}
 
 	public Literal getBody(int index) {

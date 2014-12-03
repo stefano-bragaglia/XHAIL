@@ -56,7 +56,7 @@ public class Display implements Comparable<Display> {
 		this.identifier = builder.identifier;
 	}
 
-	public String asAlternate() {
+	public String asClauses() {
 		String result = "";
 		for (int i = 1; i <= arity; i++) {
 			if (i > 1)
@@ -66,7 +66,8 @@ public class Display implements Comparable<Display> {
 		if (!result.isEmpty())
 			result = "(" + result + ")";
 		result = identifier + result;
-		return result;
+
+		return String.format("display_fact(%s):-%s.", result, result);
 	}
 
 	@Override

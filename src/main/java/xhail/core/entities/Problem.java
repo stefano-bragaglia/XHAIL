@@ -8,10 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
@@ -25,6 +28,9 @@ import xhail.core.statements.Display;
 import xhail.core.statements.Example;
 import xhail.core.statements.ModeB;
 import xhail.core.statements.ModeH;
+import xhail.core.terms.Clause;
+import xhail.core.terms.Placemarker;
+import xhail.core.terms.Scheme;
 
 /**
  * @author stefano
@@ -200,28 +206,38 @@ public class Problem implements Solvable {
 
 	}
 
-	private final Set<String> background;
+	private final String[] background;
 
 	private final Config config;
 
-	private final Set<Display> displays;
+	private final Display[] displays;
 
-	private final Set<Example> examples;
+	private final Example[] examples;
 
-	private final Set<ModeB> modeBs;
+	private final ModeB[] modeBs;
 
-	private final Set<ModeH> modeHs;
+	private final ModeH[] modeHs;
+
+	private Set<String> refinements = new HashSet<>();
 
 	private Problem(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Problem(Problem.Builder): " + builder);
-		this.background = new LinkedHashSet<>(builder.background);
+		this.background = builder.background.toArray(new String[builder.background.size()]);
 		this.config = builder.config;
-		this.displays = new LinkedHashSet<>(builder.displays);
-		this.examples = new LinkedHashSet<>(builder.examples);
-		this.modeBs = new LinkedHashSet<>(builder.modeBs);
-		this.modeHs = new LinkedHashSet<>(builder.modeHs);
+		this.displays = builder.displays.toArray(new Display[builder.displays.size()]);
+		this.examples = builder.examples.toArray(new Example[builder.examples.size()]);
+		this.modeBs = builder.modeBs.toArray(new ModeB[builder.modeBs.size()]);
+		this.modeHs = builder.modeHs.toArray(new ModeH[builder.modeHs.size()]);
 	}
+
+	// public final void addRefinement(String refinement) {
+	// if (null == refinement || (refinement = refinement.trim()).isEmpty())
+	// throw new
+	// IllegalArgumentException("Illegal 'refinement' argument in Problem.addRefinement(String): "
+	// + refinement);
+	// refinements.add(refinement);
+	// }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -232,35 +248,30 @@ public class Problem implements Solvable {
 		if (getClass() != obj.getClass())
 			return false;
 		Problem other = (Problem) obj;
-		if (background == null) {
-			if (other.background != null)
-				return false;
-		} else if (!background.equals(other.background))
+		if (!Arrays.equals(background, other.background))
 			return false;
-		if (displays == null) {
-			if (other.displays != null)
+		if (config == null) {
+			if (other.config != null)
 				return false;
-		} else if (!displays.equals(other.displays))
+		} else if (!config.equals(other.config))
 			return false;
-		if (examples == null) {
-			if (other.examples != null)
-				return false;
-		} else if (!examples.equals(other.examples))
+		if (!Arrays.equals(displays, other.displays))
 			return false;
-		if (modeBs == null) {
-			if (other.modeBs != null)
-				return false;
-		} else if (!modeBs.equals(other.modeBs))
+		if (!Arrays.equals(examples, other.examples))
 			return false;
-		if (modeHs == null) {
-			if (other.modeHs != null)
+		if (!Arrays.equals(modeBs, other.modeBs))
+			return false;
+		if (!Arrays.equals(modeHs, other.modeHs))
+			return false;
+		if (refinements == null) {
+			if (other.refinements != null)
 				return false;
-		} else if (!modeHs.equals(other.modeHs))
+		} else if (!refinements.equals(other.refinements))
 			return false;
 		return true;
 	}
 
-	public final Collection<String> getBackground() {
+	public final String[] getBackground() {
 		return background;
 	}
 
@@ -268,36 +279,78 @@ public class Problem implements Solvable {
 		return config;
 	}
 
-	public final Collection<Display> getDisplays() {
+	public final Display[] getDisplays() {
 		return displays;
 	}
 
-	public final Collection<Example> getExamples() {
+	public final Example[] getExamples() {
 		return examples;
 	}
 
-	public final Collection<ModeB> getModeBs() {
+	public final Collection<String> getFilters() {
+		Set<String> result = new TreeSet<>();
+		result.add("#hide.");
+		result.add("#show display_fact/1.");
+		result.add("#show covered_example/2.");
+		// result.add("#show number_abduced/1.");
+		result.add("#show uncovered_example/2.");
+		// result.add("#show use_clause_literal/2.");
+		for (ModeH mode : modeHs) {
+			Scheme scheme = mode.getScheme();
+			result.add(String.format("#show %s/%d.", scheme.getIdentifier(), scheme.getArity()));
+			result.add(String.format("#show abduced_%s/%d.", scheme.getIdentifier(), scheme.getArity()));
+			for (Placemarker placemarker : scheme.getPlacemarkers())
+				result.add(String.format("#show %s/1.", placemarker.getIdentifier()));
+		}
+		for (ModeB mode : modeBs) {
+			Scheme scheme = mode.getScheme();
+			result.add(String.format("#show %s/%d.", scheme.getIdentifier(), scheme.getArity()));
+			for (Placemarker placemarker : scheme.getPlacemarkers())
+				result.add(String.format("#show %s/1.", placemarker.getIdentifier()));
+		}
+		return result;
+	}
+
+	public final ModeB[] getModeBs() {
 		return modeBs;
 	}
 
-	public final Collection<ModeH> getModeHs() {
+	public final ModeH[] getModeHs() {
 		return modeHs;
+	}
+
+	public final Collection<String> getRefinements() {
+		return refinements;
+	}
+
+	public final boolean hasBackground() {
+		return background.length > 0;
+	}
+
+	public final boolean hasDisplays() {
+		return displays.length > 0;
+	}
+
+	public final boolean hasExamples() {
+		return examples.length > 0;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((background == null) ? 0 : background.hashCode());
-		result = prime * result + ((displays == null) ? 0 : displays.hashCode());
-		result = prime * result + ((examples == null) ? 0 : examples.hashCode());
-		result = prime * result + ((modeBs == null) ? 0 : modeBs.hashCode());
-		result = prime * result + ((modeHs == null) ? 0 : modeHs.hashCode());
+		result = prime * result + Arrays.hashCode(background);
+		result = prime * result + ((config == null) ? 0 : config.hashCode());
+		result = prime * result + Arrays.hashCode(displays);
+		result = prime * result + Arrays.hashCode(examples);
+		result = prime * result + Arrays.hashCode(modeBs);
+		result = prime * result + Arrays.hashCode(modeHs);
+		result = prime * result + ((refinements == null) ? 0 : refinements.hashCode());
 		return result;
 	}
 
-	public final boolean needsModel() {
-		return !displays.isEmpty();
+	public final boolean hasModes() {
+		return modeBs.length > 0 || modeHs.length > 0;
 	}
 
 	@Override
@@ -307,45 +360,40 @@ public class Problem implements Solvable {
 
 	public final Answers solve() {
 		Answers.Builder builder = new Answers.Builder(config);
-		Values values = new Values();
-		Dialer dialer = new Dialer.Builder(config, this).build();
-		Map.Entry<Values, Collection<String>> entry = Answers.timeAbduction(dialer);
-		for (String output : entry.getValue()) {
-			Grounding grounding = Answers.timeDeduction(this, output);
-			values = grounding.solve(values, builder);
+		if (background.length > 0 || examples.length > 0 || modeHs.length > 0 || modeBs.length > 0) {
+			int it = 0;
+			Set<Clause[]> kernels = new HashSet<>();
+
+			while (builder.isEmpty() && it <= config.getIterations()) {
+
+				Values values = new Values();
+				Dialer dialer = new Dialer.Builder(config, this).build();
+				Map.Entry<Values, Collection<String>> entry = Answers.timeAbduction(dialer);
+				for (String output : entry.getValue()) {
+					Grounding grounding = Answers.timeDeduction(this, output);
+					Clause[] kernel = grounding.getKernel();
+					if (!kernels.contains(kernel)) {
+						values = grounding.solve(values, builder);
+						// always add refinements, hopefully it won't be used!
+						refinements.add(grounding.asBadSolution());
+						kernels.add(kernel);
+					}
+
+				}
+
+				it += 1;
+			}
+			if (builder.isEmpty() && it <= config.getIterations()) {
+				Logger.message("No answers, try more iterations (--iter,-i <num>)");
+			}
 		}
 		return builder.build();
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		if (displays.size() > 0) {
-			for (Display display : displays)
-				builder.append(String.format("%s\n", display.toString()));
-			builder.append("\n");
-		}
-		if (background.size() > 0) {
-			builder.append("%% B. Background\n");
-			for (String statement : background)
-				builder.append(String.format("%s\n", statement));
-			builder.append("\n");
-		}
-		if (examples.size() > 0) {
-			builder.append("%% E. Examples\n");
-			for (Example example : examples)
-				builder.append(String.format("%s\n", example));
-			builder.append("\n");
-		}
-		if (modeHs.size() > 0 || modeBs.size() > 0) {
-			builder.append("%% M. Modes\n");
-			for (ModeH mode : modeHs)
-				builder.append(String.format("%s\n", mode));
-			for (ModeB mode : modeBs)
-				builder.append(String.format("%s\n", mode));
-			builder.append("\n");
-		}
-		return builder.toString();
+		return "Problem [\n  background=" + Arrays.toString(background) + ",\n  config=" + config + ",\n  displays=" + Arrays.toString(displays)
+				+ ",\n  examples=" + Arrays.toString(examples) + ",\n  modeBs=" + Arrays.toString(modeBs) + ",\n  modeHs=" + Arrays.toString(modeHs) + "\n]";
 	}
 
 }

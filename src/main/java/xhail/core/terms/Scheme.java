@@ -6,9 +6,8 @@ package xhail.core.terms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -170,14 +169,6 @@ public class Scheme implements SchemeTerm, Iterable<Scheme> {
 		return identifier;
 	}
 
-	@Override
-	public Collection<Placemarker> getPlacemarkers() {
-		Set<Placemarker> result = new HashSet<>();
-		for (SchemeTerm term : terms)
-			result.addAll(term.getPlacemarkers());
-		return result;
-	}
-
 	public final SchemeTerm getTerm(int index) {
 		if (index < 0 || index >= terms.length)
 			throw new IndexOutOfBoundsException("Illegal 'index' argument in Scheme.getTerm(int): " + index);
@@ -207,74 +198,35 @@ public class Scheme implements SchemeTerm, Iterable<Scheme> {
 				&& (1 == terms.length || 2 == terms.length);
 	}
 
-	// private int asGeneralisedAtom(int index, Atom.Builder builder) {
-	// builder.setIdentifier(identifier);
-	// for (SchemeTerm term : terms)
-	// if (term instanceof Number)
-	// builder.addTerm((Number) term);
-	// else if (term instanceof Quotation)
-	// builder.addTerm((Quotation) term);
-	// else if (term instanceof Placemarker)
-	// builder.addTerm(new Variable.Builder("V" + ++index).build());
-	// else {
-	// Atom.Builder next = new Atom.Builder("next");
-	// index = ((Scheme) term).asGeneralisedAtom(index, next);
-	// builder.addTerm(next.build());
-	// }
-	// return index;
-	// }
-	//
-	// public Atom asGeneralisedAtom() {
-	// Atom.Builder result = new Atom.Builder(identifier);
-	// asGeneralisedAtom(0, result);
-	// return result.build();
-	// }
-
 	@Override
 	public Iterator<Scheme> iterator() {
 		return new ArrayIterator<>(terms);
 	}
 
-	@Override
-	public Map<Term, Collection<Term>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
-		Map<Atom.Builder, Set<Term>> builders = new HashMap<>();
-		builders.put(new Atom.Builder(identifier), new HashSet<>());
-		for (int i = 0; i < terms.length; i++) {
-			Map<Term, Collection<Term>> nested = terms[i].matching(usables, parts);
-			if (null == nested)
-				return null;
-			Map<Atom.Builder, Set<Term>> step = new HashMap<>();
-			for (Term term : nested.keySet()) {
-				for (Atom.Builder builder : builders.keySet()) {
-					Atom.Builder key = builder.clone().addTerm(term);
-					Set<Term> value = new HashSet<>(builders.get(builder));
-					value.addAll(nested.get(term));
-					step.put(key, value);
-				}
-			}
-			builders = step;
-		}
-		Map<Term, Collection<Term>> result = new HashMap<>();
-		for (Atom.Builder builder : builders.keySet())
-			result.put(builder.build(), builders.get(builder));
-		return result;
-	}
-
-	@Override
-	public boolean subsumes(final Term term, final Collection<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Scheme.subsumes(Term, Collection<Atom>): " + term);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Scheme.subsumes(Term, Collection<Atom>): " + facts);
-		if (term instanceof Atom) {
-			Atom other = (Atom) term;
-			boolean result = identifier.equals(other.getIdentifier()) && terms.length == other.getArity();
-			for (int i = 0; result && i < terms.length; i++)
-				result = terms[i].subsumes(other.getTerm(i), facts);
-			return result;
-		} else
-			return false;
-	}
+//	@Override
+//	public Map<Term, Collection<Atom>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
+//		Map<Atom.Builder, Set<Term>> builders = new HashMap<>();
+//		builders.put(new Atom.Builder(identifier), new HashSet<>());
+//		for (int i = 0; i < terms.length; i++) {
+//			Map<Term, Collection<Atom>> nested = terms[i].matching(usables, parts);
+//			if (null == nested)
+//				return null;
+//			Map<Atom.Builder, Set<Term>> step = new HashMap<>();
+//			for (Term term : nested.keySet()) {
+//				for (Atom.Builder builder : builders.keySet()) {
+//					Atom.Builder key = builder.clone().addTerm(term);
+//					Set<Term> value = new HashSet<>(builders.get(builder));
+//					value.addAll(nested.get(term));
+//					step.put(key, value);
+//				}
+//			}
+//			builders = step;
+//		}
+//		Map<Term, Collection<Atom>> result = new HashMap<>();
+//		for (Atom.Builder builder : builders.keySet())
+//			result.put(builder.build(), builders.get(builder));
+//		return result;
+//	}
 
 	@Override
 	public String toString() {
@@ -284,6 +236,86 @@ public class Scheme implements SchemeTerm, Iterable<Scheme> {
 		result += identifier;
 		if (terms.length > 0)
 			result += "(" + StringUtils.join(terms, ",") + ")";
+		return result;
+	}
+
+	// getTypes
+
+	// getTypesWithoutConstantPlaceMarkers
+
+	// getPlacemarkers
+
+	// getPlacemarkersWithoutConstantPlacemarkers
+
+	// getVariables
+
+	// getVariablesWithoutConstantPlacemarkers
+
+	private final void getPlacemarkers(Set<Placemarker> result) {
+		if (null == result)
+			throw new IllegalArgumentException("Illegal 'result' argument in Scheme.getPlacemarkers(Set<Placemarker>): " + result);
+		for (SchemeTerm term : terms)
+			if (term instanceof Placemarker)
+				result.add((Placemarker) term);
+			else if (term instanceof Scheme)
+				((Scheme) term).getPlacemarkers(result);
+	}
+
+	private Placemarker[] placemarkers;
+
+	public final boolean hasPlacemarkers() {
+		return getPlacemarkers().length > 0;
+	}
+
+	public final Placemarker[] getPlacemarkers() {
+		if (null == placemarkers) {
+			Set<Placemarker> result = new LinkedHashSet<>();
+			getPlacemarkers(result);
+			placemarkers = result.toArray(new Placemarker[result.size()]);
+		}
+		return placemarkers;
+	}
+
+	public final boolean hasTypes() {
+		return getPlacemarkers().length > 0;
+	}
+
+	public final String[] getTypes() {
+		int length = getPlacemarkers().length;
+		String[] result = new String[length];
+		for (int i = 0; i < length; i++)
+			result[i] = String.format("%s(V%d)", placemarkers[i].getIdentifier(), 1 + i);
+		return result;
+	}
+
+	public final String[] getVariables() {
+		int length = getPlacemarkers().length;
+		String[] result = new String[length];
+		for (int i = 0; i < length; i++)
+			result[i] = String.format("V%d", 1 + i);
+		return result;
+	}
+
+	public final boolean matches(Term candidate) {
+		if (null == candidate)
+			throw new IllegalArgumentException("Illegal 'candidate' argument in Scheme.matches(Term): " + candidate);
+		if (!(candidate instanceof Atom))
+			return false;
+		Atom atom = (Atom) candidate;
+		if (!atom.getIdentifier().equals(identifier) || atom.getArity() != terms.length)
+			return false;
+		boolean result = true;
+		for (int i = 0; result && i < terms.length; i++)
+			if (terms[i] instanceof Number)
+				result = atom.getTerm(i) instanceof Number && ((Number) terms[i]).equals((Number) atom.getTerm(i));
+			else if (terms[i] instanceof Quotation)
+				result = atom.getTerm(i) instanceof Quotation && ((Quotation) terms[i]).equals((Quotation) atom.getTerm(i));
+			else if (terms[i] instanceof Placemarker)
+				result = true;
+			else if (terms[i] instanceof Scheme)
+				result = ((Scheme) terms[i]).matches(atom.getTerm(i));
+			else
+				result = false;
 		return result;
 	}
 

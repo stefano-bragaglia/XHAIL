@@ -4,12 +4,15 @@
 package xhail.core.entities;
 
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
@@ -22,7 +25,6 @@ import xhail.core.statements.ModeH;
 import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Literal;
-import xhail.core.terms.Placemarker;
 import xhail.core.terms.Scheme;
 import xhail.core.terms.SchemeTerm;
 import xhail.core.terms.Term;
@@ -54,19 +56,19 @@ public class Grounding implements Solvable {
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.addAtom(Atom): " + atom);
 			if (atom.getIdentifier().startsWith("abduced_"))
 				delta.add(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
+			else if (atom.getIdentifier().equals("covered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
 					covered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
-			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+			} else if (atom.getIdentifier().equals("uncovered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
 					uncovered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
-			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
+			} else if (atom.getIdentifier().equals("display_fact") && 1 == atom.getArity())
 				model.add((Atom) atom.getTerm(0));
 			else
 				facts.add(atom);
@@ -100,19 +102,19 @@ public class Grounding implements Solvable {
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.removeAtom(Atom): " + atom);
 			if (atom.getIdentifier().startsWith("abduced_"))
 				delta.remove(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
+			else if (atom.getIdentifier().equals("covered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
 					covered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
-			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
+			} else if (atom.getIdentifier().equals("uncovered_example") && 2 == atom.getArity()) {
 				Term term = atom.getTerm(0);
 				if (term instanceof Atom) {
 					boolean negated = ((Atom) term).getIdentifier().equals("true");
 					uncovered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
 				}
-			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
+			} else if (atom.getIdentifier().equals("display_fact") && 1 == atom.getArity())
 				model.remove((Atom) atom.getTerm(0));
 			else
 				facts.remove(atom);
@@ -129,55 +131,111 @@ public class Grounding implements Solvable {
 
 	}
 
-	public static final Map<SchemeTerm, Set<Atom>> getParts(final Collection<ModeB> modes, final Collection<Atom> facts) {
-		if (null == modes)
-			throw new IllegalArgumentException("Illegal 'modes' argument in Grounding.getParts(Collection<ModeB>, Collection<Atom>): " + modes);
-		Map<SchemeTerm, Set<Atom>> result = new HashMap<>();
-		for (ModeB mode : modes) {
-			Scheme scheme = mode.getScheme();
-			result.put(scheme, new HashSet<>());
-			for (Placemarker placemarker : scheme.getPlacemarkers())
-				if (!result.containsKey(placemarker))
-					result.put(placemarker, new HashSet<>());
-		}
-		for (SchemeTerm scheme : result.keySet()) {
-			Set<Atom> part = result.get(scheme);
-			for (Atom fact : facts) {
-				if (scheme.subsumes(fact, facts))
-					part.add(fact);
-			}
-		}
-		return result;
-	}
+	private static final String[] FILTERS = { "#hide.", "#show display_fact/1.", "#show covered_example/2.", "#show uncovered_example/2.",
+			"#show use_clause_literal/2." };
 
-	private final Set<Literal> covered;
+	private final Literal[] covered;
 
-	private final Set<Atom> delta;
+	private final Atom[] delta;
 
 	private final Set<Atom> facts;
 
-	private Set<Clause> generalisation;
+	public final Collection<Atom> getFacts() {
+		return facts;
+	}
 
-	private Set<Clause> kernel;
+	private Clause[] generalisation;
 
-	private final Set<Atom> model;
+	private Clause[] kernel;
 
-	private final Map<SchemeTerm, Set<Atom>> parts;
+	private final Atom[] model;
 
 	private final Problem problem;
 
-	private final Set<Literal> uncovered;
+	private final Map<SchemeTerm, Set<Atom>> table;
+
+	private final Literal[] uncovered;
+
+	private final int count;
+
+	public final int getCount() {
+		return count;
+	}
 
 	private Grounding(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding(Grounding.Builder): " + builder);
-		this.covered = builder.covered;
-		this.delta = builder.delta;
+		this.count = builder.delta.size();
+		this.covered = builder.covered.toArray(new Literal[builder.covered.size()]);
+		this.delta = builder.delta.toArray(new Atom[builder.delta.size()]);
 		this.facts = builder.facts;
-		this.model = builder.model;
-		this.parts = getParts(builder.problem.getModeBs(), builder.facts);
+		this.model = builder.model.toArray(new Atom[builder.model.size()]);
 		this.problem = builder.problem;
-		this.uncovered = builder.uncovered;
+		this.table = SchemeTerm.lookup(builder.problem.getModeHs(), builder.problem.getModeBs(), builder.facts);
+		this.uncovered = builder.uncovered.toArray(new Literal[builder.uncovered.size()]);
+	}
+
+	public String[] asClauses() {
+		Set<String> result = new LinkedHashSet<>();
+		Clause[] clauses = getGeneralisation();
+		if (clauses.length > 0) {
+			result.add("{ use_clause_literal(V1,0) }:-clause(V1).");
+
+			boolean hasLiterals = false;
+			for (int clauseId = 0; !hasLiterals && clauseId < clauses.length; clauseId++)
+				hasLiterals = clauses[clauseId].getBody().length > 0;
+
+			if (hasLiterals)
+				result.add("{ use_clause_literal(V1,V2) }:-clause(V1),literal(V1,V2).");
+
+			for (int clauseId = 0; clauseId < clauses.length; clauseId++) {
+				result.add(String.format("%% %s", clauses[clauseId]));
+				Literal[] literals = clauses[clauseId].getBody();
+				result.add(String.format("clause(%d).", clauseId));
+				for (int literalId = 1; literalId <= literals.length; literalId++)
+					result.add(String.format("literal(%d,%d).", clauseId, literalId));
+
+				for (int level = 0; level < clauses[clauseId].getLevels(); level++)
+					result.add(String.format(":-not clause_level(%d,%d),clause_level(%d,%d).", clauseId, level, clauseId, 1 + level));
+
+				result.add(String.format("clause_level(%d,0):-use_clause_literal(%d,0).", clauseId, clauseId));
+				for (int literalId = 1; literalId <= literals.length; literalId++)
+					result.add(String.format("clause_level(%d,%d):-use_clause_literal(%d,%d).", clauseId, literals[literalId - 1].getLevel(), clauseId,
+							literalId));
+
+				Atom head = clauses[clauseId].getHead();
+				result.add(String.format("#minimize[ use_clause_literal(%d,0) =%d @%d ].", clauseId, head.getWeight(), head.getPriority()));
+
+				for (int literalId = 1; literalId <= literals.length; literalId++)
+					result.add(String.format("#minimize[ use_clause_literal(%d,%d) =%d @%d ].", clauseId, literalId, //
+							literals[literalId - 1].getWeight(), literals[literalId - 1].getPriority()));
+
+				Set<String> set = new LinkedHashSet<>();
+				for (String type : head.getTypes())
+					set.add(type);
+				String[] array = new String[literals.length];
+				for (int literalId = 1; literalId <= literals.length; literalId++) {
+					String variables = literals[literalId - 1].hasVariables() ? "," + StringUtils.join(literals[literalId - 1].getVariables(), ",") : "";
+					array[literalId - 1] = String.format("try_clause_literal(%d,%d%s)", clauseId, literalId, variables);
+					for (String type : literals[literalId - 1].getTypes())
+						set.add(type);
+				}
+				String typesAll = !set.isEmpty() ? "," + StringUtils.join(set, ",") : "";
+				String literalsAll = array.length > 0 ? "," + StringUtils.join(array, ",") : "";
+				result.add(String.format("%s:-use_clause_literal(%d,0)%s%s.", head, clauseId, literalsAll, typesAll));
+
+				for (int literalId = 1; literalId <= literals.length; literalId++) {
+					String variables = literals[literalId - 1].hasVariables() ? "," + StringUtils.join(literals[literalId - 1].getVariables(), ",") : "";
+					String types = literals[literalId - 1].hasTypes() ? "," + StringUtils.join(literals[literalId - 1].getTypes(), ",") : "";
+					result.add(String.format("try_clause_literal(%d,%d%s):-use_clause_literal(%d,%d),%s%s.", //
+							clauseId, literalId, variables, clauseId, literalId, literals[literalId - 1], types));
+					result.add(String.format("try_clause_literal(%d,%d%s):-not use_clause_literal(%d,%d)%s.", //
+							clauseId, literalId, variables, clauseId, literalId, types));
+				}
+
+			}
+		}
+		return result.toArray(new String[result.size()]);
 	}
 
 	@Override
@@ -189,55 +247,37 @@ public class Grounding implements Solvable {
 		if (getClass() != obj.getClass())
 			return false;
 		Grounding other = (Grounding) obj;
-		if (covered == null) {
-			if (other.covered != null)
-				return false;
-		} else if (!covered.equals(other.covered))
+		if (!Arrays.equals(covered, other.covered))
 			return false;
-		if (delta == null) {
-			if (other.delta != null)
-				return false;
-		} else if (!delta.equals(other.delta))
+		if (!Arrays.equals(delta, other.delta))
 			return false;
 		if (facts == null) {
 			if (other.facts != null)
 				return false;
 		} else if (!facts.equals(other.facts))
 			return false;
-		if (generalisation == null) {
-			if (other.generalisation != null)
-				return false;
-		} else if (!generalisation.equals(other.generalisation))
+		if (!Arrays.equals(generalisation, other.generalisation))
 			return false;
-		if (kernel == null) {
-			if (other.kernel != null)
-				return false;
-		} else if (!kernel.equals(other.kernel))
+		if (!Arrays.equals(kernel, other.kernel))
 			return false;
-		if (model == null) {
-			if (other.model != null)
-				return false;
-		} else if (!model.equals(other.model))
+		if (!Arrays.equals(model, other.model))
 			return false;
-		if (parts == null) {
-			if (other.parts != null)
+		if (table == null) {
+			if (other.table != null)
 				return false;
-		} else if (!parts.equals(other.parts))
+		} else if (!table.equals(other.table))
 			return false;
 		if (problem == null) {
 			if (other.problem != null)
 				return false;
 		} else if (!problem.equals(other.problem))
 			return false;
-		if (uncovered == null) {
-			if (other.uncovered != null)
-				return false;
-		} else if (!uncovered.equals(other.uncovered))
+		if (!Arrays.equals(uncovered, other.uncovered))
 			return false;
 		return true;
 	}
 
-	public final Collection<String> getBackground() {
+	public final String[] getBackground() {
 		return problem.getBackground();
 	}
 
@@ -245,114 +285,135 @@ public class Grounding implements Solvable {
 		return problem.getConfig();
 	}
 
-	public final Collection<Literal> getCovered() {
+	public final Literal[] getCovered() {
 		return covered;
 	}
 
-	public final Collection<Atom> getDelta() {
+	public final Atom[] getDelta() {
 		return delta;
 	}
 
-	public final Collection<Display> getDisplays() {
+	public final Display[] getDisplays() {
 		return problem.getDisplays();
 	}
 
-	public final Collection<Example> getExamples() {
+	public final Example[] getExamples() {
 		return problem.getExamples();
 	}
 
-	public final Collection<Clause> getGeneralisation() {
+	public final String[] getFilters() {
+		return FILTERS;
+	}
+
+	public final Clause[] getGeneralisation() {
 		if (null == generalisation) {
-			generalisation = new LinkedHashSet<>();
+			Set<Clause> set = new LinkedHashSet<>();
 			for (Clause clause : getKernel()) {
 				Map<Term, Variable> map = new HashMap<>();
 				Clause.Builder builder = new Clause.Builder();
 				Atom atom = clause.getHead();
 				for (ModeH mode : problem.getModeHs()) {
 					Scheme scheme = mode.getScheme();
-					if (scheme.subsumes(atom, facts))
+					if (SchemeTerm.subsumes(scheme, atom, facts))
 						builder.setHead((Atom) scheme.generalises(atom, map));
 				}
 				for (Literal literal : clause.getBody()) {
 					atom = literal.getAtom();
 					for (ModeB mode : problem.getModeBs()) {
 						Scheme scheme = mode.getScheme();
-						if (scheme.subsumes(atom, facts))
+						if (SchemeTerm.subsumes(scheme, atom, facts))
 							builder.addLiteral(new Literal.Builder((Atom) scheme.generalises(atom, map)).setNegated(literal.isNegated())
 									.setLevel(literal.getLevel()).build());
 					}
 				}
-				generalisation.add(builder.build());
+				set.add(builder.build());
 			}
+			generalisation = set.toArray(new Clause[set.size()]);
 		}
 		return generalisation;
 	}
 
-	public final Collection<Clause> getKernel() {
+	public final Clause[] getKernel() {
 		if (null == kernel) {
-			kernel = new LinkedHashSet<>();
+			Set<Clause> set = new LinkedHashSet<>();
 			for (Atom alpha : delta)
 				for (ModeH head : problem.getModeHs()) {
 					Scheme scheme = head.getScheme();
-					if (scheme.subsumes(alpha, facts)) {
-						Clause.Builder builder = new Clause.Builder().setHead(new Atom.Builder(alpha).setWeight(head.getWeigth())
-								.setPriority(head.getPriority()).build());
+					if (SchemeTerm.subsumes(scheme, alpha, facts)) {
+						Clause.Builder builder = new Clause.Builder().setHead(//
+								new Atom.Builder(alpha).setWeight(head.getWeigth()).setPriority(head.getPriority()).build());
 
-						int level = 0;
-						Set<Term> usables = new HashSet<>(alpha.filters(scheme));
-						Set<Term> used = new HashSet<Term>();
-						Set<Term> next = new HashSet<Term>();
-						while (!usables.isEmpty()) {
-							level += 1;
-							for (ModeB mode : problem.getModeBs()) {
-								scheme = mode.getScheme();
-								if (mode.isNegated()) {
-									Map<Term, Collection<Term>> tests = scheme.matching(usables, parts);
-									if (null != tests) {
-										for (Term term : tests.keySet())
-											if (term instanceof Atom) {
-												Atom test = (Atom) term;
-												if (!facts.contains(test)) {
-													Collection<Term> found = tests.get(term);
-													builder.addLiteral(new Literal.Builder(new Atom.Builder(test).setWeight(mode.getWeigth())
-															.setPriority(mode.getPriority()).build()).setNegated(mode.isNegated()).setLevel(level).build());
-													next.addAll(found);
-												}
-											}
-									}
-								} else
-									for (Atom test : parts.get(scheme)) {
-										Collection<Term> found = test.matches(scheme, usables, facts);
-										if (null != found) {
-											builder.addLiteral(new Literal.Builder(new Atom.Builder(test).setWeight(mode.getWeigth())
-													.setPriority(mode.getPriority()).build()).setNegated(mode.isNegated()).setLevel(level).build());
-											next.addAll(found);
+						Collection<Term> substitutes = SchemeTerm.findSubstitutes(scheme, alpha);
+						if (null != substitutes) {
+							int level = 0;
+							Set<Term> usables = new HashSet<>(substitutes);
+							Set<Term> used = new HashSet<Term>();
+							Set<Term> next = new HashSet<Term>();
+							while (!usables.isEmpty()) {
+								level += 1;
+								for (ModeB mode : problem.getModeBs()) {
+									scheme = mode.getScheme();
+									if (mode.isNegated()) { // negative modeb
+
+										Map<Atom, Collection<Term>> found = SchemeTerm.generateAndOutput(scheme, usables, table, facts);
+										for (Atom atom : found.keySet()) {
+											builder.addLiteral(new Literal.Builder( //
+													new Atom.Builder(atom).setWeight(mode.getWeigth()).setPriority(mode.getPriority()).build() //
+											).setNegated(mode.isNegated()).setLevel(level).build());
+											next.addAll(found.get(atom));
 										}
-									}
-							}
-							used.addAll(usables);
-							next.removeAll(used);
-							usables.clear();
-							usables.addAll(next);
-							next.clear();
-						}
 
-						kernel.add(builder.build());
+										// Map<Term, Collection<Atom>> tests =
+										// scheme.matching(usables, table);
+										// if (null != tests) {
+										// for (Term term : tests.keySet())
+										// if (term instanceof Atom) {
+										// Atom test = (Atom) term;
+										// if (!facts.contains(test)) {
+										// Collection<Term> found =
+										// tests.get(term);
+										// builder.addLiteral(new
+										// Literal.Builder(new
+										// Atom.Builder(test).setWeight(mode.getWeigth())
+										// .setPriority(mode.getPriority()).build()).setNegated(mode.isNegated()).setLevel(level).build());
+										// next.addAll(found);
+										// }
+										// }
+										// }
+
+									} else {
+										Map.Entry<Collection<Atom>, Collection<Term>> found = SchemeTerm.matchAndOutput(scheme, table.get(scheme), usables);
+										for (Atom atom : found.getKey())
+											builder.addLiteral(new Literal.Builder( //
+													new Atom.Builder(atom).setWeight(mode.getWeigth()).setPriority(mode.getPriority()).build() //
+											).setNegated(mode.isNegated()).setLevel(level).build());
+										next.addAll(found.getValue());
+									}
+								}
+								used.addAll(usables);
+								next.removeAll(used);
+								usables.clear();
+								usables.addAll(next);
+								next.clear();
+							}
+						}
+						set.add(builder.build());
 					}
 				}
+			kernel = set.toArray(new Clause[set.size()]);
 		}
 		return kernel;
 	}
 
-	public final Collection<ModeB> getModeBs() {
+	public final ModeB[] getModeBs() {
 		return problem.getModeBs();
 	}
 
-	public final Collection<ModeH> getModeHs() {
+	public final ModeH[] getModeHs() {
 		return problem.getModeHs();
 	}
 
-	public final Collection<Atom> getModel() {
+	public final Atom[] getModel() {
 		return model;
 	}
 
@@ -360,32 +421,72 @@ public class Grounding implements Solvable {
 		return problem;
 	}
 
-	public final Collection<Literal> getUncovered() {
+	public final Map<SchemeTerm, Set<Atom>> getTable() {
+		return table;
+	}
+
+	public final Literal[] getUncovered() {
 		return uncovered;
+	}
+
+	public final boolean hasBackground() {
+		return problem.hasBackground();
+	}
+
+	public final boolean hasCovered() {
+		return covered.length > 0;
+	}
+
+	public final boolean hasDelta() {
+		return delta.length > 0;
+	}
+
+	public final boolean hasDisplays() {
+		return problem.hasDisplays();
+	}
+
+	public final boolean hasExamples() {
+		return problem.hasExamples();
+	}
+
+	public final boolean hasGeneralisation() {
+		return getGeneralisation().length > 0;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((covered == null) ? 0 : covered.hashCode());
-		result = prime * result + ((delta == null) ? 0 : delta.hashCode());
+		result = prime * result + Arrays.hashCode(covered);
+		result = prime * result + Arrays.hashCode(delta);
 		result = prime * result + ((facts == null) ? 0 : facts.hashCode());
-		result = prime * result + ((generalisation == null) ? 0 : generalisation.hashCode());
-		result = prime * result + ((kernel == null) ? 0 : kernel.hashCode());
-		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + ((parts == null) ? 0 : parts.hashCode());
+		result = prime * result + Arrays.hashCode(generalisation);
+		result = prime * result + Arrays.hashCode(kernel);
+		result = prime * result + Arrays.hashCode(model);
+		result = prime * result + ((table == null) ? 0 : table.hashCode());
 		result = prime * result + ((problem == null) ? 0 : problem.hashCode());
-		result = prime * result + ((uncovered == null) ? 0 : uncovered.hashCode());
+		result = prime * result + Arrays.hashCode(uncovered);
 		return result;
 	}
 
-	public final boolean needsInduction() {
-		return !getKernel().isEmpty();
+	public final boolean hasKernel() {
+		return getKernel().length > 0;
 	}
 
-	public final boolean needsModel() {
-		return problem.needsModel();
+	public final boolean hasModel() {
+		return model.length > 0;
+	}
+
+	public final boolean hasModes() {
+		return problem.hasModes();
+	}
+
+	public final boolean hasUncovered() {
+		return uncovered.length > 0;
+	}
+
+	public final boolean needsInduction() {
+		return getKernel().length > 0;
 	}
 
 	@Override
@@ -410,6 +511,17 @@ public class Grounding implements Solvable {
 		} else
 			builder.put(new Values(), new Answer.Builder(this).build());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Grounding [\n  covered=" + Arrays.toString(covered) + ",\n  delta=" + Arrays.toString(delta) + ",\n  facts=" + facts + ",\n  generalisation="
+				+ Arrays.toString(generalisation) + ",\n  kernel=" + Arrays.toString(kernel) + ",\n  model=" + Arrays.toString(model) + ",\n  table=" + table
+				+ ",\n  problem=" + problem + ",\n  uncovered=" + Arrays.toString(uncovered) + "\n]";
+	}
+
+	public final String asBadSolution() {
+		return String.format("bad_solution:-%s,number_abduced(%d).", count > 0 ? StringUtils.join(delta, ",") + "," : "", count);
 	}
 
 }

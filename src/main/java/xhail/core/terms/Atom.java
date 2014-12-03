@@ -6,8 +6,6 @@ package xhail.core.terms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.Set;
 import org.apache.commons.collections4.iterators.ArrayIterator;
 
 import xhail.core.Buildable;
-import xhail.core.terms.Placemarker.Type;
 
 /**
  * @author stefano
@@ -25,6 +22,11 @@ import xhail.core.terms.Placemarker.Type;
 public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 
 	public static class Builder implements Buildable<Atom> {
+
+		@Override
+		public String toString() {
+			return "Builder [identifier=" + identifier + ", terms=" + terms + ", scheme=" + scheme + ", weight=" + weight + ", priority=" + priority + "]";
+		}
 
 		private String identifier;
 
@@ -87,7 +89,10 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 		}
 
 		public Builder clone() {
-			return new Builder(identifier).addTerms(terms);
+			Builder result = new Builder(identifier).addTerms(terms).setWeight(weight).setPriority(priority);
+			if (null != scheme)
+				result.setScheme(scheme);
+			return result;
 		}
 
 		public Builder removeTerm(Term term) {
@@ -144,7 +149,7 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 
 	private final SchemeTerm scheme;
 
-	public final Term[] terms;
+	private final Term[] terms;
 
 	private final int weight;
 
@@ -197,31 +202,34 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 		return true;
 	}
 
-	@Override
-	public Collection<Term> filters(SchemeTerm term) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Atom.filter(SchemeTerm): " + term);
-		if (term instanceof Placemarker) {
-			Placemarker other = (Placemarker) term;
-			if (other.getType() == Type.INPUT)
-				return Collections.singleton(this);
-			else
-				return Collections.emptySet();
-		} else if (term instanceof Scheme) {
-			Scheme other = (Scheme) term;
-			if (!identifier.equals(other.getIdentifier()) || terms.length != other.getArity())
-				return null;
-			Set<Term> result = new HashSet<>();
-			for (int i = 0; i < terms.length; i++) {
-				Collection<Term> nested = terms[i].filters(other.getTerm(i));
-				if (null == nested)
-					return null;
-				result.addAll(nested);
-			}
-			return result;
-		} else
-			return null;
-	}
+	// @Override
+	// public Collection<Term> filters(SchemeTerm term) {
+	// if (null == term)
+	// throw new
+	// IllegalArgumentException("Illegal 'term' argument in Atom.filter(SchemeTerm): "
+	// + term);
+	// if (term instanceof Placemarker) {
+	// Placemarker other = (Placemarker) term;
+	// if (other.getType() == Type.INPUT)
+	// return Collections.singleton(this);
+	// else
+	// return Collections.emptySet();
+	// } else if (term instanceof Scheme) {
+	// Scheme other = (Scheme) term;
+	// if (!identifier.equals(other.getIdentifier()) || terms.length !=
+	// other.getArity())
+	// return null;
+	// Set<Term> result = new HashSet<>();
+	// for (int i = 0; i < terms.length; i++) {
+	// Collection<Term> nested = terms[i].filters(other.getTerm(i));
+	// if (null == nested)
+	// return null;
+	// result.addAll(nested);
+	// }
+	// return result;
+	// } else
+	// return null;
+	// }
 
 	public final int getArity() {
 		return terms.length;
@@ -247,14 +255,6 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 
 	public final Term[] getTerms() {
 		return terms;
-	}
-
-	@Override
-	public Collection<Variable> getVariables() {
-		Set<Variable> result = new LinkedHashSet<>();
-		for (Term term : terms)
-			result.addAll(term.getVariables());
-		return result;
 	}
 
 	public final int getWeight() {
@@ -283,40 +283,49 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 		return new ArrayIterator<>(terms);
 	}
 
-	@Override
-	public Collection<Term> matches(SchemeTerm term, Collection<Term> usables, Set<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + term);
-		if (null == usables)
-			throw new IllegalArgumentException("Illegal 'usables' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + usables);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + facts);
-		if (term instanceof Placemarker) {
-			Placemarker other = (Placemarker) term;
-			if (other.getType() == Type.INPUT)
-				if (usables.contains(this))
-					return Collections.emptySet();
-				else
-					return null;
-			else if (other.getType() == Type.OUTPUT)
-				return Collections.singleton(this);
-			else
-				return Collections.emptySet();
-		} else if (term instanceof Scheme) {
-			Scheme other = (Scheme) term;
-			if (!identifier.equals(other.getIdentifier()) || terms.length != other.getArity())
-				return null;
-			Set<Term> result = new HashSet<>();
-			for (int i = 0; i < terms.length; i++) {
-				Collection<Term> nested = terms[i].matches(other.getTerm(i), usables, facts);
-				if (null == nested)
-					return null;
-				result.addAll(nested);
-			}
-			return result;
-		} else
-			return null;
-	}
+	// @Override
+	// public Collection<Term> matches(SchemeTerm term, Collection<Term>
+	// usables, Set<Atom> facts) {
+	// if (null == term)
+	// throw new
+	// IllegalArgumentException("Illegal 'term' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): "
+	// + term);
+	// if (null == usables)
+	// throw new
+	// IllegalArgumentException("Illegal 'usables' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): "
+	// + usables);
+	// if (null == facts)
+	// throw new
+	// IllegalArgumentException("Illegal 'facts' argument in Atom.matches(SchemeTerm, Collection<Term>, Set<Atom>): "
+	// + facts);
+	// if (term instanceof Placemarker) {
+	// Placemarker other = (Placemarker) term;
+	// if (other.getType() == Type.INPUT)
+	// if (usables.contains(this))
+	// return Collections.emptySet();
+	// else
+	// return null;
+	// else if (other.getType() == Type.OUTPUT)
+	// return Collections.singleton(this);
+	// else
+	// return Collections.emptySet();
+	// } else if (term instanceof Scheme) {
+	// Scheme other = (Scheme) term;
+	// if (!identifier.equals(other.getIdentifier()) || terms.length !=
+	// other.getArity())
+	// return null;
+	// Set<Term> result = new HashSet<>();
+	// for (int i = 0; i < terms.length; i++) {
+	// Collection<Term> nested = terms[i].matches(other.getTerm(i), usables,
+	// facts);
+	// if (null == nested)
+	// return null;
+	// result.addAll(nested);
+	// }
+	// return result;
+	// } else
+	// return null;
+	// }
 
 	@Override
 	public String toString() {
@@ -332,5 +341,50 @@ public class Atom implements Term, Iterable<Atom>, Comparable<Atom> {
 		}
 		return result;
 	}
+
+	private final void getVariables(Set<Variable> result) {
+		if (null == result)
+			throw new IllegalArgumentException("Illegal 'result' argument in Atom.getVariables(Set<Variable>): " + result);
+		for (Term term : terms)
+			if (term instanceof Variable)
+				result.add((Variable) term);
+			else if (term instanceof Atom)
+				((Atom) term).getVariables(result);
+	}
+
+	private Variable[] variables;
+
+	public final boolean hasVariables() {
+		return getVariables().length > 0;
+	}
+
+	public final Variable[] getVariables() {
+		if (null == variables) {
+			Set<Variable> result = new LinkedHashSet<>();
+			getVariables(result);
+			variables = result.toArray(new Variable[result.size()]);
+		}
+		return variables;
+	}
+
+	public final boolean hasTypes() {
+		return getVariables().length > 0;
+	}
+
+	public final String[] getTypes() {
+		int length = getVariables().length;
+		String[] result = new String[length];
+		for (int i = 0; i < length; i++)
+			result[i] = String.format("%s(%s)", variables[i].getType().getIdentifier(), variables[i].getIdentifier());
+		return result;
+	}
+
+	// public final String[] getVariables() {
+	// int length = getPlacemarkers().length;
+	// String[] result = new String[length];
+	// for (int i = 0; i < length; i++)
+	// result[i] = String.format("V%d", 1 + i);
+	// return result;
+	// }
 
 }

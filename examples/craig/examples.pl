@@ -1,4 +1,5 @@
 program("select").
+%*
 program("nettle-md5").
 program("bs").
 program("qsort").
@@ -42,6 +43,12 @@ program("ud").
 program("2dfir").
 program("crc").
 program("gdb-anon").
+*%
+flag("-fguess-branch-probability").
+flag("-fomit-frame-pointer").
+flag("-ftree-ch").
+flag("-ftree-pre").
+%*
 flag("-falign-jumps").
 flag("-falign-labels").
 flag("-falign-loops").
@@ -57,7 +64,6 @@ flag("-fexpensive-optimizations").
 flag("-fforward-propagate").
 flag("-fgcse").
 flag("-fgcse-after-reload").
-flag("-fguess-branch-probability").
 flag("-fhoist-adjacent-loads").
 flag("-fif-conversion").
 flag("-fif-conversion2").
@@ -71,7 +77,6 @@ flag("-fipa-pure-const").
 flag("-fipa-reference").
 flag("-fipa-sra").
 flag("-fmerge-constants").
-flag("-fomit-frame-pointer").
 flag("-foptimize-register-move").
 flag("-foptimize-sibling-calls").
 flag("-foptimize-strlen").
@@ -92,7 +97,6 @@ flag("-fthread-jumps").
 flag("-ftree-bit-ccp").
 flag("-ftree-builtin-call-dce").
 flag("-ftree-ccp").
-flag("-ftree-ch").
 flag("-ftree-copy-prop").
 flag("-ftree-copyrename").
 flag("-ftree-dce").
@@ -101,7 +105,6 @@ flag("-ftree-dse").
 flag("-ftree-fre").
 flag("-ftree-loop-distribute-patterns").
 flag("-ftree-partial-pre").
-flag("-ftree-pre").
 flag("-ftree-sink").
 flag("-ftree-slsr").
 flag("-ftree-sra").
@@ -112,10 +115,12 @@ flag("-ftree-vectorize").
 flag("-ftree-vrp").
 flag("-funswitch-loops").
 flag("-fvect-cost-model").
+*%
 #example not goodFlag("select","-fguess-branch-probability").
 #example goodFlag("select","-fomit-frame-pointer").
 #example goodFlag("select","-ftree-ch").
 #example goodFlag("select","-ftree-pre").
+%*
 #example goodFlag("bs","-fcse-follow-jumps").
 #example goodFlag("bs","-fguess-branch-probability").
 #example goodFlag("bs","-fif-conversion2").
@@ -238,3 +243,4 @@ flag("-fvect-cost-model").
 #example goodFlag("ud","-ftree-fre").
 #example goodFlag("ud","-ftree-vrp").
 #example goodFlag("gdb-anon","-finline-small-functions").
+*%

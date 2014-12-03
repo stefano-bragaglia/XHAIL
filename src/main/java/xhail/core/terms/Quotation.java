@@ -3,8 +3,6 @@
  */
 package xhail.core.terms;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,20 +64,6 @@ public class Quotation implements Term, SchemeTerm {
 	}
 
 	@Override
-	public Collection<Term> filters(final SchemeTerm term) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.filter(SchemeTerm): " + term);
-		if (term instanceof Quotation) {
-			Quotation other = (Quotation) term;
-			if (content == other.getContent())
-				return Collections.emptySet();
-			else
-				return null;
-		} else
-			return null;
-	}
-
-	@Override
 	public Term generalises(Set<Variable> set) {
 		if (null == set)
 			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.generalises(Set<Variable>): " + set);
@@ -107,16 +91,6 @@ public class Quotation implements Term, SchemeTerm {
 	}
 
 	@Override
-	public Collection<Placemarker> getPlacemarkers() {
-		return Collections.emptySet();
-	}
-
-	@Override
-	public Collection<Variable> getVariables() {
-		return Collections.emptySet();
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -124,41 +98,28 @@ public class Quotation implements Term, SchemeTerm {
 		return result;
 	}
 
-	@Override
-	public Collection<Term> matches(SchemeTerm term, Collection<Term> usables, Set<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + term);
-		if (null == usables)
-			throw new IllegalArgumentException("Illegal 'usables' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + usables);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + facts);
-		if (term instanceof Quotation) {
-			Quotation other = (Quotation) term;
-			if (content == other.getContent())
-				return Collections.emptySet();
-			else
-				return null;
-		} else
-			return null;
-	}
-
-	@Override
-	public Map<Term, Collection<Term>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
-		return Collections.singletonMap(this, Collections.emptySet());
-	}
-
-	@Override
-	public boolean subsumes(final Term term, final Collection<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.subsumes(Term, Collection<Atom>): " + term);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Quotation.subsumes(Term, Collection<Atom>): " + facts);
-		if (term instanceof Quotation) {
-			Quotation other = (Quotation) term;
-			return content == other.getContent();
-		} else
-			return false;
-	}
+//	@Override
+//	public Collection<Term> matches(SchemeTerm term, Collection<Term> usables, Set<Atom> facts) {
+//		if (null == term)
+//			throw new IllegalArgumentException("Illegal 'term' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + term);
+//		if (null == usables)
+//			throw new IllegalArgumentException("Illegal 'usables' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + usables);
+//		if (null == facts)
+//			throw new IllegalArgumentException("Illegal 'facts' argument in Quotation.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + facts);
+//		if (term instanceof Quotation) {
+//			Quotation other = (Quotation) term;
+//			if (content == other.getContent())
+//				return Collections.emptySet();
+//			else
+//				return null;
+//		} else
+//			return null;
+//	}
+//
+//	@Override
+//	public Map<Term, Collection<Atom>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
+//		return Collections.singletonMap(this, Collections.emptySet());
+//	}
 
 	@Override
 	public String toString() {

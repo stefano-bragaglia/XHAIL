@@ -3,10 +3,6 @@
  */
 package xhail.core.terms;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-
 import xhail.core.Buildable;
 
 /**
@@ -18,7 +14,7 @@ public class Variable implements Term {
 	public static class Builder implements Buildable<Variable> {
 
 		private String identifier;
-		
+
 		private Placemarker type = null;
 
 		public Builder(String identifier) {
@@ -32,7 +28,7 @@ public class Variable implements Term {
 		public Variable build() {
 			return new Variable(this);
 		}
-		
+
 		public Builder setContent(String identifier) {
 			if (null == identifier || (identifier = identifier.trim()).isEmpty()
 					|| (identifier.charAt(0) != '_' && (identifier.charAt(0) < 'A' || identifier.charAt(0) > 'Z')))
@@ -51,7 +47,7 @@ public class Variable implements Term {
 	}
 
 	private final String identifier;
-	
+
 	private final Placemarker type;
 
 	private Variable(Builder builder) {
@@ -60,7 +56,7 @@ public class Variable implements Term {
 		this.identifier = builder.identifier;
 		this.type = builder.type;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,13 +79,15 @@ public class Variable implements Term {
 		return true;
 	}
 
-	@Override
-	public Collection<Term> filters(final SchemeTerm term) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Variable.filter(SchemeTerm): " + term);
-		// Being a variable, it matches everything!!!
-		return Collections.emptySet();
-	}
+	// @Override
+	// public Collection<Term> filters(final SchemeTerm term) {
+	// if (null == term)
+	// throw new
+	// IllegalArgumentException("Illegal 'term' argument in Variable.filter(SchemeTerm): "
+	// + term);
+	// // Being a variable, it matches everything!!!
+	// return Collections.emptySet();
+	// }
 
 	public final String getIdentifier() {
 		return identifier;
@@ -108,26 +106,21 @@ public class Variable implements Term {
 		return result;
 	}
 
-	@Override
-	public Collection<Term> matches(SchemeTerm term, Collection<Term> usables, Set<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + term);
-		if (null == usables)
-			throw new IllegalArgumentException("Illegal 'usables' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + usables);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + facts);
-		// We call matches from a ground atom, so it cannot reach this!!!
-		return null;
-	}
+//	@Override
+//	public Collection<Term> matches(SchemeTerm term, Collection<Term> usables, Set<Atom> facts) {
+//		if (null == term)
+//			throw new IllegalArgumentException("Illegal 'term' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + term);
+//		if (null == usables)
+//			throw new IllegalArgumentException("Illegal 'usables' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + usables);
+//		if (null == facts)
+//			throw new IllegalArgumentException("Illegal 'facts' argument in Variable.matches(SchemeTerm, Collection<Term>, Set<Atom>): " + facts);
+//		// We call matches from a ground atom, so it cannot reach this!!!
+//		return null;
+//	}
 
 	@Override
 	public String toString() {
 		return identifier;
-	}
-
-	@Override
-	public Collection<Variable> getVariables() {
-		return Collections.singleton(this);
 	}
 
 }

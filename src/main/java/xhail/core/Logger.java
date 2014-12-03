@@ -4,20 +4,14 @@
 package xhail.core;
 
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
 import xhail.core.entities.Answer;
 import xhail.core.entities.Answers;
-import xhail.core.terms.Atom;
-import xhail.core.terms.Clause;
-import xhail.core.terms.Literal;
 
 /**
  * @author stefano
@@ -45,32 +39,39 @@ public class Logger {
 		memory.clear();
 	}
 
-	private static String convertAtoms(Collection<Atom> atoms) {
-		if (null == atoms)
-			throw new IllegalArgumentException("Illegal 'atoms' argument in Logger.convertAtoms(Collection<Atom>): " + atoms);
-		Set<String> result = new LinkedHashSet<>();
-		for (Atom atom : atoms)
-			result.add(atom.toString());
-		return StringUtils.join(result, " ");
-	}
+	// private static String convertAtoms(Atom[] atoms) {
+	// if (null == atoms)
+	// throw new
+	// IllegalArgumentException("Illegal 'atoms' argument in Logger.convertAtoms(Atom[]): "
+	// + atoms);
+	// Set<String> result = new LinkedHashSet<>();
+	// for (Atom atom : atoms)
+	// result.add(atom.toString());
+	// return StringUtils.join(result, " ");
+	// }
 
-	private static Collection<String> convertClauses(Collection<Clause> clauses) {
-		if (null == clauses)
-			throw new IllegalArgumentException("Illegal 'clauses' argument in Logger.convertClauses(Collection<Clause>): " + clauses);
-		Set<String> result = new TreeSet<>();
-		for (Clause clause : clauses)
-			result.add(clause.toString());
-		return result;
-	}
+	// private static Collection<String> convertClauses(Collection<Clause>
+	// clauses) {
+	// if (null == clauses)
+	// throw new
+	// IllegalArgumentException("Illegal 'clauses' argument in Logger.convertClauses(Collection<Clause>): "
+	// + clauses);
+	// Set<String> result = new TreeSet<>();
+	// for (Clause clause : clauses)
+	// result.add(clause.toString());
+	// return result;
+	// }
 
-	private static String convertLiterals(Collection<Literal> literals) {
-		if (null == literals)
-			throw new IllegalArgumentException("Illegal 'literals' argument in Logger.convertLiterals(Collection<Literal>): " + literals);
-		Set<String> result = new LinkedHashSet<>();
-		for (Literal literal : literals)
-			result.add(literal.toString());
-		return StringUtils.join(result, " ");
-	}
+	// private static String convertLiterals(Collection<Literal> literals) {
+	// if (null == literals)
+	// throw new
+	// IllegalArgumentException("Illegal 'literals' argument in Logger.convertLiterals(Collection<Literal>): "
+	// + literals);
+	// Set<String> result = new LinkedHashSet<>();
+	// for (Literal literal : literals)
+	// result.add(literal.toString());
+	// return StringUtils.join(result, " ");
+	// }
 
 	public static void error(String message) {
 		if (null != message) {
@@ -137,6 +138,7 @@ public class Logger {
 		System.out.println("  --full,-f           : Show a more detailed output");
 		System.out.println("  --gringo,-g <path>  : Use given <path> as path for gringo 3");
 		System.out.println("  --help,-h           : Print this help and exit");
+		System.out.println("  --iter,-i <num>     : Run <num> iterations for non-minimal answers");
 		System.out.println("  --kill,-k <num>     : Stop the program after <num> seconds");
 		System.out.println("  --mute,-m           : Suppress warning messages");
 		System.out.println("  --prettify,-p       : Nicely format current problem");
@@ -153,7 +155,17 @@ public class Logger {
 			System.out.println(message);
 	}
 
-	public static void stampAnswers(Answers answers) {
+	private static void section(Config config, String label) {
+		if (null == config)
+			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampSection(Config, String): " + config);
+		if (null == label || (label = label.trim()).isEmpty())
+			throw new IllegalArgumentException("Illegal 'label' argument in Utils.stampSection(Config, String): " + label);
+		if (!config.isBlind())
+			System.out.print(ANSI_RED);
+		System.out.println(label);
+	}
+
+	public static void stamp(Answers answers) {
 		if (null == answers)
 			throw new IllegalArgumentException("Illegal 'answers' argument in Logger.stampAnswers(Answers): " + answers);
 		Config config = answers.getConfig();
@@ -161,18 +173,17 @@ public class Logger {
 		if (iterator.hasNext()) {
 			for (int id = 1; iterator.hasNext() && config.isAll() || 1 == id; id++) {
 				Answer answer = iterator.next();
-				stampSection(config, String.format("Answer %d:", id));
+				section(config, String.format("Answer %d:", id));
 				if (config.isFull()) {
-					if (answer.needsModel())
-						stampSubSection(config, "model", convertAtoms(answer.getModel()));
-					stampSubSection(config, "delta", convertAtoms(answer.getDelta()));
-					stampSubSection(config, "kernel", convertClauses(answer.getKernel()));
+					if (answer.hasDisplays())
+						subSection(config, "model", answer.hasModel() ? StringUtils.join(answer.getModel(), " ") : "-");
+					subSection(config, "delta", answer.hasDelta() ? StringUtils.join(answer.getDelta(), " ") : "-");
+					subSection(config, "kernel", answer.hasKernel() ? StringUtils.join(answer.getKernel(), "\n    ") : "-");
 				}
-				stampSubSection(config, "hypothesis", convertClauses(answer.getHypotheses()));
-				if (config.isFull()) {
-					stampSubSection(config, "uncovered", convertLiterals(answer.getUncover()));
-					stampSubSection(config, "covered", convertLiterals(answer.getCover()));
-				}
+				subSection(config, "hypothesis", answer.hasHypotheses() ? StringUtils.join(answer.getHypotheses(), "\n    ") : "-");
+				subSection(config, "uncovered", answer.hasUncovered() ? StringUtils.join(answer.getUncovered(), " ") : "-");
+				if (config.isFull())
+					subSection(config, "covered", answer.hasCovered() ? StringUtils.join(answer.getCovered(), " ") : "-");
 				System.out.println();
 			}
 			int remaining = answers.size() - 1;
@@ -188,27 +199,17 @@ public class Logger {
 				System.out.println("(use '-a' to see them all)\n");
 			}
 		}
-		stampStat(config, String.format("Answers     : %d", answers.count()));
-		stampStat(config, String.format("  optimal   : %d", answers.size()));
-		stampStat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
-		stampStat(config, String.format("Calls       : %d", Dialer.calls()));
-		stampStat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
-		stampStat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
-		stampStat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
-		stampStat(config, String.format("  induction : %.3fs\n", Answers.getInduction()));
+		stat(config, String.format("Answers     : %d", answers.count()));
+		stat(config, String.format("  optimal   : %d", answers.size()));
+		stat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
+		stat(config, String.format("Calls       : %d", Dialer.calls()));
+		stat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
+		stat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
+		stat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
+		stat(config, String.format("  induction : %.3fs\n", Answers.getInduction()));
 	}
 
-	public static void stampSection(Config config, String label) {
-		if (null == config)
-			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampSection(Config, String): " + config);
-		if (null == label || (label = label.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'label' argument in Utils.stampSection(Config, String): " + label);
-		if (!config.isBlind())
-			System.out.print(ANSI_RED);
-		System.out.println(label);
-	}
-
-	public static void stampStat(Config config, String value) {
+	private static void stat(Config config, String value) {
 		if (null == config)
 			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampStat(Config, String): " + config);
 		if (null == value)
@@ -218,26 +219,7 @@ public class Logger {
 		System.out.println(value);
 	}
 
-	public static void stampSubSection(Config config, String label, Collection<String> content) {
-		if (null == config)
-			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampSubSection(Config, String, Collection<String>): " + config);
-		if (null == label || (label = label.trim()).isEmpty())
-			throw new IllegalArgumentException("Illegal 'label' argument in Utils.stampSubSection(Config, String, Collection<String>): " + label);
-		if (null == content)
-			throw new IllegalArgumentException("Illegal 'content' argument in Logger.stampSubSection(Config, String, Collection<String>): " + content);
-		if (!config.isBlind())
-			System.out.print(ANSI_GREEN);
-		System.out.format("  %s:\n", label);
-		if (!config.isBlind())
-			System.out.print(ANSI_RESET);
-		if (0 == content.size())
-			System.out.println("    -");
-		else
-			for (String item : content)
-				System.out.println("    " + item);
-	}
-
-	public static void stampSubSection(Config config, String label, String content) {
+	private static void subSection(Config config, String label, String content) {
 		if (null == config)
 			throw new IllegalArgumentException("Illegal 'config' argument in Logger.stampSubSection(Config, String, String): " + config);
 		if (null == label || (label = label.trim()).isEmpty())

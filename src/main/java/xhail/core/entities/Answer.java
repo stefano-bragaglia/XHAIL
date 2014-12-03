@@ -3,11 +3,7 @@
  */
 package xhail.core.entities;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import xhail.core.Buildable;
-import xhail.core.Utils;
 import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Literal;
@@ -88,13 +84,13 @@ public class Answer {
 		return true;
 	}
 
-	public Collection<Literal> getCover() {
+	public Literal[] getCovered() {
 		if (null == this.hypothesis)
 			return grounding.getCovered();
 		return hypothesis.getCovered();
 	}
 
-	public Collection<Atom> getDelta() {
+	public Atom[] getDelta() {
 		return grounding.getDelta();
 	}
 
@@ -102,9 +98,9 @@ public class Answer {
 		return grounding;
 	}
 
-	public Collection<Clause> getHypotheses() {
+	public Clause[] getHypotheses() {
 		if (null == hypothesis)
-			return Collections.emptySet();
+			return new Clause[0];
 		return hypothesis.getHypotheses();
 	}
 
@@ -112,11 +108,11 @@ public class Answer {
 		return hypothesis;
 	}
 
-	public Collection<Clause> getKernel() {
+	public Clause[] getKernel() {
 		return grounding.getKernel();
 	}
 
-	public Collection<Atom> getModel() {
+	public Atom[] getModel() {
 		if (null == hypothesis)
 			return grounding.getModel();
 		return hypothesis.getModel();
@@ -126,10 +122,36 @@ public class Answer {
 		return grounding.getProblem();
 	}
 
-	public Collection<Literal> getUncover() {
+	public Literal[] getUncovered() {
 		if (null == hypothesis)
 			return grounding.getUncovered();
 		return hypothesis.getUncovered();
+	}
+
+	public final boolean hasBackground() {
+		return grounding.hasBackground();
+	}
+
+	public final boolean hasCovered() {
+		if (null == hypothesis)
+			return grounding.hasCovered();
+		return hypothesis.hasCovered();
+	}
+	
+	public final boolean hasDelta() {
+		return grounding.hasDelta();
+	}
+
+	public final boolean hasDisplays() {
+		return grounding.hasDisplays();
+	}
+
+	public final boolean hasExamples() {
+		return grounding.hasExamples();
+	}
+
+	public final boolean hasGeneralisation() {
+		return grounding.hasGeneralisation();
 	}
 
 	@Override
@@ -141,27 +163,35 @@ public class Answer {
 		return result;
 	}
 
-	/**
-	 * @return
-	 */
-	public final boolean needsModel() {
-		return !grounding.getProblem().getDisplays().isEmpty();
+	public final boolean hasHypotheses() {
+		if (null == hypothesis)
+			return false;
+		return hypothesis.hasHypotheses();
+	}
+
+	public final boolean hasKernel() {
+		return grounding.hasKernel();
+	}
+
+	public final boolean hasModel() {
+		if (null == hypothesis)
+			return grounding.hasModel();
+		return hypothesis.hasModel();
+	}
+
+	public final boolean hasModes() {
+		return grounding.hasModes();
+	}
+
+	public final boolean hasUncovered() {
+		if (null == hypothesis)
+			return grounding.hasUncovered();
+		return hypothesis.hasUncovered();
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		for (String line : Utils.listAtoms("Model", getModel()))
-			builder.append(line + "\n");
-		for (String line : Utils.listAtoms("Delta", getDelta()))
-			builder.append(line + "\n");
-		for (String line : Utils.listClauses("Kernel", getKernel()))
-			builder.append(line + "\n");
-		for (String line : Utils.listClauses("Hypothesis", getHypotheses()))
-			builder.append(line + "\n");
-		for (String line : Utils.listLiterals("Uncovered example", getCover()))
-			builder.append(line + "\n");
-		return builder.toString();
+		return "Answer [\n  grounding=" + grounding + ",\n  hypothesis=" + hypothesis + "\n]";
 	}
 
 }

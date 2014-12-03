@@ -3,8 +3,6 @@
  */
 package xhail.core.terms;
 
-import java.util.Collection;
-
 import xhail.core.Buildable;
 
 /**
@@ -112,10 +110,6 @@ public class Literal implements Comparable<Literal> {
 		return atom.getScheme();
 	}
 
-	public Collection<Variable> getVariables() {
-		return atom.getVariables();
-	}
-
 	public final int getWeight() {
 		return atom.getWeight();
 	}
@@ -137,6 +131,22 @@ public class Literal implements Comparable<Literal> {
 	@Override
 	public String toString() {
 		return (negated ? "not " : "") + atom;
+	}
+
+	public final boolean hasVariables() {
+		return atom.hasVariables();
+	}
+
+	public final Variable[] getVariables() {
+		return atom.getVariables();
+	}
+
+	public final boolean hasTypes() {
+		return atom.hasTypes();
+	}
+
+	public final String[] getTypes() {
+		return atom.getTypes();
 	}
 
 }

@@ -3,10 +3,6 @@
  */
 package xhail.core.terms;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,8 +17,6 @@ public class Placemarker implements SchemeTerm {
 	public static class Builder implements Buildable<Placemarker> {
 
 		private String identifier;
-
-		private int index = 0;
 
 		private Type type = Type.CONSTANT;
 
@@ -41,11 +35,6 @@ public class Placemarker implements SchemeTerm {
 			if (null == identifier || (identifier = identifier.trim()).isEmpty() || identifier.charAt(0) < 'a' || identifier.charAt(0) > 'z')
 				throw new IllegalArgumentException("Illegal 'identifier' argument in Placemarker.Builder.setIdentifier(String): " + identifier);
 			this.identifier = identifier;
-			return this;
-		}
-
-		public Builder setIndex(int index) {
-			this.index = index;
 			return this;
 		}
 
@@ -92,18 +81,11 @@ public class Placemarker implements SchemeTerm {
 
 	private final Type type;
 
-	private final Atom variable;
-
 	private Placemarker(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Placemarker(Placemarker.Builder): " + builder);
 		this.identifier = builder.identifier;
 		this.type = builder.type;
-		this.variable = new Atom.Builder(builder.identifier).addTerm(new Variable.Builder("V" + builder.index).build()).build();
-	}
-
-	public final Atom asVariable() {
-		return variable;
 	}
 
 	public final SchemeTerm decode() {
@@ -160,11 +142,6 @@ public class Placemarker implements SchemeTerm {
 		return identifier;
 	}
 
-	@Override
-	public Collection<Placemarker> getPlacemarkers() {
-		return Collections.singleton(this);
-	}
-
 	public final Type getType() {
 		return type;
 	}
@@ -178,50 +155,29 @@ public class Placemarker implements SchemeTerm {
 		return result;
 	}
 
-	@Override
-	public Map<Term, Collection<Term>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
-		if (Type.INPUT == type) {
-			Map<Term, Collection<Term>> result = new HashMap<>();
-			for (Term term : usables)
-				result.put(term, Collections.emptySet());
-			return result;
-		} else if (Type.OUTPUT == type) {
-			Set<Term> next = new HashSet<>();
-			for (Term term : parts.get(this))
-				if (term instanceof Atom)
-					next.add(((Atom) term).getTerm(0));
-			Map<Term, Collection<Term>> result = new HashMap<>();
-			for (Term term : parts.get(this))
-				result.put(term, next);
-			return result;
-		} else if (Type.CONSTANT == type) {
-			Map<Term, Collection<Term>> result = new HashMap<>();
-			for (Term term : parts.get(this))
-				result.put(term, Collections.emptySet());
-			return result;
-		} else
-			return null;
-	}
-
-	@Override
-	public boolean subsumes(final Term term, final Collection<Atom> facts) {
-		if (null == term)
-			throw new IllegalArgumentException("Illegal 'term' argument in Placemarker.subsumes(Term, Collection<Atom>): " + term);
-		if (null == facts)
-			throw new IllegalArgumentException("Illegal 'facts' argument in Placemarker.subsumes(Term, Collection<Atom>): " + facts);
-		if (term instanceof Atom) {
-			Atom other = (Atom) term;
-			if (0 == other.getArity()) {
-				Atom entity = new Atom.Builder(other.getIdentifier()).build();
-				Atom evidence = new Atom.Builder(identifier).addTerm(entity).build();
-				return facts.contains(evidence);
-			} else if (1 == other.getArity() && other.getIdentifier().equals(identifier)) {
-				return facts.contains(other);
-			} else
-				return false;
-		} else
-			return false;
-	}
+//	@Override
+//	public Map<Term, Collection<Atom>> matching(Set<Term> usables, Map<SchemeTerm, Set<Atom>> parts) {
+//		if (Type.INPUT == type) {
+//			Map<Term, Collection<Atom>> result = new HashMap<>();
+//			for (Term term : usables)
+//				result.put(term, Collections.emptySet());
+//			return result;
+//		} else if (Type.OUTPUT == type) {
+//			Set<Atom> next = new HashSet<>();
+//			for (Atom term : parts.get(this))
+//				next.add((Atom) term.getTerm(0));
+//			Map<Term, Collection<Atom>> result = new HashMap<>();
+//			for (Atom term : parts.get(this))
+//				result.put(term, next);
+//			return result;
+//		} else if (Type.CONSTANT == type) {
+//			Map<Term, Collection<Atom>> result = new HashMap<>();
+//			for (Term term : parts.get(this))
+//				result.put(term, Collections.emptySet());
+//			return result;
+//		} else
+//			return null;
+//	}
 
 	@Override
 	public String toString() {

@@ -25,6 +25,7 @@ public class Config {
 		private Path gringo = null;
 		private boolean help = false;
 		private int index = -1;
+		private int iterations = 0;
 		private long kill = 0L;
 		private boolean mute = false;
 		private boolean prettify = false;
@@ -114,6 +115,15 @@ public class Config {
 			return this;
 		}
 
+		public Builder setIterations(String iterations) {
+			try {
+				this.iterations = Integer.parseUnsignedInt(iterations);
+			} catch (NullPointerException | NumberFormatException e) {
+				errors += String.format("  '%s' is not a valid number of iterations\n", iterations);
+			}
+			return this;
+		}
+
 		public Builder setKill(String kill) {
 			try {
 				this.kill = Long.parseUnsignedLong(kill);
@@ -161,6 +171,8 @@ public class Config {
 
 	private final int index;
 
+	private final int iterations;
+
 	private final long kill;
 
 	private final boolean mute;
@@ -185,6 +197,7 @@ public class Config {
 		this.full = builder.full;
 		this.gringo = builder.gringo;
 		this.index = builder.index;
+		this.iterations = builder.iterations;
 		this.help = builder.help;
 		this.kill = builder.kill;
 		String name = "stdin";
@@ -214,6 +227,10 @@ public class Config {
 
 	public final int getIndex() {
 		return index;
+	}
+
+	public final int getIterations() {
+		return iterations;
 	}
 
 	public final long getKill() {

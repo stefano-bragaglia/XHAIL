@@ -162,4 +162,31 @@ public class ModeB {
 		return result;
 	}
 
+	// public final String[] asClauses() {
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	// Set<Variable> vars = new HashSet<>();
+	// String atom = ((Atom) scheme.generalises(vars)).toString();
+	// String types = scheme.getTypes().length > 0 ? " :" + String.join(" :",
+	// scheme.getTypes()) : "";
+	// String list = scheme.getTypes().length > 0 ? "," + String.join(",",
+	// scheme.getTypes()) : "";
+	// String[] result = new String[4];
+	// result[0] = String.format("%% %s", toString());
+	// result[1] = String.format("%d { abduced_%s%s } %d.", lower, atom, types,
+	// upper);
+	// result[2] = String.format("#minimize[ abduced_%s =%d @%d%s ].", atom,
+	// weight, priority, types);
+	// result[3] = String.format("%s:-abduced_%s%s.", atom, atom, list);
+	// return result;
+	// }
+
 }

@@ -89,6 +89,13 @@ public class Application implements Callable<Answers> {
 					case "--help":
 						builder.setHelp(true);
 						break;
+					case "-i":
+					case "--iter":
+						if (args.length - i <= 1)
+							builder.missingParameter();
+						else
+							builder.setIterations(args[++i]);
+						break;
 					case "-k":
 					case "--kill":
 						if (args.length - i <= 1)
@@ -143,6 +150,7 @@ public class Application implements Callable<Answers> {
 	private Application(Config config) {
 		if (null == config)
 			throw new IllegalArgumentException("Illegal 'config' argument in Application(Config): " + config);
+		this.config = config;
 
 		if (config.isHelp())
 			Logger.help();
@@ -178,7 +186,6 @@ public class Application implements Callable<Answers> {
 			}
 		}
 
-		this.config = config;
 		Problem.Builder problem = new Problem.Builder(config);
 		if (config.hasSources())
 			for (Path path : config.getSources()) {
@@ -208,16 +215,16 @@ public class Application implements Callable<Answers> {
 			int index = config.getIndex();
 			switch (index) {
 				case -1:
-					Utils.dump(problem, System.out);
+					Utils.dump(problem, System.err);
 					break;
 				case 0:
-					Utils.save(problem, System.out);
+					Utils.save(problem, System.err);
 					break;
 				default:
 					Dialer dialer = new Dialer.Builder(config, problem).build();
 					String[] outputs = dialer.execute().getValue().toArray(new String[0]);
 					if (index <= outputs.length)
-						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.out);
+						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.err);
 					else
 						Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem", Logger.SIGNATURE));
 			}
@@ -226,8 +233,7 @@ public class Application implements Callable<Answers> {
 			try {
 				final Future<Answers> task = service.submit(this);
 				Answers answers = kill > 0L ? task.get(kill, TimeUnit.SECONDS) : task.get();
-				Logger.stampAnswers(answers);
-
+				Logger.stamp(answers);
 			} catch (CancellationException e) {
 				Logger.message(String.format("*** Info  (%s): computation was cancelled", Logger.SIGNATURE));
 			} catch (ExecutionException e) {

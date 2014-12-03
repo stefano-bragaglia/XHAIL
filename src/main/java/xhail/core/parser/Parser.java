@@ -137,8 +137,6 @@ public class Parser {
 
 	private final String source;
 	
-	private int index = 0;
-
 	public Parser(String source) {
 		if (null == source)
 			throw new IllegalArgumentException("Illegal 'source' argument in Parser.Parser(String): " + source);
@@ -397,7 +395,7 @@ public class Parser {
 			current = iterator.next();
 		} else
 			throw new ParserErrorException("expected '+', '-' or '$' but '" + current + "' found in '" + source + "'");
-		return new Placemarker.Builder(parseIdentifier()).setType(type).setIndex(++index).build();
+		return new Placemarker.Builder(parseIdentifier()).setType(type).build();
 	}
 
 	private Quotation parseQuotation() throws ParserErrorException {

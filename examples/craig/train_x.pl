@@ -1,5 +1,5 @@
-#display goodFlag/2.
-#display small_ft/2.
+% #display goodFlag/2.
+% #display small_ft/2.
 
 #modeh goodFlag(+program,$flag).
 #modeb small_ft($ft,+program).

@@ -3,6 +3,7 @@
  */
 package xhail.core.entities;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -120,26 +121,26 @@ public class Hypothesis implements Iterable<Atom> {
 
 	}
 
-	private Set<Clause> clauses;
-
-	private final Set<Literal> covered;
+	private final Literal[] covered;
 
 	private final Grounding grounding;
 
-	private final Set<Atom> literals;
+	private Clause[] hypotheses;
 
-	private final Set<Atom> model;
+	private final Atom[] literals;
 
-	private final Set<Literal> uncovered;
+	private final Atom[] model;
+
+	private final Literal[] uncovered;
 
 	private Hypothesis(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Hypothesis(Hypothesis.Builder): " + builder);
-		this.covered = builder.covered;
+		this.covered = builder.covered.toArray(new Literal[builder.covered.size()]);
 		this.grounding = builder.grounding;
-		this.literals = builder.literals;
-		this.model = builder.model;
-		this.uncovered = builder.uncovered;
+		this.literals = builder.literals.toArray(new Atom[builder.literals.size()]);
+		this.model = builder.model.toArray(new Atom[builder.model.size()]);
+		this.uncovered = builder.uncovered.toArray(new Literal[builder.uncovered.size()]);
 	}
 
 	@Override
@@ -151,40 +152,25 @@ public class Hypothesis implements Iterable<Atom> {
 		if (getClass() != obj.getClass())
 			return false;
 		Hypothesis other = (Hypothesis) obj;
-		if (clauses == null) {
-			if (other.clauses != null)
-				return false;
-		} else if (!clauses.equals(other.clauses))
+		if (!Arrays.equals(hypotheses, other.hypotheses))
 			return false;
-		if (covered == null) {
-			if (other.covered != null)
-				return false;
-		} else if (!covered.equals(other.covered))
+		if (!Arrays.equals(covered, other.covered))
 			return false;
 		if (grounding == null) {
 			if (other.grounding != null)
 				return false;
 		} else if (!grounding.equals(other.grounding))
 			return false;
-		if (literals == null) {
-			if (other.literals != null)
-				return false;
-		} else if (!literals.equals(other.literals))
+		if (!Arrays.equals(literals, other.literals))
 			return false;
-		if (model == null) {
-			if (other.model != null)
-				return false;
-		} else if (!model.equals(other.model))
+		if (!Arrays.equals(model, other.model))
 			return false;
-		if (uncovered == null) {
-			if (other.uncovered != null)
-				return false;
-		} else if (!uncovered.equals(other.uncovered))
+		if (!Arrays.equals(uncovered, other.uncovered))
 			return false;
 		return true;
 	}
 
-	public final Collection<String> getBackground() {
+	public final String[] getBackground() {
 		return grounding.getBackground();
 	}
 
@@ -192,23 +178,23 @@ public class Hypothesis implements Iterable<Atom> {
 		return grounding.getConfig();
 	}
 
-	public final Collection<Literal> getCovered() {
+	public final Literal[] getCovered() {
 		return covered;
 	}
 
-	public final Collection<Atom> getDelta() {
+	public final Atom[] getDelta() {
 		return grounding.getDelta();
 	}
 
-	public final Collection<Display> getDisplays() {
+	public final Display[] getDisplays() {
 		return grounding.getDisplays();
 	}
 
-	public final Collection<Example> getExamples() {
+	public final Example[] getExamples() {
 		return grounding.getExamples();
 	}
 
-	public final Collection<Clause> getGeneralisation() {
+	public final Clause[] getGeneralisation() {
 		return grounding.getGeneralisation();
 	}
 
@@ -216,29 +202,30 @@ public class Hypothesis implements Iterable<Atom> {
 		return grounding;
 	}
 
-	public final Collection<Clause> getHypotheses() {
-		if (null == clauses) {
-			clauses = new HashSet<>();
-			Clause[] library = grounding.getGeneralisation().toArray(new Clause[grounding.getGeneralisation().size()]);
+	public final Clause[] getHypotheses() {
+		if (null == hypotheses) {
+			Set<Clause> set = new HashSet<>();
+			Clause[] generalisation = grounding.getGeneralisation();
 			Map<Integer, Clause.Builder> builders = new HashMap<>();
 			Map<Integer, Set<Literal>> types = new HashMap<>();
 			for (Atom atom : literals) {
-				int c = ((Number) atom.getTerm(0)).getValue();
-				int l = ((Number) atom.getTerm(1)).getValue();
-				if (0 == l && 0 <= c && c < library.length) {
-					builders.put(c, new Clause.Builder().setHead(library[c].getHead()));
-					types.put(c, new LinkedHashSet<>());
+				int clauseId = ((Number) atom.getTerm(0)).getValue();
+				int literalId = ((Number) atom.getTerm(1)).getValue();
+				if (0 == literalId && 0 <= clauseId && clauseId < generalisation.length) {
+					builders.put(clauseId, new Clause.Builder().setHead(generalisation[clauseId].getHead()));
+					types.put(clauseId, new LinkedHashSet<>());
 				}
 			}
 			for (Atom atom : literals) {
-				int c = ((Number) atom.getTerm(0)).getValue();
-				int l = ((Number) atom.getTerm(1)).getValue();
-				if (l > 0 && 0 <= c && c < library.length) {
-					Literal literal = library[c].getBody(l);
-					builders.get(c).addLiteral(literal);
-					Set<Literal> set = types.get(c);
+				int clauseId = ((Number) atom.getTerm(0)).getValue();
+				int literalId = ((Number) atom.getTerm(1)).getValue();
+				if (literalId > 0 && 0 <= clauseId && clauseId < generalisation.length) {
+
+					Literal literal = generalisation[clauseId].getBody(literalId);
+					builders.get(clauseId).addLiteral(literal);
+					Set<Literal> literals = types.get(clauseId);
 					for (Variable variable : literal.getVariables())
-						set.add(new Literal.Builder( //
+						literals.add(new Literal.Builder( //
 								new Atom.Builder(variable.getType().getIdentifier()).addTerm(variable).build() //
 						).build());
 				}
@@ -247,25 +234,26 @@ public class Hypothesis implements Iterable<Atom> {
 				Clause.Builder builder = builders.get(c);
 				for (Literal literal : types.get(c))
 					builder.addLiteral(literal);
-				clauses.add(builder.build());
+				set.add(builder.build());
 			}
+			hypotheses = set.toArray(new Clause[set.size()]);
 		}
-		return clauses;
+		return hypotheses;
 	}
 
-	public final Collection<Clause> getKernel() {
+	public final Clause[] getKernel() {
 		return grounding.getKernel();
 	}
 
-	public final Collection<ModeB> getModeBs() {
+	public final ModeB[] getModeBs() {
 		return grounding.getModeBs();
 	}
 
-	public final Collection<ModeH> getModeHs() {
+	public final ModeH[] getModeHs() {
 		return grounding.getModeHs();
 	}
 
-	public final Collection<Atom> getModel() {
+	public final Atom[] getModel() {
 		return model;
 	}
 
@@ -273,21 +261,65 @@ public class Hypothesis implements Iterable<Atom> {
 		return grounding.getProblem();
 	}
 
-	public final Collection<Literal> getUncovered() {
+	public final Literal[] getUncovered() {
 		return uncovered;
+	}
+
+	public final boolean hasBackground() {
+		return grounding.hasBackground();
+	}
+
+	public final boolean hasCovered() {
+		return covered.length > 0;
+	}
+
+	public final boolean hasDelta() {
+		return grounding.hasDelta();
+	}
+
+	public final boolean hasDisplays() {
+		return grounding.hasDisplays();
+	}
+
+	public final boolean hasExamples() {
+		return grounding.hasExamples();
+	}
+
+	public final boolean hasGeneralisation() {
+		return grounding.hasGeneralisation();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((clauses == null) ? 0 : clauses.hashCode());
-		result = prime * result + ((covered == null) ? 0 : covered.hashCode());
+		result = prime * result + Arrays.hashCode(hypotheses);
+		result = prime * result + Arrays.hashCode(covered);
 		result = prime * result + ((grounding == null) ? 0 : grounding.hashCode());
-		result = prime * result + ((literals == null) ? 0 : literals.hashCode());
-		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + ((uncovered == null) ? 0 : uncovered.hashCode());
+		result = prime * result + Arrays.hashCode(literals);
+		result = prime * result + Arrays.hashCode(model);
+		result = prime * result + Arrays.hashCode(uncovered);
 		return result;
+	}
+
+	public final boolean hasHypotheses() {
+		return getHypotheses().length > 0;
+	}
+
+	public final boolean hasKernel() {
+		return grounding.hasKernel();
+	}
+
+	public final boolean hasModel() {
+		return model.length > 0;
+	}
+
+	public final boolean hasModes() {
+		return grounding.hasModes();
+	}
+
+	public final boolean hasUncovered() {
+		return uncovered.length > 0;
 	}
 
 	@Override
@@ -295,8 +327,11 @@ public class Hypothesis implements Iterable<Atom> {
 		return new ArrayIterator<>(literals);
 	}
 
-	public final boolean needsModel() {
-		return grounding.needsModel();
+	@Override
+	public String toString() {
+		return "Hypothesis [\n  hypotheses=" + Arrays.toString(hypotheses) + ",\n  covered=" + Arrays.toString(covered) + ",\n  grounding=" + grounding
+				+ ",\n  literals=" + Arrays.toString(literals) + ",\n  model=" + Arrays.toString(model) + ",\n  uncovered=" + Arrays.toString(uncovered)
+				+ "\n]";
 	}
 
 }

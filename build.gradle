@@ -10,10 +10,9 @@ version = '0.5.1'
 
 mainClassName = 'xhail.Application'
 
-// applicationDefaultJvmArgs = ["-v", "--version"]
-// run {
-// 	args '-v' '--version'
-// }
+run {
+	args "examples/toys/reaction.lp -a -b -s -f".split()
+}
 
 jar {
     manifest {
