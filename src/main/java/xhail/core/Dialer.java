@@ -163,8 +163,8 @@ public class Dialer {
 					if (line.equals(OPTIMUM_FOUND) || line.equals(SATISFIABLE))
 						break;
 					if (line.equals(UNKNOWN) || line.equals(UNSATISFIABLE)) {
-						System.out.println(String.format("\n*** Info  (%s): %s problem", Logger.SIGNATURE, line));
-						System.exit(0);
+//						System.out.println(String.format("\n*** Info  (%s): %s problem", Logger.SIGNATURE, line));
+//						System.exit(0);
 						break;
 					}
 					if (line.startsWith(OPTIMIZATION)) {

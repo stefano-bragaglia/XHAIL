@@ -96,28 +96,6 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean save(Grounding grounding, Path path) {
-		if (null == grounding)
-			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, Path): " + grounding);
-		if (null == path)
-			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Grounding, Path): " + path);
-		try {
-			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
-			if (!Files.exists(folder))
-				Files.createDirectory(folder);
-			Path file = folder.resolve(path.getFileName());
-			try {
-				return save(grounding, new FileOutputStream(file.toFile()));
-			} catch (IOException e) {
-				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
-			}
-		} catch (IOException e) {
-			Logger.warning(false, "cannot create 'temp' folder (do we have rights?)");
-			System.err.println(e);
-		}
-		return false;
-	}
-
 	public static boolean save(Problem problem, OutputStream stream) {
 		if (null == problem)
 			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, OutputStream): " + problem);
@@ -156,7 +134,29 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean save(Problem problem, Path path) {
+	public static boolean saveTemp(Grounding grounding, Path path) {
+		if (null == grounding)
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, Path): " + grounding);
+		if (null == path)
+			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Grounding, Path): " + path);
+		try {
+			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
+			if (!Files.exists(folder))
+				Files.createDirectory(folder);
+			Path file = folder.resolve(path.getFileName());
+			try {
+				return save(grounding, new FileOutputStream(file.toFile()));
+			} catch (IOException e) {
+				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
+			}
+		} catch (IOException e) {
+			Logger.warning(false, "cannot create 'temp' folder (do we have rights?)");
+			System.err.println(e);
+		}
+		return false;
+	}
+
+	public static boolean saveTemp(Problem problem, Path path) {
 		if (null == problem)
 			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, Path): " + problem);
 		if (null == path)

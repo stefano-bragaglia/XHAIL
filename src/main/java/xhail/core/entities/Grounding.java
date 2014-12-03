@@ -162,9 +162,12 @@ public class Grounding implements Solvable {
 		return count;
 	}
 
+	private final Config config;
+
 	private Grounding(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding(Grounding.Builder): " + builder);
+		this.config = builder.problem.getConfig();
 		this.count = builder.delta.size();
 		this.covered = builder.covered.toArray(new Literal[builder.covered.size()]);
 		this.delta = builder.delta.toArray(new Atom[builder.delta.size()]);
@@ -282,7 +285,7 @@ public class Grounding implements Solvable {
 	}
 
 	public final Config getConfig() {
-		return problem.getConfig();
+		return config;
 	}
 
 	public final Literal[] getCovered() {
@@ -353,8 +356,7 @@ public class Grounding implements Solvable {
 								level += 1;
 								for (ModeB mode : problem.getModeBs()) {
 									scheme = mode.getScheme();
-									if (mode.isNegated()) { // negative modeb
-
+									if (mode.isNegated()) {
 										Map<Atom, Collection<Term>> found = SchemeTerm.generateAndOutput(scheme, usables, table, facts);
 										for (Atom atom : found.keySet()) {
 											builder.addLiteral(new Literal.Builder( //
@@ -362,25 +364,6 @@ public class Grounding implements Solvable {
 											).setNegated(mode.isNegated()).setLevel(level).build());
 											next.addAll(found.get(atom));
 										}
-
-										// Map<Term, Collection<Atom>> tests =
-										// scheme.matching(usables, table);
-										// if (null != tests) {
-										// for (Term term : tests.keySet())
-										// if (term instanceof Atom) {
-										// Atom test = (Atom) term;
-										// if (!facts.contains(test)) {
-										// Collection<Term> found =
-										// tests.get(term);
-										// builder.addLiteral(new
-										// Literal.Builder(new
-										// Atom.Builder(test).setWeight(mode.getWeigth())
-										// .setPriority(mode.getPriority()).build()).setNegated(mode.isNegated()).setLevel(level).build());
-										// next.addAll(found);
-										// }
-										// }
-										// }
-
 									} else {
 										Map.Entry<Collection<Atom>, Collection<Term>> found = SchemeTerm.matchAndOutput(scheme, table.get(scheme), usables);
 										for (Atom atom : found.getKey())
@@ -496,12 +479,12 @@ public class Grounding implements Solvable {
 
 	public Values solve(Values values, Answers.Builder builder) {
 		if (null == values)
-			throw new IllegalArgumentException("Illegal 'values' argument in Grounding.solve(Values, Answers.Builder): " + values);
+			throw new IllegalArgumentException("Illegal 'values' argument in Grounding.solve(int, Values, Answers.Builder): " + values);
 		if (null == builder)
-			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding.solve(Values, Answers.Builder): " + builder);
+			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding.solve(int, Values, Answers.Builder): " + builder);
 		Values result = values;
 		if (this.needsInduction()) {
-			Dialer dialer = new Dialer.Builder(problem.getConfig(), this, values).build();
+			Dialer dialer = new Dialer.Builder(config, this, values).build();
 			Map.Entry<Values, Collection<String>> entry = Answers.timeInduction(dialer);
 			result = entry.getKey();
 			for (String output : entry.getValue()) {
@@ -521,7 +504,7 @@ public class Grounding implements Solvable {
 	}
 
 	public final String asBadSolution() {
-		return String.format("bad_solution:-%s,number_abduced(%d).", count > 0 ? StringUtils.join(delta, ",") + "," : "", count);
+		return String.format("bad_solution:-%snumber_abduced(%d).", count > 0 ? StringUtils.join(delta, ",") + "," : "", count);
 	}
 
 }

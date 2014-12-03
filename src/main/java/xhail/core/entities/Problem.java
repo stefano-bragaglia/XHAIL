@@ -8,8 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -362,21 +364,30 @@ public class Problem implements Solvable {
 		Answers.Builder builder = new Answers.Builder(config);
 		if (background.length > 0 || examples.length > 0 || modeHs.length > 0 || modeBs.length > 0) {
 			int it = 0;
-			Set<Clause[]> kernels = new HashSet<>();
+			Set<Collection<Clause>> generalisations = new HashSet<>();
 
 			while (builder.isEmpty() && it <= config.getIterations()) {
 
+				if (config.isDebug())
+					Utils.saveTemp(this, Paths.get(String.format("%s_abd%d.lp", config.getName(), it)));
+
+				int iit = 0;
 				Values values = new Values();
 				Dialer dialer = new Dialer.Builder(config, this).build();
 				Map.Entry<Values, Collection<String>> entry = Answers.timeAbduction(dialer);
 				for (String output : entry.getValue()) {
 					Grounding grounding = Answers.timeDeduction(this, output);
-					Clause[] kernel = grounding.getKernel();
-					if (!kernels.contains(kernel)) {
+
+					if (config.isDebug() && grounding.needsInduction())
+						Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
+
+					Set<Clause> generalisation = new HashSet<Clause>();
+					Collections.addAll(generalisation, grounding.getGeneralisation());
+					if (!generalisations.contains(generalisation)) {
 						values = grounding.solve(values, builder);
 						// always add refinements, hopefully it won't be used!
 						refinements.add(grounding.asBadSolution());
-						kernels.add(kernel);
+						generalisations.add(generalisation);
 					}
 
 				}
