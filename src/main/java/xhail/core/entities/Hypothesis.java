@@ -16,6 +16,7 @@ import org.apache.commons.collections4.iterators.ArrayIterator;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
+import xhail.core.parser.Parser;
 import xhail.core.statements.Display;
 import xhail.core.statements.Example;
 import xhail.core.statements.ModeB;
@@ -86,6 +87,14 @@ public class Hypothesis implements Iterable<Atom> {
 			this.model.clear();
 			this.covered.clear();
 			this.literals.clear();
+			return this;
+		}
+
+		public Builder parse(Collection<String> answer) {
+			if (null == answer)
+				throw new IllegalArgumentException("Illegal 'answer' argument in Hypothesis.Builder.parse(Collection<String>): " + answer);
+			for (String atom : answer)
+				addAtom(Parser.parseToken(atom));
 			return this;
 		}
 

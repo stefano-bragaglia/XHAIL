@@ -14,9 +14,7 @@ import org.apache.commons.collections4.iterators.ArrayIterator;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
-import xhail.core.Dialer;
-import xhail.core.parser.Parser;
-import xhail.core.terms.Atom;
+import xhail.core.Dialler;
 
 /**
  * @author stefano
@@ -33,7 +31,7 @@ public class Answers implements Iterable<Answer> {
 		private int count = 0;
 
 		private Values values = null;
-		
+
 		public Builder(Config config) {
 			if (null == config)
 				throw new IllegalArgumentException("Illegal 'config' argument in Answers.Builder.Builder(Config): " + config);
@@ -53,8 +51,11 @@ public class Answers implements Iterable<Answer> {
 			return this;
 		}
 
-		public final boolean isEmpty() {
-			return answers.isEmpty();
+		public final boolean isMeaningful() {
+			for (Answer answer : answers)
+				if (answer.isMeaningful())
+					return true;
+			return false;
 		}
 
 		public Builder put(Values values, Answer answer) {
@@ -137,46 +138,44 @@ public class Answers implements Iterable<Answer> {
 			start = System.nanoTime();
 	}
 
-	public static Map.Entry<Values, Collection<String>> timeAbduction(Dialer dialer) {
+	public static Map.Entry<Values, Collection<Collection<String>>> timeAbduction(Dialler dialer) {
 		if (null == dialer)
 			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
 		long time = System.nanoTime();
-		Map.Entry<Values, Collection<String>> result = dialer.execute();
+		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute();
 		abduction += (System.nanoTime() - time);
 		return result;
 	}
 
-	public static Hypothesis timeDeduction(Grounding grounding, String output) {
+	public static Hypothesis timeDeduction(Grounding grounding, Collection<String> output) {
 		if (null == grounding)
-			throw new IllegalArgumentException("Illegal 'grounding' argument in Answers.timeDeduction(Grounding, String): " + grounding);
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Answers.timeDeduction(Grounding, Collection<String>): " + grounding);
 		if (null == output)
-			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Grounding, String): " + output);
+			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Grounding, Collection<String>): " + output);
 		long time = System.nanoTime();
-		Collection<Atom> atoms = Parser.parseAnswer(output);
-		Hypothesis result = new Hypothesis.Builder(grounding).addAtoms(atoms).build();
+		Hypothesis result = new Hypothesis.Builder(grounding).parse(output).build();
 		result.getHypotheses();
 		deduction += (System.nanoTime() - time);
 		return result;
 	}
 
-	public static Grounding timeDeduction(Problem problem, String output) {
+	public static Grounding timeDeduction(Problem problem, Collection<String> output) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in Answers.timeDeduction(Problem, String): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in Answers.timeDeduction(Problem, Collection<String>): " + problem);
 		if (null == output)
-			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Problem, String): " + output);
+			throw new IllegalArgumentException("Illegal 'output' argument in Answers.timeDeduction(Problem, Collection<String>): " + output);
 		long time = System.nanoTime();
-		Collection<Atom> atoms = Parser.parseAnswer(output);
-		Grounding result = new Grounding.Builder(problem).addAtoms(atoms).build();
+		Grounding result = new Grounding.Builder(problem).parse(output).build();
 		result.getGeneralisation();
 		deduction += (System.nanoTime() - time);
 		return result;
 	}
 
-	public static Map.Entry<Values, Collection<String>> timeInduction(Dialer dialer) {
+	public static Map.Entry<Values, Collection<Collection<String>>> timeInduction(Dialler dialer) {
 		if (null == dialer)
 			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
 		long time = System.nanoTime();
-		Map.Entry<Values, Collection<String>> result = dialer.execute();
+		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute();
 		induction += (System.nanoTime() - time);
 		return result;
 	}
@@ -249,7 +248,7 @@ public class Answers implements Iterable<Answer> {
 	}
 
 	public final boolean isEmpty() {
-		return (0 == answers.length);
+		return 0 == answers.length;
 	}
 
 	@Override

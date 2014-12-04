@@ -20,7 +20,7 @@ import java.util.TreeSet;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
-import xhail.core.Dialer;
+import xhail.core.Dialler;
 import xhail.core.Logger;
 import xhail.core.Utils;
 import xhail.core.parser.InputStates;
@@ -365,19 +365,16 @@ public class Problem implements Solvable {
 		if (background.length > 0 || examples.length > 0 || modeHs.length > 0 || modeBs.length > 0) {
 			int it = 0;
 			Set<Collection<Clause>> generalisations = new HashSet<>();
-
-			while (builder.isEmpty() && it <= config.getIterations()) {
-
+			while (!builder.isMeaningful() && it <= config.getIterations()) {
 				if (config.isDebug())
 					Utils.saveTemp(this, Paths.get(String.format("%s_abd%d.lp", config.getName(), it)));
 
 				int iit = 0;
 				Values values = new Values();
-				Dialer dialer = new Dialer.Builder(config, this).build();
-				Map.Entry<Values, Collection<String>> entry = Answers.timeAbduction(dialer);
-				for (String output : entry.getValue()) {
+				Dialler dialler = new Dialler.Builder(config, this).build();
+				Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeAbduction(dialler);
+				for (Collection<String> output : entry.getValue()) {
 					Grounding grounding = Answers.timeDeduction(this, output);
-
 					if (config.isDebug() && grounding.needsInduction())
 						Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
 
@@ -389,14 +386,11 @@ public class Problem implements Solvable {
 						refinements.add(grounding.asBadSolution());
 						generalisations.add(generalisation);
 					}
-
 				}
-
 				it += 1;
 			}
-			if (builder.isEmpty() && it <= config.getIterations()) {
-				Logger.message("No answers, try more iterations (--iter,-i <num>)");
-			}
+			if (!builder.isMeaningful())
+				System.out.println(String.format("*** Info  (%s): no meningful answers, try more iterations (--iter,-i <num>)\n", Logger.SIGNATURE));
 		}
 		return builder.build();
 	}

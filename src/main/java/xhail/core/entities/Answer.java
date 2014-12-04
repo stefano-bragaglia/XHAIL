@@ -84,13 +84,13 @@ public class Answer {
 		return true;
 	}
 
-	public Literal[] getCovered() {
+	public final Literal[] getCovered() {
 		if (null == this.hypothesis)
 			return grounding.getCovered();
 		return hypothesis.getCovered();
 	}
 
-	public Atom[] getDelta() {
+	public final Atom[] getDelta() {
 		return grounding.getDelta();
 	}
 
@@ -98,7 +98,7 @@ public class Answer {
 		return grounding;
 	}
 
-	public Clause[] getHypotheses() {
+	public final Clause[] getHypotheses() {
 		if (null == hypothesis)
 			return new Clause[0];
 		return hypothesis.getHypotheses();
@@ -108,11 +108,11 @@ public class Answer {
 		return hypothesis;
 	}
 
-	public Clause[] getKernel() {
+	public final Clause[] getKernel() {
 		return grounding.getKernel();
 	}
 
-	public Atom[] getModel() {
+	public final Atom[] getModel() {
 		if (null == hypothesis)
 			return grounding.getModel();
 		return hypothesis.getModel();
@@ -122,7 +122,7 @@ public class Answer {
 		return grounding.getProblem();
 	}
 
-	public Literal[] getUncovered() {
+	public final Literal[] getUncovered() {
 		if (null == hypothesis)
 			return grounding.getUncovered();
 		return hypothesis.getUncovered();
@@ -137,7 +137,7 @@ public class Answer {
 			return grounding.hasCovered();
 		return hypothesis.hasCovered();
 	}
-	
+
 	public final boolean hasDelta() {
 		return grounding.hasDelta();
 	}
@@ -187,6 +187,10 @@ public class Answer {
 		if (null == hypothesis)
 			return grounding.hasUncovered();
 		return hypothesis.hasUncovered();
+	}
+
+	public final boolean isMeaningful() {
+		return null != hypothesis && hypothesis.getHypotheses().length > 0;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import xhail.core.Config;
-import xhail.core.Dialer;
+import xhail.core.Dialler;
 import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
 import xhail.core.parser.Parser;
@@ -38,9 +38,10 @@ public class EC {
 
 		Problem problem = new Problem.Builder(config).parse(Paths.get("examples/toys/ec.lp")).build();
 
-		Dialer dialer = new Dialer.Builder(config, problem).build();
-		for (String answer : dialer.execute().getValue()) {
-			Grounding grounding = new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(answer)).build();
+		Dialler dialer = new Dialler.Builder(config, problem).build();
+		
+		for (Collection<String> answer : dialer.execute().getValue()) {
+			Grounding grounding = new Grounding.Builder(problem).parse(answer).build();
 			Collection<Atom> facts = grounding.getFacts();
 			Map<SchemeTerm, Set<Atom>> table = grounding.getTable();
 			stamp("Facts", facts.toArray(new Atom[facts.size()]));

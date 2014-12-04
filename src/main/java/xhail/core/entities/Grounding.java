@@ -16,8 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import xhail.core.Buildable;
 import xhail.core.Config;
-import xhail.core.Dialer;
+import xhail.core.Dialler;
 import xhail.core.Utils;
+import xhail.core.parser.Parser;
 import xhail.core.statements.Display;
 import xhail.core.statements.Example;
 import xhail.core.statements.ModeB;
@@ -97,6 +98,14 @@ public class Grounding implements Solvable {
 			return this;
 		}
 
+		public Builder parse(Collection<String> answer) {
+			if (null == answer)
+				throw new IllegalArgumentException("Illegal 'answer' argument in Grounding.Builder.parse(Collection<String>): " + answer);
+			for (String atom : answer)
+				addAtom(Parser.parseToken(atom));
+			return this;
+		}
+
 		public Builder removeAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.removeAtom(Atom): " + atom);
@@ -134,15 +143,15 @@ public class Grounding implements Solvable {
 	private static final String[] FILTERS = { "#hide.", "#show display_fact/1.", "#show covered_example/2.", "#show uncovered_example/2.",
 			"#show use_clause_literal/2." };
 
+	private final Config config;
+
+	private final int count;
+
 	private final Literal[] covered;
 
 	private final Atom[] delta;
 
 	private final Set<Atom> facts;
-
-	public final Collection<Atom> getFacts() {
-		return facts;
-	}
 
 	private Clause[] generalisation;
 
@@ -156,14 +165,6 @@ public class Grounding implements Solvable {
 
 	private final Literal[] uncovered;
 
-	private final int count;
-
-	public final int getCount() {
-		return count;
-	}
-
-	private final Config config;
-
 	private Grounding(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding(Grounding.Builder): " + builder);
@@ -176,6 +177,10 @@ public class Grounding implements Solvable {
 		this.problem = builder.problem;
 		this.table = SchemeTerm.lookup(builder.problem.getModeHs(), builder.problem.getModeBs(), builder.facts);
 		this.uncovered = builder.uncovered.toArray(new Literal[builder.uncovered.size()]);
+	}
+
+	public final String asBadSolution() {
+		return String.format("bad_solution:-%snumber_abduced(%d).", count > 0 ? StringUtils.join(delta, ",") + "," : "", count);
 	}
 
 	public String[] asClauses() {
@@ -288,6 +293,10 @@ public class Grounding implements Solvable {
 		return config;
 	}
 
+	public final int getCount() {
+		return count;
+	}
+
 	public final Literal[] getCovered() {
 		return covered;
 	}
@@ -302,6 +311,10 @@ public class Grounding implements Solvable {
 
 	public final Example[] getExamples() {
 		return problem.getExamples();
+	}
+
+	public final Collection<Atom> getFacts() {
+		return facts;
 	}
 
 	public final String[] getFilters() {
@@ -469,7 +482,7 @@ public class Grounding implements Solvable {
 	}
 
 	public final boolean needsInduction() {
-		return getKernel().length > 0;
+		return getGeneralisation().length > 0;
 	}
 
 	@Override
@@ -484,10 +497,10 @@ public class Grounding implements Solvable {
 			throw new IllegalArgumentException("Illegal 'builder' argument in Grounding.solve(int, Values, Answers.Builder): " + builder);
 		Values result = values;
 		if (this.needsInduction()) {
-			Dialer dialer = new Dialer.Builder(config, this, values).build();
-			Map.Entry<Values, Collection<String>> entry = Answers.timeInduction(dialer);
+			Dialler dialler = new Dialler.Builder(config, this, values).build();
+			Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeInduction(dialler);
 			result = entry.getKey();
-			for (String output : entry.getValue()) {
+			for (Collection<String> output : entry.getValue()) {
 				Hypothesis hypothesis = Answers.timeDeduction(this, output);
 				builder.put(entry.getKey(), new Answer.Builder(this).setHypothesis(hypothesis).build());
 			}
@@ -501,10 +514,6 @@ public class Grounding implements Solvable {
 		return "Grounding [\n  covered=" + Arrays.toString(covered) + ",\n  delta=" + Arrays.toString(delta) + ",\n  facts=" + facts + ",\n  generalisation="
 				+ Arrays.toString(generalisation) + ",\n  kernel=" + Arrays.toString(kernel) + ",\n  model=" + Arrays.toString(model) + ",\n  table=" + table
 				+ ",\n  problem=" + problem + ",\n  uncovered=" + Arrays.toString(uncovered) + "\n]";
-	}
-
-	public final String asBadSolution() {
-		return String.format("bad_solution:-%snumber_abduced(%d).", count > 0 ? StringUtils.join(delta, ",") + "," : "", count);
 	}
 
 }

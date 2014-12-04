@@ -15,14 +15,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import xhail.core.Config;
-import xhail.core.Dialer;
 import xhail.core.Finder;
 import xhail.core.Logger;
 import xhail.core.Utils;
 import xhail.core.entities.Answers;
-import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
-import xhail.core.parser.Parser;
 
 /**
  * @author stefano
@@ -110,20 +107,20 @@ public class Application implements Callable<Answers> {
 					case "-p":
 					case "--prettify":
 						builder.setPrettify(true);
-						if (args.length - i > 1) {
-							String arg = args[i + 1].trim();
-							int index = 0;
-							boolean found = true;
-							for (int p = 0; found && p < arg.length(); p++) {
-								found = Character.isDigit(arg.charAt(p));
-								if (found)
-									index = 10 * index + (arg.charAt(p) - '0');
-							}
-							if (found) {
-								builder.setIndex(index);
-								i += 1;
-							}
-						}
+//						if (args.length - i > 1) {
+//							String arg = args[i + 1].trim();
+//							int index = 0;
+//							boolean found = true;
+//							for (int p = 0; found && p < arg.length(); p++) {
+//								found = Character.isDigit(arg.charAt(p));
+//								if (found)
+//									index = 10 * index + (arg.charAt(p) - '0');
+//							}
+//							if (found) {
+//								builder.setIndex(index);
+//								i += 1;
+//							}
+//						}
 						break;
 					case "-s":
 					case "--search":
@@ -157,7 +154,7 @@ public class Application implements Callable<Answers> {
 		if (config.isVersion())
 			Logger.version();
 		Logger.header(config);
-		if (!config.isPrettify() || config.getIndex() > 0) {
+		if (!config.isPrettify() ) { // || config.getIndex() > 0
 			Finder finder = new Finder(" 3.", "gringo", "clasp");
 			finder.test("gringo", config.getGringo());
 			finder.test("clasp", config.getClasp());
@@ -212,22 +209,23 @@ public class Application implements Callable<Answers> {
 	public void execute() {
 		if (config.isPrettify()) {
 			System.out.println();
-			int index = config.getIndex();
-			switch (index) {
-				case -1:
-					Utils.dump(problem, System.err);
-					break;
-				case 0:
-					Utils.save(problem, System.err);
-					break;
-				default:
-					Dialer dialer = new Dialer.Builder(config, problem).build();
-					String[] outputs = dialer.execute().getValue().toArray(new String[0]);
-					if (index <= outputs.length)
-						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.err);
-					else
-						Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem", Logger.SIGNATURE));
-			}
+			Utils.dump(problem, System.err);
+//			int index = config.getIndex();
+//			switch (index) {
+//				case -1:
+//					Utils.dump(problem, System.err);
+//					break;
+//				case 0:
+//					Utils.save(problem, System.err);
+//					break;
+//				default:
+//					Dialler dialer = new Dialler.Builder(config, problem).build();
+//					String[] outputs = dialer.execute().getValue().toArray(new String[0]);
+//					if (index <= outputs.length)
+//						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.err);
+//					else
+//						Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem", Logger.SIGNATURE));
+//			}
 		} else {
 			long kill = config.getKill();
 			try {

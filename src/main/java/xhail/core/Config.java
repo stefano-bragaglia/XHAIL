@@ -24,7 +24,6 @@ public class Config {
 		private boolean full = false;
 		private Path gringo = null;
 		private boolean help = false;
-		private int index = -1;
 		private int iterations = 0;
 		private long kill = 0L;
 		private boolean mute = false;
@@ -110,11 +109,6 @@ public class Config {
 			return this;
 		}
 
-		public Builder setIndex(int index) {
-			this.index = index < -1 ? -1 : index;
-			return this;
-		}
-
 		public Builder setIterations(String iterations) {
 			try {
 				this.iterations = Integer.parseUnsignedInt(iterations);
@@ -169,8 +163,6 @@ public class Config {
 
 	private final boolean help;
 
-	private final int index;
-
 	private final int iterations;
 
 	private final long kill;
@@ -196,7 +188,6 @@ public class Config {
 		this.debug = builder.debug;
 		this.full = builder.full;
 		this.gringo = builder.gringo;
-		this.index = builder.index;
 		this.iterations = builder.iterations;
 		this.help = builder.help;
 		this.kill = builder.kill;
@@ -223,10 +214,6 @@ public class Config {
 
 	public Path getGringo() {
 		return gringo;
-	}
-
-	public final int getIndex() {
-		return index;
 	}
 
 	public final int getIterations() {
@@ -291,6 +278,40 @@ public class Config {
 
 	public void setGringo(Path gringo) {
 		this.gringo = gringo;
+	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		if (all)
+			result += " -a";
+		if (blind)
+			result += " -b";
+		if (null != clasp)
+			result += " -c " + clasp.toString();
+		if (debug)
+			result += " -d";
+		if (full)
+			result += " -f";
+		if (null != gringo)
+			result += " -g " + gringo.toString();
+		if (help)
+			result += " -h";
+		if (iterations > 0)
+			result += " -i " + iterations;
+		if (kill > 0L)
+			result += " -k " + kill;
+		if (mute)
+			result += " -m";
+		if (prettify)
+			result += " -p";
+		if (search)
+			result += " -s";
+		if (version)
+			result += " -v";
+		for (Path file : sources)
+			result += " " + file.toString();
+		return result;
 	}
 
 }

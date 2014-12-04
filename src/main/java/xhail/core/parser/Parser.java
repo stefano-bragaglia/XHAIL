@@ -103,6 +103,20 @@ public class Parser {
 		}
 	}
 
+	public static Atom parseToken(String source) {
+		if (null == source)
+			throw new IllegalArgumentException("Illegal 'source' argument in Parser.parseToken(String): " + source);
+		try {
+			Parser parser = new Parser(source);
+			Atom result = parser.parseGroundAtom();
+			parser.parseEOF();
+			return result;
+		} catch (ParserErrorException e) {
+			Logger.error(e.getMessage());
+			return null;
+		}
+	}
+
 	public static ModeB parseModeB(String source) {
 		if (null == source)
 			throw new IllegalArgumentException("Illegal 'source' argument in Parser.parseModeB(String): " + source);
@@ -136,7 +150,7 @@ public class Parser {
 	private final Iterator<Character> iterator;
 
 	private final String source;
-	
+
 	public Parser(String source) {
 		if (null == source)
 			throw new IllegalArgumentException("Illegal 'source' argument in Parser.Parser(String): " + source);
@@ -291,16 +305,11 @@ public class Parser {
 			throw new ParserErrorException("expected 'a..z' but EOF found in '" + source + "'");
 		if (!Character.isLowerCase(current))
 			throw new ParserErrorException("expected 'a..z' but '" + current + "' found in '" + source + "'");
-		String result = "" + current;
-		if (!iterator.hasNext())
+		String result = "";
+		while (null != current && (Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current)) {
+			result += current;
 			current = iterator.next();
-		else
-			while (iterator.hasNext()) {
-				current = iterator.next();
-				if (null == current || !(Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current))
-					break;
-				result += current;
-			}
+		}
 		return result;
 	}
 
@@ -488,12 +497,10 @@ public class Parser {
 			throw new ParserErrorException("expected 'A..Z' or '_' but EOF found in '" + source + "'");
 		if (!Character.isUpperCase(current) && '_' != current)
 			throw new ParserErrorException("expected 'A..Z' or '_' but '" + current + "' found in '" + source + "'");
-		String result = "" + current;
-		while (iterator.hasNext()) {
-			current = iterator.next();
-			if (null == current || !(Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current))
-				break;
+		String result = "";
+		while (null != current && (Character.isLowerCase(current) || Character.isUpperCase(current) || Character.isDigit(current) || '_' == current)) {
 			result += current;
+			current = iterator.next();
 		}
 		return new Variable.Builder(result).build();
 	}

@@ -28,14 +28,17 @@ public class Pipe implements Runnable {
 
 	@Override
 	public void run() {
+		System.err.println("I'm in!");
 		try {
 			int read = 1;
 			byte[] buffer = new byte[512];
 			while (read > -1) {
+				System.err.print(".");
 				read = input.read(buffer, 0, buffer.length);
 				if (read > -1)
 					output.write(buffer, 0, read);
 			}
+			System.err.println("\nI'm done.");
 		} catch (IOException e) {
 			Logger.error("broken pipe between Gringo and Clasp");
 		} finally {
@@ -51,6 +54,7 @@ public class Pipe implements Runnable {
 				Logger.warning(false, "cannot close the pipe to Clasp");
 			}
 		}
+		System.err.println("I'm leaving...");
 	}
 
 }

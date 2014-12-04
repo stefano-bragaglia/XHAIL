@@ -4,13 +4,13 @@
 package xhail;
 
 import java.nio.file.Paths;
+import java.util.Collection;
 
 import xhail.core.Config;
-import xhail.core.Dialer;
+import xhail.core.Dialler;
 import xhail.core.Utils;
 import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
-import xhail.core.parser.Parser;
 import xhail.core.terms.Clause;
 
 /**
@@ -31,10 +31,11 @@ public class Abstract {
 
 		Utils.dump(problem, System.err);
 
-		Dialer dialer = new Dialer.Builder(config, problem).build();
-		for (String answer : dialer.execute().getValue()) {
-			Grounding grounding = new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(answer)).build();
-			
+		Dialler dialer = new Dialler.Builder(config, problem).build();
+		
+		for (Collection<String> answer : dialer.execute().getValue()) {
+			Grounding grounding = new Grounding.Builder(problem).parse(answer).build();
+						
 			System.out.println(grounding.getKernel().length);
 			
 			for (Clause clause : grounding.getKernel())
@@ -45,7 +46,7 @@ public class Abstract {
 			for (Clause clause : grounding.getGeneralisation())
 				System.out.println(clause);
 			
-//			dialer = new Dialer.Builder(config, grounding).build();
+//			dialer = new Dialler.Builder(config, grounding).build();
 //			
 //			for (String result : dialer.execute().getValue()) {
 //				Hypothesis hypothesis = new Hypothesis.Builder(grounding).addAtoms(Parser.parseAnswer(result)).build();

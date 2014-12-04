@@ -39,40 +39,6 @@ public class Logger {
 		memory.clear();
 	}
 
-	// private static String convertAtoms(Atom[] atoms) {
-	// if (null == atoms)
-	// throw new
-	// IllegalArgumentException("Illegal 'atoms' argument in Logger.convertAtoms(Atom[]): "
-	// + atoms);
-	// Set<String> result = new LinkedHashSet<>();
-	// for (Atom atom : atoms)
-	// result.add(atom.toString());
-	// return StringUtils.join(result, " ");
-	// }
-
-	// private static Collection<String> convertClauses(Collection<Clause>
-	// clauses) {
-	// if (null == clauses)
-	// throw new
-	// IllegalArgumentException("Illegal 'clauses' argument in Logger.convertClauses(Collection<Clause>): "
-	// + clauses);
-	// Set<String> result = new TreeSet<>();
-	// for (Clause clause : clauses)
-	// result.add(clause.toString());
-	// return result;
-	// }
-
-	// private static String convertLiterals(Collection<Literal> literals) {
-	// if (null == literals)
-	// throw new
-	// IllegalArgumentException("Illegal 'literals' argument in Logger.convertLiterals(Collection<Literal>): "
-	// + literals);
-	// Set<String> result = new LinkedHashSet<>();
-	// for (Literal literal : literals)
-	// result.add(literal.toString());
-	// return StringUtils.join(result, " ");
-	// }
-
 	public static void error(String message) {
 		if (null != message) {
 			System.err.println(String.format("*** ERROR (%s): %s", SIGNATURE, message));
@@ -202,7 +168,7 @@ public class Logger {
 		stat(config, String.format("Answers     : %d", answers.count()));
 		stat(config, String.format("  optimal   : %d", answers.size()));
 		stat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
-		stat(config, String.format("Calls       : %d", Dialer.calls()));
+		stat(config, String.format("Calls       : %d", Dialler.calls()));
 		stat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
 		stat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
 		stat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
