@@ -36,8 +36,10 @@ public class Utils {
 					printer.println(display.toString());
 				printer.println();
 			}
-			if (problem.hasBackground()) {
+			if (problem.hasBackground() || problem.hasDomains()) {
 				printer.println("%% B. Background");
+				for (String statement : problem.getDomains())
+					printer.println(statement);
 				for (String statement : problem.getBackground())
 					printer.println(statement);
 				printer.println();
@@ -74,6 +76,8 @@ public class Utils {
 				printer.println(filter);
 			printer.println();
 			printer.println("%%% B. Background");
+			for (String statement : grounding.getDomains())
+				printer.println(statement);
 			for (String statement : grounding.getBackground())
 				printer.println(statement);
 			for (Display display : grounding.getDisplays())
@@ -107,6 +111,8 @@ public class Utils {
 				printer.println(filter);
 			printer.println();
 			printer.println("%%% B. Background");
+			for (String statement : problem.getDomains())
+				printer.println(statement);
 			for (String statement : problem.getBackground())
 				printer.println(statement);
 			for (Display display : problem.getDisplays())

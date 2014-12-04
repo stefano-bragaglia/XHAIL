@@ -1,5 +1,15 @@
+#domain reactionID(Reaction;R1;R2).
+#domain enzymeID(Complex;E1;E2).
+#domain metabolite(Metabolite;M1;M2).
+#domain day(Day;D1;D2).
+#domain orf(ORF).
+#domain compartment(Compartment;P1;P2).
+#domain experiment(Experiment).
+
 in_compartment(Experiment,Metabolite,Compartment,Day) :-
-  start_compound(Metabolite,Compartment).
+  start_compound(Metabolite,Compartment),
+  experiment(Experiment),
+  day(Day).
 
 in_compartment(Experiment,Metabolite,Compartment,Day) :-
   additional_nutrient(Experiment,Metabolite,Compartment).

@@ -48,6 +48,8 @@ public class Problem implements Solvable {
 
 		private Set<Display> displays = new LinkedHashSet<>();
 
+		private Set<String> domains = new LinkedHashSet<>();
+
 		private Set<Example> examples = new LinkedHashSet<>();
 
 		private Set<ModeB> modeBs = new LinkedHashSet<>();
@@ -69,15 +71,17 @@ public class Problem implements Solvable {
 					Logger.warning(config.isMute(), "'#hide' statements are not supported and will be ignored");
 				else if (statement.startsWith("#show"))
 					Logger.warning(config.isMute(), "'#show' statements are not supported and will be ignored");
-				else if (statement.startsWith("#display") && statement.endsWith(".")) {
+				else if (statement.startsWith("#display") && statement.endsWith("."))
 					addDisplay(Parser.parseDisplay(statement.substring("#display".length(), statement.length() - 1).trim()));
-				} else if (statement.startsWith("#example") && statement.endsWith(".")) {
+				else if (statement.startsWith("#example") && statement.endsWith("."))
 					addExample(Parser.parseExample(statement.substring("#example".length(), statement.length() - 1).trim()));
-				} else if (statement.startsWith("#modeb") && statement.endsWith(".")) {
+				else if (statement.startsWith("#modeb") && statement.endsWith("."))
 					addMode(Parser.parseModeB(statement.substring("#modeb".length(), statement.length() - 1).trim()));
-				} else if (statement.startsWith("#modeh") && statement.endsWith(".")) {
+				else if (statement.startsWith("#modeh") && statement.endsWith("."))
 					addMode(Parser.parseModeH(statement.substring("#modeh".length(), statement.length() - 1).trim()));
-				} else
+				else if (statement.startsWith("#domain"))
+					domains.add(statement);
+				else
 					background.add(statement);
 			}
 			return this;
@@ -175,6 +179,8 @@ public class Problem implements Solvable {
 					removeMode(Parser.parseModeB(statement.substring("#modeb".length(), statement.length() - 1).trim()));
 				} else if (statement.startsWith("#modeh") && statement.endsWith(".")) {
 					removeMode(Parser.parseModeH(statement.substring("#modeh".length(), statement.length() - 1).trim()));
+				} else if (statement.startsWith("#domain")) {
+					domains.remove(statement);
 				} else
 					background.remove(statement);
 			}
@@ -214,6 +220,8 @@ public class Problem implements Solvable {
 
 	private final Display[] displays;
 
+	private final String[] domains;
+
 	private final Example[] examples;
 
 	private final ModeB[] modeBs;
@@ -228,18 +236,11 @@ public class Problem implements Solvable {
 		this.background = builder.background.toArray(new String[builder.background.size()]);
 		this.config = builder.config;
 		this.displays = builder.displays.toArray(new Display[builder.displays.size()]);
+		this.domains = builder.domains.toArray(new String[builder.domains.size()]);
 		this.examples = builder.examples.toArray(new Example[builder.examples.size()]);
 		this.modeBs = builder.modeBs.toArray(new ModeB[builder.modeBs.size()]);
 		this.modeHs = builder.modeHs.toArray(new ModeH[builder.modeHs.size()]);
 	}
-
-	// public final void addRefinement(String refinement) {
-	// if (null == refinement || (refinement = refinement.trim()).isEmpty())
-	// throw new
-	// IllegalArgumentException("Illegal 'refinement' argument in Problem.addRefinement(String): "
-	// + refinement);
-	// refinements.add(refinement);
-	// }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -258,6 +259,8 @@ public class Problem implements Solvable {
 		} else if (!config.equals(other.config))
 			return false;
 		if (!Arrays.equals(displays, other.displays))
+			return false;
+		if (!Arrays.equals(domains, other.domains))
 			return false;
 		if (!Arrays.equals(examples, other.examples))
 			return false;
@@ -283,6 +286,10 @@ public class Problem implements Solvable {
 
 	public final Display[] getDisplays() {
 		return displays;
+	}
+
+	public final String[] getDomains() {
+		return domains;
 	}
 
 	public final Example[] getExamples() {
@@ -333,6 +340,10 @@ public class Problem implements Solvable {
 		return displays.length > 0;
 	}
 
+	public final boolean hasDomains() {
+		return domains.length > 0;
+	}
+
 	public final boolean hasExamples() {
 		return examples.length > 0;
 	}
@@ -344,6 +355,7 @@ public class Problem implements Solvable {
 		result = prime * result + Arrays.hashCode(background);
 		result = prime * result + ((config == null) ? 0 : config.hashCode());
 		result = prime * result + Arrays.hashCode(displays);
+		result = prime * result + Arrays.hashCode(domains);
 		result = prime * result + Arrays.hashCode(examples);
 		result = prime * result + Arrays.hashCode(modeBs);
 		result = prime * result + Arrays.hashCode(modeHs);
@@ -398,7 +410,8 @@ public class Problem implements Solvable {
 	@Override
 	public String toString() {
 		return "Problem [\n  background=" + Arrays.toString(background) + ",\n  config=" + config + ",\n  displays=" + Arrays.toString(displays)
-				+ ",\n  examples=" + Arrays.toString(examples) + ",\n  modeBs=" + Arrays.toString(modeBs) + ",\n  modeHs=" + Arrays.toString(modeHs) + "\n]";
+				+ ",\n  domains=" + Arrays.toString(domains) + ",\n  examples=" + Arrays.toString(examples) + ",\n  modeBs=" + Arrays.toString(modeBs)
+				+ ",\n  modeHs=" + Arrays.toString(modeHs) + "\n]";
 	}
 
 }

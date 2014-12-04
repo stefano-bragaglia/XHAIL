@@ -199,6 +199,10 @@ public class Hypothesis implements Iterable<Atom> {
 		return grounding.getDisplays();
 	}
 
+	public final String[] getDomains() {
+		return grounding.getDomains();
+	}
+
 	public final Example[] getExamples() {
 		return grounding.getExamples();
 	}
@@ -288,6 +292,10 @@ public class Hypothesis implements Iterable<Atom> {
 
 	public final boolean hasDisplays() {
 		return grounding.hasDisplays();
+	}
+
+	public final boolean hasDomains() {
+		return grounding.getDomains().length > 0;
 	}
 
 	public final boolean hasExamples() {

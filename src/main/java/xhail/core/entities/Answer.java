@@ -94,6 +94,10 @@ public class Answer {
 		return grounding.getDelta();
 	}
 
+	public final String[] getDomains() {
+		return grounding.getDomains();
+	}
+
 	public Grounding getGrounding() {
 		return grounding;
 	}
@@ -144,6 +148,10 @@ public class Answer {
 
 	public final boolean hasDisplays() {
 		return grounding.hasDisplays();
+	}
+
+	public final boolean hasDomains() {
+		return grounding.getDomains().length > 0;
 	}
 
 	public final boolean hasExamples() {

@@ -309,6 +309,10 @@ public class Grounding implements Solvable {
 		return problem.getDisplays();
 	}
 
+	public final String[] getDomains() {
+		return problem.getDomains();
+	}
+
 	public final Example[] getExamples() {
 		return problem.getExamples();
 	}
@@ -439,6 +443,10 @@ public class Grounding implements Solvable {
 
 	public final boolean hasDisplays() {
 		return problem.hasDisplays();
+	}
+
+	public final boolean hasDomains() {
+		return problem.getDomains().length > 0;
 	}
 
 	public final boolean hasExamples() {

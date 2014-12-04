@@ -1,5 +1,12 @@
 %% B. Background
-in_compartment(Experiment,Metabolite,Compartment,Day):-start_compound(Metabolite,Compartment).
+#domain reactionID(Reaction;R1;R2).
+#domain enzymeID(Complex;E1;E2).
+#domain metabolite(Metabolite;M1;M2).
+#domain day(Day;D1;D2).
+#domain orf(ORF).
+#domain compartment(Compartment;P1;P2).
+#domain experiment(Experiment).
+in_compartment(Experiment,Metabolite,Compartment,Day):-start_compound(Metabolite,Compartment),experiment(Experiment),day(Day).
 in_compartment(Experiment,Metabolite,Compartment,Day):-additional_nutrient(Experiment,Metabolite,Compartment).
 in_compartment(Experiment,M1,Compartment,Day):-additional_nutrient(Experiment,M2,Compartment),contaminated(M2,M1).
 in_compartment(Experiment,"C00011",cytosol,Day):-not exclude(41),Day>=1,in_compartment(Experiment,"C00011",medium,Day),catalyst(41,Complex),not inhibited(Experiment,Complex,Day),not deleted(Experiment,Complex).
@@ -574,13 +581,6 @@ compartment(cytosol).
 compartment(medium).
 day(1).
 inhibitor(25,"C00082",cytosol).
-#domain reactionID(Reaction;R1;R2).
-#domain enzymeID(Complex;E1;E2).
-#domain metabolite(Metabolite;M1;M2).
-#domain day(Day;D1;D2).
-#domain orf(ORF).
-#domain compartment(Compartment;P1;P2).
-#domain experiment(Experiment).
 start_compound("C00011",medium).
 start_compound("C00014",medium).
 start_compound("C00025",medium).
