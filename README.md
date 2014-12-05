@@ -18,8 +18,8 @@ This information is known as mode declarations.
 The answer provided by **XHAIL** suggests that each bird that is not a penguin flies.
 The problem is encoded by the following statements:
 
-    %% penguins.lp
-    %%%%%%%%%%%%%%%
+    %% penguins_weighted.lp
+    %%%%%%%%%%%%%%%%%%%%%%%
     
     #display flies/1.
     #display penguin/1.
