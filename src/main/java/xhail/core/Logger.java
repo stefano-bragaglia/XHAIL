@@ -42,7 +42,7 @@ public class Logger {
 	public static void error(String message) {
 		if (null != message) {
 			System.err.println(String.format("*** ERROR (%s): %s", SIGNATURE, message));
-			System.err.println(String.format("*** Info  (%s): try '-h' or '--help' for usage information", SIGNATURE));
+			System.out.println(String.format("*** Info  (%s): try '-h' or '--help' for usage information", SIGNATURE));
 			System.exit(-1);
 		}
 	}

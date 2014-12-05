@@ -138,8 +138,8 @@ public class Dialler {
 		try {
 			solvable.save(Files.newOutputStream(source));
 			try {
-				Process gringo = new ProcessBuilder(this.gringo) // 
-				.redirectError(Redirect.to(errors.toFile())).redirectOutput(Redirect.to(middle.toFile())).start();
+				Process gringo = new ProcessBuilder(this.gringo) //
+						.redirectError(Redirect.to(errors.toFile())).redirectOutput(Redirect.to(middle.toFile())).start();
 				gringo.waitFor();
 				handle(Files.newInputStream(errors));
 				try {
@@ -150,11 +150,15 @@ public class Dialler {
 					} catch (IOException e) {
 						Logger.error("cannot read from 'clasp' process");
 					}
-				} catch (IOException | InterruptedException e) {
+				} catch (IOException e) {
 					Logger.error("cannot launch 'clasp' process");
+				} catch (InterruptedException e) {
+					Logger.error("'clasp' process was interrupted");
 				}
-			} catch (IOException | InterruptedException e) {
+			} catch (IOException e) {
 				Logger.error("cannot launch 'gringo' process");
+			} catch (InterruptedException e) {
+				Logger.error("'gringo' process was interrupted");
 			}
 		} catch (IOException e) {
 			Logger.error("cannot write to 'gringo' process");
