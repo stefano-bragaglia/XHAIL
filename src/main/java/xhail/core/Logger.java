@@ -137,7 +137,7 @@ public class Logger {
 		Config config = answers.getConfig();
 		if (config.isOutput()) {
 			System.out.println("Problem,Answers,Calls,Loading,Abduction,Deduction,Induction,Wall");
-			System.err.format ("Stats,%d,%d,%.3fs,%.3fs,%.3fs,%.3fs,%.3fs\n", answers.size(), Dialler.calls(), //
+			System.err.format ("Stats,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", answers.size(), Dialler.calls(), //
 					Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), Answers.getNow());
 		} else {
 			Iterator<Answer> iterator = answers.iterator();
