@@ -61,16 +61,18 @@ Many operative systems already have a *JVM* installed. You can check if your mac
     Java(TM) SE Runtime Environment (build 1.8.0_11-b12)
     Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)
 
-If no *Java* environment is installed or the one available is of the wrong type or version, you need to install a new one. Multiple *JVM*s can coexist on the same machine. The *JVM* appropriate for your machine can be downloaded from the [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) site. Follow the instructions that you can find there to complete the installation. Even if it is not strictly needed to run the application, it is highly suggested that you set some environment variables for *Java*. If you need instructions, you can find several guides online appropriate for your own operative system. 
+If no *Java* environment is installed or the one available is of the wrong type or version, you need to install a new one. Multiple *JVM*s can coexist on the same machine. The *JVM* appropriate for your machine can be downloaded from the [Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) web site. Follow the instructions that you can find there to complete the installation. Even if it is not strictly needed to run the application, it is highly suggested that you set some environment variables for *Java*. If you need instructions, you can find several guides online with specific instructions for your own operative system. 
 
 ### Obtaining XHAIL
 
-You can obtain the source code of **XHAIL** by downloading and unpacking this [archive](https://github.com/stefano-bragaglia/XHAIL/archive/master.zip) in any folder of your choice, or by issuing the command `git clone https://github.com/stefano-bragaglia/XHAIL.git` on the command line or terminal. We recommend to use the latter procedure which requires the *git* tool to be installed on your machine. if it doesn't, you can find the latest version for your operative system on the [official website](http://git-scm.com/downloads). Alternatively, you can use one of the several *GUI* applications for *git* (there are a few free, open source valid application). If you have some problems dealing with *git*, we recommend to read this [guide](http://rogerdudler.github.io/git-guide/).
+**Download XHAIL v0.5.1:** [xhail.jar](https://github.com/stefano-bragaglia/XHAIL/examples/xhail.jar)
+
+You can obtain **XHAIL** by downloading it from the above link (you still need to configure it, see below) or by issuing the command `git clone https://github.com/stefano-bragaglia/XHAIL.git` on the command line or terminal to download and compile the sources. We recommend to use the latter procedure which requires the *git* tool to be installed on your machine. If it doesn't, you can find the latest *git* version for your operative system on the [official website](http://git-scm.com/downloads). Alternatively, you can use one of the several *GUI* applications for *git* (there are a few free, open source applications). If you have some problems dealing with *git*, we recommend to read this simple [guide](http://rogerdudler.github.io/git-guide/).
 
 ### Compiling XHAIL
 
 The files in this repository are organised in a hierarchy of folders that is typical of any [Apache *Maven*](http://maven.apache.org) project. Any tool that supports such a directories structure can be used to compile **XHAIL**. We specifically use *Gradle* and we highly recommend you to do the same.
-The current stable release of *Gradle* is 2.0 and it is available [here](http://www.gradle.org/downloads). Unzip the binaries package in a folder of your choice and add an environment variable that points to that location as you did for *Java*. More detailed instructions can be found in the *Gradle* documentation on the same site. Run the command `gradle -version` from the command line or terminal. If you get the following output, you have properly configured *Gradle* on your machine:
+At the time of writing, the stable release of *Gradle* is 2.0 and it is available [here](http://www.gradle.org/downloads). Unzip the binaries package in a folder of your choice and add an environment variable that points to that location as you should have done for *Java*. More detailed instructions can be found in the *Gradle* documentation on the same site. Run the command `gradle -version` from the command line or terminal. If you get the following output, you have properly configured *Gradle* on your machine:
 
     ------------------------------------------------------------
     Gradle 2.0
@@ -87,7 +89,7 @@ The current stable release of *Gradle* is 2.0 and it is available [here](http://
 
 Open a command prompt or a terminal and enter the folder where you downloaded the source code of **XHAIL**. Be sure to be in the root folder of the project: if the folder contains the file `build.gradle`, then you are in the proper directory.
 Now simply issue the command `gradle installApp` to build and install **XHAIL** on you machine.
-Be sure to be online because this procedure is going to download a few packages that are required by the application (i.e.: [ANTLR 4](http://www.antlr.org)). The procedure might fail if you don't have enough privileges: on Mac or Linux, you can raise your privileges by preceding the above command with `sudo` and typing your password when requested. On Windows, run the command prompt with *administrator privileges* by right-clicking on its icon and choosing the appropriate item. The procedure will install **XHAIL** in `/usr/local/XHAIL-0.5.1/`, so if you which to change this path, modify the value of `destinationDir` in `build.gradle` accordingly.
+Be sure to be online because this procedure is going to download a few packages that are required by the application. The procedure might fail if you don't have enough privileges: on Mac or Linux, you can raise your privileges by preceding the above command with `sudo` and typing your password when requested. On Windows, run the command prompt with *administrator privileges* by right-clicking on its icon and choosing the appropriate menu item. The procedure will install **XHAIL** in `/usr/local/XHAIL-0.5.1/`, so if you wish to change this path, modify the value of `destinationDir` in `build.gradle` accordingly.
 
 You should be now able to run **XHAIL**. Launch the command `java -jar /usr/local/XHAIL-0.5.1/xhail.jar --version` from the command line or terminal. If you get the following output, the installation completed successfully:
 
@@ -116,14 +118,12 @@ This implementation of **XHAIL** is still young and, even if we did our best to 
 
 This repository also contains the configuration files for *Eclipse*, one of the most common and popular *Java* *Integrated Development Environment* (IDE). We recommend you to use *Eclipse* to work on **XHAIL**. You can download the latest version, *Luna* which already supports *Java 8*, from its official [web site](https://www.eclipse.org/downloads/). Once you downloaded the archive most appropriate for your machine, extract it and simply run the *Eclipse* application. To start working on **XHAIL**, just import the source code as a Java project. You might want to move the source files inside *Eclipse*'s workspace directory.
 
-Since **XHAIL** internally uses *ANTLR 4* to parse its language and relies on *Gradle* to handle dependencies and compilation, we recommend to add some plugins to your *Eclipse* distribution.
-*ANTLR 4 IDE* is a plugin that enables the editing and automatic compilation of *ANTLR 4* grammars within *Eclipse* (available [here](https://github.com/jknack/antlr4ide)).
 *Gradle IDE* is a plugin that supports *Gradle* directly from *Eclipse* (available [here](http://www.gradle.org/tooling)).
 *Minimalist Gradle Editor* adds an editor for *Gradle* files to your *Eclipse* distribution (available [here](http://marketplace.eclipse.org/content/minimalist-gradle-editor)).
 
 ### Configuring XHAIL
 
-**XHAIL** delegates some of the reasoning tasks it performs to an external *ASP* engine, which is therefore required to work properly. 
+**XHAIL** delegates some of the reasoning tasks it performs to an external *ASP* engine, which is therefore required to make it work properly. 
 The *ASP* platform that we have chosen to use is *Gringo*/*Clasp*.
 These tools in fact support many interesting features and often win *ASP* competitions.
 In particular, we aim to use the 3rd major release of *Gringo*/*Clasp* because it is the most recent version supporting *reification*, which is required by the **XHAIL** procedure.
@@ -180,19 +180,23 @@ If launched with `--help` (or `-h`) as an argument, it produces the following he
     
     Options:
     
+      --all,-a            : Print all the best answers
       --blind,-b          : Remove colours from the program output
       --clasp,-c <path>   : Use given <path> as path for clasp 3
       --debug,-d          : Leave temporary files in ./temp
+      --full,-f           : Show a more detailed output
       --gringo,-g <path>  : Use given <path> as path for gringo 3
       --help,-h           : Print this help and exit
+      --iter,-i <num>     : Run <num> iterations for non-minimal answers
       --kill,-k <num>     : Stop the program after <num> seconds
       --mute,-m           : Suppress warning messages
+      --prettify,-p       : Nicely format current problem
       --search,-s         : Search for clasp 3 and gringo 3
       --version,-v        : Print version information and exit
     
     Example:   java -jar xhail.jar  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  example.pl
 
-**Notice** that all the arguments are optional except for `--gringo <path>` (or `-g <path>`) and `--clasp <path>` (or `-c <path>`) that must both be specified to notify the path (either absolute or relative, provided that includes the full name of the application, i.e.: `C:\ASP\gringo.exe`) of the two programs.
+**Notice** that all the arguments are optional except for `--gringo <path>` (or `-g <path>`) and `--clasp <path>` (or `-c <path>`) that must be both specified to notify the path (either absolute or relative, provided that includes the full name of the application, i.e.: `C:\ASP\gringo.exe`) of the two programs.
 
 **Notice** also that the argument `--search` (or `-s`) can be used in place of either `--gringo <path>` (or `-g <path>`) and `--clasp <path>` (or `-c <path>`). 
 This argument triggers a routine that recursively visits the folders of the first logical drive of the machine starting from its root, therefore it may take a while to complete.
@@ -212,11 +216,15 @@ Such locations are the following:
 
 The other arguments are pretty self-explanatory:
 
+- `--all` (or `-a`) stamps all the optimal answers found instead of stopping after finding the first one
 - `--blind` (or `-b`) inhibits the usage of ANSI colour codes to generate the program's output; this is useful when redirecting the program's output as otherwise it would be hardly readable
 - `--debug` (or `-d`) saves a copy of temporary files in `./temp` for debugging purposes
+- `--full` (or `-f`) displays more information (which might be useful in some cases) for each answer
 - `--help` (or `-h`) prints the help message above
+- `--iter <num>` (or `-i <num>`) allows more iterations of increasing complexity when a minimal compressive theory can't find an answer for the given problem
 - `--kill <num>` (or `-k <num>`) interrupts the execution after the given amount of seconds (if it would normally takes longer than this)
 - `--mute` (or `-m`) hides all the warning messages reported by *Gringo* and *Clasp* (critical halting errors are still reported)
+- `--prettify` (or `-p`) nicely formats the problem loaded in memory and prints it on the `stderr`
 - `--version` (or `-v`) simply displays current version information and gracefully exits.
 
 **Notice** that the path of any program to solve (either absolute or relative, including full name and extension) may be passed as an argument and **XHAIL** will automatically try to load and solve it.
@@ -226,44 +234,44 @@ If no file is specified, anything typed or redirected to the standard input (up 
 
 The following example, for instance, uses the applications `/Library/Clasp/clasp` and `/Library/Gringo/gringo` as sources for *Clasp* and *Gringo*, solves the problem in the relative path `./examples/toys/penguins_weighted.pl`, ignores warning messages and does not use colourful output:
 
-    xhail  -b  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
+    xhail  -a  -b  -f  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
 
 If no `alias` was defined for **XHAIL**, the command line is the following: 
 
-    java -jar xhail.jar  -b  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
+    java -jar xhail.jar  -a  -b  -f  -m  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  ./examples/toys/penguins_weighted.pl
 
 In either cases, the following output is produced:
 
-    xhail version 0.5.1
+    xhail 0.5.1
     
-    Reading from ./examples/toys/penguins_weighted.pl
+    Reading from 'examples/toys/penguins_weighted.lp'...
+    
     Solving...
     
-    Answer: 1
-      model (8 fact/s):
-        flies(a) flies(b) flies(c) penguin(d)
-      delta (3 abducible/s):
-        flies(+bird(a)) flies(+bird(b)) flies(+bird(c))
-      kernel (1 clause/s):
-        flies(V1) :- bird(V1), not penguin(V1).
-      hypotheses (1 clause/s):
-        flies(V1) :- bird(V1).
-      coverage (4 example/s out of 4):
-        flies(a) flies(b) flies(c) not flies(d)
-      optimization
-        abducing: 0 15
-        inducing: 0 6
+    Answer 1:
+      model:
+        penguin(d) flies(b) flies(c) flies(a)
+      delta:
+        flies(b) flies(c) flies(a)
+      kernel:
+        flies(b):-not penguin(b).
+        flies(c):-not penguin(c).
+        flies(a):-not penguin(a).
+      hypothesis:
+        flies(V1):-not penguin(V1),bird(V1).
+      uncovered:
+        -
+      covered:
+        flies(b) flies(c) flies(a) not flies(d)
     
     Answers     : 1
-    Runtime     : 0.228s
-      parsing   : 0.038s
-      abducing  : 0.020s
-       a.gringo : 0.006s
-       a.clasp  : 0.004s
-      deducing  : 0.006s
-      inducing  : 0.012s
-       i.gringo : 0.004s
-       i.clasp  : 0.004s
+      optimal   : 1
+      shown     : 1
+    Calls       : 2
+    Time        : 0.129s  (loading: 0.055s  1st answer: 0.127s)
+      abduction : 0.032s
+      deduction : 0.007s
+      induction : 0.015s
 
 ### Some details about XHAIL syntax
 
