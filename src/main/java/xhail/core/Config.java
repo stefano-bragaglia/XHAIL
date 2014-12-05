@@ -30,6 +30,7 @@ public class Config {
 		private boolean prettify = false;
 		private boolean search = false;
 		private LinkedHashSet<Path> sources = new LinkedHashSet<>();
+		private boolean output = false;
 
 		private boolean version = false;
 
@@ -72,6 +73,11 @@ public class Config {
 
 		public Builder setAll(boolean all) {
 			this.all = all;
+			return this;
+		}
+
+		public Builder setOutput(boolean output) {
+			this.output = output;
 			return this;
 		}
 
@@ -153,6 +159,8 @@ public class Config {
 
 	private final boolean blind;
 
+	private final boolean output;
+
 	private Path clasp;
 
 	private final boolean debug;
@@ -202,6 +210,7 @@ public class Config {
 		}
 		this.mute = builder.mute;
 		this.name = name;
+		this.output = builder.output;
 		this.prettify = builder.prettify;
 		this.search = builder.search;
 		this.sources = builder.sources.toArray(new Path[builder.sources.size()]);
@@ -242,6 +251,10 @@ public class Config {
 
 	public final boolean isBlind() {
 		return blind;
+	}
+
+	public final boolean isOutput() {
+		return output;
 	}
 
 	public final boolean isDebug() {

@@ -135,44 +135,50 @@ public class Logger {
 		if (null == answers)
 			throw new IllegalArgumentException("Illegal 'answers' argument in Logger.stampAnswers(Answers): " + answers);
 		Config config = answers.getConfig();
-		Iterator<Answer> iterator = answers.iterator();
-		if (iterator.hasNext()) {
-			for (int id = 1; iterator.hasNext() && config.isAll() || 1 == id; id++) {
-				Answer answer = iterator.next();
-				section(config, String.format("Answer %d:", id));
-				if (config.isFull()) {
-					if (answer.hasDisplays())
-						subSection(config, "model", answer.hasModel() ? StringUtils.join(answer.getModel(), " ") : "-");
-					subSection(config, "delta", answer.hasDelta() ? StringUtils.join(answer.getDelta(), " ") : "-");
-					subSection(config, "kernel", answer.hasKernel() ? StringUtils.join(answer.getKernel(), "\n    ") : "-");
+		if (config.isOutput()) {
+			System.out.println("Problem,Answers,Calls,Loading,Abduction,Deduction,Induction,Wall");
+			System.err.format ("Stats,%d,%d,%.3fs,%.3fs,%.3fs,%.3fs,%.3fs\n", answers.size(), Dialler.calls(), //
+					Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), Answers.getNow());
+		} else {
+			Iterator<Answer> iterator = answers.iterator();
+			if (iterator.hasNext()) {
+				for (int id = 1; iterator.hasNext() && config.isAll() || 1 == id; id++) {
+					Answer answer = iterator.next();
+					section(config, String.format("Answer %d:", id));
+					if (config.isFull()) {
+						if (answer.hasDisplays())
+							subSection(config, "model", answer.hasModel() ? StringUtils.join(answer.getModel(), " ") : "-");
+						subSection(config, "delta", answer.hasDelta() ? StringUtils.join(answer.getDelta(), " ") : "-");
+						subSection(config, "kernel", answer.hasKernel() ? StringUtils.join(answer.getKernel(), "\n    ") : "-");
+					}
+					subSection(config, "hypothesis", answer.hasHypotheses() ? StringUtils.join(answer.getHypotheses(), "\n    ") : "-");
+					subSection(config, "uncovered", answer.hasUncovered() ? StringUtils.join(answer.getUncovered(), " ") : "-");
+					if (config.isFull())
+						subSection(config, "covered", answer.hasCovered() ? StringUtils.join(answer.getCovered(), " ") : "-");
+					System.out.println();
 				}
-				subSection(config, "hypothesis", answer.hasHypotheses() ? StringUtils.join(answer.getHypotheses(), "\n    ") : "-");
-				subSection(config, "uncovered", answer.hasUncovered() ? StringUtils.join(answer.getUncovered(), " ") : "-");
-				if (config.isFull())
-					subSection(config, "covered", answer.hasCovered() ? StringUtils.join(answer.getCovered(), " ") : "-");
-				System.out.println();
+				int remaining = answers.size() - 1;
+				if (!config.isAll() && remaining > 0) {
+					if (!config.isBlind())
+						System.out.print(ANSI_RED);
+					System.out.print("NB: ");
+					if (!config.isBlind())
+						System.out.print(ANSI_RESET);
+					System.out.format("%d additional optimal answer/s omitted ", remaining);
+					if (!config.isBlind())
+						System.out.print(ANSI_WHITE);
+					System.out.println("(use '-a' to see them all)\n");
+				}
 			}
-			int remaining = answers.size() - 1;
-			if (!config.isAll() && remaining > 0) {
-				if (!config.isBlind())
-					System.out.print(ANSI_RED);
-				System.out.print("NB: ");
-				if (!config.isBlind())
-					System.out.print(ANSI_RESET);
-				System.out.format("%d additional optimal answer/s omitted ", remaining);
-				if (!config.isBlind())
-					System.out.print(ANSI_WHITE);
-				System.out.println("(use '-a' to see them all)\n");
-			}
+			stat(config, String.format("Answers     : %d", answers.count()));
+			stat(config, String.format("  optimal   : %d", answers.size()));
+			stat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
+			stat(config, String.format("Calls       : %d", Dialler.calls()));
+			stat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
+			stat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
+			stat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
+			stat(config, String.format("  induction : %.3fs\n", Answers.getInduction()));
 		}
-		stat(config, String.format("Answers     : %d", answers.count()));
-		stat(config, String.format("  optimal   : %d", answers.size()));
-		stat(config, String.format("  shown     : %d", config.isAll() ? answers.size() : answers.isEmpty() ? 0 : 1));
-		stat(config, String.format("Calls       : %d", Dialler.calls()));
-		stat(config, String.format("Time        : %.3fs  (loading: %.3fs  1st answer: %.3fs)", Answers.getNow(), Answers.getLoading(), Answers.getFirst()));
-		stat(config, String.format("  abduction : %.3fs", Answers.getAbduction()));
-		stat(config, String.format("  deduction : %.3fs", Answers.getDeduction()));
-		stat(config, String.format("  induction : %.3fs\n", Answers.getInduction()));
 	}
 
 	private static void stat(Config config, String value) {

@@ -104,6 +104,10 @@ public class Application implements Callable<Answers> {
 					case "--mute":
 						builder.setMute(true);
 						break;
+					case "-o":
+					case "--output":
+						builder.setOutput(true);
+						break;
 					case "-p":
 					case "--prettify":
 						builder.setPrettify(true);
