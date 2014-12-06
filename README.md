@@ -65,7 +65,7 @@ If no *Java* environment is installed or the one available is of the wrong type 
 
 ### Obtaining XHAIL
 
-**Download XHAIL v0.5.1:** [xhail.jar](https://github.com/stefano-bragaglia/XHAIL/examples/xhail.jar)
+**Download XHAIL v0.5.1:** [xhail.jar](https://github.com/stefano-bragaglia/XHAIL/blob/master/examples/xhail.jar?raw=true)
 
 You can obtain **XHAIL** by downloading it from the above link (you still need to configure it, see below) or by issuing the command `git clone https://github.com/stefano-bragaglia/XHAIL.git` on the command line or terminal to download and compile the sources. We recommend to use the latter procedure which requires the *git* tool to be installed on your machine. If it doesn't, you can find the latest *git* version for your operative system on the [official website](http://git-scm.com/downloads). Alternatively, you can use one of the several *GUI* applications for *git* (there are a few free, open source applications). If you have some problems dealing with *git*, we recommend to read this simple [guide](http://rogerdudler.github.io/git-guide/).
 
