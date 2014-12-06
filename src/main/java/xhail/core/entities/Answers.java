@@ -37,7 +37,7 @@ public class Answers implements Iterable<Answer> {
 				throw new IllegalArgumentException("Illegal 'config' argument in Answers.Builder.Builder(Config): " + config);
 			this.config = config;
 		}
-
+		
 		@Override
 		public Answers build() {
 			return new Answers(this);
@@ -85,6 +85,10 @@ public class Answers implements Iterable<Answer> {
 				if (this.answers.remove(answer))
 					count -= 1;
 			return this;
+		}
+
+		public final int size() {
+			return answers.size();
 		}
 
 	}

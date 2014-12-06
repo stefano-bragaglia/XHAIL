@@ -25,7 +25,6 @@ import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Literal;
 import xhail.core.terms.Number;
-import xhail.core.terms.Term;
 import xhail.core.terms.Variable;
 
 /**
@@ -37,9 +36,11 @@ public class Hypothesis implements Iterable<Atom> {
 	public static class Builder implements Buildable<Hypothesis> {
 
 		private Set<Literal> covered = new HashSet<>();
+		private Set<Atom> facts = new HashSet<>();
 		private Grounding grounding;
 		private Set<Atom> literals = new HashSet<>();
 		private Set<Atom> model = new HashSet<>();
+
 		private Set<Literal> uncovered = new HashSet<>();
 
 		public Builder(Grounding grounding) {
@@ -51,22 +52,13 @@ public class Hypothesis implements Iterable<Atom> {
 		public Builder addAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Hypothesis.Builder.addAtom(Atom): " + atom);
-			if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					covered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					uncovered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
-				model.add((Atom) atom.getTerm(0));
-			else
+			if (atom.getIdentifier().equals("use_clause_literal") && 2 == atom.getArity()) {
 				literals.add(atom);
+			} else {
+				if (grounding.getConfig().isFull() && grounding.hasDisplays() && grounding.lookup(atom))
+					model.add(atom);
+				facts.add(atom);
+			}
 			return this;
 		}
 
@@ -80,10 +72,19 @@ public class Hypothesis implements Iterable<Atom> {
 
 		@Override
 		public Hypothesis build() {
+			covered.clear();
+			uncovered.clear();
+			for (Example example : grounding.getExamples()) {
+				Atom atom = example.getAtom();
+				if (example.isNegated() != facts.contains(atom))
+					covered.add(new Literal.Builder(atom).setNegated(example.isNegated()).build());
+				else
+					uncovered.add(new Literal.Builder(atom).setNegated(example.isNegated()).build());
+			}
 			return new Hypothesis(this);
 		}
 
-		public Builder clearAtom() {
+		public Builder clear() {
 			this.model.clear();
 			this.covered.clear();
 			this.literals.clear();
@@ -101,22 +102,13 @@ public class Hypothesis implements Iterable<Atom> {
 		public Builder removeAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Hypothesis.Builder.removeAtom(Atom): " + atom);
-			if (atom.getIdentifier().startsWith("covered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					covered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().startsWith("uncovered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					uncovered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().startsWith("display_fact") && 1 == atom.getArity())
-				model.remove((Atom) atom.getTerm(0));
-			else
-				literals.remove((Atom) atom);
+			if (atom.getIdentifier().equals("use_clause_literal") && 2 == atom.getArity()) {
+				literals.remove(atom);
+			} else {
+				if (grounding.getConfig().isFull() && grounding.hasDisplays() && grounding.lookup(atom))
+					model.remove(atom);
+				facts.remove(atom);
+			}
 			return this;
 		}
 

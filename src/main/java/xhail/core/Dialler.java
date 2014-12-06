@@ -112,6 +112,8 @@ public class Dialler {
 
 	private final Path target;
 
+	private final boolean output;
+
 	private Dialler(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Dialler(Byprocess.Builder): " + builder);
@@ -128,6 +130,7 @@ public class Dialler {
 		this.gringo[1] = builder.source.toAbsolutePath().toString();
 		this.middle = builder.middle.toAbsolutePath();
 		this.mute = builder.config.isMute();
+		this.output = builder.config.isOutput();
 		this.solvable = builder.solvable;
 		this.source = builder.source.toAbsolutePath();
 		this.target = builder.target.toAbsolutePath();
@@ -148,20 +151,26 @@ public class Dialler {
 					try {
 						return Acquirer.from(Files.newInputStream(target)).parse();
 					} catch (IOException e) {
-						Logger.error("cannot read from 'clasp' process");
+						if (!output)
+							Logger.error("cannot read from 'clasp' process");
 					}
 				} catch (IOException e) {
-					Logger.error("cannot launch 'clasp' process");
+					if (!output)
+						Logger.error("cannot launch 'clasp' process");
 				} catch (InterruptedException e) {
-					Logger.error("'clasp' process was interrupted");
+					if (!output)
+						Logger.error("'clasp' process was interrupted");
 				}
 			} catch (IOException e) {
-				Logger.error("cannot launch 'gringo' process");
+				if (!output)
+					Logger.error("cannot launch 'gringo' process");
 			} catch (InterruptedException e) {
-				Logger.error("'gringo' process was interrupted");
+				if (!output)
+					Logger.error("'gringo' process was interrupted");
 			}
 		} catch (IOException e) {
-			Logger.error("cannot write to 'gringo' process");
+			if (!output)
+				Logger.error("cannot write to 'gringo' process");
 		}
 		return new SimpleEntry<Values, Collection<Collection<String>>>(null, Collections.emptySet());
 	}
@@ -179,9 +188,11 @@ public class Dialler {
 						message += "\n  " + line;
 					else if (line.startsWith(ERROR))
 						message = line.substring(ERROR.length());
-					else if (line.startsWith(WARNING))
-						Logger.warning(mute, line.substring(WARNING.length()));
-					else
+					else if (line.startsWith(WARNING)) {
+						String content = line.substring(WARNING.length());
+						if (!"bad_solution/0 is never defined".equals(content))
+							Logger.warning(mute, content);
+					}else
 						System.err.println(line);
 				}
 			}

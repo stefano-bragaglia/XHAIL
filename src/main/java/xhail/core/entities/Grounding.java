@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,24 +56,13 @@ public class Grounding implements Solvable {
 		public Builder addAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.addAtom(Atom): " + atom);
-			if (atom.getIdentifier().startsWith("abduced_"))
+			if (atom.getIdentifier().startsWith("abduced_")) {
 				delta.add(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().equals("covered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					covered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().equals("uncovered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					uncovered.add(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().equals("display_fact") && 1 == atom.getArity())
-				model.add((Atom) atom.getTerm(0));
-			else
+			} else {
+				if (problem.getConfig().isFull() && problem.hasDisplays() && problem.lookup(atom))
+					model.add(atom);
 				facts.add(atom);
+			}
 			return this;
 		}
 
@@ -86,6 +76,15 @@ public class Grounding implements Solvable {
 
 		@Override
 		public Grounding build() {
+			covered.clear();
+			uncovered.clear();
+			for (Example example : problem.getExamples()) {
+				Atom atom = example.getAtom();
+				if (example.isNegated() != facts.contains(atom))
+					covered.add(new Literal.Builder(atom).setNegated(example.isNegated()).build());
+				else
+					uncovered.add(new Literal.Builder(atom).setNegated(example.isNegated()).build());
+			}
 			return new Grounding(this);
 		}
 
@@ -109,24 +108,13 @@ public class Grounding implements Solvable {
 		public Builder removeAtom(Atom atom) {
 			if (null == atom)
 				throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.Builder.removeAtom(Atom): " + atom);
-			if (atom.getIdentifier().startsWith("abduced_"))
+			if (atom.getIdentifier().startsWith("abduced_")) {
 				delta.remove(new Atom.Builder(atom.getIdentifier().substring("abduced_".length())).addTerms(atom.getTerms()).build());
-			else if (atom.getIdentifier().equals("covered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					covered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().equals("uncovered_example") && 2 == atom.getArity()) {
-				Term term = atom.getTerm(0);
-				if (term instanceof Atom) {
-					boolean negated = ((Atom) term).getIdentifier().equals("true");
-					uncovered.remove(new Literal.Builder((Atom) atom.getTerm(1)).setNegated(negated).build());
-				}
-			} else if (atom.getIdentifier().equals("display_fact") && 1 == atom.getArity())
-				model.remove((Atom) atom.getTerm(0));
-			else
+			} else {
+				if (problem.getConfig().isFull() && problem.hasDisplays() && problem.lookup(atom))
+					model.remove(atom);
 				facts.remove(atom);
+			}
 			return this;
 		}
 
@@ -139,9 +127,6 @@ public class Grounding implements Solvable {
 		}
 
 	}
-
-	private static final String[] FILTERS = { "#hide.", "#show display_fact/1.", "#show covered_example/2.", "#show uncovered_example/2.",
-			"#show use_clause_literal/2." };
 
 	private final Config config;
 
@@ -321,8 +306,19 @@ public class Grounding implements Solvable {
 		return facts;
 	}
 
-	public final String[] getFilters() {
-		return FILTERS;
+	public final Collection<String> getFilters() {
+		Set<String> result = new TreeSet<>();
+		result.add("#hide.");
+		// result.add("#show display_fact/1.");
+		// result.add("#show covered_example/2.");
+		// result.add("#show number_abduced/1.");
+		// result.add("#show uncovered_example/2.");
+		result.add("#show use_clause_literal/2.");
+		for (Display display : problem.getDisplays())
+			result.add(String.format("#show %s/%d.", display.getIdentifier(), display.getArity()));
+		for (Example example : problem.getExamples())
+			result.add(String.format("#show %s/%d.", example.getAtom().getIdentifier(), example.getAtom().getArity()));
+		return result;
 	}
 
 	public final Clause[] getGeneralisation() {
@@ -487,6 +483,12 @@ public class Grounding implements Solvable {
 
 	public final boolean hasUncovered() {
 		return uncovered.length > 0;
+	}
+
+	public final boolean lookup(Atom atom) {
+		if (null == atom)
+			throw new IllegalArgumentException("Illegal 'atom' argument in Grounding.lookup(Atom): " + atom);
+		return problem.lookup(atom);
 	}
 
 	public final boolean needsInduction() {

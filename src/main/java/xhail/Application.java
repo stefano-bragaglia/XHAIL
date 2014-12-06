@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import xhail.core.Config;
+import xhail.core.Dialler;
 import xhail.core.Finder;
 import xhail.core.Logger;
 import xhail.core.Utils;
@@ -244,6 +245,11 @@ public class Application implements Callable<Answers> {
 				Logger.message(String.format("*** Info  (%s): current thread was interrupted while waiting", Logger.SIGNATURE));
 			} catch (TimeoutException e) {
 				Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
+				if (config.isOutput()) {
+					System.out.println("Problem,Answers,Calls,Loading,Abduction,Deduction,Induction,Wall");
+					System.err.format ("Interrupted,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", problem.count(), Dialler.calls(), //
+							Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), kill * 1.0);
+				} 
 			} catch (final Exception e) {
 				String message = "unexpected runtime error:\n  " + e.getMessage();
 				for (StackTraceElement element : e.getStackTrace())

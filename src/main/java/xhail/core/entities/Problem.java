@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -30,6 +31,7 @@ import xhail.core.statements.Display;
 import xhail.core.statements.Example;
 import xhail.core.statements.ModeB;
 import xhail.core.statements.ModeH;
+import xhail.core.terms.Atom;
 import xhail.core.terms.Clause;
 import xhail.core.terms.Placemarker;
 import xhail.core.terms.Scheme;
@@ -51,6 +53,8 @@ public class Problem implements Solvable {
 		private Set<String> domains = new LinkedHashSet<>();
 
 		private Set<Example> examples = new LinkedHashSet<>();
+
+		private Map<String, Set<Integer>> lookup = new HashMap<>();
 
 		private Set<ModeB> modeBs = new LinkedHashSet<>();
 
@@ -114,6 +118,16 @@ public class Problem implements Solvable {
 
 		@Override
 		public Problem build() {
+			lookup.clear();
+			for (Display display : displays) {
+				String key = display.getIdentifier();
+				Set<Integer> arities = lookup.get(key);
+				if (null == arities) {
+					arities = new HashSet<>();
+					lookup.put(key, arities);
+				}
+				arities.add(display.getArity());
+			}
 			return new Problem(this);
 		}
 
@@ -121,6 +135,7 @@ public class Problem implements Solvable {
 			this.background.clear();
 			this.displays.clear();
 			this.examples.clear();
+			this.lookup.clear();
 			this.modeBs.clear();
 			this.modeHs.clear();
 			return this;
@@ -128,6 +143,7 @@ public class Problem implements Solvable {
 
 		public Builder clearDisplay() {
 			this.displays.clear();
+			this.lookup.clear();
 			return this;
 		}
 
@@ -144,6 +160,73 @@ public class Problem implements Solvable {
 		public Builder clearModeHs() {
 			this.modeHs.clear();
 			return this;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Builder other = (Builder) obj;
+			if (background == null) {
+				if (other.background != null)
+					return false;
+			} else if (!background.equals(other.background))
+				return false;
+			if (config == null) {
+				if (other.config != null)
+					return false;
+			} else if (!config.equals(other.config))
+				return false;
+			if (displays == null) {
+				if (other.displays != null)
+					return false;
+			} else if (!displays.equals(other.displays))
+				return false;
+			if (domains == null) {
+				if (other.domains != null)
+					return false;
+			} else if (!domains.equals(other.domains))
+				return false;
+			if (examples == null) {
+				if (other.examples != null)
+					return false;
+			} else if (!examples.equals(other.examples))
+				return false;
+			if (lookup == null) {
+				if (other.lookup != null)
+					return false;
+			} else if (!lookup.equals(other.lookup))
+				return false;
+			if (modeBs == null) {
+				if (other.modeBs != null)
+					return false;
+			} else if (!modeBs.equals(other.modeBs))
+				return false;
+			if (modeHs == null) {
+				if (other.modeHs != null)
+					return false;
+			} else if (!modeHs.equals(other.modeHs))
+				return false;
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((background == null) ? 0 : background.hashCode());
+			result = prime * result + ((config == null) ? 0 : config.hashCode());
+			result = prime * result + ((displays == null) ? 0 : displays.hashCode());
+			result = prime * result + ((domains == null) ? 0 : domains.hashCode());
+			result = prime * result + ((examples == null) ? 0 : examples.hashCode());
+			result = prime * result + ((lookup == null) ? 0 : lookup.hashCode());
+			result = prime * result + ((modeBs == null) ? 0 : modeBs.hashCode());
+			result = prime * result + ((modeHs == null) ? 0 : modeHs.hashCode());
+			return result;
 		}
 
 		public Builder parse(InputStream stream) {
@@ -224,6 +307,8 @@ public class Problem implements Solvable {
 
 	private final Example[] examples;
 
+	private final Map<String, Set<Integer>> lookup;
+
 	private final ModeB[] modeBs;
 
 	private final ModeH[] modeHs;
@@ -238,6 +323,7 @@ public class Problem implements Solvable {
 		this.displays = builder.displays.toArray(new Display[builder.displays.size()]);
 		this.domains = builder.domains.toArray(new String[builder.domains.size()]);
 		this.examples = builder.examples.toArray(new Example[builder.examples.size()]);
+		this.lookup = builder.lookup;
 		this.modeBs = builder.modeBs.toArray(new ModeB[builder.modeBs.size()]);
 		this.modeHs = builder.modeHs.toArray(new ModeH[builder.modeHs.size()]);
 	}
@@ -263,6 +349,11 @@ public class Problem implements Solvable {
 		if (!Arrays.equals(domains, other.domains))
 			return false;
 		if (!Arrays.equals(examples, other.examples))
+			return false;
+		if (lookup == null) {
+			if (other.lookup != null)
+				return false;
+		} else if (!lookup.equals(other.lookup))
 			return false;
 		if (!Arrays.equals(modeBs, other.modeBs))
 			return false;
@@ -299,11 +390,15 @@ public class Problem implements Solvable {
 	public final Collection<String> getFilters() {
 		Set<String> result = new TreeSet<>();
 		result.add("#hide.");
-		result.add("#show display_fact/1.");
-		result.add("#show covered_example/2.");
+		// result.add("#show display_fact/1.");
+		// result.add("#show covered_example/2.");
 		// result.add("#show number_abduced/1.");
-		result.add("#show uncovered_example/2.");
-		// result.add("#show use_clause_literal/2.");
+		// result.add("#show uncovered_example/2.");
+		// // result.add("#show use_clause_literal/2.");
+		for (Display display : displays)
+			result.add(String.format("#show %s/%d.", display.getIdentifier(), display.getArity()));
+		for (Example example : examples)
+			result.add(String.format("#show %s/%d.", example.getAtom().getIdentifier(), example.getAtom().getArity()));
 		for (ModeH mode : modeHs) {
 			Scheme scheme = mode.getScheme();
 			result.add(String.format("#show %s/%d.", scheme.getIdentifier(), scheme.getArity()));
@@ -357,6 +452,7 @@ public class Problem implements Solvable {
 		result = prime * result + Arrays.hashCode(displays);
 		result = prime * result + Arrays.hashCode(domains);
 		result = prime * result + Arrays.hashCode(examples);
+		result = prime * result + ((lookup == null) ? 0 : lookup.hashCode());
 		result = prime * result + Arrays.hashCode(modeBs);
 		result = prime * result + Arrays.hashCode(modeHs);
 		result = prime * result + ((refinements == null) ? 0 : refinements.hashCode());
@@ -367,9 +463,24 @@ public class Problem implements Solvable {
 		return modeBs.length > 0 || modeHs.length > 0;
 	}
 
+	public final boolean lookup(Atom atom) {
+		if (null == atom)
+			throw new IllegalArgumentException("Illegal 'atom' argument in Problem.lookup(Atom): " + atom);
+		String key = atom.getIdentifier();
+		if (!this.lookup.containsKey(key))
+			return false;
+		return this.lookup.get(key).contains(atom.getArity());
+	}
+
 	@Override
 	public boolean save(OutputStream stream) {
 		return Utils.save(this, stream);
+	}
+
+	private volatile int count = 0;
+
+	public final int count() {
+		return count;
 	}
 
 	public final Answers solve() {
@@ -398,11 +509,12 @@ public class Problem implements Solvable {
 						refinements.add(grounding.asBadSolution());
 						generalisations.add(generalisation);
 					}
+					count = builder.size();
 				}
 				it += 1;
 			}
 			if (!builder.isMeaningful())
-				System.out.println(String.format("*** Info  (%s): no meningful answers, try more iterations (--iter,-i <num>)\n", Logger.SIGNATURE));
+				System.out.println(String.format("*** Info  (%s): no meaningful answers, try more iterations (--iter,-i <num>)\n", Logger.SIGNATURE));
 		}
 		return builder.build();
 	}
