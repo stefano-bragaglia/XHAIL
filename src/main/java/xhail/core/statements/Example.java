@@ -170,14 +170,14 @@ public class Example {
 	public final String[] asClauses() {
 		String yes = negated ? "not " : "";
 		String not = negated ? "" : "not ";
-		String bool = negated ? "true" : "false";
-		String[] result = new String[defeasible ? 4 : 5];
+//		String bool = negated ? "true" : "false";
+		String[] result = new String[defeasible ? 2 : 3];
 		result[0] = String.format("%% %s", toString());
 		result[1] = String.format("#maximize[ %s%s =%d @%d ].", yes, atom, weight, priority);
 		if (!defeasible)
 			result[2] = String.format(":-%s%s.", not, atom);
-		result[result.length - 2] = String.format("covered_example(%s,%s):-%s%s.", bool, atom, yes, atom);
-		result[result.length - 1] = String.format("uncovered_example(%s,%s):-%s%s.", bool, atom, not, atom);
+//		result[result.length - 2] = String.format("covered_example(%s,%s):-%s%s.", bool, atom, yes, atom);
+//		result[result.length - 1] = String.format("uncovered_example(%s,%s):-%s%s.", bool, atom, not, atom);
 		return result;
 	}
 

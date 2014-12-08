@@ -190,9 +190,9 @@ public class Dialler {
 						message = line.substring(ERROR.length());
 					else if (line.startsWith(WARNING)) {
 						String content = line.substring(WARNING.length());
-						if (!"bad_solution/0 is never defined".equals(content))
+						if (!"bad_solution/0 is never defined".equals(content) && !"number_abduced/2 is never defined".equals(content))
 							Logger.warning(mute, content);
-					}else
+					} else
 						System.err.println(line);
 				}
 			}

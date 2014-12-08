@@ -80,8 +80,8 @@ public class Utils {
 				printer.println(statement);
 			for (String statement : grounding.getBackground())
 				printer.println(statement);
-			for (Display display : grounding.getDisplays())
-				printer.println(display.asClauses());
+//			for (Display display : grounding.getDisplays())
+//				printer.println(display.asClauses());
 			printer.println();
 			printer.println("%%% E. Examples");
 			for (Example example : grounding.getExamples())
@@ -115,8 +115,8 @@ public class Utils {
 				printer.println(statement);
 			for (String statement : problem.getBackground())
 				printer.println(statement);
-			for (Display display : problem.getDisplays())
-				printer.println(display.asClauses());
+//			for (Display display : problem.getDisplays())
+//				printer.println(display.asClauses());
 			for (String refinement : problem.getRefinements())
 				printer.println(refinement);
 			printer.println();
