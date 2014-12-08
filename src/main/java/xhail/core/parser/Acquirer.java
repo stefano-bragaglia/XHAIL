@@ -118,9 +118,9 @@ public class Acquirer {
 	private void parseNested() throws ParserErrorException {
 		if (null == token)
 			throw new ParserErrorException("expected ATOM but EOF found");
-		if (FOUND.equals(token) || OPTIMIZATION.equals(token) || OPTIMUM.equals(token) || SATISFIABLE.equals(token) || UNKNOWN.equals(token)
-				|| UNSATISFIABLE.equals(token))
-			throw new ParserErrorException(String.format("expected ATOM but '%s' found", token));
+//		if (FOUND.equals(token) || OPTIMIZATION.equals(token) || OPTIMUM.equals(token) || SATISFIABLE.equals(token) || UNKNOWN.equals(token)
+//				|| UNSATISFIABLE.equals(token))
+//			throw new ParserErrorException(String.format("expected ATOM but '%s' found", token));
 		this.atoms = new HashSet<>();
 		while (null != token && !FOUND.equals(token) && !OPTIMIZATION.equals(token) && !OPTIMUM.equals(token) && !SATISFIABLE.equals(token)
 				&& !UNKNOWN.equals(token) && !UNSATISFIABLE.equals(token)) {
