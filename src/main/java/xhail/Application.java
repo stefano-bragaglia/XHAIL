@@ -38,7 +38,8 @@ public class Application implements Callable<Answers> {
 	 */
 	private static final Path[] PATHS = { Paths.get("/Library/Gringo/"), Paths.get("/Library/Clasp/"), Paths.get("/usr/bin/gringo/"),
 			Paths.get("/usr/bin/clasp/"), Paths.get("/usr/bin/"), Paths.get("/usr/local/gringo/"), Paths.get("/usr/local/clasp/"), Paths.get("/usr/local/"),
-			Paths.get("C:\\Gringo\\"), Paths.get("C:\\Clasp\\") };
+			Paths.get("/opt/bin/"), Paths.get("/opt/local/"), Paths.get("/opt/clasp/"), Paths.get("/opt/gringo/"), Paths.get("/opt/local/gringo/"),
+			Paths.get("/opt/local/clasp/"), Paths.get("C:\\Gringo\\"), Paths.get("C:\\Clasp\\") };
 	private static final Path ROOT = Paths.get(".").toAbsolutePath().getRoot().normalize();
 
 	private static final ExecutorService service = Executors.newSingleThreadExecutor();
@@ -112,20 +113,20 @@ public class Application implements Callable<Answers> {
 					case "-p":
 					case "--prettify":
 						builder.setPrettify(true);
-//						if (args.length - i > 1) {
-//							String arg = args[i + 1].trim();
-//							int index = 0;
-//							boolean found = true;
-//							for (int p = 0; found && p < arg.length(); p++) {
-//								found = Character.isDigit(arg.charAt(p));
-//								if (found)
-//									index = 10 * index + (arg.charAt(p) - '0');
-//							}
-//							if (found) {
-//								builder.setIndex(index);
-//								i += 1;
-//							}
-//						}
+						// if (args.length - i > 1) {
+						// String arg = args[i + 1].trim();
+						// int index = 0;
+						// boolean found = true;
+						// for (int p = 0; found && p < arg.length(); p++) {
+						// found = Character.isDigit(arg.charAt(p));
+						// if (found)
+						// index = 10 * index + (arg.charAt(p) - '0');
+						// }
+						// if (found) {
+						// builder.setIndex(index);
+						// i += 1;
+						// }
+						// }
 						break;
 					case "-s":
 					case "--search":
@@ -159,7 +160,7 @@ public class Application implements Callable<Answers> {
 		if (config.isVersion())
 			Logger.version();
 		Logger.header(config);
-		if (!config.isPrettify() ) { // || config.getIndex() > 0
+		if (!config.isPrettify()) { // || config.getIndex() > 0
 			Finder finder = new Finder(" 3.", "gringo", "clasp");
 			finder.test("gringo", config.getGringo());
 			finder.test("clasp", config.getClasp());
@@ -215,22 +216,26 @@ public class Application implements Callable<Answers> {
 		if (config.isPrettify()) {
 			System.out.println();
 			Utils.dump(problem, System.err);
-//			int index = config.getIndex();
-//			switch (index) {
-//				case -1:
-//					Utils.dump(problem, System.err);
-//					break;
-//				case 0:
-//					Utils.save(problem, System.err);
-//					break;
-//				default:
-//					Dialler dialer = new Dialler.Builder(config, problem).build();
-//					String[] outputs = dialer.execute().getValue().toArray(new String[0]);
-//					if (index <= outputs.length)
-//						Utils.save(new Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index - 1])).build(), System.err);
-//					else
-//						Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem", Logger.SIGNATURE));
-//			}
+			// int index = config.getIndex();
+			// switch (index) {
+			// case -1:
+			// Utils.dump(problem, System.err);
+			// break;
+			// case 0:
+			// Utils.save(problem, System.err);
+			// break;
+			// default:
+			// Dialler dialer = new Dialler.Builder(config, problem).build();
+			// String[] outputs = dialer.execute().getValue().toArray(new
+			// String[0]);
+			// if (index <= outputs.length)
+			// Utils.save(new
+			// Grounding.Builder(problem).addAtoms(Parser.parseAnswer(outputs[index
+			// - 1])).build(), System.err);
+			// else
+			// Logger.message(String.format("*** Info  (%s): no such inductive phase for this problem",
+			// Logger.SIGNATURE));
+			// }
 		} else {
 			long kill = config.getKill();
 			try {
@@ -247,9 +252,9 @@ public class Application implements Callable<Answers> {
 				Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
 				if (config.isOutput()) {
 					System.out.println("Problem,Answers,Calls,Loading,Abduction,Deduction,Induction,Wall");
-					System.err.format ("Interrupted,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", problem.count(), Dialler.calls(), //
+					System.err.format("Interrupted,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", problem.count(), Dialler.calls(), //
 							Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), kill * 1.0);
-				} 
+				}
 			} catch (final Exception e) {
 				String message = "unexpected runtime error:\n  " + e.getMessage();
 				for (StackTraceElement element : e.getStackTrace())
