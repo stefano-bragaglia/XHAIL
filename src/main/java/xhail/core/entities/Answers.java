@@ -142,11 +142,13 @@ public class Answers implements Iterable<Answer> {
 			start = System.nanoTime();
 	}
 
-	public static Map.Entry<Values, Collection<Collection<String>>> timeAbduction(Dialler dialer) {
+	public static Map.Entry<Values, Collection<Collection<String>>> timeAbduction(int iter, Dialler dialer) {
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Answers.timeAbduction(int, Dialer): " + iter);
 		if (null == dialer)
-			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
+			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(int, Dialer): " + dialer);
 		long time = System.nanoTime();
-		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute();
+		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute(iter);
 		abduction += (System.nanoTime() - time);
 		return result;
 	}
@@ -175,11 +177,13 @@ public class Answers implements Iterable<Answer> {
 		return result;
 	}
 
-	public static Map.Entry<Values, Collection<Collection<String>>> timeInduction(Dialler dialer) {
+	public static Map.Entry<Values, Collection<Collection<String>>> timeInduction(int iter, Dialler dialer) {
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Answers.timeInduction(int, Dialer): " + iter);
 		if (null == dialer)
-			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeAbduction(Dialer): " + dialer);
+			throw new IllegalArgumentException("Illegal 'dialer' argument in Answers.timeInduction(Dialer): " + dialer);
 		long time = System.nanoTime();
-		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute();
+		Map.Entry<Values, Collection<Collection<String>>> result = dialer.execute(iter);
 		induction += (System.nanoTime() - time);
 		return result;
 	}

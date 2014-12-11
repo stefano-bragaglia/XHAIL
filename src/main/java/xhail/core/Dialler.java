@@ -11,12 +11,9 @@ import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
@@ -142,10 +139,12 @@ public class Dialler {
 		this.target = builder.target.toAbsolutePath();
 	}
 
-	public Map.Entry<Values, Collection<Collection<String>>> execute() {
+	public Map.Entry<Values, Collection<Collection<String>>> execute(int iter) {
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Dialler.execute(int): " + iter);
 		calls += 1;
 		try {
-			solvable.save(Files.newOutputStream(source));
+			solvable.save(iter, Files.newOutputStream(source));
 			try {
 				if (debug)
 					Logger.message(String.format("*** Info  (%s): calling '%s'", Logger.SIGNATURE, String.join(" ", this.gringo)));

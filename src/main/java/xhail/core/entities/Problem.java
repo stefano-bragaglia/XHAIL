@@ -475,8 +475,8 @@ public class Problem implements Solvable {
 	}
 
 	@Override
-	public boolean save(OutputStream stream) {
-		return Utils.save(this, stream);
+	public boolean save(int iter, OutputStream stream) {
+		return Utils.save(this, iter, stream);
 	}
 
 	private volatile int count = 0;
@@ -488,16 +488,16 @@ public class Problem implements Solvable {
 	public final Answers solve() {
 		Answers.Builder builder = new Answers.Builder(config);
 		if (background.length > 0 || examples.length > 0 || modeHs.length > 0 || modeBs.length > 0) {
-			int it = 0;
+			int iter = 0;
 			Set<Collection<Clause>> generalisations = new HashSet<>();
-			while (!builder.isMeaningful() && it <= config.getIterations()) {
+			while (!builder.isMeaningful() && iter <= config.getIterations()) {
 				if (config.isDebug())
-					Utils.saveTemp(this, Paths.get(String.format("%s_abd%d.lp", config.getName(), it)));
+					Utils.saveTemp(this, iter, Paths.get(String.format("%s_abd%d.lp", config.getName(), iter)));
 
 				int iit = 0;
 				Values values = new Values();
 				Dialler dialler = new Dialler.Builder(config, this).build();
-				Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeAbduction(dialler);
+				Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeAbduction(iter, dialler);
 				for (Collection<String> output : entry.getValue()) {
 					if (builder.size() > 0 && config.isTerminate())
 						break;
@@ -507,7 +507,7 @@ public class Problem implements Solvable {
 						Logger.message(String.format("*** Info  (%s): found Kernel: %s", Logger.SIGNATURE, StringUtils.join(grounding.getKernel(), " ")));
 						Logger.message(String.format("*** Info  (%s): found Generalisation: %s", Logger.SIGNATURE, StringUtils.join(grounding.getGeneralisation(), " ")));
 						if (grounding.needsInduction())
-							Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
+							Utils.saveTemp(grounding, iter, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), iter, iit++)));
 					}
 					Set<Clause> generalisation = new HashSet<Clause>();
 					Collections.addAll(generalisation, grounding.getGeneralisation());
@@ -519,7 +519,7 @@ public class Problem implements Solvable {
 					}
 					count = builder.size();
 				}
-				it += 1;
+				iter += 1;
 			}
 			if (builder.size() > 0 && config.isTerminate())
 				System.out.println(String.format("*** Info  (%s): search for hypotheses terminated after the first match", Logger.SIGNATURE));

@@ -15,6 +15,6 @@ public interface Solvable {
 	 * @param stream
 	 * @return
 	 */
-	public boolean save(OutputStream stream);
+	public boolean save(int iter, OutputStream stream);
 
 }

@@ -497,8 +497,8 @@ public class Grounding implements Solvable {
 	}
 
 	@Override
-	public boolean save(OutputStream stream) {
-		return Utils.save(this, stream);
+	public boolean save(int iter, OutputStream stream) {
+		return Utils.save(this, iter, stream);
 	}
 
 	public Values solve(Values values, Answers.Builder builder) {
@@ -509,7 +509,7 @@ public class Grounding implements Solvable {
 		Values result = values;
 		if (this.needsInduction()) {
 			Dialler dialler = new Dialler.Builder(config, this, values).build();
-			Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeInduction(dialler);
+			Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeInduction(1, dialler);
 			result = entry.getKey();
 			for (Collection<String> output : entry.getValue()) {
 				if (builder.size() > 0 && config.isTerminate())

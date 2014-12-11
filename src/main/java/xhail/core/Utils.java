@@ -65,11 +65,13 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean save(Grounding grounding, OutputStream stream) {
+	public static boolean save(Grounding grounding, int iter, OutputStream stream) {
 		if (null == grounding)
-			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, OutputStream): " + grounding);
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, int, OutputStream): " + grounding);
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Utils.save(Grounding, int, OutputStream): " + iter);
 		if (null == stream)
-			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Grounding, OutputStream): " + stream);
+			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Grounding, int, OutputStream): " + stream);
 		try {
 			PrintStream printer = new PrintStream(stream);
 			for (String filter : grounding.getFilters())
@@ -80,8 +82,8 @@ public class Utils {
 				printer.println(statement);
 			for (String statement : grounding.getBackground())
 				printer.println(statement);
-//			for (Display display : grounding.getDisplays())
-//				printer.println(display.asClauses());
+			// for (Display display : grounding.getDisplays())
+			// printer.println(display.asClauses());
 			printer.println();
 			printer.println("%%% E. Examples");
 			for (Example example : grounding.getExamples())
@@ -100,11 +102,13 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean save(Problem problem, OutputStream stream) {
+	public static boolean save(Problem problem, int iter, OutputStream stream) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, OutputStream): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, int, OutputStream): " + problem);
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Utils.save(Problem, int, OutputStream): " + iter);
 		if (null == stream)
-			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Problem, OutputStream): " + stream);
+			throw new IllegalArgumentException("Illegal 'stream' argument in Utils.save(Problem, int, OutputStream): " + stream);
 		try {
 			PrintStream printer = new PrintStream(stream);
 			for (String filter : problem.getFilters())
@@ -115,8 +119,8 @@ public class Utils {
 				printer.println(statement);
 			for (String statement : problem.getBackground())
 				printer.println(statement);
-//			for (Display display : problem.getDisplays())
-//				printer.println(display.asClauses());
+			// for (Display display : problem.getDisplays())
+			// printer.println(display.asClauses());
 			for (String refinement : problem.getRefinements())
 				printer.println(refinement);
 			printer.println();
@@ -126,11 +130,14 @@ public class Utils {
 					printer.println(statement);
 			printer.println();
 			printer.println("%%% I. Inflation");
-			printer.println(":-bad_solution.");
-			printer.println("number_abduced(V):-V:=#sum[ number_abduced(_,W) =W ].");
+			if (iter > 0) {
+				printer.println(":-bad_solution.");
+				printer.println("number_abduced(V):-V:=#sum[ number_abduced(_,W) =W ].");
+			}
 			for (ModeH mode : problem.getModeHs())
 				for (String statement : mode.asClauses())
-					printer.println(statement);
+					if (iter > 0 || !statement.startsWith("number_abduced(0,V):-V:=#count{ abduced_"))
+						printer.println(statement);
 			printer.println();
 			printer.close();
 			return true;
@@ -140,18 +147,20 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean saveTemp(Grounding grounding, Path path) {
+	public static boolean saveTemp(Grounding grounding, int iter, Path path) {
 		if (null == grounding)
-			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, Path): " + grounding);
+			throw new IllegalArgumentException("Illegal 'grounding' argument in Utils.save(Grounding, int, Path): " + grounding);
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Utils.save(Grounding, int, Path): " + iter);
 		if (null == path)
-			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Grounding, Path): " + path);
+			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Grounding, int, Path): " + path);
 		try {
 			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
 			if (!Files.exists(folder))
 				Files.createDirectory(folder);
 			Path file = folder.resolve(path.getFileName());
 			try {
-				return save(grounding, new FileOutputStream(file.toFile()));
+				return save(grounding, iter, new FileOutputStream(file.toFile()));
 			} catch (IOException e) {
 				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
 			}
@@ -162,18 +171,20 @@ public class Utils {
 		return false;
 	}
 
-	public static boolean saveTemp(Problem problem, Path path) {
+	public static boolean saveTemp(Problem problem, int iter, Path path) {
 		if (null == problem)
-			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, Path): " + problem);
+			throw new IllegalArgumentException("Illegal 'problem' argument in Utils.save(Problem, int, Path): " + problem);
+		if (iter < 0)
+			throw new IllegalArgumentException("Illegal 'iter' argument in Utils.save(Problem, int, Path): " + iter);
 		if (null == path)
-			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Problem, Path): " + path);
+			throw new IllegalArgumentException("Illegal 'path' argument in Utils.save(Problem, int, Path): " + path);
 		try {
 			Path folder = Paths.get(".", "temp").toAbsolutePath().normalize();
 			if (!Files.exists(folder))
 				Files.createDirectory(folder);
 			Path file = folder.resolve(path.getFileName());
 			try {
-				return save(problem, new FileOutputStream(file.toFile()));
+				return save(problem, iter, new FileOutputStream(file.toFile()));
 			} catch (IOException e) {
 				Logger.error(String.format("cannot write to '%s' file (do we have rights?)", path.getFileName().toString()));
 			}
