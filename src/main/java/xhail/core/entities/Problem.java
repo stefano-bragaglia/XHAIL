@@ -499,17 +499,17 @@ public class Problem implements Solvable {
 				Dialler dialler = new Dialler.Builder(config, this).build();
 				Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeAbduction(dialler);
 				for (Collection<String> output : entry.getValue()) {
+					if (builder.size() > 0 && config.isTerminate())
+						break;
 					Grounding grounding = Answers.timeDeduction(this, output);
 					if (config.isDebug()) {
 						Logger.message(String.format("*** Info  (%s): found Delta: %s", Logger.SIGNATURE, StringUtils.join(grounding.getDelta(), " ")));
+						Logger.message(String.format("*** Info  (%s): found Kernel: %s", Logger.SIGNATURE, StringUtils.join(grounding.getKernel(), " ")));
+						Logger.message(String.format("*** Info  (%s): found Generalisation: %s", Logger.SIGNATURE, StringUtils.join(grounding.getGeneralisation(), " ")));
 						if (grounding.needsInduction())
 							Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
 					}
 					Set<Clause> generalisation = new HashSet<Clause>();
-					if (config.isDebug()) {
-						Logger.message(String.format("*** Info  (%s): found Kernel: %s", Logger.SIGNATURE, StringUtils.join(grounding.getKernel(), " ")));
-						Logger.message(String.format("*** Info  (%s): found Generalisation: %s", Logger.SIGNATURE, StringUtils.join(grounding.getGeneralisation(), " ")));
-					}					
 					Collections.addAll(generalisation, grounding.getGeneralisation());
 					if (!generalisations.contains(generalisation)) {
 						values = grounding.solve(values, builder);
@@ -521,8 +521,10 @@ public class Problem implements Solvable {
 				}
 				it += 1;
 			}
+			if (builder.size() > 0 && config.isTerminate())
+				System.out.println(String.format("*** Info  (%s): search for hypotheses terminated after the first match", Logger.SIGNATURE));
 			if (!builder.isMeaningful())
-				System.out.println(String.format("*** Info  (%s): no meaningful answers, try more iterations (--iter,-i <num>)\n", Logger.SIGNATURE));
+				System.out.println(String.format("*** Info  (%s): no meaningful answers, try more iterations (--iter,-i <num>)", Logger.SIGNATURE));
 		}
 		return builder.build();
 	}

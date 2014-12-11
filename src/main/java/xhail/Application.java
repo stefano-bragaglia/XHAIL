@@ -132,6 +132,10 @@ public class Application implements Callable<Answers> {
 					case "--search":
 						builder.setSearch(true);
 						break;
+					case "-t":
+					case "--terminate":
+						builder.setTerminate(true);
+						break;
 					case "-v":
 					case "--version":
 						builder.setVersion(true);

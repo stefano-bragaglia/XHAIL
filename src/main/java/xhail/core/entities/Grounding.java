@@ -512,6 +512,8 @@ public class Grounding implements Solvable {
 			Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeInduction(dialler);
 			result = entry.getKey();
 			for (Collection<String> output : entry.getValue()) {
+				if (builder.size() > 0 && config.isTerminate())
+					break;
 				Hypothesis hypothesis = Answers.timeDeduction(this, output);
 				if (config.isDebug())
 					Logger.message(String.format("*** Info  (%s): found Hypothesis: %s", Logger.SIGNATURE, StringUtils.join(hypothesis.getHypotheses(), " ")));

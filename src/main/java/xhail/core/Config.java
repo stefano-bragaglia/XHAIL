@@ -27,10 +27,11 @@ public class Config {
 		private int iterations = 0;
 		private long kill = 0L;
 		private boolean mute = false;
+		private boolean output = false;
 		private boolean prettify = false;
 		private boolean search = false;
 		private LinkedHashSet<Path> sources = new LinkedHashSet<>();
-		private boolean output = false;
+		private boolean terminate = false;
 
 		private boolean version = false;
 
@@ -73,11 +74,6 @@ public class Config {
 
 		public Builder setAll(boolean all) {
 			this.all = all;
-			return this;
-		}
-
-		public Builder setOutput(boolean output) {
-			this.output = output;
 			return this;
 		}
 
@@ -138,6 +134,11 @@ public class Config {
 			return this;
 		}
 
+		public Builder setOutput(boolean output) {
+			this.output = output;
+			return this;
+		}
+
 		public Builder setPrettify(boolean prettify) {
 			this.prettify = prettify;
 			return this;
@@ -145,6 +146,11 @@ public class Config {
 
 		public Builder setSearch(boolean search) {
 			this.search = search;
+			return this;
+		}
+
+		public Builder setTerminate(boolean terminate) {
+			this.terminate = terminate;
 			return this;
 		}
 
@@ -158,8 +164,6 @@ public class Config {
 	private final boolean all;
 
 	private final boolean blind;
-
-	private final boolean output;
 
 	private Path clasp;
 
@@ -179,11 +183,15 @@ public class Config {
 
 	private final String name;
 
+	private final boolean output;
+
 	private final boolean prettify;
 
 	private final boolean search;
 
 	private final Path[] sources;
+
+	private final boolean terminate;
 
 	private final boolean version;
 
@@ -214,6 +222,7 @@ public class Config {
 		this.prettify = builder.prettify;
 		this.search = builder.search;
 		this.sources = builder.sources.toArray(new Path[builder.sources.size()]);
+		this.terminate = builder.terminate;
 		this.version = builder.version;
 	}
 
@@ -253,10 +262,6 @@ public class Config {
 		return blind;
 	}
 
-	public final boolean isOutput() {
-		return output;
-	}
-
 	public final boolean isDebug() {
 		return debug;
 	}
@@ -273,12 +278,20 @@ public class Config {
 		return mute;
 	}
 
+	public final boolean isOutput() {
+		return output;
+	}
+
 	public final boolean isPrettify() {
 		return prettify;
 	}
 
 	public final boolean isSearch() {
 		return search;
+	}
+
+	public final boolean isTerminate() {
+		return terminate;
 	}
 
 	public final boolean isVersion() {

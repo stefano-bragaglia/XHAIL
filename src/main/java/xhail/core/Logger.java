@@ -109,6 +109,7 @@ public class Logger {
 		System.out.println("  --mute,-m           : Suppress warning messages");
 		System.out.println("  --prettify,-p       : Nicely format current problem");
 		System.out.println("  --search,-s         : Search for clasp 3 and gringo 3");
+		System.out.println("  --terminate,-t      : Stop searching hypotheses after first match");
 		System.out.println("  --version,-v        : Print version information and exit");
 		System.out.println();
 		System.out.println(String.format("Example:   java -jar %s.jar  -c /Library/Clasp/clasp  -g /Library/Gringo/gringo  example.pl", SIGNATURE));
