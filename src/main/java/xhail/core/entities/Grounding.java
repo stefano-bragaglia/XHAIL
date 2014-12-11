@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import xhail.core.Buildable;
 import xhail.core.Config;
 import xhail.core.Dialler;
+import xhail.core.Logger;
 import xhail.core.Utils;
 import xhail.core.parser.Parser;
 import xhail.core.statements.Display;
@@ -512,6 +513,8 @@ public class Grounding implements Solvable {
 			result = entry.getKey();
 			for (Collection<String> output : entry.getValue()) {
 				Hypothesis hypothesis = Answers.timeDeduction(this, output);
+				if (config.isDebug())
+					Logger.message(String.format("*** Info  (%s): found Hypothesis: %s", Logger.SIGNATURE, StringUtils.join(hypothesis.getHypotheses(), " ")));
 				builder.put(entry.getKey(), new Answer.Builder(this).setHypothesis(hypothesis).build());
 			}
 		} else

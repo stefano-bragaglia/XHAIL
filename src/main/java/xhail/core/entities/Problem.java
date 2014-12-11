@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
+
 import xhail.core.Buildable;
 import xhail.core.Config;
 import xhail.core.Dialler;
@@ -498,10 +500,16 @@ public class Problem implements Solvable {
 				Map.Entry<Values, Collection<Collection<String>>> entry = Answers.timeAbduction(dialler);
 				for (Collection<String> output : entry.getValue()) {
 					Grounding grounding = Answers.timeDeduction(this, output);
-					if (config.isDebug() && grounding.needsInduction())
-						Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
-
+					if (config.isDebug()) {
+						Logger.message(String.format("*** Info  (%s): found Delta: %s", Logger.SIGNATURE, StringUtils.join(grounding.getDelta(), " ")));
+						if (grounding.needsInduction())
+							Utils.saveTemp(grounding, Paths.get(String.format("%s_abd%d_ind%d.lp", config.getName(), it, iit++)));
+					}
 					Set<Clause> generalisation = new HashSet<Clause>();
+					if (config.isDebug()) {
+						Logger.message(String.format("*** Info  (%s): found Kernel: %s", Logger.SIGNATURE, StringUtils.join(grounding.getKernel(), " ")));
+						Logger.message(String.format("*** Info  (%s): found Generalisation: %s", Logger.SIGNATURE, StringUtils.join(grounding.getGeneralisation(), " ")));
+					}					
 					Collections.addAll(generalisation, grounding.getGeneralisation());
 					if (!generalisations.contains(generalisation)) {
 						values = grounding.solve(values, builder);

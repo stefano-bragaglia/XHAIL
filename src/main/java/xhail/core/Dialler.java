@@ -11,9 +11,12 @@ import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 import xhail.core.entities.Grounding;
 import xhail.core.entities.Problem;
@@ -114,6 +117,8 @@ public class Dialler {
 
 	private final boolean output;
 
+	private final boolean debug;
+
 	private Dialler(Builder builder) {
 		if (null == builder)
 			throw new IllegalArgumentException("Illegal 'builder' argument in Dialler(Byprocess.Builder): " + builder);
@@ -124,6 +129,7 @@ public class Dialler {
 		this.clasp[3] = "--opt-mode=optN";
 		if (null != builder.values)
 			this.clasp[4] = "--opt-bound=" + builder.values.toString();
+		this.debug = builder.config.isDebug();
 		this.errors = builder.errors.toAbsolutePath();
 		this.gringo = new String[2];
 		this.gringo[0] = builder.config.getGringo().toAbsolutePath().toString();
@@ -141,11 +147,15 @@ public class Dialler {
 		try {
 			solvable.save(Files.newOutputStream(source));
 			try {
+				if (debug)
+					Logger.message(String.format("*** Info  (%s): calling '%s'", Logger.SIGNATURE, String.join(" ", this.gringo)));
 				Process gringo = new ProcessBuilder(this.gringo) //
 						.redirectError(Redirect.to(errors.toFile())).redirectOutput(Redirect.to(middle.toFile())).start();
 				gringo.waitFor();
 				handle(Files.newInputStream(errors));
 				try {
+					if (debug)
+						Logger.message(String.format("*** Info  (%s): calling '%s'", Logger.SIGNATURE, String.join(" ", this.clasp)));
 					Process clasp = new ProcessBuilder(this.clasp).redirectOutput(Redirect.to(target.toFile())).start();
 					clasp.waitFor();
 					try {
