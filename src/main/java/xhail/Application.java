@@ -256,7 +256,7 @@ public class Application implements Callable<Answers> {
 				Logger.message(String.format("*** Info  (%s): solving interrupted after %d second/s", Logger.SIGNATURE, kill));
 				if (config.isOutput()) {
 					System.out.println("Problem,Answers,Calls,Loading,Abduction,Deduction,Induction,Wall");
-					System.err.format("Interrupted,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", problem.count(), Dialler.calls(), //
+					System.err.format("interrupted,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f\n", problem.count(), Dialler.calls(), //
 							Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), kill * 1.0);
 				}
 			} catch (final Exception e) {

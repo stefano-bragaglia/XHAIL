@@ -47,7 +47,7 @@ public class Acquirer {
 	private Tokeniser tokeniser;
 
 	private Values values = new Values();
-
+	
 	private Acquirer(Tokeniser tokeniser) {
 		if (null == tokeniser)
 			throw new IllegalArgumentException("Illegal 'tokeniser' argument in Acquirer(Tokeniser): " + tokeniser);
@@ -194,8 +194,9 @@ public class Acquirer {
 		if (OPTIMUM.equals(token)) {
 			parseOPTIMUM();
 			parseFOUND();
-		} else
+		} else {
 			parseNested();
+		}
 	}
 
 }
