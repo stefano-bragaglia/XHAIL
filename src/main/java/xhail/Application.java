@@ -260,6 +260,7 @@ public class Application implements Callable<Answers> {
 							Answers.getLoading(), Answers.getAbduction(), Answers.getDeduction(), Answers.getInduction(), kill * 1.0);
 				}
 			} catch (final Exception e) {
+				// If something independent by our will happens...
 				String message = "unexpected runtime error:\n  " + e.getMessage();
 				for (StackTraceElement element : e.getStackTrace())
 					message += "\n    " + element.toString();
