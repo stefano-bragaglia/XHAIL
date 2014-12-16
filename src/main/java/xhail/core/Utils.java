@@ -136,7 +136,7 @@ public class Utils {
 			}
 			for (ModeH mode : problem.getModeHs())
 				for (String statement : mode.asClauses())
-					if (iter > 0 || !statement.startsWith("number_abduced(0,V):-V:=#count{ abduced_"))
+					if (iter > 0 || !statement.startsWith("number_abduced("))
 						printer.println(statement);
 			printer.println();
 			printer.close();
